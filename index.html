@@ -1,134 +1,106 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agrocontrol</title>
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="css/index.css">
-
-    <script src="js/Fecha.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Iniciar Sesión - Agrocontrol</title>
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/usuario.css">
 </head>
 <body>
-  <header>
 
- <nav class="navbar navbar-expand-lg ">
-  <div class="container-fluid ">
+  <div class="container">
+    <div class="row justify-content-center">
+      <!-- Responsive col -->
+      <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-4">
+        <div class="card p-4">
+          <div class="text-center mb-3">
+            <img src="img/Agrocontrol verde bonito.jpg" alt="Logo Agrocontrol" class="rounded-circle" width="90" height="90">
+            <h3 class="mt-2">Agrocontrol</h3>
+            <p class="text-muted">Inicia sesión en tu cuenta</p>
+          </div>
 
-    <a class="navbar-brand" >
-      <img src="img/Agrocontrol verde bonito.jpg" alt="Bootstrap" width="120" height="120">
-    </a>
+          <form>
+            <div class="mb-3">
+              <label for="email" class="form-label">Correo electrónico</label>
+              <input type="email" class="form-control" id="email" placeholder="ejemplo@correo.com" required>
+            </div>
 
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <div class="mb-3">
+              <label for="password" class="form-label">Contraseña</label>
+              <input type="password" class="form-control" id="password" placeholder="••••••••" required>
+            </div>
 
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Vacas
-          </a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Jersey</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Girolando</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Gyr</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Simmental</a></li>
-          </ul>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link " href="#">Medicamentos</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Insumos</a>
-        </li>
+            <div class="d-flex justify-content-between mb-3">
+              <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="remember">
+                <label class="form-check-label" for="remember">Recuérdame</label>
+              </div>
+              <a href="#" class="text-decoration-none">¿Olvidaste tu contraseña?</a>
+            </div>
 
-        <li class="nav-item">
-          <a class="nav-link" href="#">Enfermedades</a>
-        </li>
+            <div class="d-grid mb-3">
+              <button type="submit" class="btn btn-success">Iniciar Sesión</button>
+            </div>
 
-        <li class="nav-item">
-          <a class="nav-link" href="#" > Alertas y Recordatorios </a>
-        </li>
+            <div class="text-center">
+              <p class="mb-0">¿No tienes cuenta? 
+                <a href="CrearCuenta.html" class="text-decoration-none">Crea una aquí</a> <br>
+                
 
-        <li class="nav-item">
-          <a class="nav-link" href="#" > Control </a>
-        </li>
-
-        <li class="nav-item">
-          <a class="nav-link" href="usuario.html" > Usuario </a>
-        </li>
-      </ul>
-      <form class="d-flex" role="search">
-        <input class="form-control me-2" type="search" placeholder="Buscar" aria-label="Search"/>
-        <button class="btn btn-outline-success" type="submit">Buscar</button> 
-      </form> <br>
-    </div>
-  </div>
- </nav>
-  </header>
-
-  <main class="mt-4">
-<div class="container">
- 
-
-
-<div class="card mb-3" >
-  <div class="row g-0">
-    <div class="col-md-4  ">
-      <img src="img/Jersey Imagen 2.webp" class="img-fluid rounded-start" alt="...">
-    </div>
-    <div class="col-md-8">
-      <div class="card-body">
-    <h3 id="saludo-dinamico">👋 ¡Bienvenido!</h3>
-    <p>Este panel es exclusivo para quienes gestionan Agrocontrol. Úsalo para tener acceso rápido a tareas y estado actual de la finca.</p>
-    <p id="fecha-hoy" class="fecha-panel"></p>
+              </p>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   </div>
-</div>
+
+  <!-- Firebase SDK -->
+<script type="module">
+  // Importar Firebase desde CDN
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } 
+    from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+  // Configuración de Firebase (esta la copias de tu consola de Firebase)
+  const firebaseConfig = {
+    apiKey: "AIzaSyB7WdEEYxvxYDe1bsrcLg1lQNa1wJbBXZ8",
+    authDomain: "agrocontrol-8550b.firebaseapp.com",
+    projectId: "agrocontrol-8550b",
+    storageBucket: "agrocontrol-8550b.appspot.com",
+    messagingSenderId: "540741735209",
+    appId: "1:540741735209:web:7a44dff52d07641cc91d38",
+    measurementId: "G-7FBMJ1WNPZ"
+  };
+
+  // Inicializar Firebase
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+
+  // 🔐 LOGIN
+  const loginForm = document.querySelector("form");
+  if (loginForm) {
+    loginForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+
+      try {
+        await signInWithEmailAndPassword(auth, email, password);
+        alert("✅ Inicio de sesión exitoso");
+        window.location.href = "contenidoPrincipal.html"; // página principal
+      } catch (error) {
+        alert("❌ Error: usuario no encontrado" );
+      }
+    });
+  }
+
+</script>
 
 
-<div class="row">
-  <div class="col-sm-6 mb-3 mb-sm-0">
-    <div class="card h-100">
-      <div class="card-body">
-        <h4>⚡ Accesos Rápidos</h4>
-        <ul>
-      <li><a href="#">➕ Registrar medicamento aplicado</a></li>
-      <li><a href="#">🐄 Ver vacas registradas</a></li>
-      <li><a href="#">📋 Añadir nueva vaca</a></li>
-      <li><a href="#">📈 Generar reporte mensual</a></li>
-      <li><a href="#">📅 Ver calendario de alertas</a></li>
-    </ul>
-        
-      </div>
-    </div>
-  </div>
-  
-  <div class="col-sm-6">
-    <div class="card h-100">
-      <div class="card-body">
-        <h4>📊 Estadísticas</h4>
-          <p>Tipo de vacas:</p>
-            <ul>
-                <li>🐄 Lecheras: 6</li>
-                <li>🥩 Engorde: 3</li>
-                <li>❤️ Reproductoras: 2</li>
-            </ul>
-                <p>Último reporte generado: <strong>21/06/2025</strong></p>
-      </div>
-    </div>
-  </div>
-</div>
-</div> <br>
-
-
-  </main>
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
