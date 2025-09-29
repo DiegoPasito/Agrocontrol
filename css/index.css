@@ -31,6 +31,42 @@ header {
     text-decoration: underline;
 }
 
+/* EStilo de las barras de, medicamentos, insumos, enfermades, etc*/
+.navbar-nav .nav-link {
+    border: 2px solid #36ac42;     /* Color del borde */
+    border-radius: 50px;         /* Hace el borde ovalado */
+    padding: 6px 15px;           /* Espaciado interno */
+    margin:  5px;               /* Espacio entre cada opción */
+    transition: all 0.3s ease;   /* Animación suave */
+    color: rgb(0, 0, 0);                /* Texto en blanco */
+}
+
+.navbar-nav .nav-link:hover {
+    background-color: #a9eeb0;   /* Fondo blanco */
+    color: #207729;            /* Texto verde (el color de tu navbar) */
+    border-color: #36ac42;     /* Borde verde */
+}
+
+/*Estilo del color de las tarjetas y demas*/
+.card {
+    background-color: #d9f5dc;       /* Verde clarito de fondo */
+    border: 2px solid #36ac42;       /* Borde verde más fuerte */
+    border-radius: 15px;             /* Bordes redondeados */
+    box-shadow: 0 4px 10px rgba(54, 172, 66, 0.4); /* Sombra verde translúcida */
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Efecto al pasar el mouse */
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(54, 172, 66, 0.6);
+}
+
+
+
+
+
+
 
 
 

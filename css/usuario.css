@@ -1,0 +1,25 @@
+body {
+      background: linear-gradient(135deg, #7fca86, #a1e2a8);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .card {
+      background-color: #ffffff;
+      border: 2px solid #36ac42;
+      border-radius: 20px;
+      box-shadow: 0 6px 15px rgba(54, 172, 66, 0.4);
+    }
+    .btn-success {
+      background-color: #36ac42;
+      border: none;
+    }
+    .btn-success:hover {
+      background-color: #2b8c35;
+    }
+    .form-control:focus {
+      border-color: #36ac42;
+      box-shadow: 0 0 0 0.2rem rgba(54, 172, 66, 0.25);
+    }
