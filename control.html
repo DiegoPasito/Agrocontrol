@@ -74,5 +74,103 @@
   </div>
  </nav>
   </header>
+
+  <main>
+    <div class="card p-4 mt-4">
+  <h3 class="mb-3">Registrar Vaca</h3>
+  <form id="formVaca">
+    <div class="mb-3">
+      <label class="form-label">Nombre</label>
+      <input type="text" class="form-control" id="nombre" required>
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Raza</label>
+      <select class="form-select" id="raza" required>
+        <option value="">Selecciona...</option>
+        <option value="Jersey">Jersey</option>
+        <option value="Simmental">Simmental</option>
+        <option value="Gyr">Gyr</option>
+        <option value="Girolando">Girolando</option>
+      </select>
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Peso (kg)</label>
+      <input type="number" class="form-control" id="peso" required>
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Edad (años)</label>
+      <input type="number" class="form-control" id="edad" required>
+    </div>
+    <div class="mb-3">
+      <label class="form-label">¿Está lactando?</label>
+      <select class="form-select" id="lactando" required>
+        <option value="true">Sí</option>
+        <option value="false">No</option>
+      </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Guardar Vaca</button>
+  </form>
+</div>
+
+  <script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+  import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyB7WdEEYxvxYDe1bsrcLg1lQNa1wJbBXZ8",
+    authDomain: "agrocontrol-8550b.firebaseapp.com",
+    projectId: "agrocontrol-8550b",
+    storageBucket: "agrocontrol-8550b.appspot.com",
+    messagingSenderId: "540741735209",
+    appId: "1:540741735209:web:7a44dff52d07641cc91d38",
+    measurementId: "G-7FBMJ1WNPZ"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+
+  // Referencia al formulario
+  const formVaca = document.getElementById("formVaca");
+
+  // Detectar usuario logueado
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      console.log("Usuario logueado:", user.email);
+
+      // Evento submit del formulario
+      formVaca.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const nombre = document.getElementById("nombre").value;
+        const raza = document.getElementById("raza").value;
+        const peso = parseFloat(document.getElementById("peso").value);
+        const edad = parseInt(document.getElementById("edad").value);
+        const lactando = document.getElementById("lactando").value === "true";
+
+        try {
+          await addDoc(collection(db, "usuarios", user.uid, "control"), {
+            nombre,
+            raza,
+            peso,
+            edad,
+            lactando,
+            creado: new Date()
+          });
+
+          alert("✅ Vaca registrada con éxito");
+          formVaca.reset();
+        } catch (error) {
+          console.error("Error al guardar vaca:", error);
+        }
+      });
+    } else {
+      console.log("No hay usuario logueado");
+    }
+  });
+</script>
+
+  </main>
 </body>
 </html>
