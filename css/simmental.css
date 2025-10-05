@@ -1,0 +1,47 @@
+body {
+    margin: 0;
+    background-color: #a1e2a8;
+    
+
+}
+
+header {
+    position: sticky;
+    top: 0;
+    left: 0;
+    width: 100;
+    z-index: 1000;
+}
+
+.navbar-expand-lg {
+    background-color:  #7fca86;
+    top: 0;
+    left: 0;
+    box-shadow: 0 2px 5px #428b49;
+      
+}
+
+.card-body a{
+    text-decoration: none;
+    color: black;
+}
+
+.card-body a:hover{
+    text-decoration: underline;
+}
+
+/* EStilo de las barras de, medicamentos, insumos, enfermades, etc*/
+.navbar-nav .nav-link {
+    border: 2px solid #36ac42;     /* Color del borde */
+    border-radius: 50px;         /* Hace el borde ovalado */
+    padding: 6px 15px;           /* Espaciado interno */
+    margin:  5px;               /* Espacio entre cada opción */
+    transition: all 0.3s ease;   /* Animación suave */
+    color: rgb(0, 0, 0);                /* Texto en blanco */
+}
+
+.navbar-nav .nav-link:hover {
+    background-color: #a9eeb0;   /* Fondo blanco */
+    color: #207729;            /* Texto verde (el color de tu navbar) */
+    border-color: #36ac42;     /* Borde verde */
+}

@@ -6,10 +6,11 @@
     <title>Agrocontrol</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="css/control.css">
+    <link rel="stylesheet" href="css/Gyr.css">
 
 </head>
-   <header>
+<body>
+ <header>
 
  <nav class="navbar navbar-expand-lg ">
   <div class="container-fluid ">
@@ -72,51 +73,17 @@
     </div>
   </div>
  </nav>
-  </header> 
-<body >
+  </header>
 
-  <main class="container mt-4">
-    <h2>Registrar Vaca</h2>
-  <form id="form-vaca" class="mb-4">
-    <div class="mb-3">
-      <label class="form-label">Nombre</label>
-      <input type="text" id="nombre" class="form-control" required>
-    </div>
-
-    <div class="mb-3">
-      <label class="form-label">Raza</label>
-      <select id="raza" class="form-select" required>
-        <option value="Jersey">Jersey</option>
-        <option value="Girolando">Girolando</option>
-        <option value="Gyr">Gyr</option>
-        <option value="Simmental">Simmental</option>
-      </select>
-    </div>
-
-    <div class="mb-3">
-      <label class="form-label">Peso (kg)</label>
-      <input type="number" id="peso" class="form-control" required>
-    </div>
-
-    <div class="mb-3">
-      <label class="form-label">Edad (años)</label>
-      <input type="number" id="edad" class="form-control" required>
-    </div>
-
-    <div class="mb-3 form-check">
-      <input type="checkbox" id="lactando" class="form-check-input">
-      <label class="form-check-label" for="lactando">¿Está lactando?</label>
-    </div>
-
-    <button type="submit" class="btn btn-success">Guardar</button>
-  </form>
-
-  <div id="mensaje"></div>
+    <main class="container mt-4">
+    <h2>Mis Vacas Gyr</h2>
+    <div id="tabla-gyr"></div>
+  </main>
 
   <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
   import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
-  import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+  import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
 
   const firebaseConfig = {
     apiKey: "AIzaSyB7WdEEYxvxYDe1bsrcLg1lQNa1wJbBXZ8",
@@ -132,47 +99,48 @@
   const auth = getAuth(app);
   const db = getFirestore(app);
 
-    const form = document.getElementById("form-vaca");
-    const mensaje = document.getElementById("mensaje");
+    function crearTabla(vacas) {
+      if (vacas.length === 0) return "<p>No hay vacas Jersey registradas.</p>";
+
+      let filas = vacas.map(v => `
+        <tr>
+          <td>${v.nombre}</td>
+          <td>${v.peso} kg</td>
+          <td>${v.edad} años</td>
+          <td>${v.lactando ? "Sí" : "No"}</td>
+        </tr>
+      `).join("");
+
+      return `
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Peso</th>
+              <th>Edad</th>
+              <th>Lactando</th>
+            </tr>
+          </thead>
+          <tbody>${filas}</tbody>
+        </table>
+      `;
+    }
+
+    async function cargarVacas(userId) {
+      const querySnap = await getDocs(collection(db, "usuarios", userId, "Gyr"));
+      const vacas = querySnap.docs.map(doc => doc.data());
+      document.getElementById("tabla-gyr").innerHTML = crearTabla(vacas);
+    }
 
     onAuthStateChanged(auth, (user) => {
-      if (!user) {
-        mensaje.innerHTML = "<p class='text-danger'>Debes iniciar sesión para registrar vacas.</p>";
-        form.style.display = "none";
-        return;
+      if (user) {
+        cargarVacas(user.uid);
+      } else {
+        document.getElementById("tabla-gyr").innerHTML = "<p>Debes iniciar sesión para ver tus vacas.</p>";
       }
-
-      form.addEventListener("submit", async (e) => {
-        e.preventDefault();
-
-        const nombre = document.getElementById("nombre").value;
-        const raza = document.getElementById("raza").value;
-        const peso = parseFloat(document.getElementById("peso").value);
-        const edad = parseInt(document.getElementById("edad").value);
-        const lactando = document.getElementById("lactando").checked;
-
-        try {
-          await addDoc(collection(db, "usuarios", user.uid, raza), {
-            nombre,
-            raza,
-            peso,
-            edad,
-            lactando,
-            creado: new Date()
-          });
-
-          mensaje.innerHTML = "<p class='text-success'>✅ Vaca registrada con éxito.</p>";
-          form.reset();
-        } catch (error) {
-          console.error("Error al guardar vaca:", error);
-          mensaje.innerHTML = "<p class='text-danger'>❌ Error al guardar la vaca.</p>";
-        }
-      });
     });
   </script>
 
-</main>
 
-  
 </body>
 </html>

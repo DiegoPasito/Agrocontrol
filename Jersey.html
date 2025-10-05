@@ -35,12 +35,12 @@
           </a>
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="Jersey.html">Jersey</a></li>
+            <li><hr class="dropdown-divider" ></li>
+            <li><a class="dropdown-item" href="Girolando.html">Girolando</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Girolando</a></li>
+            <li><a class="dropdown-item" href="Gyr.html">Gyr</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Gyr</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Simmental</a></li>
+            <li><a class="dropdown-item" href="simmental.html">Simmental</a></li>
           </ul>
         </li>
         <li class="nav-item">
@@ -81,12 +81,23 @@
   </main>
 
   <script type="module">
-    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-auth.js";
-    import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.14.0/firebase-firestore.js";
-    import { app } from "./firebase-config.js"; // tu configuración
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+  import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
 
-    const auth = getAuth(app);
-    const db = getFirestore(app);
+  const firebaseConfig = {
+    apiKey: "AIzaSyB7WdEEYxvxYDe1bsrcLg1lQNa1wJbBXZ8",
+    authDomain: "agrocontrol-8550b.firebaseapp.com",
+    projectId: "agrocontrol-8550b",
+    storageBucket: "agrocontrol-8550b.appspot.com",
+    messagingSenderId: "540741735209",
+    appId: "1:540741735209:web:7a44dff52d07641cc91d38",
+    measurementId: "G-7FBMJ1WNPZ"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
 
     function crearTabla(vacas) {
       if (vacas.length === 0) return "<p>No hay vacas Jersey registradas.</p>";
