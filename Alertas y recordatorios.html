@@ -75,5 +75,149 @@
  </nav>
   </header> 
 
+   <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.css" rel="stylesheet">
+   <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js"></script>
+
+<main>
+  <div class="container mt-4">
+    <h2 class="text-center mb-4">📅 Calendario de Recordatorios</h2>
+    <div id="calendar"></div>
+  </div>
+
+  <!-- Modal para nuevo recordatorio -->
+  <div class="modal fade" id="recordatorioModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+      <form id="recordatorioForm" class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Nuevo Recordatorio</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label class="form-label">Fecha y Hora</label>
+            <input type="datetime-local" id="fechaHora" class="form-control" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Nombre</label>
+            <input type="text" id="nombre" class="form-control" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Asunto</label>
+            <select id="asunto" class="form-select">
+              <option value="Reunión">Reunión</option>
+              <option value="Pago">Pago</option>
+              <option value="Entrega">Entrega</option>
+              <option value="Otro">Otro...</option>
+            </select>
+            <input type="text" id="asuntoOtro" class="form-control mt-2 d-none" placeholder="Escribe el asunto">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Observaciones</label>
+            <textarea id="observaciones" class="form-control"></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-success">Guardar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Audio de notificación -->
+  <audio id="alertSound" src="audio/Sonido Musica Waos pa la alerta.mpeg" preload="auto"></audio>
+</main>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+  import { getFirestore, collection, addDoc, onSnapshot, deleteDoc, doc } 
+    from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+
+  // Configuración Firebase (usa tu apiKey real aquí 👇)
+  const firebaseConfig = {
+    apiKey: "TU_API_KEY",
+    authDomain: "agrocontrol-8550b.firebaseapp.com",
+    projectId: "agrocontrol-8550b",
+    storageBucket: "agrocontrol-8550b.appspot.com",
+    messagingSenderId: "540741735209",
+    appId: "1:540741735209:web:7a44dff52d07641cc91d38",
+    measurementId: "G-7FBMJ1WNPZ"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const calendarEl = document.getElementById("calendar");
+    const alertSound = document.getElementById("alertSound");
+
+    const calendar = new FullCalendar.Calendar(calendarEl, {
+      initialView: "dayGridMonth",
+      locale: "es",
+      dateClick: function (info) {
+        document.getElementById("fechaHora").value = info.dateStr + "T09:00";
+        new bootstrap.Modal(document.getElementById("recordatorioModal")).show();
+      },
+      eventClick: async function(info) {
+        if (confirm("¿Eliminar este recordatorio?")) {
+          await deleteDoc(doc(db, "recordatorios", info.event.id));
+        }
+      }
+    });
+
+    calendar.render();
+
+    // Mostrar input "Otro asunto"
+    document.getElementById("asunto").addEventListener("change", function() {
+      document.getElementById("asuntoOtro").classList.toggle("d-none", this.value !== "Otro");
+    });
+
+    // Guardar recordatorio
+    document.getElementById("recordatorioForm").addEventListener("submit", async function (e) {
+      e.preventDefault();
+      const fechaHora = document.getElementById("fechaHora").value;
+      const nombre = document.getElementById("nombre").value;
+      let asunto = document.getElementById("asunto").value;
+      if (asunto === "Otro") asunto = document.getElementById("asuntoOtro").value;
+      const observaciones = document.getElementById("observaciones").value;
+
+      await addDoc(collection(db, "recordatorios"), {
+        title: `${asunto} - ${nombre}`,
+        start: fechaHora,
+        observaciones: observaciones
+      });
+
+      bootstrap.Modal.getInstance(document.getElementById("recordatorioModal")).hide();
+      e.target.reset();
+    });
+
+    // Escuchar cambios en tiempo real
+    onSnapshot(collection(db, "recordatorios"), (snapshot) => {
+      calendar.getEvents().forEach(ev => ev.remove());
+      snapshot.forEach(docSnap => {
+        const data = docSnap.data();
+        calendar.addEvent({
+          id: docSnap.id,
+          title: data.title,
+          start: data.start,
+          extendedProps: { observaciones: data.observaciones }
+        });
+      });
+    });
+
+    // Alertas cada 30 segundos
+    setInterval(() => {
+      const ahora = new Date();
+      calendar.getEvents().forEach(ev => {
+        const evDate = new Date(ev.start);
+        const diff = (evDate - ahora) / 1000;
+        if (diff >= 0 && diff <= 30) {
+          alert("🔔 Recordatorio: " + ev.title + "\n📌 " + (ev.extendedProps.observaciones || ""));
+          alertSound.play();
+        }
+      });
+    }, 30000);
+  });
+</script>
+
 </body>
 </html>

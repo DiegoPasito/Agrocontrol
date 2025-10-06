@@ -45,3 +45,10 @@ header {
     color: #207729;            /* Texto verde (el color de tu navbar) */
     border-color: #36ac42;     /* Borde verde */
 }
+
+/*Cuerpo de calendario*/
+
+  #calendar {
+      max-width: 900px;
+      margin: 40px auto;
+    }
