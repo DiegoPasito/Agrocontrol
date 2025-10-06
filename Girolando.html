@@ -198,7 +198,7 @@ function crearTabla(vacas) {
 async function cargarVacas(userId) {
   const querySnap = await getDocs(collection(db, "usuarios", userId, "Girolando"));
   const vacas = querySnap.docs.map(docSnap => ({ id: docSnap.id, data: docSnap.data() }));
-  document.getElementById("tabla-jersey").innerHTML = crearTabla(vacas);
+  document.getElementById("tabla-girolando").innerHTML = crearTabla(vacas);
 }
 
 // Pasar datos al modal de edición
