@@ -80,66 +80,175 @@
     <div id="tabla-gyr"></div>
   </main>
 
-  <script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
-  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
-  import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+<!-- Modal Editar -->
+<div class="modal fade" id="editarModal" tabindex="-1" aria-labelledby="editarLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editarLabel">Editar Vaca</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <form id="formEditar">
+          <input type="hidden" id="edit-id">
+          <div class="mb-3">
+            <label class="form-label">Nombre</label>
+            <input type="text" class="form-control" id="edit-nombre" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Peso (kg)</label>
+            <input type="number" class="form-control" id="edit-peso" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Edad (años)</label>
+            <input type="number" class="form-control" id="edit-edad" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Lactando</label>
+            <select class="form-select" id="edit-lactando">
+              <option value="true">Sí</option>
+              <option value="false">No</option>
+            </select>
+          </div>
+          <button type="submit" class="btn btn-success">Guardar cambios</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyB7WdEEYxvxYDe1bsrcLg1lQNa1wJbBXZ8",
-    authDomain: "agrocontrol-8550b.firebaseapp.com",
-    projectId: "agrocontrol-8550b",
-    storageBucket: "agrocontrol-8550b.appspot.com",
-    messagingSenderId: "540741735209",
-    appId: "1:540741735209:web:7a44dff52d07641cc91d38",
-    measurementId: "G-7FBMJ1WNPZ"
-  };
+<!-- Modal Eliminar -->
+<div class="modal fade" id="eliminarModal" tabindex="-1" aria-labelledby="eliminarLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header bg-danger text-white">
+        <h5 class="modal-title" id="eliminarLabel">Eliminar Vaca</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <p>¿Seguro que deseas eliminar la vaca <strong id="nombreEliminar"></strong>?</p>
+        <input type="hidden" id="delete-id">
+        <button id="btnConfirmEliminar" class="btn btn-danger">Sí, eliminar</button>
+      </div>
+    </div>
+  </div>
+</div>
 
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-  const db = getFirestore(app);
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+import { 
+  getFirestore, collection, getDocs, doc, deleteDoc, updateDoc } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
 
-    function crearTabla(vacas) {
-      if (vacas.length === 0) return "<p>No hay vacas Jersey registradas.</p>";
+const firebaseConfig = {
+  apiKey: "AIzaSyB7WdEEYxvxYDe1bsrcLg1lQNa1wJbBXZ8",
+  authDomain: "agrocontrol-8550b.firebaseapp.com",
+  projectId: "agrocontrol-8550b",
+  storageBucket: "agrocontrol-8550b.appspot.com",
+  messagingSenderId: "540741735209",
+  appId: "1:540741735209:web:7a44dff52d07641cc91d38",
+  measurementId: "G-7FBMJ1WNPZ"
+};
 
-      let filas = vacas.map(v => `
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+let usuarioId = null;
+
+// Render tabla
+function crearTabla(vacas) {
+  if (vacas.length === 0) return "<p>No hay vacas Gyr registradas.</p>";
+
+  let filas = vacas.map(v => `
+    <tr>
+      <td>${v.data.nombre}</td>
+      <td>${v.data.peso} kg</td>
+      <td>${v.data.edad} años</td>
+      <td>${v.data.lactando ? "Sí" : "No"}</td>
+      <td>
+        <button class="btn btn-warning btn-sm" 
+          data-bs-toggle="modal" data-bs-target="#editarModal"
+          onclick="llenarFormulario('${v.id}','${v.data.nombre}','${v.data.peso}','${v.data.edad}','${v.data.lactando}')">Editar</button>
+        <button class="btn btn-danger btn-sm"
+          data-bs-toggle="modal" data-bs-target="#eliminarModal"
+          onclick="prepararEliminar('${v.id}','${v.data.nombre}')">Eliminar</button>
+      </td>
+    </tr>
+  `).join("");
+
+  return `
+    <table class="table table-striped table-hover shadow rounded">
+      <thead class="table-dark">
         <tr>
-          <td>${v.nombre}</td>
-          <td>${v.peso} kg</td>
-          <td>${v.edad} años</td>
-          <td>${v.lactando ? "Sí" : "No"}</td>
+          <th>Nombre</th>
+          <th>Peso</th>
+          <th>Edad</th>
+          <th>Lactando</th>
+          <th>Acciones</th>
         </tr>
-      `).join("");
+      </thead>
+      <tbody>${filas}</tbody>
+    </table>
+  `;
+}
 
-      return `
-        <table class="table table-striped">
-          <thead>
-            <tr>
-              <th>Nombre</th>
-              <th>Peso</th>
-              <th>Edad</th>
-              <th>Lactando</th>
-            </tr>
-          </thead>
-          <tbody>${filas}</tbody>
-        </table>
-      `;
-    }
+// Cargar vacas
+async function cargarVacas(userId) {
+  const querySnap = await getDocs(collection(db, "usuarios", userId, "Gyr"));
+  const vacas = querySnap.docs.map(docSnap => ({ id: docSnap.id, data: docSnap.data() }));
+  document.getElementById("tabla-jersey").innerHTML = crearTabla(vacas);
+}
 
-    async function cargarVacas(userId) {
-      const querySnap = await getDocs(collection(db, "usuarios", userId, "Gyr"));
-      const vacas = querySnap.docs.map(doc => doc.data());
-      document.getElementById("tabla-gyr").innerHTML = crearTabla(vacas);
-    }
+// Pasar datos al modal de edición
+window.llenarFormulario = function(id, nombre, peso, edad, lactando) {
+  document.getElementById("edit-id").value = id;
+  document.getElementById("edit-nombre").value = nombre;
+  document.getElementById("edit-peso").value = peso;
+  document.getElementById("edit-edad").value = edad;
+  document.getElementById("edit-lactando").value = lactando;
+};
 
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        cargarVacas(user.uid);
-      } else {
-        document.getElementById("tabla-gyr").innerHTML = "<p>Debes iniciar sesión para ver tus vacas.</p>";
-      }
-    });
-  </script>
+// Guardar cambios de edición
+document.getElementById("formEditar").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const id = document.getElementById("edit-id").value;
+  const nombre = document.getElementById("edit-nombre").value;
+  const peso = parseFloat(document.getElementById("edit-peso").value);
+  const edad = parseInt(document.getElementById("edit-edad").value);
+  const lactando = document.getElementById("edit-lactando").value === "true";
+
+  await updateDoc(doc(db, "usuarios", usuarioId, "Gyr", id), {
+    nombre, peso, edad, lactando
+  });
+
+  bootstrap.Modal.getInstance(document.getElementById("editarModal")).hide();
+  cargarVacas(usuarioId);
+});
+
+// Pasar datos al modal de eliminación
+window.prepararEliminar = function(id, nombre) {
+  document.getElementById("delete-id").value = id;
+  document.getElementById("nombreEliminar").innerText = nombre;
+};
+
+// Confirmar eliminación
+document.getElementById("btnConfirmEliminar").addEventListener("click", async () => {
+  const id = document.getElementById("delete-id").value;
+  await deleteDoc(doc(db, "usuarios", usuarioId, "Gyr", id));
+  bootstrap.Modal.getInstance(document.getElementById("eliminarModal")).hide();
+  cargarVacas(usuarioId);
+});
+
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    usuarioId = user.uid;
+    cargarVacas(usuarioId);
+  } else {
+    document.getElementById("tabla-gyr").innerHTML = "<p>Debes iniciar sesión para ver tus vacas.</p>";
+  }
+});
+</script>
 
 
 </body>
