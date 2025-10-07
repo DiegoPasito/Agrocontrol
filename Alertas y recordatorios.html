@@ -1,19 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agrocontrol</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
-    
-    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/main.min.css" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Agrocontrol</title>
 
-    <link rel="stylesheet" href="css/Alertas y recordatorios.css">
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"/>
 
+  <!-- FullCalendar CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.css" rel="stylesheet"/>
+
+  <!-- Tu CSS -->
+  <link rel="stylesheet" href="css/Alertas y recordatorios.css"/>
 </head>
 <body>
-   <header>
+ <header>
 
  <nav class="navbar navbar-expand-lg ">
   <div class="container-fluid ">
@@ -76,273 +78,200 @@
     </div>
   </div>
  </nav>
-  </header> 
+  </header>
 
-  <main>
-    <div class="container mt-4 text-center">
-      <h2 class="mb-4">📅 Calendario de Recordatorios</h2>
+<main>
+  <div class="container mt-4 text-center">
+    <h2 class="mb-4">📅 Calendario de Recordatorios</h2>
+    <button class="btn btn-success mb-3" id="btnNuevo">➕ Nuevo Recordatorio</button>
+    <div id="calendar"></div>
+  </div>
 
-      <!-- botón para abrir modal manualmente (opcional) -->
-      <button class="btn btn-success mb-3" id="btnNuevo">➕ Nuevo Recordatorio</button>
-
-      <div id="calendar"></div>
+  <!-- Modal crear / editar -->
+  <div class="modal fade" id="recordatorioModal" tabindex="-1">
+    <div class="modal-dialog">
+      <form id="recordatorioForm" class="modal-content">
+        <div class="modal-header bg-success text-white">
+          <h5 class="modal-title">Nuevo Recordatorio</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <input type="hidden" id="editingId">
+          <div class="mb-3">
+            <label class="form-label">Fecha y Hora</label>
+            <input type="datetime-local" id="fechaHora" class="form-control" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Nombre</label>
+            <input type="text" id="nombre" class="form-control" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Asunto</label>
+            <select id="asunto" class="form-select">
+              <option value="Reunión">Reunión</option>
+              <option value="Pago">Pago</option>
+              <option value="Entrega">Entrega</option>
+              <option value="Otro">Otro...</option>
+            </select>
+            <input type="text" id="asuntoOtro" class="form-control mt-2 d-none" placeholder="Escribe el asunto">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Observaciones</label>
+            <textarea id="observaciones" class="form-control" rows="3"></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="submit" class="btn btn-success">Guardar</button>
+        </div>
+      </form>
     </div>
+  </div>
 
-    <!-- Modal crear / editar -->
-    <div class="modal fade" id="recordatorioModal" tabindex="-1" aria-hidden="true">
-      <div class="modal-dialog">
-        <form id="recordatorioForm" class="modal-content">
-          <div class="modal-header bg-success text-white">
-            <h5 class="modal-title">Nuevo Recordatorio</h5>
-            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-          </div>
-          <div class="modal-body">
-            <input type="hidden" id="editingId" value="">
-            <div class="mb-3">
-              <label class="form-label">Fecha y Hora</label>
-              <input type="datetime-local" id="fechaHora" class="form-control" required>
-            </div>
-            <div class="mb-3">
-              <label class="form-label">Nombre</label>
-              <input type="text" id="nombre" class="form-control" required>
-            </div>
-            <div class="mb-3">
-              <label class="form-label">Asunto</label>
-              <select id="asunto" class="form-select">
-                <option value="Reunión">Reunión</option>
-                <option value="Pago">Pago</option>
-                <option value="Entrega">Entrega</option>
-                <option value="Otro">Otro...</option>
-              </select>
-              <input type="text" id="asuntoOtro" class="form-control mt-2 d-none" placeholder="Escribe el asunto">
-            </div>
-            <div class="mb-3">
-              <label class="form-label">Observaciones</label>
-              <textarea id="observaciones" class="form-control" rows="3"></textarea>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-            <button type="submit" class="btn btn-success">Guardar</button>
-          </div>
-        </form>
-      </div>
-    </div>
-
-    <!-- Modal detalle -->
-    <div class="modal fade" id="detalleModal" tabindex="-1" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header bg-primary text-white">
-            <h5 class="modal-title">Detalle del Recordatorio</h5>
-            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-          </div>
-          <div class="modal-body">
-            <p><strong>Nombre:</strong> <span id="detalleNombre"></span></p>
-            <p><strong>Fecha:</strong> <span id="detalleFecha"></span></p>
-            <p><strong>Asunto:</strong> <span id="detalleAsunto"></span></p>
-            <p><strong>Observaciones:</strong> <span id="detalleObs"></span></p>
-          </div>
-          <div class="modal-footer">
-            <button id="btnEliminar" type="button" class="btn btn-danger">Eliminar</button>
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-          </div>
+  <!-- Modal detalle -->
+  <div class="modal fade" id="detalleModal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header bg-primary text-white">
+          <h5 class="modal-title">Detalle del Recordatorio</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <p><strong>Nombre:</strong> <span id="detalleNombre"></span></p>
+          <p><strong>Fecha:</strong> <span id="detalleFecha"></span></p>
+          <p><strong>Asunto:</strong> <span id="detalleAsunto"></span></p>
+          <p><strong>Observaciones:</strong> <span id="detalleObs"></span></p>
+        </div>
+        <div class="modal-footer">
+          <button id="btnEliminar" type="button" class="btn btn-danger">Eliminar</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
         </div>
       </div>
     </div>
+  </div>
 
-    <!-- audio alerta -->
-    <audio id="alertSound" src="audio/Sonido Musica Waos pa la alerta.mpeg" preload="auto"></audio>
-  </main>
+  <!-- audio alerta -->
+  <audio id="alertSound" src="audio/Sonido Musica Waos pa la alerta.mpeg" preload="auto"></audio>
+</main>
 
-  <!-- Scripts: FullCalendar primero (global) y bootstrap bundle ya cargado en head -->
-  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/main.global.min.js"></script>
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+<!-- FullCalendar Global -->
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js"></script>
 
-  <!-- Firebase + app script (module) -->
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
-    import {
-      getFirestore,
-      collection,
-      addDoc,
-      onSnapshot,
-      deleteDoc,
-      doc,
-      updateDoc
-    } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+<!-- Firebase + lógica -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+  import { getFirestore, collection, addDoc, onSnapshot, deleteDoc, doc, updateDoc } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
 
-    // --- TU CONFIG (usa la tuya; estoy usando la que mencionaste antes) ---
-    const firebaseConfig = {
-      apiKey: "AIzaSyB7WdEEYxvxYDe1bsrcLg1lQNa1wJbBXZ8",
-      authDomain: "agrocontrol-8550b.firebaseapp.com",
-      projectId: "agrocontrol-8550b",
-      storageBucket: "agrocontrol-8550b.appspot.com",
-      messagingSenderId: "540741735209",
-      appId: "1:540741735209:web:7a44dff52d07641cc91d38",
-      measurementId: "G-7FBMJ1WNPZ"
-    };
+  const firebaseConfig = {
+    apiKey: "AIzaSyB7WdEEYxvxYDe1bsrcLg1lQNa1wJbBXZ8",
+    authDomain: "agrocontrol-8550b.firebaseapp.com",
+    projectId: "agrocontrol-8550b",
+    storageBucket: "agrocontrol-8550b.appspot.com",
+    messagingSenderId: "540741735209",
+    appId: "1:540741735209:web:7a44dff52d07641cc91d38",
+    measurementId: "G-7FBMJ1WNPZ"
+  };
 
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-    const colRef = collection(db, "recordatorios");
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+  const colRef = collection(db, "recordatorios");
 
-    // Referencias DOM
-    const calendarEl = document.getElementById("calendar");
-    const alertSound = document.getElementById("alertSound");
-    const recordatorioModalEl = document.getElementById("recordatorioModal");
-    const recordatorioModal = new bootstrap.Modal(recordatorioModalEl);
-    const detalleModal = new bootstrap.Modal(document.getElementById("detalleModal"));
+  const calendarEl = document.getElementById("calendar");
+  const alertSound = document.getElementById("alertSound");
+  const recordatorioModal = new bootstrap.Modal(document.getElementById("recordatorioModal"));
+  const detalleModal = new bootstrap.Modal(document.getElementById("detalleModal"));
 
-    // Inicializar FullCalendar
-    const calendar = new FullCalendar.Calendar(calendarEl, {
-      initialView: "dayGridMonth",
-      locale: "es",
-      headerToolbar: {
-        left: "prev,next today",
-        center: "title",
-        right: "dayGridMonth,timeGridWeek,timeGridDay"
-      },
-      dateClick: function(info) {
-        // abrir modal con fecha preseleccionada
-        // set value for datetime-local as YYYY-MM-DDTHH:MM
-        const fechaDefault = info.dateStr + "T09:00";
-        document.getElementById("fechaHora").value = fechaDefault;
-        document.getElementById("editingId").value = "";
-        recordatorioModal.show();
-      },
-      eventClick: function(info) {
-        // mostrar detalle modal (traemos datos del evento)
-        const ev = info.event;
-        document.getElementById("detalleNombre").innerText = ev.title;
-        // formato de fecha
-        const d = ev.start;
-        document.getElementById("detalleFecha").innerText = d ? d.toLocaleString() : ev.startStr;
-        document.getElementById("detalleAsunto").innerText = ev.extendedProps?.asunto || "";
-        document.getElementById("detalleObs").innerText = ev.extendedProps?.observaciones || "";
-
-        // configurar botón eliminar
-        document.getElementById("btnEliminar").onclick = async () => {
-          try {
-            await deleteDoc(doc(db, "recordatorios", ev.id));
-            detalleModal.hide();
-          } catch (err) {
-            console.error(err);
-            alert("Error al eliminar: " + err.message);
-          }
-        };
-
-        // abrir modal detalle
-        detalleModal.show();
-      }
-    });
-
-    calendar.render();
-
-    // botón para abrir modal manualmente
-    document.getElementById("btnNuevo").addEventListener("click", () => {
+  const calendar = new FullCalendar.Calendar(calendarEl, {
+    initialView: "dayGridMonth",
+    locale: "es",
+    headerToolbar: { left: "prev,next today", center: "title", right: "dayGridMonth,timeGridWeek,timeGridDay" },
+    dateClick: (info) => {
+      document.getElementById("fechaHora").value = info.dateStr + "T09:00";
       document.getElementById("editingId").value = "";
       recordatorioModal.show();
-    });
+    },
+    eventClick: (info) => {
+      const ev = info.event;
+      document.getElementById("detalleNombre").innerText = ev.extendedProps.nombre || ev.title;
+      document.getElementById("detalleFecha").innerText = ev.start ? ev.start.toLocaleString() : ev.startStr;
+      document.getElementById("detalleAsunto").innerText = ev.extendedProps?.asunto || "";
+      document.getElementById("detalleObs").innerText = ev.extendedProps?.observaciones || "";
 
-    // mostrar input "Otro asunto"
-    document.getElementById("asunto").addEventListener("change", function() {
-      document.getElementById("asuntoOtro").classList.toggle("d-none", this.value !== "Otro");
-    });
-
-    // Guardar/Editar recordatorio
-    document.getElementById("recordatorioForm").addEventListener("submit", async function(e) {
-      e.preventDefault();
-      const idEditing = document.getElementById("editingId").value || null;
-      const fechaHora = document.getElementById("fechaHora").value;
-      const nombre = document.getElementById("nombre").value.trim();
-      let asunto = document.getElementById("asunto").value;
-      if (asunto === "Otro") asunto = document.getElementById("asuntoOtro").value.trim();
-      const observaciones = document.getElementById("observaciones").value.trim();
-
-      if (!fechaHora || !nombre) {
-        alert("Fecha y nombre son obligatorios");
-        return;
-      }
-
-      const payload = {
-        title: `${asunto} - ${nombre}`,
-        nombre,
-        asunto,
-        observaciones,
-        start: fechaHora,
-        createdAt: new Date().toISOString()
+      document.getElementById("btnEliminar").onclick = async () => {
+        await deleteDoc(doc(db, "recordatorios", ev.id));
+        detalleModal.hide();
       };
+      detalleModal.show();
+    }
+  });
+  calendar.render();
 
-      try {
-        if (idEditing) {
-          // editar: actualizar documento y evento en calendario
-          const docRef = doc(db, "recordatorios", idEditing);
-          await updateDoc(docRef, payload);
-          // el onSnapshot se encargará de refrescar el calendario
+  document.getElementById("btnNuevo").addEventListener("click", () => {
+    document.getElementById("editingId").value = "";
+    recordatorioModal.show();
+  });
+
+  document.getElementById("asunto").addEventListener("change", function() {
+    document.getElementById("asuntoOtro").classList.toggle("d-none", this.value !== "Otro");
+  });
+
+  document.getElementById("recordatorioForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const idEditing = document.getElementById("editingId").value || null;
+    const fechaHora = document.getElementById("fechaHora").value;
+    const nombre = document.getElementById("nombre").value.trim();
+    let asunto = document.getElementById("asunto").value;
+    if (asunto === "Otro") asunto = document.getElementById("asuntoOtro").value.trim();
+    const observaciones = document.getElementById("observaciones").value.trim();
+
+    if (!fechaHora || !nombre) {
+      alert("Fecha y nombre son obligatorios");
+      return;
+    }
+
+    const payload = { title: `${asunto} - ${nombre}`, nombre, asunto, observaciones, start: fechaHora, createdAt: new Date().toISOString() };
+
+    if (idEditing) {
+      await updateDoc(doc(db, "recordatorios", idEditing), payload);
+    } else {
+      const docRef = await addDoc(colRef, payload);
+      calendar.addEvent({ id: docRef.id, title: payload.title, start: payload.start, extendedProps: { nombre, asunto, observaciones } });
+    }
+
+    recordatorioModal.hide();
+    e.target.reset();
+  });
+
+  onSnapshot(colRef, (snapshot) => {
+    calendar.getEvents().forEach(ev => ev.remove());
+    snapshot.forEach(docSnap => {
+      const d = docSnap.data();
+      calendar.addEvent({ id: docSnap.id, title: d.title || d.nombre, start: d.start, extendedProps: { nombre: d.nombre, asunto: d.asunto, observaciones: d.observaciones } });
+    });
+  });
+
+  setInterval(() => {
+    const ahora = new Date();
+    calendar.getEvents().forEach(ev => {
+      const evDate = ev.start ? new Date(ev.start) : null;
+      if (!evDate) return;
+      const diff = (evDate - ahora) / 1000;
+      if (diff >= 0 && diff <= 30) {
+        if ("Notification" in window && Notification.permission === "granted") {
+          new Notification("Recordatorio Agrocontrol", { body: ev.title });
         } else {
-          // crear nuevo
-          const docRef = await addDoc(colRef, payload);
-          // onSnapshot añadirá el evento también; podemos añadirlo ya para feedback instantáneo:
-          calendar.addEvent({
-            id: docRef.id,
-            title: payload.title,
-            start: payload.start,
-            extendedProps: { asunto: payload.asunto, observaciones: payload.observaciones }
-          });
+          console.log("Recordatorio:", ev.title);
         }
-
-        recordatorioModal.hide();
-        e.target.reset();
-      } catch (err) {
-        console.error(err);
-        alert("Error guardando: " + err.message);
+        try { alertSound.play(); } catch {}
       }
     });
+  }, 30000);
 
-    // Escuchar colección en tiempo real y (re)renderizar eventos
-    onSnapshot(colRef, (snapshot) => {
-      // limpiar
-      calendar.getEvents().forEach(ev => ev.remove());
-      // agregar cada doc como evento
-      snapshot.forEach(docSnap => {
-        const d = docSnap.data();
-        // campo "start" en Firestore lo guardamos como ISO string (datetime-local produce ISO-like "YYYY-MM-DDTHH:mm")
-        calendar.addEvent({
-          id: docSnap.id,
-          title: d.title || (d.asunto ? `${d.asunto} - ${d.nombre}` : d.nombre),
-          start: d.start || d.fecha || d.createdAt || null,
-          extendedProps: { nombre: d.nombre, asunto: d.asunto, observaciones: d.observaciones }
-        });
-      });
-    });
-
-    // comprobador de notificaciones (cada 30s) → mejorar con workers para producción
-    setInterval(() => {
-      const ahora = new Date();
-      calendar.getEvents().forEach(ev => {
-        const evDate = ev.start ? new Date(ev.start) : null;
-        if (!evDate) return;
-        const diff = (evDate - ahora) / 1000; // segundos
-        // disparar notificación si está dentro de próximos 30s
-        if (diff >= 0 && diff <= 30) {
-          // mostrar una notificación visual (toast simple)
-          if (Notification && Notification.permission === "granted") {
-            new Notification("Recordatorio Agrocontrol", { body: ev.title });
-          } else {
-            // fallback: simple alert no intrusiva + sonido
-            console.log("Recordatorio:", ev.title);
-          }
-          // sonido (nota: autoplay puede bloquearse hasta interacción)
-          try { alertSound.play(); } catch (e) {}
-        }
-      });
-    }, 30000);
-
-    // pedir permiso de notificaciones (opcional)
-    if ("Notification" in window && Notification.permission !== "granted") {
-      Notification.requestPermission().then(perm => console.log("Permiso notificaciones:", perm));
-    }
-  </script>
-
+  if ("Notification" in window && Notification.permission !== "granted") {
+    Notification.requestPermission();
+  }
+</script>
 </body>
 </html>
