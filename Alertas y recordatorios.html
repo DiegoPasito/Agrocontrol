@@ -162,7 +162,11 @@
 <!-- Firebase + lógica -->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
-  import { getFirestore, collection, addDoc, onSnapshot, deleteDoc, doc, updateDoc } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+  import { 
+    getFirestore, collection, addDoc, onSnapshot, deleteDoc, doc, updateDoc 
+  } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+  import { getAuth, onAuthStateChanged } 
+    from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
 
   const firebaseConfig = {
     apiKey: "AIzaSyB7WdEEYxvxYDe1bsrcLg1lQNa1wJbBXZ8",
@@ -176,7 +180,7 @@
 
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
-  const colRef = collection(db, "recordatorios");
+  const auth = getAuth(app);
 
   const calendarEl = document.getElementById("calendar");
   const alertSound = document.getElementById("alertSound");
@@ -186,7 +190,11 @@
   const calendar = new FullCalendar.Calendar(calendarEl, {
     initialView: "dayGridMonth",
     locale: "es",
-    headerToolbar: { left: "prev,next today", center: "title", right: "dayGridMonth,timeGridWeek,timeGridDay" },
+    headerToolbar: { 
+      left: "prev,next today", 
+      center: "title", 
+      right: "dayGridMonth,timeGridWeek,timeGridDay" 
+    },
     dateClick: (info) => {
       document.getElementById("fechaHora").value = info.dateStr + "T09:00";
       document.getElementById("editingId").value = "";
@@ -200,7 +208,9 @@
       document.getElementById("detalleObs").innerText = ev.extendedProps?.observaciones || "";
 
       document.getElementById("btnEliminar").onclick = async () => {
-        await deleteDoc(doc(db, "recordatorios", ev.id));
+        const user = auth.currentUser;
+        if (!user) return alert("Debes iniciar sesión");
+        await deleteDoc(doc(db, "usuarios", user.uid, "recordatorios", ev.id));
         detalleModal.hide();
       };
       detalleModal.show();
@@ -217,41 +227,75 @@
     document.getElementById("asuntoOtro").classList.toggle("d-none", this.value !== "Otro");
   });
 
-  document.getElementById("recordatorioForm").addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const idEditing = document.getElementById("editingId").value || null;
-    const fechaHora = document.getElementById("fechaHora").value;
-    const nombre = document.getElementById("nombre").value.trim();
-    let asunto = document.getElementById("asunto").value;
-    if (asunto === "Otro") asunto = document.getElementById("asuntoOtro").value.trim();
-    const observaciones = document.getElementById("observaciones").value.trim();
-
-    if (!fechaHora || !nombre) {
-      alert("Fecha y nombre son obligatorios");
+  // 🔑 Esperamos a que el usuario esté logueado
+  onAuthStateChanged(auth, (user) => {
+    if (!user) {
+      console.warn("⚠️ No hay usuario logueado. No se cargarán recordatorios.");
       return;
     }
 
-    const payload = { title: `${asunto} - ${nombre}`, nombre, asunto, observaciones, start: fechaHora, createdAt: new Date().toISOString() };
+    const colRef = collection(db, "usuarios", user.uid, "recordatorios");
 
-    if (idEditing) {
-      await updateDoc(doc(db, "recordatorios", idEditing), payload);
-    } else {
-      const docRef = await addDoc(colRef, payload);
-      calendar.addEvent({ id: docRef.id, title: payload.title, start: payload.start, extendedProps: { nombre, asunto, observaciones } });
-    }
+    // Guardar recordatorio
+    document.getElementById("recordatorioForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const idEditing = document.getElementById("editingId").value || null;
+      const fechaHora = document.getElementById("fechaHora").value;
+      const nombre = document.getElementById("nombre").value.trim();
+      let asunto = document.getElementById("asunto").value;
+      if (asunto === "Otro") asunto = document.getElementById("asuntoOtro").value.trim();
+      const observaciones = document.getElementById("observaciones").value.trim();
 
-    recordatorioModal.hide();
-    e.target.reset();
-  });
+      if (!fechaHora || !nombre) {
+        alert("Fecha y nombre son obligatorios");
+        return;
+      }
 
-  onSnapshot(colRef, (snapshot) => {
-    calendar.getEvents().forEach(ev => ev.remove());
-    snapshot.forEach(docSnap => {
-      const d = docSnap.data();
-      calendar.addEvent({ id: docSnap.id, title: d.title || d.nombre, start: d.start, extendedProps: { nombre: d.nombre, asunto: d.asunto, observaciones: d.observaciones } });
+      const payload = { 
+        title: `${asunto} - ${nombre}`, 
+        nombre, 
+        asunto, 
+        observaciones, 
+        start: new Date(fechaHora).toISOString(), 
+        createdAt: new Date().toISOString() 
+      };
+
+      if (idEditing) {
+        await updateDoc(doc(db, "usuarios", user.uid, "recordatorios", idEditing), payload);
+      } else {
+        const docRef = await addDoc(colRef, payload);
+        calendar.addEvent({ 
+          id: docRef.id, 
+          title: payload.title, 
+          start: payload.start, 
+          extendedProps: { nombre, asunto, observaciones } 
+        });
+      }
+
+      recordatorioModal.hide();
+      e.target.reset();
+    });
+
+    // 🔄 Escuchar cambios en tiempo real
+    onSnapshot(colRef, (snapshot) => {
+      calendar.getEvents().forEach(ev => ev.remove());
+      snapshot.forEach(docSnap => {
+        const d = docSnap.data();
+        calendar.addEvent({ 
+          id: docSnap.id, 
+          title: d.title || d.nombre, 
+          start: d.start, 
+          extendedProps: { 
+            nombre: d.nombre, 
+            asunto: d.asunto, 
+            observaciones: d.observaciones 
+          } 
+        });
+      });
     });
   });
 
+  // ⏰ Revisar recordatorios cercanos cada 30s
   setInterval(() => {
     const ahora = new Date();
     calendar.getEvents().forEach(ev => {
@@ -273,5 +317,6 @@
     Notification.requestPermission();
   }
 </script>
+
 </body>
 </html>
