@@ -1,0 +1,109 @@
+/* Estilos generales */
+body {
+    background-color: #a1e2a8;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 20px 0;
+}
+
+/* Estilos de la tarjeta */
+.card {
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+}
+
+/* Estilos del logo */
+.card img {
+    background-color: white;
+    transition: transform 0.3s ease;
+}
+
+.card img:hover {
+    transform: scale(1.05);
+}
+
+/* Estilos de los inputs */
+.form-control {
+    border-radius: 8px;
+    padding: 12px;
+    border: 1px solid #ced4da;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.form-control:focus {
+    border-color: #36ac42;
+    box-shadow: 0 0 0 0.2rem rgba(54, 172, 66, 0.25);
+}
+
+/* Estilos de los botones */
+.btn-success {
+    background-color: #36ac42;
+    border: none;
+    padding: 12px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.btn-success:hover {
+    background-color: #2b8c35;
+    transform: translateY(-1px);
+}
+
+.btn-outline-secondary {
+    padding: 12px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.btn-outline-secondary:hover {
+    transform: translateY(-1px);
+}
+
+/* Estilos responsivos */
+@media (max-width: 576px) {
+    .card {
+        margin: 0 15px;
+    }
+    
+    .card-body {
+        padding: 1.5rem;
+    }
+}
+
+/* Animaciones de entrada */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.card {
+    animation: fadeIn 0.5s ease-out;
+}
+
+/* Estilos para mensajes de error/éxito */
+.alert {
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    padding: 1rem;
+}
+
+.alert-danger {
+    background-color: #fff3f3;
+    border-color: #f8d7da;
+    color: #dc3545;
+}
+
+.alert-success {
+    background-color: #f0fff1;
+    border-color: #d4edda;
+    color: #28a745;
+}

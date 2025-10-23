@@ -45,3 +45,152 @@ header {
     color: #207729;            /* Texto verde (el color de tu navbar) */
     border-color: #36ac42;     /* Borde verde */
 }
+
+/* Estilos del perfil */
+
+.avatar {
+    width: 200px !important;  /* Ancho fijo */
+    height: 200px !important; /* Alto fijo igual al ancho para formar círculo */
+    border-radius: 50% !important; /* Hace la imagen circular */
+    object-fit: cover; /* Mantiene la proporción sin distorsionar */
+    margin: 20px auto; /* Centra la imagen y añade espacio arriba/abajo */
+    display: block; /* Necesario para el margin auto */
+    border: 3px solid #7fca86; /* Borde opcional que coincide con el tema */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2); /* Sombra suave */
+}
+
+/* Contenedor de la imagen para mantener layout */
+.card-img-top {
+    background-color: #f8f9fa;
+    padding: 10px;
+}
+
+/* Anular transiciones/animaciones/transforms que provoquen jitter */
+aside.col-md-4 *,
+aside.col-md-4 *::before,
+aside.col-md-4 *::after {
+  transition: none !important;
+  animation: none !important;
+  transform: none !important;
+  will-change: auto !important;
+  backface-visibility: hidden !important;
+}
+
+/* Asegurar overflow visible para filas */
+.row {
+  overflow: visible;
+}
+
+/* En móviles mantener comportamiento normal */
+@media (max-width: 767.98px) {
+  aside.col-md-4 { position: static !important; top: auto !important; }
+}
+
+/* ---------- Responsividad y ajustes visuales ---------- */
+
+/* Asegura que el logo en la navbar no se desborde */
+.navbar-brand img {
+  max-width: 100px;
+  height: auto;
+  display: block;
+}
+
+/* Contenedor de avatar centrado (si ya existe, estas reglas solo refinan) */
+.text-center > .avatar {
+  display: block;
+  margin: 18px auto;
+}
+
+/* Avatar circular y escalable */
+.avatar {
+  width: 200px !important;
+  height: 200px !important;
+  border-radius: 50% !important;
+  object-fit: cover !important;
+  border: 3px solid #7fca86;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+}
+
+/* Grupo de botones: centrado y adaptable */
+.btn-group.p-2 {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap; /* permite que los botones salten línea en pantallas pequeñas */
+}
+
+/* Fuerza botones para ocupar ancho completo en pantallas muy pequeñas */
+@media (max-width: 575.98px) {
+  .btn-group.p-2 .btn {
+    flex: 1 1 100%;
+    min-width: 0;
+  }
+
+  /* Reduce tamaño del avatar en móviles */
+  .avatar {
+    width: 120px !important;
+    height: 120px !important;
+    margin: 12px auto;
+  }
+
+  /* Card body: usar paddings más pequeños */
+  .card-body {
+    padding: 0.9rem;
+  }
+}
+
+/* Tamaño intermedio (sm / md) */
+@media (min-width: 576px) and (max-width: 991.98px) {
+  .avatar {
+    width: 150px !important;
+    height: 150px !important;
+  }
+
+  .btn-group.p-2 .btn {
+    flex: 0 1 auto;
+  }
+}
+
+/* Desktop (lg y superior) ajustes finos */
+@media (min-width: 992px) {
+  .avatar {
+    width: 200px !important;
+    height: 200px !important;
+  }
+}
+
+/* Asegura que tablas y elementos anchos sean desplazables en pantallas pequeñas */
+.table-responsive {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Evita que la fila genere scroll inesperado */
+.row {
+  overflow: visible;
+}
+
+/* Asegurar que los botones de card-body queden en una columna en móviles */
+.card-body .w-100 {
+  width: 100%;
+}
+
+/* Mejor presentación del modal de vista previa (si se inyecta) */
+#previewModal .modal-body {
+  text-align: center;
+  padding: 1rem;
+}
+#previewModal img {
+  max-width: 90%;
+  max-height: 60vh;
+  object-fit: contain;
+  border-radius: 50%;
+}
+
+/* Mantener consistencia entre navegadores para imágenes en card */
+.card img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
