@@ -45,3 +45,17 @@ header {
     color: #207729;            /* Texto verde (el color de tu navbar) */
     border-color: #36ac42;     /* Borde verde */
 }
+
+/* Efecto Efecto hover de elevación */
+.card {
+    transition: all 0.3s ease;
+    border: 2px solid #36ac42;
+    /* verde del diseño base */
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
+    border-color: #207729;
+    /* verde más oscuro al pasar el cursor */
+}
