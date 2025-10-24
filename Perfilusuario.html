@@ -1,11 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agrocontrol</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+
+    <!-- Enlazar CSS -->
     <link rel="stylesheet" href="css/Perfilusuario.css">
 
 </head>
@@ -16,7 +18,7 @@
   <div class="container-fluid ">
 
     <a class="navbar-brand" >
-      <img src="img/Logo agrocontrol.png" alt="Bootstrap" width="100" height="100">
+      <img src="img/Logo agrocontrol.png" alt="Logo Agrocontrol" width="100" height="100">
     </a>
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -44,7 +46,7 @@
           </ul>
         </li>
         <li class="nav-item">
-          <a class="nav-link " href="">Medicamentos</a>
+          <a class="nav-link " href="Medicamentos.html">Medicamentos</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#">Insumos</a>
@@ -71,6 +73,7 @@
         </li>
         
       </ul>
+
       <form class="d-flex" role="search">
         <input class="form-control me-2" type="search" placeholder="Buscar" aria-label="Search"/>
         <button class="btn btn-outline-success" type="submit">Buscar</button> 
@@ -79,5 +82,184 @@
   </div>
  </nav>
   </header>
+
+<main class = "container my-5">
+<div class="row g-4">
+
+    <!-- PANEL IZQUIERDO: INFO DE USUARIO -->
+    <aside class="col-md-4">
+      <div class="card shadow-sm">
+         <div class="text-center"> <!-- Añadido: contenedor centrado -->
+        <img 
+            src="img/avatar-placeholder.png" 
+            class="avatar" 
+            id="profile-image" 
+            alt="Avatar" 
+            onerror="this.src='img/Logo Agro sin letras';"
+        >
+    </div>
+
+        <!-- Botones para manejar la foto -->
+        <div class="btn-group p-2">
+          <input type="file" id="foto-input" accept="image/*" style="display: none;">
+          <button class="btn btn-sm btn-primary" onclick="document.getElementById('foto-input').click()">
+            Actualizar foto
+          </button>
+          <button class="btn btn-sm btn-danger" onclick="eliminarFoto()">
+            Eliminar
+          </button>
+          <button class="btn btn-sm btn-secondary" onclick="verFoto()">
+            Ver foto
+          </button>
+        </div>
+
+        <div class="card-body">
+          <h5 id="profile-name" class="card-title">Juan Pérez</h5>
+          <p class="mb-1"><strong>Rol:</strong> Administrador</p>
+          <p id="profile-email" class="mb-3 text-muted">juan.perez@ejemplo.com</p>
+
+          <a href="index.html" class="btn btn-danger w-100 mb-2">Cerrar sesión</a>
+          <a href="CrearCuenta.html" class="btn btn-outline-primary w-100">Ingresar con otra cuenta / Crear cuenta</a>
+          <a href="CambioContra.html" class="btn btn-outline-danger w-100 mt-2">Cambiar contraseña</a>
+
+          <hr>
+
+          <div class="d-flex justify-content-between">
+            <div>
+              <small class="text-muted">Vacas registradas</small>
+              <div class="h5 mb-0">24</div>
+            </div>
+            <div>
+              <small class="text-muted">Alertas activas</small>
+              <div class="h5 mb-0 text-warning">3</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card mt-3 shadow-sm">
+        <div class="card-body">
+          <h6 class="card-title">Accesos rápidos</h6>
+          <div class="list-group list-group-flush">
+            <a href="control.html" class="list-group-item list-group-item-action">Control de salud</a>
+            <a href="Medicamentos.html" class="list-group-item list-group-item-action">Medicamentos</a>
+            <a href="Alertas y recordatorios.html" class="list-group-item list-group-item-action">Alertas y recordatorios</a>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- PANEL DERECHO: DETALLE Y SECCIONES -->
+    <section class="col-md-8">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h4 class="mb-0">Mi Perfil</h4>
+        <small class="text-muted">Última actividad: 2 horas</small>
+      </div>
+
+      <!-- Acordeon con secciones: Vacas, Medicamentos, Alertas, Controles -->
+      <div class="accordion" id="perfilAccordion">
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="headingVacas">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseVacas" aria-expanded="true" aria-controls="collapseVacas">
+              Vacas registradas
+            </button>
+          </h2>
+          <div id="collapseVacas" class="accordion-collapse collapse show" aria-labelledby="headingVacas" data-bs-parent="#perfilAccordion">
+            <div class="accordion-body">
+              <p class="text-muted">Lista de vacas asociadas a su cuenta. (Los datos reales se cargan desde la base de datos.)</p>
+              <div class="table-responsive">
+                <table class="table table-striped table-sm">
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Nombre</th>
+                      <th>Raza</th>
+                      <th>Edad</th>
+                      <th>Estado</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <!-- Ejemplos estáticos; reemplazar por contenido dinámico desde BD -->
+                    <tr>
+                      <td>001</td><td>María</td><td>Jersey</td><td>4 años</td><td><span class="badge bg-success">Sana</span></td>
+                    </tr>
+                    <tr>
+                      <td>002</td><td>Lucía</td><td>Girolando</td><td>3 años</td><td><span class="badge bg-warning text-dark">Control</span></td>
+                    </tr>
+                    <tr>
+                      <td>003</td><td>Estrella</td><td>Gyr</td><td>5 años</td><td><span class="badge bg-danger">Enferma</span></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <a href="contenidoPrincipal.html" class="btn btn-sm btn-outline-secondary">Ver todas las vacas</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="headingMedic">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseMedic" aria-expanded="false" aria-controls="collapseMedic">
+              Medicamentos y tratamientos
+            </button>
+          </h2>
+          <div id="collapseMedic" class="accordion-collapse collapse" aria-labelledby="headingMedic" data-bs-parent="#perfilAccordion">
+            <div class="accordion-body">
+              <p class="text-muted">Últimos tratamientos y próxima administración.</p>
+              <ul class="list-group">
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  Vacuna X
+                  <span class="badge bg-primary rounded-pill">Próx: 2025-11-01</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  Antibiótico Y
+                  <span class="badge bg-secondary rounded-pill">Próx: 2025-10-28</span>
+                </li>
+              </ul>
+              <a href="Medicamentos.html" class="btn btn-sm btn-outline-secondary mt-2">Administrar medicamentos</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="headingAlertas">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseAlertas" aria-expanded="false" aria-controls="collapseAlertas">
+              Alertas y recordatorios
+            </button>
+          </h2>
+          <div id="collapseAlertas" class="accordion-collapse collapse" aria-labelledby="headingAlertas" data-bs-parent="#perfilAccordion">
+            <div class="accordion-body">
+              <p class="text-muted">Alertas activas relacionadas con su lote.</p>
+              <ul class="list-group">
+                <li class="list-group-item">Alerta: Revisión sanitaria (Vaca ID 002) <small class="text-muted">- 1 día</small></li>
+                <li class="list-group-item">Recordatorio: Compra de insumos <small class="text-muted">- 3 días</small></li>
+              </ul>
+              <a href="Alertas y recordatorios.html" class="btn btn-sm btn-outline-secondary mt-2">Ver alertas</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="headingControl">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseControl" aria-expanded="false" aria-controls="collapseControl">
+              Control y reportes
+            </button>
+          </h2>
+          <div id="collapseControl" class="accordion-collapse collapse" aria-labelledby="headingControl" data-bs-parent="#perfilAccordion">
+            <div class="accordion-body">
+              <p class="text-muted">Acceso rápido a reportes de peso, producción y salud.</p>
+              <div class="d-flex gap-2 flex-wrap">
+                <a href="control.html" class="btn btn-outline-primary btn-sm">Ver controles</a>
+                <a href="#" class="btn btn-outline-success btn-sm">Generar reporte PDF</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+  </div>
+</main>
+<script type = "module" src="js/perfil.js"></script>
 </body>
 </html>

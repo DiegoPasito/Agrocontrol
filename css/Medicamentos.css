@@ -46,16 +46,46 @@ header {
     border-color: #36ac42;     /* Borde verde */
 }
 
-/* Efecto Efecto hover de elevación */
-.card {
-    transition: all 0.3s ease;
-    border: 2px solid #36ac42;
-    /* verde del diseño base */
-}
-
-.card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
-    border-color: #207729;
-    /* verde más oscuro al pasar el cursor */
-}
+    .sidebar {
+      background-color: #cdd8c0;
+      border-radius: 15px;
+      padding: 20px;
+    }
+    .sidebar h5 {
+      font-weight: bold;
+      color: #2f3b2f;
+    }
+    .sidebar button {
+      width: 100%;
+      margin-bottom: 10px;
+      background-color: #e9f1e4;
+      color: #2f3b2f;
+      border: none;
+      transition: 0.3s;
+    }
+    .sidebar button:hover {
+      background-color: #a8bfa2;
+      color: white;
+    }
+    .carousel-item img {
+      border-radius: 10px;
+      object-fit: cover;
+      height: 250px;
+    }
+    .card {
+      border: none;
+      border-radius: 15px;
+      background-color: #f8f9f6;
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+    }
+    .card-body {
+      text-align: center;
+    }
+    .btn-info-custom {
+      background-color: #7b8f6d;
+      color: white;
+      border: none;
+    }
+    .btn-info-custom:hover {
+      background-color: #5c6d52;
+    }
