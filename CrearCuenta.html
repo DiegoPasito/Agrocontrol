@@ -68,28 +68,32 @@
 
   <!-- Firebase SDK -->
 <script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-app.js";
   import { getAuth, createUserWithEmailAndPassword } 
-    from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+    from "https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js";
+  import { getFirestore, doc, setDoc 
+  } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-firestore.js";
 
   const firebaseConfig = {
-    apiKey: "AIzaSyB7WdEEYxvxYDe1bsrcLg1lQNa1wJbBXZ8",
-    authDomain: "agrocontrol-8550b.firebaseapp.com",
-    projectId: "agrocontrol-8550b",
-    storageBucket: "agrocontrol-8550b.appspot.com",
-    messagingSenderId: "540741735209",
-    appId: "1:540741735209:web:7a44dff52d07641cc91d38",
-    measurementId: "G-7FBMJ1WNPZ"
+      apiKey: "AIzaSyAzonIFbhlOnnIs9xG9Lb4uBJHLrhCi3qU",
+      authDomain: "web-y-movil-agroncontrol.firebaseapp.com",
+      projectId: "web-y-movil-agroncontrol",
+      storageBucket: "web-y-movil-agroncontrol.firebasestorage.app",
+      messagingSenderId: "180502593551",
+      appId: "1:180502593551:web:f4ae5111ac99ec70fa237a",
+      measurementId: "G-BJ9G9WSKNY"
   };
 
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
+  const db = getFirestore(app);
 
   // Registro
   const registerForm = document.querySelector("#registerForm");
   if (registerForm) {
     registerForm.addEventListener("submit", async (e) => {
       e.preventDefault();
+      const nombre = document.getElementById("nombre").value;
       const email = document.getElementById("regEmail").value;
       const password = document.getElementById("regPassword").value;
       const confirmPassword = document.getElementById("confirm-password").value;
@@ -100,7 +104,17 @@
       }
 
       try {
-        await createUserWithEmailAndPassword(auth, email, password);
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        const user = userCredential.user;
+
+        // 🔹 Guardar información adicional en Firestore
+        await setDoc(doc(db, "users", user.uid), {
+          nombre: nombre,
+          email: email,
+          uid: user.uid,
+          fechaRegistro: new Date()
+        });
+
         alert("✅ Cuenta creada exitosamente");
         window.location.href = "index.html"; // tu login
       } catch (error) {

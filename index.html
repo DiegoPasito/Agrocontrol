@@ -37,7 +37,7 @@
                 <input type="checkbox" class="form-check-input" id="remember">
                 <label class="form-check-label" for="remember">Recuérdame</label>
               </div>
-              <a href="#" class="text-decoration-none">¿Olvidaste tu contraseña?</a>
+              <a href="#" id="forgotPasswordLink" data-bs-toggle="modal" data-bs-target="#forgotPasswordModal" class="text-decoration-none">¿Olvidaste tu contraseña?</a>
             </div>
 
             <div class="d-grid mb-3">
@@ -55,22 +55,42 @@
     </div>
   </div>
 
+  <!-- 🔑 Modal de recuperación de contraseña -->
+  <div class="modal fade" id="forgotPasswordModal" tabindex="-1" aria-labelledby="forgotPasswordModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content rounded-4">
+        <div class="modal-header">
+          <h5 class="modal-title" id="forgotPasswordModalLabel">Recuperar contraseña</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body">
+          <p>Ingresa el correo con el que te registraste. Te enviaremos un enlace para restablecer tu contraseña.</p>
+          <input type="email" id="resetEmail" class="form-control" placeholder="tu@correo.com" required>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" id="sendResetEmailBtn" class="btn btn-success">Enviar enlace</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Firebase SDK -->
 <script type="module">
   // Importar Firebase desde CDN
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-  import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } 
-    from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-app.js";
+  import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, sendPasswordResetEmail} 
+    from "https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js";
 
   // Configuración de Firebase (esta la copias de tu consola de Firebase)
   const firebaseConfig = {
-    apiKey: "AIzaSyB7WdEEYxvxYDe1bsrcLg1lQNa1wJbBXZ8",
-    authDomain: "agrocontrol-8550b.firebaseapp.com",
-    projectId: "agrocontrol-8550b",
-    storageBucket: "agrocontrol-8550b.appspot.com",
-    messagingSenderId: "540741735209",
-    appId: "1:540741735209:web:7a44dff52d07641cc91d38",
-    measurementId: "G-7FBMJ1WNPZ"
+      apiKey: "AIzaSyAzonIFbhlOnnIs9xG9Lb4uBJHLrhCi3qU",
+      authDomain: "web-y-movil-agroncontrol.firebaseapp.com",
+      projectId: "web-y-movil-agroncontrol",
+      storageBucket: "web-y-movil-agroncontrol.firebasestorage.app",
+      messagingSenderId: "180502593551",
+      appId: "1:180502593551:web:f4ae5111ac99ec70fa237a",
+      measurementId: "G-BJ9G9WSKNY"
   };
 
   // Inicializar Firebase
@@ -91,6 +111,28 @@
         window.location.href = "contenidoPrincipal.html"; // página principal
       } catch (error) {
         alert("❌ Error: usuario no encontrado" );
+      }
+    });
+  }
+
+  // 🔑 Recuperar contraseña (modal)
+  const sendResetEmailBtn = document.getElementById("sendResetEmailBtn");
+  if (sendResetEmailBtn) {
+    sendResetEmailBtn.addEventListener("click", async () => {
+      const email = document.getElementById("resetEmail").value.trim();
+      if (!email) {
+        alert("Por favor, ingresa un correo válido.");
+        return;
+      }
+
+      try {
+        await sendPasswordResetEmail(auth, email);
+        alert("✅ Se ha enviado un enlace de recuperación a tu correo.");
+        document.getElementById("resetEmail").value = "";
+        const modal = bootstrap.Modal.getInstance(document.getElementById("forgotPasswordModal"));
+        modal.hide();
+      } catch (error) {
+        alert("❌ Error: " + error.message);
       }
     });
   }
