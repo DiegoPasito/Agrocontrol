@@ -113,22 +113,12 @@
             <input type="datetime-local" id="fechaHora" class="form-control" required>
           </div>
           <div class="mb-3">
-            <label class="form-label">Nombre</label>
-            <input type="text" id="nombre" class="form-control" required>
+            <label class="form-label">Título</label>
+            <input type="text" id="titulo" class="form-control" required>
           </div>
           <div class="mb-3">
-            <label class="form-label">Asunto</label>
-            <select id="asunto" class="form-select">
-              <option value="Reunión">Reunión</option>
-              <option value="Pago">Pago</option>
-              <option value="Entrega">Entrega</option>
-              <option value="Otro">Otro...</option>
-            </select>
-            <input type="text" id="asuntoOtro" class="form-control mt-2 d-none" placeholder="Escribe el asunto">
-          </div>
-          <div class="mb-3">
-            <label class="form-label">Observaciones</label>
-            <textarea id="observaciones" class="form-control" rows="3"></textarea>
+            <label class="form-label">Descripción</label>
+            <textarea id="descripcion" class="form-control" rows="3" placeholder="Opcional"></textarea>
           </div>
         </div>
         <div class="modal-footer">
@@ -148,10 +138,9 @@
           <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
         </div>
         <div class="modal-body">
-          <p><strong>Nombre:</strong> <span id="detalleNombre"></span></p>
+          <p><strong>Título:</strong> <span id="detalleTitulo"></span></p>
           <p><strong>Fecha:</strong> <span id="detalleFecha"></span></p>
-          <p><strong>Asunto:</strong> <span id="detalleAsunto"></span></p>
-          <p><strong>Observaciones:</strong> <span id="detalleObs"></span></p>
+          <p><strong>Descripción:</strong> <span id="detalleDesc"></span></p>
         </div>
         <div class="modal-footer">
           <button id="btnEliminar" type="button" class="btn btn-danger">Eliminar</button>
@@ -161,172 +150,151 @@
     </div>
   </div>
 
-  <!-- audio alerta -->
+  <!-- 🔔 audio alerta -->
   <audio id="alertSound" src="audio/Sonido Musica Waos pa la alerta.mpeg" preload="auto"></audio>
 </main>
 
-<!-- Bootstrap JS -->
+<!-- Dependencias -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
-<!-- FullCalendar Global -->
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js"></script>
 
-<!-- Firebase + lógica -->
 <script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
-  import { 
-    getFirestore, collection, addDoc, onSnapshot, deleteDoc, doc, updateDoc 
-  } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
-  import { getAuth, onAuthStateChanged } 
-    from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-app.js";
+import { getFirestore, collection, addDoc, onSnapshot, deleteDoc, doc, updateDoc, Timestamp  } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-firestore.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js";
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyB7WdEEYxvxYDe1bsrcLg1lQNa1wJbBXZ8",
-    authDomain: "agrocontrol-8550b.firebaseapp.com",
-    projectId: "agrocontrol-8550b",
-    storageBucket: "agrocontrol-8550b.appspot.com",
-    messagingSenderId: "540741735209",
-    appId: "1:540741735209:web:7a44dff52d07641cc91d38",
-    measurementId: "G-7FBMJ1WNPZ"
-  };
+const firebaseConfig = {
+  apiKey: "AIzaSyAzonIFbhlOnnIs9xG9Lb4uBJHLrhCi3qU",
+  authDomain: "web-y-movil-agroncontrol.firebaseapp.com",
+  projectId: "web-y-movil-agroncontrol",
+  storageBucket: "web-y-movil-agroncontrol.firebasestorage.app",
+  messagingSenderId: "180502593551",
+  appId: "1:180502593551:web:f4ae5111ac99ec70fa237a",
+  measurementId: "G-BJ9G9WSKNY"
+};
 
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
-  const auth = getAuth(app);
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const auth = getAuth(app);
 
-  const calendarEl = document.getElementById("calendar");
-  const alertSound = document.getElementById("alertSound");
-  const recordatorioModal = new bootstrap.Modal(document.getElementById("recordatorioModal"));
-  const detalleModal = new bootstrap.Modal(document.getElementById("detalleModal"));
+const calendarEl = document.getElementById("calendar");
+const alertSound = document.getElementById("alertSound");
+const recordatorioModal = new bootstrap.Modal(document.getElementById("recordatorioModal"));
+const detalleModal = new bootstrap.Modal(document.getElementById("detalleModal"));
 
-  const calendar = new FullCalendar.Calendar(calendarEl, {
-    initialView: "dayGridMonth",
-    locale: "es",
-    headerToolbar: { 
-      left: "prev,next today", 
-      center: "title", 
-      right: "dayGridMonth,timeGridWeek,timeGridDay" 
-    },
-    dateClick: (info) => {
-      document.getElementById("fechaHora").value = info.dateStr + "T09:00";
-      document.getElementById("editingId").value = "";
-      recordatorioModal.show();
-    },
-    eventClick: (info) => {
-      const ev = info.event;
-      document.getElementById("detalleNombre").innerText = ev.extendedProps.nombre || ev.title;
-      document.getElementById("detalleFecha").innerText = ev.start ? ev.start.toLocaleString() : ev.startStr;
-      document.getElementById("detalleAsunto").innerText = ev.extendedProps?.asunto || "";
-      document.getElementById("detalleObs").innerText = ev.extendedProps?.observaciones || "";
-
-      document.getElementById("btnEliminar").onclick = async () => {
-        const user = auth.currentUser;
-        if (!user) return alert("Debes iniciar sesión");
-        await deleteDoc(doc(db, "usuarios", user.uid, "recordatorios", ev.id));
-        detalleModal.hide();
-      };
-      detalleModal.show();
-    }
-  });
-  calendar.render();
-
-  document.getElementById("btnNuevo").addEventListener("click", () => {
+const calendar = new FullCalendar.Calendar(calendarEl, {
+  initialView: "dayGridMonth",
+  locale: "es",
+  headerToolbar: { left: "prev,next today", center: "title", right: "dayGridMonth,timeGridWeek,timeGridDay" },
+  dateClick: (info) => {
+    document.getElementById("fechaHora").value = info.dateStr + "T09:00";
     document.getElementById("editingId").value = "";
     recordatorioModal.show();
-  });
+  },
+  eventClick: (info) => {
+    const ev = info.event;
+    document.getElementById("detalleTitulo").innerText = ev.title;
+    document.getElementById("detalleFecha").innerText = ev.start.toLocaleString();
+    document.getElementById("detalleDesc").innerText = ev.extendedProps.description || "Sin descripción";
+    document.getElementById("btnEliminar").onclick = async () => {
+      const user = auth.currentUser;
+      if (!user) return alert("Debes iniciar sesión");
+      await deleteDoc(doc(db, "users", user.uid, "reminders", ev.id));
+      detalleModal.hide();
+    };
+    detalleModal.show();
+  }
+});
+calendar.render();
 
-  document.getElementById("asunto").addEventListener("change", function() {
-    document.getElementById("asuntoOtro").classList.toggle("d-none", this.value !== "Otro");
-  });
+document.getElementById("btnNuevo").addEventListener("click", () => {
+  document.getElementById("editingId").value = "";
+  recordatorioModal.show();
+});
 
-  // 🔑 Esperamos a que el usuario esté logueado
-  onAuthStateChanged(auth, (user) => {
-    if (!user) {
-      console.warn("⚠️ No hay usuario logueado. No se cargarán recordatorios.");
-      return;
+onAuthStateChanged(auth, (user) => {
+  if (!user) {
+    console.warn("⚠️ No hay usuario logueado.");
+    return;
+  }
+
+  const colRef = collection(db, "users", user.uid, "reminders");
+
+  // Guardar recordatorio
+  document.getElementById("recordatorioForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const idEditing = document.getElementById("editingId").value || null;
+    const fechaHora = document.getElementById("fechaHora").value;
+    const titulo = document.getElementById("titulo").value.trim();
+    const descripcion = document.getElementById("descripcion").value.trim();
+
+    if (!fechaHora || !titulo) return alert("⚠️ Completa los campos obligatorios.");
+
+    const payload = {
+      title: titulo,
+      description: descripcion,
+      dateTime: Timestamp.fromDate(new Date(fechaHora)),
+      createdAt: Timestamp.now(),
+    };
+
+    if (idEditing) {
+      await updateDoc(doc(db, "users", user.uid, "reminders", idEditing), payload);
+    } else {
+      const docRef = await addDoc(colRef, payload);
+      calendar.addEvent({
+        id: docRef.id,
+        title: titulo,
+        start: payload.dateTime,
+        extendedProps: { description: descripcion },
+      });
     }
 
-    const colRef = collection(db, "usuarios", user.uid, "recordatorios");
+    recordatorioModal.hide();
+    e.target.reset();
+  });
 
-    // Guardar recordatorio
-    document.getElementById("recordatorioForm").addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const idEditing = document.getElementById("editingId").value || null;
-      const fechaHora = document.getElementById("fechaHora").value;
-      const nombre = document.getElementById("nombre").value.trim();
-      let asunto = document.getElementById("asunto").value;
-      if (asunto === "Otro") asunto = document.getElementById("asuntoOtro").value.trim();
-      const observaciones = document.getElementById("observaciones").value.trim();
-
-      if (!fechaHora || !nombre) {
-        alert("Fecha y nombre son obligatorios");
-        return;
-      }
-
-      const payload = { 
-        title: `${asunto} - ${nombre}`, 
-        nombre, 
-        asunto, 
-        observaciones, 
-        start: new Date(fechaHora).toISOString(), 
-        createdAt: new Date().toISOString() 
-      };
-
-      if (idEditing) {
-        await updateDoc(doc(db, "usuarios", user.uid, "recordatorios", idEditing), payload);
-      } else {
-        const docRef = await addDoc(colRef, payload);
-        calendar.addEvent({ 
-          id: docRef.id, 
-          title: payload.title, 
-          start: payload.start, 
-          extendedProps: { nombre, asunto, observaciones } 
-        });
-      }
-
-      recordatorioModal.hide();
-      e.target.reset();
-    });
-
-    // 🔄 Escuchar cambios en tiempo real
-    onSnapshot(colRef, (snapshot) => {
-      calendar.getEvents().forEach(ev => ev.remove());
-      snapshot.forEach(docSnap => {
-        const d = docSnap.data();
-        calendar.addEvent({ 
-          id: docSnap.id, 
-          title: d.title || d.nombre, 
-          start: d.start, 
-          extendedProps: { 
-            nombre: d.nombre, 
-            asunto: d.asunto, 
-            observaciones: d.observaciones 
-          } 
-        });
+  // Escuchar cambios en tiempo real
+  onSnapshot(colRef, (snapshot) => {
+    calendar.getEvents().forEach(ev => ev.remove());
+    snapshot.forEach(docSnap => {
+      const d = docSnap.data();
+      calendar.addEvent({
+        id: docSnap.id,
+        title: d.title,
+        start: d.dateTime.toDate(),
+        extendedProps: { description: d.description },
       });
     });
   });
+});
 
-  // ⏰ Revisar recordatorios cercanos cada 30s
-  setInterval(() => {
-    const ahora = new Date();
-    calendar.getEvents().forEach(ev => {
-      const evDate = ev.start ? new Date(ev.start) : null;
-      if (!evDate) return;
-      const diff = (evDate - ahora) / 1000;
-      if (diff >= 0 && diff <= 30) {
-        if ("Notification" in window && Notification.permission === "granted") {
-          new Notification("Recordatorio Agrocontrol", { body: ev.title });
-        } else {
-          console.log("Recordatorio:", ev.title);
-        }
-        try { alertSound.play(); } catch {}
+// Revisar recordatorios cercanos cada 10s
+setInterval(() => {
+  const ahora = new Date();
+  calendar.getEvents().forEach(ev => {
+    const evDate = new Date(ev.start);
+    const diff = (evDate - ahora) / 1000; // segundos
+    if (diff >= 0 && diff <= 15) { // margen 15 s
+      if ("Notification" in window && Notification.permission === "granted") {
+        new Notification("Recordatorio", { body: ev.title });
+      } else {
+        alert("🔔 Recordatorio: " + ev.title);
+      }
+      try { alertSound.play(); } catch {}
+    }
+  });
+}, 5000); // revisa cada 5 s
+
+// Pedir permisos de notificación al cargar
+if ("Notification" in window) {
+  if (Notification.permission === "default") {
+    Notification.requestPermission().then(permission => {
+      if (permission !== "granted") {
+        console.warn("🚫 Permiso de notificación denegado. Se usará alerta visual.");
       }
     });
-  }, 30000);
-
-  if ("Notification" in window && Notification.permission !== "granted") {
-    Notification.requestPermission();
   }
+}
 </script>
 
 </body>

@@ -106,12 +106,17 @@
 
     <div class="mb-3">
       <label class="form-label">Peso (kg)</label>
-      <input type="number" id="peso" class="form-control" required>
+      <input type="number" id="peso" class="form-control" step="any" required>
     </div>
 
     <div class="mb-3">
       <label class="form-label">Edad (años)</label>
       <input type="number" id="edad" class="form-control" required>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Produccion de leche Diaria (Litros)</label>
+      <input type="number" id="leche" class="form-control" step="any"  required>
     </div>
 
     <div class="mb-3 form-check">
@@ -125,18 +130,18 @@
   <div id="mensaje"></div>
 
   <script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
-  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
-  import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-app.js";
+  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js";
+  import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-firestore.js";
 
   const firebaseConfig = {
-    apiKey: "AIzaSyB7WdEEYxvxYDe1bsrcLg1lQNa1wJbBXZ8",
-    authDomain: "agrocontrol-8550b.firebaseapp.com",
-    projectId: "agrocontrol-8550b",
-    storageBucket: "agrocontrol-8550b.appspot.com",
-    messagingSenderId: "540741735209",
-    appId: "1:540741735209:web:7a44dff52d07641cc91d38",
-    measurementId: "G-7FBMJ1WNPZ"
+    apiKey: "AIzaSyAzonIFbhlOnnIs9xG9Lb4uBJHLrhCi3qU",
+    authDomain: "web-y-movil-agroncontrol.firebaseapp.com",
+    projectId: "web-y-movil-agroncontrol",
+    storageBucket: "web-y-movil-agroncontrol.firebasestorage.app",
+    messagingSenderId: "180502593551",
+    appId: "1:180502593551:web:f4ae5111ac99ec70fa237a",
+    measurementId: "G-BJ9G9WSKNY"
   };
 
   const app = initializeApp(firebaseConfig);
@@ -153,6 +158,9 @@
         return;
       }
 
+        form.style.display = "block";
+        mensaje.innerHTML = "<p class='text-success'>Bienvenido, puedes registrar tus vacas 🐄</p>";
+
       form.addEventListener("submit", async (e) => {
         e.preventDefault();
 
@@ -160,16 +168,18 @@
         const raza = document.getElementById("raza").value;
         const peso = parseFloat(document.getElementById("peso").value);
         const edad = parseInt(document.getElementById("edad").value);
+        const leche = parseFloat(document.getElementById("leche").value);
         const lactando = document.getElementById("lactando").checked;
 
         try {
-          await addDoc(collection(db, "usuarios", user.uid, raza), {
-            nombre,
-            raza,
-            peso,
-            edad,
-            lactando,
-            creado: new Date()
+          await addDoc(collection(db, "users", user.uid, "cows"), {
+            name: nombre,
+            breed: raza,
+            weight: peso,
+            age: edad,
+            milkProduction: leche,
+            isLactating: lactando,
+            createdAt: new Date()
           });
 
           mensaje.innerHTML = "<p class='text-success'>✅ Vaca registrada con éxito.</p>";
