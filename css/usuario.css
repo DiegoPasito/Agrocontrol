@@ -1,25 +1,131 @@
-    body {
-      background: linear-gradient(135deg, #7fca86, #a1e2a8);
+body {
+      background: linear-gradient(135deg, #4bc95a, #7fca86, #36ac42);
       min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
       margin: 0;
+      padding: 20px;
     }
-    .card {
+
+    .login-container {
       background-color: #ffffff;
-      border: 2px solid #36ac42;
       border-radius: 20px;
-      box-shadow: 0 6px 15px rgba(54, 172, 66, 0.4);
+      box-shadow: 0 10px 30px rgba(54, 172, 66, 0.3);
+      overflow: hidden;
+      max-width: 1000px;
+      width: 100%;
+      
     }
+
+    .login-container h3 {
+      color: #36ac42;
+      
+    }
+
+    .login-form-section {
+      padding: 50px 40px;
+    }
+
+    .login-visual-section {
+      background: linear-gradient(135deg, #36ac42, #4bc95a);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 50px 40px;
+      color: white;
+      position: relative;
+      overflow: hidden;
+      
+    }
+
+    .login-visual-section::before {
+      content: '';
+      position: absolute;
+      width: 300px;
+      height: 300px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      top: -100px;
+      right: -100px;
+    }
+
+    .login-visual-section::after {
+      content: '';
+      position: absolute;
+      width: 200px;
+      height: 200px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      bottom: -50px;
+      left: -50px;
+    }
+
+    .visual-content {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+    }
+
+    .visual-logo {
+      background: white;
+      border-radius: 50%;
+      padding: 20px;
+      width: 150px;
+      height: 150px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 30px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .visual-logo img {
+      width: 110px;
+      height: 110px;
+      object-fit: contain;
+    }
+
+    .form-logo {
+      width: 70px;
+      height: 70px;
+    }
+
     .btn-success {
       background-color: #36ac42;
       border: none;
+      padding: 12px;
+      font-weight: 500;
     }
+
     .btn-success:hover {
       background-color: #2b8c35;
     }
+
     .form-control:focus {
       border-color: #36ac42;
       box-shadow: 0 0 0 0.2rem rgba(54, 172, 66, 0.25);
+    }
+
+    .form-control {
+      padding: 12px;
+    }
+
+    a {
+      color: #36ac42;
+    }
+
+    a:hover {
+      color: #2b8c35;
+    }
+
+    @media (max-width: 767px) {
+      .login-visual-section {
+        display: none;
+      }
+      
+      .login-form-section {
+        padding: 30px 25px;
+      }
     }

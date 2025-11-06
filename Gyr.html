@@ -11,202 +11,196 @@
 </head>
 <body>
  <header>
+    <nav class="navbar navbar-expand-lg">
+      <div class="container-fluid">
+        <a class="navbar-brand">
+          <img src="img/Logo agrocontrol.png" alt="Logo Agrocontrol" width="100" height="100" onerror="this.style.display='none'">
+        </a>
 
- <nav class="navbar navbar-expand-lg ">
-  <div class="container-fluid ">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
 
-    <a class="navbar-brand" >
-      <img src="img/Logo agrocontrol.png" alt="Bootstrap" width="100" height="100">
-    </a>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link" href="contenidoPrincipal.html">Inicio</a>
+            </li>
 
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Vacas
+              </a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="Jersey.html">Jersey</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="Girolando.html">Girolando</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="Gyr.html">Gyr</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="simmental.html">Simmental</a></li>
+              </ul>
+            </li>
 
-         <li class="nav-item">
-          <a class="nav-link" href="contenidoPrincipal.html" > Inicio </a>
-        </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Medicamentos</a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="Medicamento Jersey.html">Jersey</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="Medicamento Girolando.html">Girolando</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="Medicamento Gyr.html">Gyr</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="Medicamento Simmental.html">Simmental</a></li>
+              </ul>
+            </li>
 
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Vacas
-          </a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="Jersey.html">Jersey</a></li>
-            <li><hr class="dropdown-divider" ></li>
-            <li><a class="dropdown-item" href="Girolando.html">Girolando</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="Gyr.html">Gyr</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="simmental.html">Simmental</a></li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Insumos</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="enfermedades.html">Enfermedades</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="Alertas y recordatorios.html">Alertas y Recordatorios</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="control.html">Control</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="Perfilusuario.html">Perfil</a>
+            </li>
           </ul>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" >Medicamentos</a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="Medicamento Jersey.html">Jersey</a></li>
-            <li><hr class="dropdown-divider" ></li>
-            <li><a class="dropdown-item" href="Medicamento Girolando.html">Girolando</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="Medicamento Gyr.html">Gyr</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="Medicamento Simmental.html">Simmental</a></li>
-          </ul>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Insumos</a>
-        </li>
 
-        <li class="nav-item">
-          <a class="nav-link" href="enfermedades.html">Enfermedades</a>
-        </li>
-
-        <li class="nav-item">
-          <a class="nav-link" href="Alertas y recordatorios.html" > Alertas y Recordatorios </a>
-        </li>
-
-         <li class="nav-item">
-          <a class="nav-link" href="control.html" > Control </a>
-        </li>
-
-        <li class="nav-item">
-          <a class="nav-link" href="Perfilusuario.html" > Perfil </a>
-        </li>
-
-      </ul>
-      <form class="d-flex" role="search">
-        <input class="form-control me-2" type="search" placeholder="Buscar" aria-label="Search"/>
-        <button class="btn btn-outline-success" type="submit">Buscar</button> 
-      </form> <br>
-    </div>
-  </div>
- </nav>
+          <form class="d-flex" role="search">
+            <input class="form-control me-2" type="search" placeholder="Buscar" aria-label="Search">
+            <button class="btn btn-outline-success" type="submit">Buscar</button> 
+          </form>
+        </div>
+      </div>
+    </nav>
   </header>
 
-    <main class="container mt-4">
-      <div class="text-center mb-5">
-        <h2 style="color:#207729; font-weight:700;">🐄 Perfil de la Vaca Gyr</h2>
-        <p style="color:#2d7a35;">Raza tropical, resistente y base de la famosa Girolando ☀️</p>
-        <hr style="width:60%; margin:auto; border:2px solid #36ac42;">
-      </div>
-      
-      <!-- Sección principal -->
-      <div class="card shadow-lg border-0 mb-4"
-        style="border-radius:20px; background:linear-gradient(145deg, #a9eeb0, #a1e2a8);">
-        <div class="row g-0 align-items-center">
-          <div class="col-md-5">
-            <img src="img/Gyr Imagen 4.webp" class="img-fluid rounded-start" alt="Vaca Gyr" style="border-radius:20px 0 0 20px;">
-          </div>
-          <div class="col-md-7">
-            <div class="card-body">
-              <h4 class="card-title fw-bold" style="color:#207729;">Raza Gyr</h4>
-              <p class="card-text">
-                <strong>Descripción:</strong> La Gyr es una raza cebuina originaria de la India 🇮🇳, conocida por su
-                resistencia al calor, longevidad y buena producción de leche en zonas tropicales.
-                Es fundamental en programas de cruce como la <strong>Girolando (Gyr x Holstein)</strong>.
-              </p>
-              <ul class="list-unstyled">
-                <li><strong>Uso principal:</strong> Producción lechera y cruzamientos.</li>
-                <li><strong>Tamaño promedio:</strong> 400–550 kg.</li>
-                <li><strong>Color:</strong> Rojo, blanco moteado o gris.</li>
-                <li><strong>Producción:</strong> 2.000–3.500 L/lactancia.</li>
-                <li><strong>Grasa:</strong> 4.5–5%.</li>
-              </ul>
-            </div>
+  <main class="container mt-4">
+    <div class="text-center mb-5">
+      <h2 class="page-title">🐄 Perfil de la Vaca Gyr</h2>
+      <p class="page-subtitle">Raza tropical, resistente y base de la famosa Girolando ☀️</p>
+      <hr class="decorative">
+    </div>
+    
+    <!-- Sección principal -->
+    <div class="card shadow-lg mb-4">
+      <div class="row g-0 align-items-center">
+        <div class="col-md-5">
+          <img src="img/Gyr Imagen 4.webp" class="img-fluid rounded-start" alt="Vaca Gyr" style="border-radius:20px 0 0 20px;" onerror="this.style.display='none'">
+        </div>
+        <div class="col-md-7">
+          <div class="card-body">
+            <h4 class="card-title fw-bold section-title">Raza Gyr</h4>
+            <p class="card-text">
+              <strong>Descripción:</strong> La Gyr es una raza cebuina originaria de la India 🇮🇳, conocida por su
+              resistencia al calor, longevidad y buena producción de leche en zonas tropicales.
+              Es fundamental en programas de cruce como la <strong>Girolando (Gyr x Holstein)</strong>.
+            </p>
+            <ul class="list-unstyled">
+              <li><strong>Uso principal:</strong> Producción lechera y cruzamientos.</li>
+              <li><strong>Tamaño promedio:</strong> 400–550 kg.</li>
+              <li><strong>Color:</strong> Rojo, blanco moteado o gris.</li>
+              <li><strong>Producción:</strong> 2.000–3.500 L/lactancia.</li>
+              <li><strong>Grasa:</strong> 4.5–5%.</li>
+            </ul>
           </div>
         </div>
       </div>
-      
-      <!-- Alimentación -->
-      <div class="card shadow-sm border-0 mb-4"
-        style="background-color:#a9eeb0; border-left:6px solid #36ac42; border-radius:15px;">
-        <div class="card-body">
-          <h5 style="color:#207729;">🌱 Alimentación</h5>
-          <ul>
-            <li><strong>Forrajes:</strong> Brachiaria, estrella africana, pasto guineo.</li>
-            <li><strong>Conservados:</strong> Ensilaje de maíz o caña de azúcar.</li>
-            <li><strong>Leguminosas:</strong> Matarratón, botón de oro.</li>
-            <li><strong>Requerimientos:</strong> Menos exigente que razas europeas, más económica de mantener.</li>
-          </ul>
-        </div>
+    </div>
+    
+    <!-- Alimentación -->
+    <div class="card shadow-sm border-left-accent mb-4">
+      <div class="card-body">
+        <h5 class="section-title">🌱 Alimentación</h5>
+        <ul>
+          <li><strong>Forrajes:</strong> Brachiaria, estrella africana, pasto guineo.</li>
+          <li><strong>Conservados:</strong> Ensilaje de maíz o caña de azúcar.</li>
+          <li><strong>Leguminosas:</strong> Matarratón, botón de oro.</li>
+          <li><strong>Requerimientos:</strong> Menos exigente que razas europeas, más económica de mantener.</li>
+        </ul>
       </div>
-      
-      <!-- Suplementos -->
-      <div class="card shadow-sm border-0 mb-4"
-        style="background-color:#a9eeb0; border-left:6px solid #36ac42; border-radius:15px;">
-        <div class="card-body">
-          <h5 style="color:#207729;">🧪 Suplementos</h5>
-          <ul>
-            <li><strong>Minerales:</strong> Calcio, fósforo y magnesio.</li>
-            <li><strong>Postparto:</strong> Energía adicional (propilenglicol, balanceados).</li>
-            <li><strong>Producción:</strong> Suplementos proteicos y vitamínicos para mejorar la calidad de la leche.</li>
-          </ul>
-        </div>
+    </div>
+    
+    <!-- Suplementos -->
+    <div class="card shadow-sm border-left-accent mb-4">
+      <div class="card-body">
+        <h5 class="section-title">🧪 Suplementos</h5>
+        <ul>
+          <li><strong>Minerales:</strong> Calcio, fósforo y magnesio.</li>
+          <li><strong>Postparto:</strong> Energía adicional (propilenglicol, balanceados).</li>
+          <li><strong>Producción:</strong> Suplementos proteicos y vitamínicos para mejorar la calidad de la leche.</li>
+        </ul>
       </div>
-      
-      <!-- Manejo sanitario -->
-      <div class="card shadow-sm border-0 mb-4"
-        style="background-color:#a9eeb0; border-left:6px solid #36ac42; border-radius:15px;">
-        <div class="card-body">
-          <h5 style="color:#207729;">🚑 Manejo sanitario</h5>
-          <ul>
-            <li><strong>Vacunas:</strong> Aftosa, brucelosis, clostridiosis, IBR, BVD y leptospira.</li>
-            <li><strong>Parásitos:</strong> Control de garrapatas y moscas en climas tropicales.</li>
-            <li><strong>Resistencia natural:</strong> Alta tolerancia al calor y enfermedades tropicales.</li>
-          </ul>
-        </div>
+    </div>
+    
+    <!-- Manejo sanitario -->
+    <div class="card shadow-sm border-left-accent mb-4">
+      <div class="card-body">
+        <h5 class="section-title">🚑 Manejo sanitario</h5>
+        <ul>
+          <li><strong>Vacunas:</strong> Aftosa, brucelosis, clostridiosis, IBR, BVD y leptospira.</li>
+          <li><strong>Parásitos:</strong> Control de garrapatas y moscas en climas tropicales.</li>
+          <li><strong>Resistencia natural:</strong> Alta tolerancia al calor y enfermedades tropicales.</li>
+        </ul>
       </div>
-      
-      <!-- Reproducción -->
-      <div class="card shadow-sm border-0 mb-4"
-        style="background-color:#a9eeb0; border-left:6px solid #36ac42; border-radius:15px;">
-        <div class="card-body">
-          <h5 style="color:#207729;">👶 Reproducción</h5>
-          <ul>
-            <li><strong>Primer parto:</strong> 30–36 meses.</li>
-            <li><strong>Intervalo entre partos:</strong> 13–15 meses.</li>
-            <li><strong>Ventaja:</strong> Longevidad alta y excelente instinto maternal.</li>
-          </ul>
-        </div>
+    </div>
+    
+    <!-- Reproducción -->
+    <div class="card shadow-sm border-left-accent mb-4">
+      <div class="card-body">
+        <h5 class="section-title">👶 Reproducción</h5>
+        <ul>
+          <li><strong>Primer parto:</strong> 30–36 meses.</li>
+          <li><strong>Intervalo entre partos:</strong> 13–15 meses.</li>
+          <li><strong>Ventaja:</strong> Longevidad alta y excelente instinto maternal.</li>
+        </ul>
       </div>
-      
-      <!-- Ventajas y desventajas -->
-      <div class="card shadow-sm border-0 mb-5"
-        style="background-color:#a9eeb0; border-left:6px solid #36ac42; border-radius:15px;">
-        <div class="card-body">
-          <h5 style="color:#207729;">📊 Ventajas y desventajas</h5>
-          <div class="row">
-            <div class="col-md-6">
-              <p class="fw-bold">Ventajas 🌟</p>
-              <ul>
-                <li>Alta resistencia al calor, sequía y parásitos.</li>
-                <li>Longevidad y rusticidad excepcionales.</li>
-                <li>Leche con alto contenido graso.</li>
-              </ul>
-            </div>
-            <div class="col-md-6">
-              <p class="fw-bold">Desventajas ⚠️</p>
-              <ul>
-                <li>Producción de leche más baja que razas europeas.</li>
-                <li>Madurez sexual tardía.</li>
-                <li>Temperamento menos dócil.</li>
-              </ul>
-            </div>
+    </div>
+    
+    <!-- Ventajas y desventajas -->
+    <div class="card shadow-sm border-left-accent mb-5">
+      <div class="card-body">
+        <h5 class="section-title">📊 Ventajas y desventajas</h5>
+        <div class="row">
+          <div class="col-md-6">
+            <p class="fw-bold">Ventajas 🌟</p>
+            <ul>
+              <li>Alta resistencia al calor, sequía y parásitos.</li>
+              <li>Longevidad y rusticidad excepcionales.</li>
+              <li>Leche con alto contenido graso.</li>
+            </ul>
+          </div>
+          <div class="col-md-6">
+            <p class="fw-bold">Desventajas ⚠️</p>
+            <ul>
+              <li>Producción de leche más baja que razas europeas.</li>
+              <li>Madurez sexual tardía.</li>
+              <li>Temperamento menos dócil.</li>
+            </ul>
           </div>
         </div>
       </div>
-      
-      <div class="text-center">
-        <small style="color:#207729;">Actualizado: octubre de 2025 🕓</small>
-      </div>
-      
-    <h2 class="mb-4 text-center">Mis Vacas Gyr</h2>
+    </div>
+    
+    <div class="text-center mb-4">
+      <small style="color:#207729;">Actualizado: octubre de 2025 🕓</small>
+    </div>
+    
+    <h2 class="mb-4 text-center page-title">🐄 Mis Vacas Gyr</h2>
     <div id="tabla-gyr"></div>
   </main>
 
-<!-- Modal Editar -->
+  <!-- Modal Editar -->
   <div class="modal fade" id="editarModal" tabindex="-1" aria-labelledby="editarLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">

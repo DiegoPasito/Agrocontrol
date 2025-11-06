@@ -10,14 +10,14 @@
 </head>
 <body>
 
-  <div class="container">
-    <div class="row justify-content-center">
-      <!-- Responsive col -->
-      <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-4">
-        <div class="card p-4">
-          <div class="text-center mb-3">
-            <img src="img/Logo Agro sin letras.png" alt="Logo Agrocontrol" class="rounded-circle" width="90" height="90">
-            <h3 class="mt-2">Agrocontrol</h3>
+   <div class="login-container">
+    <div class="row g-0">
+      <!-- Sección del Formulario (Izquierda) -->
+      <div class="col-md-6">
+        <div class="login-form-section">
+          <div class="text-center mb-4">
+            <img src="img/Logo Agro sin letras.png" alt="Logo Agrocontrol" class="rounded-circle form-logo" onerror="this.style.display='none'">
+            <h3 class="mt-3 mb-1" >Agrocontrol</h3>
             <p class="text-muted">Inicia sesión en tu cuenta</p>
           </div>
 
@@ -46,16 +46,34 @@
 
             <div class="text-center">
               <p class="mb-0">¿No tienes cuenta? 
-                <a href="CrearCuenta.html" class="text-decoration-none">Crea una aquí</a> <br>
+                <a href="CrearCuenta.html" class="text-decoration-none">Crea una aquí</a>
               </p>
             </div>
           </form>
         </div>
       </div>
+
+      <!-- Sección Visual (Derecha) -->
+      <div class="col-md-6">
+        <div class="login-visual-section">
+          <div class="visual-content">
+            <div class="visual-logo">
+              <img src="img/Logo Agro sin letras.png" alt="Logo Agrocontrol" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ccircle cx=%2250%22 cy=%2250%22 r=%2240%22 fill=%22%2336ac42%22/%3E%3Cpath d=%22M50 30 L50 70 M30 50 L70 50%22 stroke=%22white%22 stroke-width=%224%22/%3E%3C/svg%3E'">
+            </div>
+            <h2 class="mb-3">Bienvenido a Agrocontrol</h2>
+            <p class="mb-4">Gestiona tu producción ganadera de manera eficiente y efectiva</p>
+            <div class="mt-4">
+              <p class="small mb-1">✓ Control total de tu ganado</p>
+              <p class="small mb-1">✓ Seguimiento en tiempo real</p>
+              <p class="small">✓ Reportes detallados</p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
-  <!-- 🔑 Modal de recuperación de contraseña -->
+  <!-- Modal de recuperación de contraseña -->
   <div class="modal fade" id="forgotPasswordModal" tabindex="-1" aria-labelledby="forgotPasswordModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content rounded-4">
