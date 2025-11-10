@@ -1,6 +1,6 @@
 
 body {
-      background: linear-gradient(135deg, #4bc95a, #7fca86, #36ac42);
+      background: linear-gradient(135deg, rgba(219, 245, 222, 0.95), rgba(200, 240, 205, 0.95));
       min-height: 100vh;
       display: flex;
       justify-content: center;

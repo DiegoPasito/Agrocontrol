@@ -10,209 +10,200 @@
 
 </head>
 <body>
- <header>
+  <header>
+    <nav class="navbar navbar-expand-lg">
+      <div class="container-fluid">
+        <a class="navbar-brand">
+          <img src="img/Logo agrocontrol.png" alt="Logo Agrocontrol" width="100" height="100" onerror="this.style.display='none'">
+        </a>
 
- <nav class="navbar navbar-expand-lg ">
-  <div class="container-fluid ">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
 
-    <a class="navbar-brand" >
-      <img src="img/Logo agrocontrol.png" alt="Bootstrap" width="100" height="100">
-    </a>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link" href="contenidoPrincipal.html">Inicio</a>
+            </li>
 
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Vacas
+              </a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="Jersey.html">Jersey</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="Girolando.html">Girolando</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="Gyr.html">Gyr</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="simmental.html">Simmental</a></li>
+              </ul>
+            </li>
 
-         <li class="nav-item">
-          <a class="nav-link" href="contenidoPrincipal.html" > Inicio </a>
-        </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Medicamentos</a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="Medicamento Jersey.html">Jersey</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="Medicamento Girolando.html">Girolando</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="Medicamento Gyr.html">Gyr</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="Medicamento Simmental.html">Simmental</a></li>
+              </ul>
+            </li>
 
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Vacas
-          </a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="Jersey.html">Jersey</a></li>
-            <li><hr class="dropdown-divider" ></li>
-            <li><a class="dropdown-item" href="Girolando.html">Girolando</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="Gyr.html">Gyr</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="simmental.html">Simmental</a></li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Insumos</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="enfermedades.html">Enfermedades</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="Alertas y recordatorios.html">Alertas y Recordatorios</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="control.html">Control</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="Perfilusuario.html">Perfil</a>
+            </li>
           </ul>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" >Medicamentos</a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="Medicamento Jersey.html">Jersey</a></li>
-            <li><hr class="dropdown-divider" ></li>
-            <li><a class="dropdown-item" href="Medicamento Girolando.html">Girolando</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="Medicamento Gyr.html">Gyr</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="Medicamento Simmental.html">Simmental</a></li>
-          </ul>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Insumos</a>
-        </li>
 
-        <li class="nav-item">
-          <a class="nav-link" href="enfermedades.html">Enfermedades</a>
-        </li>
-
-        <li class="nav-item">
-          <a class="nav-link" href="Alertas y recordatorios.html" > Alertas y Recordatorios </a>
-        </li>
-
-         <li class="nav-item">
-          <a class="nav-link" href="control.html" > Control </a>
-        </li>
-
-        <li class="nav-item">
-          <a class="nav-link" href="Perfilusuario.html" > Usuario </a>
-        </li>
-      </ul>
-      <form class="d-flex" role="search">
-        <input class="form-control me-2" type="search" placeholder="Buscar" aria-label="Search"/>
-        <button class="btn btn-outline-success" type="submit">Buscar</button> 
-      </form> <br>
-    </div>
-  </div>
- </nav>
+          <form class="d-flex" role="search">
+            <input class="form-control me-2" type="search" placeholder="Buscar" aria-label="Search">
+            <button class="btn btn-outline-success" type="submit">Buscar</button> 
+          </form>
+        </div>
+      </div>
+    </nav>
   </header>
 
-    <main class="container mt-4">
-      <div class="text-center mb-5">
-        <h2 style="color:#207729; font-weight:700;">🐄 Perfil de la Vaca Simmental</h2>
-        <p style="color:#2d7a35;">Una raza europea fuerte, productiva y de doble propósito 💪🥛🍖</p>
-        <hr style="width:60%; margin:auto; border:2px solid #36ac42;">
-      </div>
-      
-      <!-- Sección principal -->
-      <div class="card shadow-lg border-0 mb-4"
-        style="border-radius:20px; background:linear-gradient(145deg, #a9eeb0, #a1e2a8);">
-        <div class="row g-0 align-items-center">
-          <div class="col-md-5">
-            <img src="img/Simmental imagen 5.webp" class="img-fluid rounded-start" alt="Vaca Simmental"
-              style="border-radius:20px 0 0 20px;">
-          </div>
-          <div class="col-md-7">
-            <div class="card-body">
-              <h4 class="card-title fw-bold" style="color:#207729;">Raza Simmental</h4>
-              <p class="card-text">
-                <strong>Descripción:</strong> La Simmental es una raza de <strong>doble propósito</strong> (leche y carne),
-                originaria del valle del río Simme en Suiza 🇨🇭.
-                Es grande, musculosa y de pelaje rojizo con manchas blancas. Produce buena leche y carne de alta calidad.
-              </p>
-              <ul class="list-unstyled">
-                <li><strong>Tamaño:</strong> Vacas 600–700 kg, toros hasta 1.200 kg.</li>
-                <li><strong>Color:</strong> Rojizo con manchas blancas, cara blanca típica.</li>
-                <li><strong>Producción:</strong> 4.000–6.000 L/lactancia.</li>
-                <li><strong>Grasa:</strong> 3.8–4.2%.</li>
-                <li><strong>Uso:</strong> Leche y carne (doble propósito).</li>
-              </ul>
-            </div>
+  <main class="container mt-4">
+    <div class="text-center mb-5">
+      <h2 class="page-title">🐄 Perfil de la Vaca Simmental</h2>
+      <p class="page-subtitle">Una raza europea fuerte, productiva y de doble propósito 💪🥛🍖</p>
+      <hr class="decorative">
+    </div>
+    
+    <!-- Sección principal -->
+    <div class="card shadow-lg mb-4">
+      <div class="row g-0 align-items-center">
+        <div class="col-md-5">
+          <img src="img/Simmental imagen 5.webp" class="img-fluid rounded-start" alt="Vaca Simmental" style="border-radius:20px 0 0 20px;" onerror="this.style.display='none'">
+        </div>
+        <div class="col-md-7">
+          <div class="card-body">
+            <h4 class="card-title fw-bold section-title">Raza Simmental</h4>
+            <p class="card-text">
+              <strong>Descripción:</strong> La Simmental es una raza de <strong>doble propósito</strong> (leche y carne),
+              originaria del valle del río Simme en Suiza 🇨🇭.
+              Es grande, musculosa y de pelaje rojizo con manchas blancas. Produce buena leche y carne de alta calidad.
+            </p>
+            <ul class="list-unstyled">
+              <li><strong>Tamaño:</strong> Vacas 600–700 kg, toros hasta 1.200 kg.</li>
+              <li><strong>Color:</strong> Rojizo con manchas blancas, cara blanca típica.</li>
+              <li><strong>Producción:</strong> 4.000–6.000 L/lactancia.</li>
+              <li><strong>Grasa:</strong> 3.8–4.2%.</li>
+              <li><strong>Uso:</strong> Leche y carne (doble propósito).</li>
+            </ul>
           </div>
         </div>
       </div>
-      
-      <!-- Alimentación -->
-      <div class="card shadow-sm border-0 mb-4"
-        style="background-color:#a9eeb0; border-left:6px solid #36ac42; border-radius:15px;">
-        <div class="card-body">
-          <h5 style="color:#207729;">🌱 Alimentación</h5>
-          <ul>
-            <li><strong>Forrajes:</strong> Kikuyo, ryegrass, estrella africana.</li>
-            <li><strong>Conservados:</strong> Ensilaje de maíz y sorgo.</li>
-            <li><strong>Concentrados:</strong> Balanceados 16–18% proteína.</li>
-            <li><strong>Minerales:</strong> Calcio y fósforo, por su gran tamaño.</li>
-          </ul>
-        </div>
+    </div>
+    
+    <!-- Alimentación -->
+    <div class="card shadow-sm border-left-accent mb-4">
+      <div class="card-body">
+        <h5 class="section-title">🌱 Alimentación</h5>
+        <ul>
+          <li><strong>Forrajes:</strong> Kikuyo, ryegrass, estrella africana.</li>
+          <li><strong>Conservados:</strong> Ensilaje de maíz y sorgo.</li>
+          <li><strong>Concentrados:</strong> Balanceados 16–18% proteína.</li>
+          <li><strong>Minerales:</strong> Calcio y fósforo, por su gran tamaño.</li>
+        </ul>
       </div>
-      
-      <!-- Suplementos -->
-      <div class="card shadow-sm border-0 mb-4"
-        style="background-color:#a9eeb0; border-left:6px solid #36ac42; border-radius:15px;">
-        <div class="card-body">
-          <h5 style="color:#207729;">🧪 Suplementos</h5>
-          <ul>
-            <li><strong>Preparto:</strong> Calcio y fósforo.</li>
-            <li><strong>Postparto:</strong> Propilenglicol para evitar cetosis.</li>
-            <li><strong>Producción:</strong> Grasas protegidas y proteínas balanceadas.</li>
-          </ul>
-        </div>
+    </div>
+    
+    <!-- Suplementos -->
+    <div class="card shadow-sm border-left-accent mb-4">
+      <div class="card-body">
+        <h5 class="section-title">🧪 Suplementos</h5>
+        <ul>
+          <li><strong>Preparto:</strong> Calcio y fósforo.</li>
+          <li><strong>Postparto:</strong> Propilenglicol para evitar cetosis.</li>
+          <li><strong>Producción:</strong> Grasas protegidas y proteínas balanceadas.</li>
+        </ul>
       </div>
-      
-      <!-- Sanitario -->
-      <div class="card shadow-sm border-0 mb-4"
-        style="background-color:#a9eeb0; border-left:6px solid #36ac42; border-radius:15px;">
-        <div class="card-body">
-          <h5 style="color:#207729;">🚑 Manejo sanitario</h5>
-          <ul>
-            <li><strong>Vacunas:</strong> Aftosa, brucelosis, clostridiosis, IBR, BVD, leptospira.</li>
-            <li><strong>Antiparasitarios:</strong> Internos (albendazol, ivermectina) y externos (amitraz, cipermetrina).</li>
-            <li><strong>Cuidados especiales:</strong> Control de cojeras y problemas articulares por su tamaño.</li>
-          </ul>
-        </div>
+    </div>
+    
+    <!-- Sanitario -->
+    <div class="card shadow-sm border-left-accent mb-4">
+      <div class="card-body">
+        <h5 class="section-title">🚑 Manejo sanitario</h5>
+        <ul>
+          <li><strong>Vacunas:</strong> Aftosa, brucelosis, clostridiosis, IBR, BVD, leptospira.</li>
+          <li><strong>Antiparasitarios:</strong> Internos (albendazol, ivermectina) y externos (amitraz, cipermetrina).</li>
+          <li><strong>Cuidados especiales:</strong> Control de cojeras y problemas articulares por su tamaño.</li>
+        </ul>
       </div>
-      
-      <!-- Reproducción -->
-      <div class="card shadow-sm border-0 mb-4"
-        style="background-color:#a9eeb0; border-left:6px solid #36ac42; border-radius:15px;">
-        <div class="card-body">
-          <h5 style="color:#207729;">👶 Reproducción</h5>
-          <ul>
-            <li><strong>Primer parto:</strong> 24–30 meses.</li>
-            <li><strong>Intervalo entre partos:</strong> 13–14 meses.</li>
-            <li><strong>Partos:</strong> Tienden a ser más complicados por el tamaño del ternero.</li>
-            <li><strong>Ventajas:</strong> Buen instinto maternal y producción de calostro.</li>
-          </ul>
-        </div>
+    </div>
+    
+    <!-- Reproducción -->
+    <div class="card shadow-sm border-left-accent mb-4">
+      <div class="card-body">
+        <h5 class="section-title">👶 Reproducción</h5>
+        <ul>
+          <li><strong>Primer parto:</strong> 24–30 meses.</li>
+          <li><strong>Intervalo entre partos:</strong> 13–14 meses.</li>
+          <li><strong>Partos:</strong> Tienden a ser más complicados por el tamaño del ternero.</li>
+          <li><strong>Ventajas:</strong> Buen instinto maternal y producción de calostro.</li>
+        </ul>
       </div>
-      
-      <!-- Ventajas y desventajas -->
-      <div class="card shadow-sm border-0 mb-5"
-        style="background-color:#a9eeb0; border-left:6px solid #36ac42; border-radius:15px;">
-        <div class="card-body">
-          <h5 style="color:#207729;">📊 Ventajas y desventajas</h5>
-          <div class="row">
-            <div class="col-md-6">
-              <p class="fw-bold">Ventajas 🌟</p>
-              <ul>
-                <li>Excelente raza de doble propósito.</li>
-                <li>Carne de alta calidad y buena producción de leche.</li>
-                <li>Rústica y adaptable.</li>
-              </ul>
-            </div>
-            <div class="col-md-6">
-              <p class="fw-bold">Desventajas ⚠️</p>
-              <ul>
-                <li>Requiere mayor cantidad de alimento.</li>
-                <li>Partos más difíciles por crías grandes.</li>
-                <li>Menor eficiencia alimenticia comparada con Jersey.</li>
-              </ul>
-            </div>
+    </div>
+    
+    <!-- Ventajas y desventajas -->
+    <div class="card shadow-sm border-left-accent mb-5">
+      <div class="card-body">
+        <h5 class="section-title">📊 Ventajas y desventajas</h5>
+        <div class="row">
+          <div class="col-md-6">
+            <p class="fw-bold">Ventajas 🌟</p>
+            <ul>
+              <li>Excelente raza de doble propósito.</li>
+              <li>Carne de alta calidad y buena producción de leche.</li>
+              <li>Rústica y adaptable.</li>
+            </ul>
+          </div>
+          <div class="col-md-6">
+            <p class="fw-bold">Desventajas ⚠️</p>
+            <ul>
+              <li>Requiere mayor cantidad de alimento.</li>
+              <li>Partos más difíciles por crías grandes.</li>
+              <li>Menor eficiencia alimenticia comparada con Jersey.</li>
+            </ul>
           </div>
         </div>
       </div>
-      
-      <div class="text-center">
-        <small style="color:#207729;">Actualizado: octubre de 2025 🕓</small>
-      </div>
-      
-      
-    <h2 class="mb-4 text-center">Mis Vacas Simmental</h2>
+    </div>
+    
+    
+    
+    <h2 class="mb-4 text-center page-title">🐄 Mis Vacas Simmental</h2>
     <div id="tabla-simmental"></div>
   </main>
 
-<!-- Modal Editar -->
+  <!-- Modal Editar -->
   <div class="modal fade" id="editarModal" tabindex="-1" aria-labelledby="editarLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
-        <div class="modal-header bg-warning text-dark">
+        <div class="modal-header modal-header-verde">
           <h5 class="modal-title" id="editarLabel">Editar Vaca</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
@@ -272,6 +263,11 @@
     </div>
   </div>
 
+  <!-- Botón flotante -->
+  <button id="btn-flotante" onclick="scrollToTabla()">🐄 Tus vacas registradas</button>
+
+  
+
   <!-- Firebase y Script -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-app.js";
@@ -314,7 +310,7 @@
         </tr>
       `).join("");
       return `<table class="table table-striped table-hover shadow rounded">
-        <thead class="table-dark"><tr>
+        <thead class="table-verde"><tr>
           <th>Nombre</th><th>Peso</th><th>Edad</th><th>Leche (L/día)</th><th>Lactando</th><th>Acciones</th>
         </tr></thead><tbody>${filas}</tbody></table>`;
     }
@@ -371,6 +367,32 @@
       }
     });
   </script>
+
+
+  <script>
+  const btnFlotante = document.getElementById("btn-flotante");
+  const seccionVacas = document.getElementById("tabla-simmental"); // Cambia el ID si tu tabla se llama distinto
+
+  function scrollToTabla() {
+    if (seccionVacas) {
+      seccionVacas.scrollIntoView({ behavior: "smooth" });
+    }
+  }
+
+  window.addEventListener("scroll", () => {
+  if (!seccionVacas) return;
+
+  const rect = seccionVacas.getBoundingClientRect();
+  const alturaVentana = window.innerHeight;
+
+  // Si la parte superior de la tabla está dentro del área visible, ocultar el botón
+  if (rect.top < alturaVentana && rect.bottom > 0) {
+    btnFlotante.classList.add("oculto");
+  } else {
+    btnFlotante.classList.remove("oculto");
+  }
+  });
+</script>
 
 
 </body>

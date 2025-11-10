@@ -1,48 +1,126 @@
 body {
     margin: 0;
-    background-color: #a1e2a8;
-    
+    background: linear-gradient(135deg, #e8f8ea 0%, #f0fdf1 50%, #e8f8ea 100%);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    min-height: 100vh;
 }
 
 header {
     position: sticky;
     top: 0;
     left: 0;
-    width: 100;
+    width: 100%;
     z-index: 1000;
+    backdrop-filter: blur(10px);
 }
 
+/* Navbar con glassmorphism */
 .navbar-expand-lg {
-    background-color:  #7fca86;
-    top: 0;
-    left: 0;
-    box-shadow: 0 2px 5px #428b49;
-      
+    background: linear-gradient(135deg, rgba(219, 245, 222, 0.95), rgba(200, 240, 205, 0.95));
+    backdrop-filter: blur(10px);
+    border-bottom: 2px solid rgba(54, 172, 66, 0.2);
+    box-shadow: 0 4px 15px rgba(54, 172, 66, 0.15);
+    padding: 10px 0;
 }
 
-.card-body a{
-    text-decoration: none;
-    color: black;
+/* Logo con efecto hover */
+.navbar-brand img {
+    transition: transform 0.3s ease;
 }
 
-.card-body a:hover{
-    text-decoration: underline;
+.navbar-brand img:hover {
+    transform: scale(1.05);
 }
 
-/* EStilo de las barras de, medicamentos, insumos, enfermades, etc*/
+/* Estilo mejorado de los links del navbar */
 .navbar-nav .nav-link {
-    border: 2px solid #36ac42;     /* Color del borde */
-    border-radius: 50px;         /* Hace el borde ovalado */
-    padding: 6px 15px;           /* Espaciado interno */
-    margin:  5px;               /* Espacio entre cada opción */
-    transition: all 0.3s ease;   /* Animación suave */
-    color: rgb(0, 0, 0);                /* Texto en blanco */
+    border: 2px solid transparent;
+    border-radius: 50px;
+    padding: 8px 18px;
+    margin: 5px;
+    transition: all 0.3s ease;
+    color: #1e7e34;
+    font-weight: 500;
+    position: relative;
+    overflow: hidden;
+}
+
+.navbar-nav .nav-link::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(54, 172, 66, 0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+.navbar-nav .nav-link:hover::before {
+    left: 100%;
 }
 
 .navbar-nav .nav-link:hover {
-    background-color: #a9eeb0;   /* Fondo blanco */
-    color: #207729;            /* Texto verde (el color de tu navbar) */
-    border-color: #36ac42;     /* Borde verde */
+    background: linear-gradient(135deg, #a9eeb0, #8de89a);
+    color: #1a5e29;
+    border-color: #36ac42;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(54, 172, 66, 0.3);
+}
+
+/* Dropdown mejorado */
+.dropdown-menu {
+    border: 2px solid #36ac42;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(54, 172, 66, 0.25);
+    background-color: #f8fdf8;
+    padding: 10px;
+}
+
+.dropdown-item {
+    border-radius: 10px;
+    padding: 10px 15px;
+    transition: all 0.2s ease;
+    color: #1e7e34;
+}
+
+.dropdown-item:hover {
+    background: linear-gradient(135deg, #a9eeb0, #8de89a);
+    color: #1a5e29;
+    transform: translateX(5px);
+}
+
+.dropdown-divider {
+    border-color: rgba(54, 172, 66, 0.3);
+}
+
+/* Buscador mejorado */
+.form-control {
+    border: 2px solid #36ac42;
+    border-radius: 50px;
+    padding: 10px 20px;
+    transition: all 0.3s ease;
+}
+
+.form-control:focus {
+    border-color: #2b8c35;
+    box-shadow: 0 0 0 0.3rem rgba(54, 172, 66, 0.25);
+    transform: scale(1.02);
+}
+
+.btn-outline-success {
+    border: 2px solid #36ac42;
+    border-radius: 50px;
+    padding: 10px 25px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.btn-outline-success:hover {
+    background: linear-gradient(135deg, #36ac42, #2b8c35);
+    border-color: #36ac42;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(54, 172, 66, 0.4);
 }
 
 .custom-container {
