@@ -271,3 +271,81 @@ aside.col-md-4 *::after {
   max-width: 100%;
   height: auto;
 }
+
+/* Nuevo diseño de perfil */
+.profile-card {
+  background: linear-gradient(135deg, #ffffff, #f5fff6);
+  border: 1px solid rgba(54, 172, 66, 0.15);
+  transition: all 0.3s ease;
+}
+
+.profile-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(54, 172, 66, 0.2);
+}
+
+.profile-avatar {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  border: 3px solid #7fca86;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.profile-avatar:hover {
+  transform: scale(1.05);
+}
+
+.profile-image-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.profile-card hr {
+  border-top: 2px solid rgba(54, 172, 66, 0.2);
+}
+
+.profile-card .btn {
+  border-radius: 50px;
+}
+
+.profile-card .badge {
+  font-size: 0.9rem;
+}
+
+@media (max-width: 576px) {
+  .profile-avatar {
+    width: 120px;
+    height: 120px;
+  }
+  .profile-card {
+    padding: 1rem;
+  }
+}
+
+.card-header {
+  font-size: 1rem;
+  letter-spacing: 0.3px;
+}
+
+.list-group-item {
+  background-color: #f9fff9;
+  border: none;
+  border-bottom: 1px solid rgba(54, 172, 66, 0.1);
+}
+
+.list-group-item:last-child {
+  border-bottom: none;
+}
+
+.btn-outline-success:hover {
+  background-color: #7fca86;
+  color: white;
+  border-color: #7fca86;
+}
+
+.profile-card .btn:hover {
+  transform: translateY(-1px);
+  transition: 0.2s;
+}

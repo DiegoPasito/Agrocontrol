@@ -87,59 +87,74 @@
   <!-- Firebase SDK -->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-app.js";
-  import { getAuth, createUserWithEmailAndPassword } 
-    from "https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js";
-  import { getFirestore, doc, setDoc 
-  } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-firestore.js";
+import { 
+  getAuth, 
+  createUserWithEmailAndPassword, 
+  updateProfile 
+} from "https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js";
+import { 
+  getFirestore, 
+  doc, 
+  setDoc, 
+  serverTimestamp 
+} from "https://www.gstatic.com/firebasejs/12.5.0/firebase-firestore.js";
 
-  const firebaseConfig = {
-      apiKey: "AIzaSyAzonIFbhlOnnIs9xG9Lb4uBJHLrhCi3qU",
-      authDomain: "web-y-movil-agroncontrol.firebaseapp.com",
-      projectId: "web-y-movil-agroncontrol",
-      storageBucket: "web-y-movil-agroncontrol.firebasestorage.app",
-      messagingSenderId: "180502593551",
-      appId: "1:180502593551:web:f4ae5111ac99ec70fa237a",
-      measurementId: "G-BJ9G9WSKNY"
-  };
+const firebaseConfig = {
+  apiKey: "AIzaSyAzonIFbhlOnnIs9xG9Lb4uBJHLrhCi3qU",
+  authDomain: "web-y-movil-agroncontrol.firebaseapp.com",
+  projectId: "web-y-movil-agroncontrol",
+  storageBucket: "web-y-movil-agroncontrol.firebasestorage.app",
+  messagingSenderId: "180502593551",
+  appId: "1:180502593551:web:f4ae5111ac99ec70fa237a",
+  measurementId: "G-BJ9G9WSKNY"
+};
 
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-  const db = getFirestore(app);
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
 
-  // Registro
-  const registerForm = document.querySelector("#registerForm");
-  if (registerForm) {
-    registerForm.addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const nombre = document.getElementById("nombre").value;
-      const email = document.getElementById("regEmail").value;
-      const password = document.getElementById("regPassword").value;
-      const confirmPassword = document.getElementById("confirm-password").value;
+// 🟢 Registro
+const registerForm = document.querySelector("#registerForm");
 
-      if (password !== confirmPassword) {
-        alert("❌ Las contraseñas no coinciden");
-        return;
-      }
+if (registerForm) {
+  registerForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
 
-      try {
-        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-        const user = userCredential.user;
+    const nombre = document.getElementById("nombre").value.trim();
+    const email = document.getElementById("regEmail").value.trim();
+    const password = document.getElementById("regPassword").value;
+    const confirmPassword = document.getElementById("confirm-password").value;
 
-        // 🔹 Guardar información adicional en Firestore
-        await setDoc(doc(db, "users", user.uid), {
-          nombre: nombre,
-          email: email,
-          uid: user.uid,
-          fechaRegistro: new Date()
-        });
+    if (password !== confirmPassword) {
+      alert("❌ Las contraseñas no coinciden");
+      return;
+    }
 
-        alert("✅ Cuenta creada exitosamente");
-        window.location.href = "index.html"; // tu login
-      } catch (error) {
-        alert("❌ Error: " + error.message);
-      }
-    });
-  }
+    try {
+      // Crear usuario en Authentication
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+
+      // Actualizar el perfil de autenticación con el nombre
+      await updateProfile(user, { displayName: nombre });
+
+      // Guardar información en Firestore
+      await setDoc(doc(db, "users", user.uid), {
+        nombre: nombre,
+        email: email,
+        uid: user.uid,
+        fechaRegistro: serverTimestamp(),
+        ultimoAcceso: serverTimestamp()
+      });
+
+      alert("✅ Cuenta creada exitosamente");
+      window.location.href = "index.html"; // redirige al login
+    } catch (error) {
+      console.error("❌ Error al registrar usuario:", error);
+      alert("❌ Error: " + error.message);
+    }
+  });
+}
 </script>
 
 
