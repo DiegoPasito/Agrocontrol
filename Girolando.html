@@ -56,7 +56,7 @@
             </li>
 
             <li class="nav-item">
-              <a class="nav-link" href="#">Insumos</a>
+              <a class="nav-link" href="insumos.html">Insumos</a>
             </li>
 
             <li class="nav-item">
@@ -76,10 +76,7 @@
             </li>
           </ul>
 
-          <form class="d-flex" role="search">
-            <input class="form-control me-2" type="search" placeholder="Buscar" aria-label="Search">
-            <button class="btn btn-outline-success" type="submit">Buscar</button> 
-          </form>
+          
         </div>
       </div>
     </nav>
@@ -269,6 +266,23 @@
   <!-- Botón flotante -->
   <button id="btn-flotante" onclick="scrollToTabla()">🐄 Tus vacas registradas</button>
 
+  <!-- Modal Insumos -->
+<div class="modal fade" id="insumosModal" tabindex="-1" aria-labelledby="insumosLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header bg-success text-white">
+        <h5 class="modal-title" id="insumosLabel">Insumos Recomendados</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <h6 id="vacaSeleccionada" class="text-center mb-3"></h6>
+        <div id="listaInsumos" class="d-flex flex-wrap justify-content-center gap-2"></div>
+        <div id="resultadoInsumo" class="mt-4 text-center"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
   <!-- Firebase y Script -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-app.js";
@@ -300,14 +314,29 @@
           <td>${v.data.age} años</td>
           <td>${v.data.milkProduction ?? "-"} L</td>
           <td>${v.data.isLactating ? "Sí" : "No"}</td>
-          <td>
-            <button class="btn btn-warning btn-sm me-1"
+          <td class="text-center">
+          <div class="d-flex flex-wrap justify-content-center gap-2">
+            <button class="btn btn-warning btn-sm"
               data-bs-toggle="modal" data-bs-target="#editarModal"
-              onclick="llenarFormulario('${v.id}','${v.data.name}','${v.data.weight}','${v.data.age}','${v.data.milkProduction ?? 0}','${v.data.isLactating}')">Editar</button>
+              onclick="llenarFormulario('${v.id}','${v.data.name}','${v.data.weight}','${v.data.age}','${v.data.milkProduction ?? 0}','${v.data.isLactating}')">
+              Editar
+            </button>
+
             <button class="btn btn-danger btn-sm"
               data-bs-toggle="modal" data-bs-target="#eliminarModal"
-              onclick="prepararEliminar('${v.id}','${v.data.name}')">Eliminar</button>
-          </td>
+              onclick="prepararEliminar('${v.id}','${v.data.name}')">
+              Eliminar
+            </button>
+
+            <button class="btn btn-info btn-sm text-white" onclick="mostrarMedicamentos('${v.data.name}')">
+              Medicamentos
+            </button>
+
+            <button class="btn btn-success btn-sm text-white" onclick="mostrarInsumos('${v.data.name}')">
+              Insumos
+            </button>
+          </div>
+        </td>
         </tr>
       `).join("");
       return `<table class="table table-striped table-hover shadow rounded">
@@ -367,6 +396,90 @@
         document.getElementById("tabla-girolando").innerHTML = "<p class='text-danger text-center'>Debes iniciar sesión para ver tus vacas.</p>";
       }
     });
+
+    // 🟢 Mostrar insumos recomendados para una vaca
+window.mostrarInsumos = async function (nombreVaca) {
+  // Buscar los datos reales de la vaca seleccionada
+  const q = query(collection(db, "users", usuarioId, "cows"), where("name", "==", nombreVaca));
+  const snap = await getDocs(q);
+
+  if (snap.empty) {
+    alert("No se encontraron datos de la vaca.");
+    return;
+  }
+
+  const vaca = snap.docs[0].data();
+  const { weight, milkProduction } = vaca;
+
+  document.getElementById("vacaSeleccionada").innerText =
+    `🐄 ${nombreVaca} — Peso: ${weight} kg | Leche diaria: ${milkProduction} L`;
+
+    // Mostrar modal
+    const modal = new bootstrap.Modal(document.getElementById("insumosModal"));
+    modal.show();
+
+    // Obtener insumos desde el HTML de insumos generales
+    const insumos = await obtenerInsumosDesdeHTML();
+    const contenedor = document.getElementById("listaInsumos");
+    contenedor.innerHTML = "";
+
+    insumos.forEach(nombre => {
+      const btn = document.createElement("button");
+      btn.className = "btn btn-outline-success";
+      btn.textContent = nombre;
+      btn.onclick = () => calcularRecomendacion(nombre, weight, milkProduction);
+      contenedor.appendChild(btn);
+    });
+  };
+
+    // 🟢 Leer los insumos automáticamente del HTML de insumos generales
+    async function obtenerInsumosDesdeHTML() {
+      try {
+        const res = await fetch("insumos.html");
+        const html = await res.text();
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, "text/html");
+
+        // Leer nombres de insumos (desde los títulos de las tarjetas)
+        return Array.from(doc.querySelectorAll(".card-title")).map(e => e.textContent.trim());
+      } catch (err) {
+        console.error("Error leyendo insumos:", err);
+        return [];
+      }
+    }
+
+    function calcularRecomendacion(nombreInsumo, peso, leche) {
+    let cantidad = 0;
+
+    if (nombreInsumo.includes("Concentrado")) {
+      cantidad = leche * 0.4; // 400g por litro de leche
+    } else if (nombreInsumo.includes("Heno")) {
+      cantidad = peso * 0.02; // 2% del peso
+    } else if (nombreInsumo.includes("Pastura")) {
+      cantidad = peso * 0.05; // 5% del peso corporal (forraje verde)
+    } else if (nombreInsumo.includes("Silo") || nombreInsumo.includes("Ensilaje")) {
+      cantidad = peso * 0.03; // 3% del peso corporal
+    } else if (nombreInsumo.includes("Melaza")) {
+      cantidad = (leche / 10) * 0.8; // 0.8 kg por cada 10 litros
+    } else if (nombreInsumo.includes("Sales")) {
+      cantidad = peso * 0.001; // 0.1% del peso corporal
+    } else {
+      cantidad = peso * 0.01; // valor genérico
+    }
+
+    const resultado = `
+      <div class="alert alert-success mt-3">
+        <h6><strong>${nombreInsumo}</strong></h6>
+        <p>
+          Cantidad recomendada diaria: 
+          <strong>${cantidad.toFixed(2)} kg</strong>
+          <br><small>(según peso ${peso} kg y ${leche} L leche/día)</small>
+        </p>
+      </div>
+    `;
+
+    document.getElementById("resultadoInsumo").innerHTML = resultado;
+  }
   </script>
 
   <script>

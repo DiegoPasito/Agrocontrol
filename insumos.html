@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agrocontrol</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="css/insumos.css">
+
+</head>
+<body>
+ <header>
+
+ <nav class="navbar navbar-expand-lg ">
+  <div class="container-fluid ">
+
+    <a class="navbar-brand" >
+      <img src="img/Logo agrocontrol.png" alt="Bootstrap" width="100" height="100">
+    </a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+         <li class="nav-item">
+          <a class="nav-link" href="contenidoPrincipal.html" > Inicio </a>
+        </li>
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Vacas
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="Jersey.html">Jersey</a></li>
+            <li><hr class="dropdown-divider" ></li>
+            <li><a class="dropdown-item" href="Girolando.html">Girolando</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="Gyr.html">Gyr</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="simmental.html">Simmental</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" >Medicamentos</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="Medicamento Jersey.html">Jersey</a></li>
+            <li><hr class="dropdown-divider" ></li>
+            <li><a class="dropdown-item" href="Medicamento Girolando.html">Girolando</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="Medicamento Gyr.html">Gyr</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="Medicamento Simmental.html">Simmental</a></li>
+          </ul>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="insumos.html">Insumos</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="enfermedades.html">Enfermedades</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="Alertas y recordatorios.html" > Alertas y Recordatorios </a>
+        </li>
+
+         <li class="nav-item">
+          <a class="nav-link" href="control.html" > Control </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="Perfilusuario.html" > Perfil </a>
+        </li>
+        
+
+      </ul>
+       
+    </div>
+  </div>
+ </nav>
+  </header>
+
+  <main>
+        <div class="container">
+            <h1 class="section-title">Insumos Ganaderos</h1>
+            
+            <div class="row g-4">
+                <!-- Tarjeta 1: Heno -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="card insumo-card">
+                        <img src="https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=500&h=250&fit=crop" class="card-img-top" alt="Heno">
+                        <div class="card-body">
+                            <h5 class="card-title">Heno</h5>
+                            <p class="card-text">Forraje seco fundamental para la alimentación del ganado. Rico en fibra y nutrientes esenciales.</p>
+                            <button type="button" class="btn btn-info-insumo" data-bs-toggle="modal" data-bs-target="#modalHeno">
+                                Más Información
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tarjeta 2: Pastura -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="card insumo-card">
+                        <img src="https://images.unsplash.com/photo-1500595046743-cd271d694d30?w=500&h=250&fit=crop" class="card-img-top" alt="Pastura">
+                        <div class="card-body">
+                            <h5 class="card-title">Pastura</h5>
+                            <p class="card-text">Forraje verde fresco que proporciona nutrientes naturales y vitaminas para el ganado en pastoreo.</p>
+                            <button type="button" class="btn btn-info-insumo" data-bs-toggle="modal" data-bs-target="#modalPastura">
+                                Más Información
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tarjeta 3: Silo de Maíz -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="card insumo-card">
+                        <img src="https://images.unsplash.com/photo-1536514498073-50e69d39c6cf?w=500&h=250&fit=crop" class="card-img-top" alt="Silo de Maíz">
+                        <div class="card-body">
+                            <h5 class="card-title">Silo de Maíz</h5>
+                            <p class="card-text">Ensilaje de maíz de alta energía, excelente para mejorar la producción lechera y ganancia de peso.</p>
+                            <button type="button" class="btn btn-info-insumo" data-bs-toggle="modal" data-bs-target="#modalSilo">
+                                Más Información
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tarjeta 4: Concentrado -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="card insumo-card">
+                        <img src="https://images.unsplash.com/photo-1574943320219-553eb213f72d?w=500&h=250&fit=crop" class="card-img-top" alt="Concentrado">
+                        <div class="card-body">
+                            <h5 class="card-title">Concentrado</h5>
+                            <p class="card-text">Suplemento alimenticio concentrado rico en proteínas, minerales y vitaminas para máximo rendimiento.</p>
+                            <button type="button" class="btn btn-info-insumo" data-bs-toggle="modal" data-bs-target="#modalConcentrado">
+                                Más Información
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tarjeta 5: Sales Minerales -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="card insumo-card">
+                        <img src="https://images.unsplash.com/photo-1582727657295-b9473221e189?w=500&h=250&fit=crop" class="card-img-top" alt="Sales Minerales">
+                        <div class="card-body">
+                            <h5 class="card-title">Sales Minerales</h5>
+                            <p class="card-text">Suplemento mineral esencial para prevenir deficiencias nutricionales y mejorar la salud del ganado.</p>
+                            <button type="button" class="btn btn-info-insumo" data-bs-toggle="modal" data-bs-target="#modalSales">
+                                Más Información
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tarjeta 6: Melaza -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="card insumo-card">
+                        <img src="https://images.unsplash.com/photo-1571069165146-013749eb28b6?w=500&h=250&fit=crop" class="card-img-top" alt="Melaza">
+                        <div class="card-body">
+                            <h5 class="card-title">Melaza</h5>
+                            <p class="card-text">Fuente natural de energía y palatabilizante que mejora el consumo de alimento en el ganado.</p>
+                            <button type="button" class="btn btn-info-insumo" data-bs-toggle="modal" data-bs-target="#modalMelaza">
+                                Más Información
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modales con información detallada -->
+    
+    <!-- Modal Heno -->
+    <div class="modal fade" id="modalHeno" tabindex="-1" aria-labelledby="modalHenoLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalHenoLabel">Heno - Información Detallada</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="info-section">
+                        <h5>Descripción</h5>
+                        <p>El heno es un forraje conservado mediante el proceso de secado de pastos o leguminosas. Es uno de los alimentos más importantes en la ganadería bovina, especialmente durante épocas de escasez de pasto fresco.</p>
+                    </div>
+                    <div class="info-section">
+                        <h5>Beneficios</h5>
+                        <ul>
+                            <li>Alto contenido de fibra que favorece la rumia</li>
+                            <li>Fuente importante de energía y proteína</li>
+                            <li>Fácil almacenamiento y conservación</li>
+                            <li>Disponible durante todo el año</li>
+                            <li>Mejora la salud digestiva del ganado</li>
+                        </ul>
+                    </div>
+                    <div class="info-section">
+                        <h5>Almacenamiento</h5>
+                        <p>Debe almacenarse en lugares secos, ventilados y protegidos de la humedad. La humedad óptima para el almacenamiento es menor al 20%. Se recomienda apilar sobre tarimas para evitar contacto con el suelo.</p>
+                    </div>
+                    <div class="info-section">
+                        <h5>Dosificación Recomendada</h5>
+                        <p>Para vacas lecheras: 8-12 kg por día. Para ganado de carne: 6-10 kg por día. Ajustar según peso del animal y condición corporal.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Pastura -->
+    <div class="modal fade" id="modalPastura" tabindex="-1" aria-labelledby="modalPasturaLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalPasturaLabel">Pastura - Información Detallada</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="info-section">
+                        <h5>Descripción</h5>
+                        <p>La pastura o forraje verde es el alimento natural más completo para el ganado bovino. Incluye diversas especies de gramíneas y leguminosas que crecen en praderas y potreros.</p>
+                    </div>
+                    <div class="info-section">
+                        <h5>Beneficios</h5>
+                        <ul>
+                            <li>Fuente natural de vitaminas y minerales</li>
+                            <li>Alto contenido de agua y nutrientes frescos</li>
+                            <li>Mejora la calidad de la leche</li>
+                            <li>Reduce costos de alimentación</li>
+                            <li>Favorece el comportamiento natural del ganado</li>
+                        </ul>
+                    </div>
+                    <div class="info-section">
+                        <h5>Manejo de Pastoreo</h5>
+                        <p>Implementar sistemas de pastoreo rotacional para mantener la calidad del pasto. El tiempo de descanso recomendado es de 25-35 días según la época del año. La altura ideal de entrada es de 25-30 cm.</p>
+                    </div>
+                    <div class="info-section">
+                        <h5>Especies Recomendadas</h5>
+                        <p>Brachiaria, kikuyo, estrella africana, ryegrass, trébol blanco y otras según la zona climática. Considerar la rotación de especies para mejor aprovechamiento.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Silo de Maíz -->
+    <div class="modal fade" id="modalSilo" tabindex="-1" aria-labelledby="modalSiloLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalSiloLabel">Silo de Maíz - Información Detallada</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="info-section">
+                        <h5>Descripción</h5>
+                        <p>El ensilaje de maíz es un forraje conservado mediante fermentación anaeróbica. Se cosecha la planta completa en estado lechoso-pastoso del grano, se pica y se compacta en estructuras herméticas.</p>
+                    </div>
+                    <div class="info-section">
+                        <h5>Beneficios</h5>
+                        <ul>
+                            <li>Alta concentración energética</li>
+                            <li>Excelente palatabilidad</li>
+                            <li>Aumenta la producción de leche</li>
+                            <li>Conservación prolongada (más de 1 año)</li>
+                            <li>Mayor ganancia de peso en ganado de carne</li>
+                        </ul>
+                    </div>
+                    <div class="info-section">
+                        <h5>Proceso de Elaboración</h5>
+                        <p>Cosechar cuando el grano tiene 30-35% de materia seca. Picar a 1-2 cm de longitud. Compactar bien para eliminar aire. Cubrir herméticamente con plástico. Dejar fermentar mínimo 21 días antes de usar.</p>
+                    </div>
+                    <div class="info-section">
+                        <h5>Suministro</h5>
+                        <p>Para vacas lecheras: 15-25 kg por día. Para ganado de carne: 10-20 kg por día. Siempre combinarlo con heno o pasto para equilibrar la dieta. Descartar material en mal estado.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Concentrado -->
+    <div class="modal fade" id="modalConcentrado" tabindex="-1" aria-labelledby="modalConcentradoLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalConcentradoLabel">Concentrado - Información Detallada</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="info-section">
+                        <h5>Descripción</h5>
+                        <p>El concentrado es un suplemento alimenticio formulado con alta densidad nutricional. Contiene mezclas de granos, proteínas, minerales y vitaminas diseñadas para complementar la dieta base del ganado.</p>
+                    </div>
+                    <div class="info-section">
+                        <h5>Beneficios</h5>
+                        <ul>
+                            <li>Aumenta significativamente la producción de leche</li>
+                            <li>Mejora la condición corporal</li>
+                            <li>Acelera el crecimiento en animales jóvenes</li>
+                            <li>Equilibra deficiencias nutricionales</li>
+                            <li>Mejora la eficiencia reproductiva</li>
+                        </ul>
+                    </div>
+                    <div class="info-section">
+                        <h5>Tipos de Concentrado</h5>
+                        <p>Existen concentrados para lechería (16-20% proteína), engorde (12-14% proteína), terneros (18-22% proteína) y minerales. Elegir según el objetivo productivo y etapa del animal.</p>
+                    </div>
+                    <div class="info-section">
+                        <h5>Dosificación</h5>
+                        <p>Vacas en producción: 1 kg por cada 2.5-3 litros de leche producidos sobre 10 litros. Ganado de carne: 0.5-1.5% del peso vivo. Introducir gradualmente en la dieta para evitar problemas digestivos.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Sales Minerales -->
+    <div class="modal fade" id="modalSales" tabindex="-1" aria-labelledby="modalSalesLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalSalesLabel">Sales Minerales - Información Detallada</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="info-section">
+                        <h5>Descripción</h5>
+                        <p>Las sales minerales son suplementos esenciales que proporcionan minerales macro y micro que el forraje no cubre en su totalidad. Son fundamentales para la salud y productividad del ganado bovino.</p>
+                    </div>
+                    <div class="info-section">
+                        <h5>Beneficios</h5>
+                        <ul>
+                            <li>Previene deficiencias minerales</li>
+                            <li>Mejora la fertilidad y reproducción</li>
+                            <li>Fortalece el sistema inmunológico</li>
+                            <li>Optimiza el crecimiento óseo</li>
+                            <li>Aumenta la producción láctea</li>
+                        </ul>
+                    </div>
+                    <div class="info-section">
+                        <h5>Minerales Principales</h5>
+                        <p>Calcio, fósforo, magnesio, sodio, azufre (macrominerales). Cobre, zinc, selenio, cobalto, yodo, manganeso (microminerales). Cada mineral cumple funciones específicas en el metabolismo animal.</p>
+                    </div>
+                    <div class="info-section">
+                        <h5>Suministro</h5>
+                        <p>Consumo promedio: 80-120 gramos por animal por día. Colocar en comederos cubiertos de libre acceso. Cambiar regularmente para evitar apelmazamiento. Verificar consumo diario y ajustar según necesidad.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Melaza -->
+    <div class="modal fade" id="modalMelaza" tabindex="-1" aria-labelledby="modalMelazaLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalMelazaLabel">Melaza - Información Detallada</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="info-section">
+                        <h5>Descripción</h5>
+                        <p>La melaza es un subproducto líquido de la industria azucarera, rico en azúcares y minerales. Es altamente palatable y se utiliza como fuente de energía rápida y mejorador del sabor de otros alimentos.</p>
+                    </div>
+                    <div class="info-section">
+                        <h5>Beneficios</h5>
+                        <ul>
+                            <li>Fuente rápida de energía</li>
+                            <li>Mejora la palatabilidad de la dieta</li>
+                            <li>Aumenta el consumo de materia seca</li>
+                            <li>Aporta minerales como potasio y hierro</li>
+                            <li>Económica y fácil de usar</li>
+                        </ul>
+                    </div>
+                    <div class="info-section">
+                        <h5>Modo de Uso</h5>
+                        <p>Se puede mezclar con concentrados, ensilaje o alimentos secos. También se diluye en agua para preparar bloques nutricionales. Ayuda a reducir el desperdicio de alimentos al mejorar su aceptación.</p>
+                    </div>
+                    <div class="info-section">
+                        <h5>Dosificación</h5>
+                        <p>Dosis recomendada: 0.5-1.5 kg por animal por día. No exceder el 15% de la materia seca total de la dieta. Introducir gradualmente para evitar trastornos digestivos. Diluir con agua en proporción 1:1 para facilitar mezclado.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

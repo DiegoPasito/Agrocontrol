@@ -55,7 +55,7 @@
           </ul>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Insumos</a>
+          <a class="nav-link" href="insumos.html">Insumos</a>
         </li>
 
         <li class="nav-item">
@@ -76,123 +76,141 @@
         </li>
 
       </ul>
-      <form class="d-flex" role="search">
-        <input class="form-control me-2" type="search" placeholder="Buscar" aria-label="Search"/>
-        <button class="btn btn-outline-success" type="submit">Buscar</button> 
-      </form> <br>
+       
     </div>
   </div>
  </nav>
   </header> 
 <body >
 
-  <main class="container mt-4">
-    <h2>Registrar Vaca</h2>
-  <form id="form-vaca" class="mb-4">
-    <div class="mb-3">
-      <label class="form-label">Nombre</label>
-      <input type="text" id="nombre" class="form-control" required>
-    </div>
+  <main>
+        <div class="control-container">
+            <h1 class="page-title">Control de Ganado</h1>
+            <p class="page-subtitle">Registra y gestiona la información de tus vacas</p>
 
-    <div class="mb-3">
-      <label class="form-label">Raza</label>
-      <select id="raza" class="form-select" required>
-        <option value="Jersey">Jersey</option>
-        <option value="Girolando">Girolando</option>
-        <option value="Gyr">Gyr</option>
-        <option value="Simmental">Simmental</option>
-      </select>
-    </div>
+            <div id="mensaje"></div>
 
-    <div class="mb-3">
-      <label class="form-label">Peso (kg)</label>
-      <input type="number" id="peso" class="form-control" step="any" required>
-    </div>
+            <div class="form-card">
+                <div class="icon-cow">🐄</div>
+                
+                <form id="form-vaca">
+                    <div class="mb-4">
+                        <label class="form-label">Nombre de la Vaca</label>
+                        <input type="text" id="nombre" class="form-control" placeholder="Ej: Margarita" required>
+                    </div>
 
-    <div class="mb-3">
-      <label class="form-label">Edad (años)</label>
-      <input type="number" id="edad" class="form-control" required>
-    </div>
+                    <div class="mb-4">
+                        <label class="form-label">Raza</label>
+                        <select id="raza" class="form-select" required>
+                            <option value="" disabled selected>Selecciona una raza</option>
+                            <option value="Jersey">Jersey</option>
+                            <option value="Girolando">Girolando</option>
+                            <option value="Gyr">Gyr</option>
+                            <option value="Simmental">Simmental</option>
+                        </select>
+                    </div>
 
-    <div class="mb-3">
-      <label class="form-label">Produccion de leche Diaria (Litros)</label>
-      <input type="number" id="leche" class="form-control" step="any"  required>
-    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-4">
+                            <label class="form-label">Peso (kg)</label>
+                            <input type="number" id="peso" class="form-control" placeholder="Ej: 450" step="any" required>
+                        </div>
 
-    <div class="mb-3 form-check">
-      <input type="checkbox" id="lactando" class="form-check-input">
-      <label class="form-check-label" for="lactando">¿Está lactando?</label>
-    </div>
+                        <div class="col-md-6 mb-4">
+                            <label class="form-label">Edad (años)</label>
+                            <input type="number" id="edad" class="form-control" placeholder="Ej: 3" required>
+                        </div>
+                    </div>
 
-    <button type="submit" class="btn btn-success">Guardar</button>
-  </form>
+                    <div class="mb-4">
+                        <label class="form-label">Producción de Leche Diaria (Litros)</label>
+                        <input type="number" id="leche" class="form-control" placeholder="Ej: 15.5" step="any" required>
+                    </div>
 
-  <div id="mensaje"></div>
+                    <div class="mb-4">
+                        <div class="form-check">
+                            <input type="checkbox" id="lactando" class="form-check-input">
+                            <label class="form-check-label" for="lactando">¿Está actualmente lactando?</label>
+                        </div>
+                    </div>
 
-  <script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-app.js";
-  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js";
-  import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-firestore.js";
+                    <button type="submit" class="btn btn-success">
+                        Guardar Registro
+                    </button>
+                </form>
+            </div>
+        </div>
+    </main>
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyAzonIFbhlOnnIs9xG9Lb4uBJHLrhCi3qU",
-    authDomain: "web-y-movil-agroncontrol.firebaseapp.com",
-    projectId: "web-y-movil-agroncontrol",
-    storageBucket: "web-y-movil-agroncontrol.firebasestorage.app",
-    messagingSenderId: "180502593551",
-    appId: "1:180502593551:web:f4ae5111ac99ec70fa237a",
-    measurementId: "G-BJ9G9WSKNY"
-  };
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js";
+        import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-firestore.js";
 
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-  const db = getFirestore(app);
+        const firebaseConfig = {
+            apiKey: "AIzaSyAzonIFbhlOnnIs9xG9Lb4uBJHLrhCi3qU",
+            authDomain: "web-y-movil-agroncontrol.firebaseapp.com",
+            projectId: "web-y-movil-agroncontrol",
+            storageBucket: "web-y-movil-agroncontrol.firebasestorage.app",
+            messagingSenderId: "180502593551",
+            appId: "1:180502593551:web:f4ae5111ac99ec70fa237a",
+            measurementId: "G-BJ9G9WSKNY"
+        };
 
-    const form = document.getElementById("form-vaca");
-    const mensaje = document.getElementById("mensaje");
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
 
-    onAuthStateChanged(auth, (user) => {
-      if (!user) {
-        mensaje.innerHTML = "<p class='text-danger'>Debes iniciar sesión para registrar vacas.</p>";
-        form.style.display = "none";
-        return;
-      }
+        const form = document.getElementById("form-vaca");
+        const mensaje = document.getElementById("mensaje");
 
-        form.style.display = "block";
-        mensaje.innerHTML = "<p class='text-success'>Bienvenido, puedes registrar tus vacas 🐄</p>";
+        onAuthStateChanged(auth, (user) => {
+            if (!user) {
+                mensaje.innerHTML = "<div class='alert-custom alert-danger-custom'>⚠️ Debes iniciar sesión para registrar vacas.</div>";
+                form.style.display = "none";
+                return;
+            }
 
-      form.addEventListener("submit", async (e) => {
-        e.preventDefault();
+            form.style.display = "block";
+            mensaje.innerHTML = "<div class='alert-custom alert-success-custom'>✅ Bienvenido, puedes registrar tus vacas</div>";
 
-        const nombre = document.getElementById("nombre").value;
-        const raza = document.getElementById("raza").value;
-        const peso = parseFloat(document.getElementById("peso").value);
-        const edad = parseInt(document.getElementById("edad").value);
-        const leche = parseFloat(document.getElementById("leche").value);
-        const lactando = document.getElementById("lactando").checked;
+            form.addEventListener("submit", async (e) => {
+                e.preventDefault();
 
-        try {
-          await addDoc(collection(db, "users", user.uid, "cows"), {
-            name: nombre,
-            breed: raza,
-            weight: peso,
-            age: edad,
-            milkProduction: leche,
-            isLactating: lactando,
-            createdAt: new Date()
-          });
+                const nombre = document.getElementById("nombre").value;
+                const raza = document.getElementById("raza").value;
+                const peso = parseFloat(document.getElementById("peso").value);
+                const edad = parseInt(document.getElementById("edad").value);
+                const leche = parseFloat(document.getElementById("leche").value);
+                const lactando = document.getElementById("lactando").checked;
 
-          mensaje.innerHTML = "<p class='text-success'>✅ Vaca registrada con éxito.</p>";
-          form.reset();
-        } catch (error) {
-          console.error("Error al guardar vaca:", error);
-          mensaje.innerHTML = "<p class='text-danger'>❌ Error al guardar la vaca.</p>";
-        }
-      });
-    });
-  </script>
+                try {
+                    await addDoc(collection(db, "users", user.uid, "cows"), {
+                        name: nombre,
+                        breed: raza,
+                        weight: peso,
+                        age: edad,
+                        milkProduction: leche,
+                        isLactating: lactando,
+                        createdAt: new Date()
+                    });
 
-</main>
+                    mensaje.innerHTML = "<div class='alert-custom alert-success-custom'>✅ Vaca registrada con éxito</div>";
+                    form.reset();
+                    
+                    setTimeout(() => {
+                        mensaje.innerHTML = "<div class='alert-custom alert-success-custom'>✅ Bienvenido, puedes registrar tus vacas</div>";
+                    }, 3000);
+                } catch (error) {
+                    console.error("Error al guardar vaca:", error);
+                    mensaje.innerHTML = "<div class='alert-custom alert-danger-custom'>❌ Error al guardar la vaca. Intenta nuevamente.</div>";
+                }
+            });
+        });
+    </script>
+
+
+
 
   
 </body>
