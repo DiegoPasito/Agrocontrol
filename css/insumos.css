@@ -1,5 +1,5 @@
-    body {
-          margin: 0;
+  body {
+            margin: 0;
             background: linear-gradient(135deg, #e8f8ea 0%, #f0fdf1 50%, #e8f8ea 100%);
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
             min-height: 100vh;
@@ -17,8 +17,8 @@
         .navbar-expand-lg {
             background: linear-gradient(135deg, rgba(219, 245, 222, 0.95), rgba(200, 240, 205, 0.95));
             backdrop-filter: blur(10px);
-            border-bottom: 2px solid rgba(54, 172, 66, 0.2);
-            box-shadow: 0 4px 15px rgba(54, 172, 66, 0.15);
+            border-bottom: 2px solid rgba(54, 172, 66, 0.3);
+            box-shadow: 0 4px 15px rgba(54, 172, 66, 0.2);
             padding: 10px 0;
         }
 
@@ -27,7 +27,7 @@
         }
 
         .navbar-brand img:hover {
-            transform: scale(1.05);
+            transform: scale(1.05) rotate(5deg);
         }
 
         .navbar-nav .nav-link {
@@ -89,6 +89,38 @@
         .dropdown-divider {
             border-color: rgba(54, 172, 66, 0.3);
         }
+
+        .form-control {
+            border: 2px solid #36ac42;
+            border-radius: 50px;
+            padding: 10px 20px;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: #2b8c35;
+            box-shadow: 0 0 0 0.3rem rgba(54, 172, 66, 0.25);
+            transform: scale(1.02);
+        }
+
+        .btn-outline-success {
+            border: 2px solid #36ac42;
+            border-radius: 50px;
+            padding: 10px 25px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .btn-outline-success:hover {
+            background: linear-gradient(135deg, #36ac42, #2b8c35);
+            border-color: #36ac42;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(54, 172, 66, 0.4);
+        }
+
+        /* Aqui termina el navbar */
+
+
 
         /* Estilos para la sección de insumos */
         main {
