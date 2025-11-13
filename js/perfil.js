@@ -12,7 +12,8 @@ import {
   getDoc,
   setDoc,
   serverTimestamp,
-  onSnapshot
+  onSnapshot,
+  collection
 } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-firestore.js";
 
 // 🔧 Configuración de Firebase
@@ -42,46 +43,46 @@ async function actualizarPerfilUI(user) {
   const emailEl = document.getElementById("profile-email");
   const profileImg = document.getElementById("profile-image");
 
-  let email = user.email || "email@ejemplo.com";
-  let displayName = user.displayName;
+  const email = user.email || "email@ejemplo.com";
+  let displayName = user.displayName || email.split("@")[0];
 
-  // 🔹 Intentar obtener nombre desde Firestore
   try {
     const userRef = doc(db, "users", user.uid);
     const userSnap = await getDoc(userRef);
-    if (userSnap.exists() && userSnap.data().nombre) {
-      displayName = userSnap.data().nombre;
+
+    if (!userSnap.exists()) {
+      // 🟢 Crea el documento si no existe (esto sí tiene permiso con tus reglas)
+      await setDoc(userRef, {
+        email,
+        nombre: displayName,
+        creado: serverTimestamp(),
+        ultimoAcceso: serverTimestamp()
+      });
+      console.log(`[perfil.js] Documento Firestore creado para ${user.uid}`);
     }
+
+    // Vuelve a leer (ahora debe existir)
+    const nuevoSnap = await getDoc(userRef);
+    const data = nuevoSnap.data();
+    if (data?.nombre) displayName = data.nombre;
+
   } catch (err) {
-    console.warn("⚠️ No se pudo obtener el nombre desde Firestore:", err);
+    console.warn("⚠️ No se pudo acceder a Firestore (verifica permisos):", err);
   }
 
-  // 🔹 Si no tiene nombre guardado, usa el email antes del "@"
-  if (!displayName) {
-    displayName = email.split("@")[0] || "Usuario";
-  }
-
-  // 🔹 Mostrar en la interfaz
+  // Mostrar datos en la UI
   if (nombreEl) nombreEl.textContent = displayName;
   if (emailEl) emailEl.textContent = email;
-
-  // 🔹 Cargar imagen de perfil guardada localmente
   if (profileImg) {
     const savedUid = localStorage.getItem("profile-image-uid");
-    if (savedUid === user.uid) {
-      const saved = localStorage.getItem("profile-image");
-      if (saved) profileImg.src = saved;
-      else profileImg.src = "img/avatar-placeholder.png";
-    } else {
-      profileImg.src = "img/avatar-placeholder.png";
-    }
+    const savedImg = localStorage.getItem("profile-image");
+    profileImg.src =
+      savedUid === user.uid && savedImg
+        ? savedImg
+        : "img/avatar-placeholder.png";
   }
 
-  console.log("[perfil.js] Perfil actualizado:", {
-    displayName,
-    email,
-    uid: user.uid
-  });
+  console.log("[perfil.js] Perfil mostrado:", { displayName, email, uid: user.uid });
 }
 
 // ================================
@@ -91,7 +92,11 @@ async function registrarUltimoAcceso(uid) {
   if (!uid) return;
   try {
     const userRef = doc(db, "users", uid);
-    await setDoc(userRef, { ultimoAcceso: serverTimestamp() }, { merge: true });
+    await setDoc(
+      userRef,
+      { ultimoAcceso: serverTimestamp() },
+      { merge: true }
+    );
     console.log(`[perfil.js] Último acceso registrado para UID: ${uid}`);
   } catch (err) {
     console.error("❌ Error registrando último acceso:", err);
@@ -99,25 +104,20 @@ async function registrarUltimoAcceso(uid) {
 }
 
 // ================================
-// 🔹 MOSTRAR ÚLTIMO ACCESO EN TIEMPO REAL 🔹
+// 🔹 MOSTRAR ÚLTIMO ACCESO 🔹
 // ================================
-async function mostrarUltimoAcceso(uid) {
+function mostrarUltimoAcceso(uid) {
   if (!uid) return;
   const userRef = doc(db, "users", uid);
   const ultimoEl = document.getElementById("ultimoAcceso");
   if (!ultimoEl) return;
 
-  try {
-    onSnapshot(userRef, (snap) => {
+  onSnapshot(
+    userRef,
+    (snap) => {
       if (snap.exists() && snap.data().ultimoAcceso) {
         let fecha = snap.data().ultimoAcceso;
         if (typeof fecha.toDate === "function") fecha = fecha.toDate();
-        else if (typeof fecha === "string") fecha = new Date(fecha);
-
-        if (isNaN(fecha.getTime())) {
-          ultimoEl.textContent = "Fecha inválida";
-          return;
-        }
 
         const opciones = {
           year: "numeric",
@@ -133,43 +133,85 @@ async function mostrarUltimoAcceso(uid) {
       } else {
         ultimoEl.textContent = "Primer inicio de sesión";
       }
-    });
-  } catch (err) {
-    console.error("❌ Error mostrando último acceso:", err);
-    ultimoEl.textContent = "Error al cargar hora";
-  }
+    },
+    (err) => {
+      console.error("⚠️ Error mostrando último acceso:", err);
+      ultimoEl.textContent = "Sin permiso o error al cargar";
+    }
+  );
+}
+
+// ================================
+// 🔹 CONTAR VACAS Y RECORDATORIOS 🔹
+// ================================
+function escucharCambiosColecciones(uid) {
+  if (!uid) return;
+
+  const vacasSpan = document.getElementById("vacas-registradas");
+  const recordatoriosSpan = document.getElementById("recordatorios-activos");
+
+  // Escuchar cambios en la colección de vacas
+  const cowsRef = collection(db, "users", uid, "cows");
+  onSnapshot(cowsRef, (snapshot) => {
+    const totalVacas = snapshot.size;
+    if (vacasSpan) vacasSpan.textContent = totalVacas;
+    console.log(`🐄 Vacas registradas: ${totalVacas}`);
+  });
+
+  // Escuchar cambios en la colección de recordatorios
+  const remindersRef = collection(db, "users", uid, "reminders");
+  onSnapshot(remindersRef, (snapshot) => {
+    const activos = snapshot.docs.filter(doc => doc.data().activo !== false).length;
+    if (recordatoriosSpan) recordatoriosSpan.textContent = activos;
+    console.log(`⏰ Recordatorios activos: ${activos}`);
+  });
 }
 
 // ================================
 // 🔹 CONTROL DE SESIÓN 🔹
 // ================================
 onAuthStateChanged(auth, async (user) => {
+  const nombreEl = document.getElementById("profile-name");
+  const emailEl = document.getElementById("profile-email");
+  const ultimoEl = document.getElementById("ultimoAcceso");
+  const profileImg = document.getElementById("profile-image");
+
   if (user) {
-    currentUid = user.uid;
+    console.log("[Auth] Usuario autenticado:", user.uid);
+
+    const userRef = doc(db, "users", user.uid);
+    const snap = await getDoc(userRef);
+
+    // ✅ Si el usuario no tiene documento, lo creamos
+    if (!snap.exists()) {
+      console.warn("⚠️ No existe documento para este usuario, creando uno nuevo...");
+      await setDoc(userRef, {
+        nombre: user.displayName || "Usuario nuevo",
+        email: user.email || "Sin email",
+        creadoEn: new Date().toISOString(),
+        ultimoAcceso: new Date().toISOString(),
+      });
+      console.log("✅ Documento de usuario creado en Firestore:", user.uid);
+    }
+
+    // Ya puedes continuar con tus funciones normales
     await registrarUltimoAcceso(user.uid);
     await actualizarPerfilUI(user);
-    await mostrarUltimoAcceso(user.uid);
+    mostrarUltimoAcceso(user.uid);
+    escucharCambiosColecciones(user.uid);
+
   } else {
-    currentUid = null;
-    try {
-      localStorage.removeItem("profile-image");
-      localStorage.removeItem("profile-image-uid");
-    } catch (e) {
-      console.warn(e);
-    }
-    const profileImg = document.getElementById("profile-image");
+    // 🔹 Usuario no autenticado: limpiar la UI
+    console.warn("[Auth] Ningún usuario autenticado");
     if (profileImg) profileImg.src = "img/avatar-placeholder.png";
-    const pn = document.getElementById("profile-name");
-    const pe = document.getElementById("profile-email");
-    if (pn) pn.textContent = "Usuario";
-    if (pe) pe.textContent = "email@ejemplo.com";
-    const ultimoEl = document.getElementById("ultimoAcceso");
+    if (nombreEl) nombreEl.textContent = "Usuario";
+    if (emailEl) emailEl.textContent = "email@ejemplo.com";
     if (ultimoEl) ultimoEl.textContent = "-";
   }
 });
 
 // ================================
-// 🔹 FOTO DE PERFIL (LOCALSTORAGE) 🔹
+// 🔹 FOTO DE PERFIL LOCAL 🔹
 // ================================
 document.addEventListener("DOMContentLoaded", () => {
   const profileImg = document.getElementById("profile-image");
@@ -180,8 +222,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (fotoInput) {
     fotoInput.addEventListener("change", (e) => {
       const file = e.target.files && e.target.files[0];
-      if (!file) return;
-      mostrarVistaPrevia(file);
+      if (file) mostrarVistaPrevia(file);
     });
   }
 
@@ -222,16 +263,11 @@ function mostrarVistaPrevia(file) {
     const modalNode = container.querySelector("#previewModal");
     const previewModal = new bootstrap.Modal(modalNode);
     previewModal.show();
-    const confirmar = container.querySelector("#confirmar-foto");
-    confirmar.onclick = () => {
+    container.querySelector("#confirmar-foto").onclick = () => {
       const profileImg = document.getElementById("profile-image");
       if (profileImg) profileImg.src = imageData;
-      try {
-        localStorage.setItem("profile-image", imageData);
-        localStorage.setItem("profile-image-uid", currentUid);
-      } catch (e) {
-        console.warn("No se pudo usar localStorage:", e);
-      }
+      localStorage.setItem("profile-image", imageData);
+      localStorage.setItem("profile-image-uid", currentUid);
       previewModal.hide();
     };
     modalNode.addEventListener("hidden.bs.modal", () => {
@@ -244,26 +280,16 @@ function mostrarVistaPrevia(file) {
 function eliminarFoto() {
   const profileImg = document.getElementById("profile-image");
   if (profileImg) profileImg.src = "img/avatar-placeholder.png";
-  try {
-    localStorage.removeItem("profile-image");
-    localStorage.removeItem("profile-image-uid");
-  } catch (e) {
-    console.warn(e);
-  }
+  localStorage.removeItem("profile-image");
+  localStorage.removeItem("profile-image-uid");
 }
 
 function verFoto() {
   const img = document.getElementById("profile-image");
-  if (!img) {
-    alert("Imagen no encontrada");
-    return;
-  }
+  if (!img) return alert("Imagen no encontrada");
   const url = img.src;
   const w = window.open("", "_blank");
-  if (!w) {
-    alert("No se pudo abrir la ventana. Revisa bloqueo de pop-ups.");
-    return;
-  }
+  if (!w) return alert("No se pudo abrir la ventana. Revisa bloqueo de pop-ups.");
   w.document.write(`
     <html><head><title>Foto de perfil</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -275,3 +301,4 @@ function verFoto() {
 window.eliminarFoto = eliminarFoto;
 window.verFoto = verFoto;
 window.mostrarVistaPrevia = mostrarVistaPrevia;
+window.auth = auth;
