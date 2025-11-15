@@ -196,7 +196,7 @@
     
     
     <h2 class="mb-4 text-center page-title">🐮 Mis Vacas Girolando</h2>
-    <div id="tabla-girolando"></div>
+    <div id="tabla-girolando" class="table-responsive"></div>
   </main>
 
   <!-- Modal Editar -->
@@ -315,7 +315,7 @@
           <td>${v.data.milkProduction ?? "-"} L</td>
           <td>${v.data.isLactating ? "Sí" : "No"}</td>
           <td class="text-center">
-          <div class="d-flex flex-wrap justify-content-center gap-2">
+          <div class="d-flex flex-wrap justify-content-center gap-2 w-100 text-center">
             <button class="btn btn-warning btn-sm"
               data-bs-toggle="modal" data-bs-target="#editarModal"
               onclick="llenarFormulario('${v.id}','${v.data.name}','${v.data.weight}','${v.data.age}','${v.data.milkProduction ?? 0}','${v.data.isLactating}')">
