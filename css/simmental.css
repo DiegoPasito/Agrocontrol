@@ -5,21 +5,29 @@
             min-height: 100vh;
         }
 
+         /* ---- FIX: header fijo  ---- */
         header {
-            position: sticky;
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 1000;
-            backdrop-filter: blur(10px);
+        width: 100%;
+        z-index: 1100; /* alto para que esté encima */
+        
         }
 
         .navbar-expand-lg {
-           background: linear-gradient(135deg, rgba(219, 245, 222, 0.95), rgba(200, 240, 205, 0.95));
-            backdrop-filter: blur(10px);
-            border-bottom: 2px solid rgba(54, 172, 66, 0.3);
-            box-shadow: 0 4px 15px rgba(54, 172, 66, 0.2);
-            padding: 10px 0;
+        background: linear-gradient(135deg, rgba(219,245,222,0.95), rgba(200,240,205,0.95));
+        border-bottom: 2px solid rgba(54, 172, 66, 0.3);
+        box-shadow: 0 4px 15px rgba(54, 172, 66, 0.2);
+        padding: 10px 0;
+        
+        }
+
+        body {
+        padding-top: calc(100px + 2.5rem); /* SUMA LOGO + NAV */
+        }
+
+        @media (max-width: 992px) {
+            body {
+                padding-top: 130px; /* cuando está colapsado */
+            }
         }
 
         .navbar-brand img {
@@ -175,14 +183,7 @@
             z-index: 1;
         }
 
-        .card.shadow-lg img {
-            transition: transform 0.5s ease;
-            object-fit: cover;
-        }
-
-        .card.shadow-lg:hover img {
-            transform: scale(1.1);
-        }
+        
 
         .card.border-left-accent {
             border-left: 6px solid #36ac42;
