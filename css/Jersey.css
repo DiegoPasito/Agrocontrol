@@ -426,6 +426,30 @@ body {
         transform: scale(0.8);
         pointer-events: none;
         }
+
+        /* === Arreglo de que la pantalla se rompa === */
+
+        html, body {
+        overflow-x: hidden !important;
+        }
+
+        table td {
+        word-wrap: break-word;
+        white-space: normal !important;
+        }
+
+        td .btn {
+        flex: 1 1 45%;
+        min-width: 120px;
+        }
+
+        .card img {
+        max-width: 100%;
+        height: auto;
+        display: block;
+        }
+
+        
         
 
         /* === Encabezado del modal (verde elegante) === */

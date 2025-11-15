@@ -91,7 +91,7 @@
 
     <!-- Sección principal -->
     <div class="card shadow-lg mb-4">
-      <div class="row g-0 align-items-center">
+      <div class="row g-0 align-items-center  w-100 m-0">
         <div class="col-md-5">
           <img src="img/Jersey Imagen 2.webp" class="img-fluid rounded-start" alt="Vaca Jersey" style="border-radius:20px 0 0 20px;" onerror="this.style.display='none'">
         </div>
@@ -318,7 +318,7 @@
           <td>${v.data.milkProduction ?? "-"} L</td>
           <td>${v.data.isLactating ? "Sí" : "No"}</td>
           <td class="text-center">
-          <div class="d-flex flex-wrap justify-content-center gap-2">
+          <div class="d-flex flex-wrap justify-content-center gap-2 w-100 text-center">
             <button class="btn btn-warning btn-sm"
               data-bs-toggle="modal" data-bs-target="#editarModal"
               onclick="llenarFormulario('${v.id}','${v.data.name}','${v.data.weight}','${v.data.age}','${v.data.milkProduction ?? 0}','${v.data.isLactating}')">
