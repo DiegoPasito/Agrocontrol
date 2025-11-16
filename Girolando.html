@@ -424,11 +424,15 @@ window.mostrarInsumos = async function (nombreVaca) {
     contenedor.innerHTML = "";
 
     insumos.forEach(nombre => {
-      const btn = document.createElement("button");
-      btn.className = "btn btn-outline-success";
-      btn.textContent = nombre;
-      btn.onclick = () => calcularRecomendacion(nombre, weight, milkProduction);
-      contenedor.appendChild(btn);
+    const btn = document.createElement("button");
+    btn.className = "btn btn-outline-success";
+    btn.textContent = nombre;
+
+    btn.addEventListener("mouseover", () => {
+      calcularRecomendacion(nombre, weight, milkProduction);
+    });
+
+    contenedor.appendChild(btn);
     });
   };
 
@@ -480,6 +484,11 @@ window.mostrarInsumos = async function (nombreVaca) {
 
     document.getElementById("resultadoInsumo").innerHTML = resultado;
   }
+
+  document.getElementById("insumosModal").addEventListener("hidden.bs.modal", () => {
+  document.getElementById("resultadoInsumo").innerHTML = "";
+});
+
   </script>
 
   <script>

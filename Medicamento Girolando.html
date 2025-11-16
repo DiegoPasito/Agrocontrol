@@ -83,107 +83,1602 @@
  </nav>
   </header>
 
-  <main class="mt-5">
-  <div class="container">
-    <h2 class="carousel-title text-center mb-4">Medicamentos para la vaca Girolando</h2>
+  <main class="medicamentos-section">
+        <div class="container">
+            <h1 class="section-title">Medicamentos para Vacas Jersey</h1>
+            <p class="section-subtitle">Encuentra los medicamentos adecuados para el cuidado de tu ganado Jersey</p>
 
-    <div class="row g-4 align-items-start">
-      <!-- Carrusel 1 (izquierda) -->
-      <div class="col-12 col-lg-6">
-        <div class="custom-container">
-          <h3 class="carousel-title text-center">Medicamentos para vaca en lactancia</h3>
-
-          <div id="carouselLeft" class="carousel slide">
-            <div class="carousel-indicators">
-          <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true"></button>
-          <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1"></button>
-          <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2"></button>
-          <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="3"></button>
-          </div>
-            <div class="carousel-inner">
-              <div class="carousel-item active">
-                <img src="img/Gyr Imagen 4.webp" class="d-block w-100 object-fit-cover" alt="...">
-                <div class="carousel-caption">
-                  <h5>Primer medicamento</h5>
-                  <p>Descripción breve del medicamento.</p>
-                  <a href="#" class="btn btn-success btn-sm">Más información</a>
+            <!-- Barra de búsqueda -->
+            <div class="search-container">
+                <div class="search-wrapper">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" id="searchInput" class="search-input" placeholder="Buscar medicamento por nombre o categoría...">
+                    <button class="search-clear" id="clearSearch" style="display: none;">✕</button>
                 </div>
-              </div>
-              <div class="carousel-item">
-                <img src="img/Jersey Imagen 2.webp" class="d-block w-100 object-fit-cover" alt="...">
-                <div class="carousel-caption">
-                  <h5>Segundo medicamento</h5>
-                  <p>Descripción breve del medicamento.</p>
-                  <a href="#" class="btn btn-success btn-sm">Más información</a>
-                </div>
-              </div>
-              <div class="carousel-item">
-                <img src="img/Jersey Imagen 2.webp" class="d-block w-100 object-fit-cover" alt="...">
-                <div class="carousel-caption">
-                  <h5>Segundo medicamento</h5>
-                  <p>Descripción breve del medicamento.</p>
-                  <a href="#" class="btn btn-success btn-sm">Más información</a>
-                </div>
-              </div>
-              <div class="carousel-item">
-                <img src="img/Jersey Imagen 2.webp" class="d-block w-100 object-fit-cover" alt="...">
-                <div class="carousel-caption">
-                  <h5>Segundo medicamento</h5>
-                  <p>Descripción breve del medicamento.</p>
-                  <a href="#" class="btn btn-success btn-sm">Más información</a>
-                </div>
-              </div>
+                <div id="searchResults" class="search-results" style="display: none;"></div>
             </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#carouselLeft" data-bs-slide="prev">
-              <span class="carousel-control-prev-icon"></span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carouselLeft" data-bs-slide="next">
-              <span class="carousel-control-next-icon"></span>
-            </button>
-          </div>
+
+            <!-- Carrusel de Medicamentos Inyectables -->
+            <div class="carousel-container">
+                <div class="carousel-header">
+                    <div class="carousel-icon">💉</div>
+                    <h3>Medicamentos Inyectables</h3>
+                </div>
+
+                <div id="carouselInyectables" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <div class="row">
+                                <div class="col-md-4 mb-3">
+                                    <div class="med-card">
+                                        <img src="img/OxitetraciclinaLA.png" class="med-card-img" alt="Oxitetraciclina">
+                                        <span class="med-card-category">Antibiótico</span>
+                                        <h4 class="med-card-title">Oxitetraciclina LA</h4>
+                                        <p class="med-card-desc">Antibiótico de amplio espectro para infecciones bacterianas.</p>
+                                        <button class="btn-info-med" data-bs-toggle="modal" data-bs-target="#modalMed1">Más información</button>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <div class="med-card">
+                                        <img src="img/Ivermectina.webp" class="med-card-img" alt="Ivermectina">
+                                        <span class="med-card-category">Antiparasitario</span>
+                                        <h4 class="med-card-title">Ivermectina 1%</h4>
+                                        <p class="med-card-desc">Tratamiento contra parásitos internos y externos.</p>
+                                        <button class="btn-info-med" data-bs-toggle="modal" data-bs-target="#modalMed2">Más información</button>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <div class="med-card">
+                                        <img src="img/complejo_b.png" class="med-card-img" alt="Vitamina ADE">
+                                        <span class="med-card-category">Vitamínico</span>
+                                        <h4 class="med-card-title">Complejo B</h4>
+                                        <p class="med-card-desc">Suplemento vitamínico (cambiar info).</p>
+                                        <button class="btn-info-med" data-bs-toggle="modal" data-bs-target="#modalMed3">Más información</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <div class="row">
+                                <div class="col-md-4 mb-3">
+                                    <div class="med-card">
+                                        <img src="img/meloxicam.png" class="med-card-img" alt="Meloxicam">
+                                        <span class="med-card-category">Antiinflamatorio</span>
+                                        <h4 class="med-card-title">Meloxicam 2%</h4>
+                                        <p class="med-card-desc">Antiinflamatorio no esteroideo para dolor y fiebre.</p>
+                                        <button class="btn-info-med" data-bs-toggle="modal" data-bs-target="#modalMed4">Más información</button>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <div class="med-card">
+                                        <img src="img/dexametasona.png" class="med-card-img" alt="Dexametasona">
+                                        <span class="med-card-category">Corticosteroide</span>
+                                        <h4 class="med-card-title">Dexametasona 2mg</h4>
+                                        <p class="med-card-desc">Corticosteroide para procesos inflamatorios y alérgicos.</p>
+                                        <button class="btn-info-med" data-bs-toggle="modal" data-bs-target="#modalMed5">Más información</button>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <div class="med-card">
+                                        <img src="img/SelenioVitaminaE.png" class="med-card-img" alt="Dexametasona">
+                                        <span class="med-card-category">Vitamínico</span>
+                                        <h4 class="med-card-title">Selenio</h4>
+                                        <p class="med-card-desc">Suplemento vitamínico-mineral.</p>
+                                        <button class="btn-info-med" data-bs-toggle="modal" data-bs-target="#modalMed11">Más información</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <div class="row">
+                                <div class="col-md-4 mb-3">
+                                    <div class="med-card">
+                                        <img src="img/VacunaClostridial.png" class="med-card-img" alt="Meloxicam">
+                                        <span class="med-card-category">Prevención</span>
+                                        <h4 class="med-card-title">Vacuna Clostridial</h4>
+                                        <p class="med-card-desc">Vacuna preventiva.</p>
+                                        <button class="btn-info-med" data-bs-toggle="modal" data-bs-target="#modalMed12">Más información</button>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <div class="med-card">
+                                        <img src="img/enrofloxacina.png" class="med-card-img" alt="Dexametasona">
+                                        <span class="med-card-category">Antibiótico</span>
+                                        <h4 class="med-card-title">Enrofloxacina</h4>
+                                        <p class="med-card-desc">Antibiótico de amplio espectro.</p>
+                                        <button class="btn-info-med" data-bs-toggle="modal" data-bs-target="#modalMed13">Más información</button>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <div class="med-card">
+                                        <img src="img/flunixin_meglumine.png" class="med-card-img" alt="Dexametasona">
+                                        <span class="med-card-category">Antiinflamatorio</span>
+                                        <h4 class="med-card-title">Flunixin Meglumine</h4>
+                                        <p class="med-card-desc">Antiinflamatorio no esteroideo.</p>
+                                        <button class="btn-info-med" data-bs-toggle="modal" data-bs-target="#modalMed14">Más información</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>  
+                        <div class="carousel-item">
+                            <div class="row">
+                                <div class="col-md-4 mb-3">
+                                    <div class="med-card">
+                                        <img src="img/sulfadoxina_trimethoprim.png" class="med-card-img" alt="Meloxicam">
+                                        <span class="med-card-category">Antibiótico</span>
+                                        <h4 class="med-card-title">Sulfadoxina + Trimetoprima </h4>
+                                        <p class="med-card-desc">Combinación antibacteriana.</p>
+                                        <button class="btn-info-med" data-bs-toggle="modal" data-bs-target="#modalMed15">Más información</button>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <div class="med-card">
+                                        <img src="img/vacuna_aftosa.png" class="med-card-img" alt="Dexametasona">
+                                        <span class="med-card-category">Vacuna obligatoria</span>
+                                        <h4 class="med-card-title">Vacuna contra Fiebre Aftosa</h4>
+                                        <p class="med-card-desc">Vacuna obligatoria en la mayoría de países.</p>
+                                        <button class="btn-info-med" data-bs-toggle="modal" data-bs-target="#modalMed16">Más información</button>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <div class="med-card">
+                                        <img src="img/vacuna_brucelosis.png" class="med-card-img" alt="Dexametasona">
+                                        <span class="med-card-category">Prevención</span>
+                                        <h4 class="med-card-title">Vacuna contra Brucelosis</h4>
+                                        <p class="med-card-desc">Vacuna para prevenir la brucelosis bovina.</p>
+                                        <button class="btn-info-med" data-bs-toggle="modal" data-bs-target="#modalMed17">Más información</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>                                        
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselInyectables" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon"></span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselInyectables" data-bs-slide="next">
+                        <span class="carousel-control-next-icon"></span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Carrusel de Medicamentos Orales/Corporales -->
+            <div class="carousel-container">
+                <div class="carousel-header">
+                    <div class="carousel-icon">💊</div>
+                    <h3>Medicamentos Orales y Corporales</h3>
+                </div>
+
+                <div id="carouselOrales" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <div class="row">
+                                <div class="col-md-4 mb-3">
+                                    <div class="med-card">
+                                        <img src="https://via.placeholder.com/300x180/36ac42/ffffff?text=Desparasitante" class="med-card-img" alt="Desparasitante">
+                                        <span class="med-card-category">Antiparasitario Oral</span>
+                                        <h4 class="med-card-title">Albendazol 10%</h4>
+                                        <p class="med-card-desc">Desparasitante oral de amplio espectro.</p>
+                                        <button class="btn-info-med" data-bs-toggle="modal" data-bs-target="#modalMed6">Más información</button>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <div class="med-card">
+                                        <img src="https://via.placeholder.com/300x180/2b8c35/ffffff?text=Probioticos" class="med-card-img" alt="Probióticos">
+                                        <span class="med-card-category">Suplemento Oral</span>
+                                        <h4 class="med-card-title">Probióticos Bovinos</h4>
+                                        <p class="med-card-desc">Mejora la flora ruminal y digestión.</p>
+                                        <button class="btn-info-med" data-bs-toggle="modal" data-bs-target="#modalMed7">Más información</button>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <div class="med-card">
+                                        <img src="https://via.placeholder.com/300x180/1e7e34/ffffff?text=Pomada" class="med-card-img" alt="Pomada">
+                                        <span class="med-card-category">Tópico</span>
+                                        <h4 class="med-card-title">Pomada Cicatrizante</h4>
+                                        <p class="med-card-desc">Para heridas y lesiones cutáneas.</p>
+                                        <button class="btn-info-med" data-bs-toggle="modal" data-bs-target="#modalMed8">Más información</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <div class="row">
+                                <div class="col-md-4 mb-3">
+                                    <div class="med-card">
+                                        <img src="https://via.placeholder.com/300x180/36ac42/ffffff?text=Spray" class="med-card-img" alt="Spray">
+                                        <span class="med-card-category">Tópico</span>
+                                        <h4 class="med-card-title">Spray Repelente</h4>
+                                        <p class="med-card-desc">Protección contra moscas y parásitos externos.</p>
+                                        <button class="btn-info-med" data-bs-toggle="modal" data-bs-target="#modalMed9">Más información</button>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <div class="med-card">
+                                        <img src="https://via.placeholder.com/300x180/2b8c35/ffffff?text=Electrolitos" class="med-card-img" alt="Electrolitos">
+                                        <span class="med-card-category">Suplemento Oral</span>
+                                        <h4 class="med-card-title">Electrolitos Orales</h4>
+                                        <p class="med-card-desc">Rehidratación y balance electrolítico.</p>
+                                        <button class="btn-info-med" data-bs-toggle="modal" data-bs-target="#modalMed10">Más información</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselOrales" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon"></span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselOrales" data-bs-slide="next">
+                        <span class="carousel-control-next-icon"></span>
+                    </button>
+                </div>
+            </div>
         </div>
-      </div>
+    </main>
 
-      <!-- Carrusel 2 (derecha) -->
-      <div class="col-12 col-lg-6">
-        <div class="custom-container">
-          <h3 class="carousel-title text-center">Medicamentos para vaca en lactancia</h3>
-          <div id="carouselRight" class="carousel slide">
-            <div class="carousel-indicators">
-              <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true"></button>
-              <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1"></button>
-              
-            </div>
-            <div class="carousel-inner">
-              <div class="carousel-item active">
-                <img src="img/Jersey Imagen 2.webp" class="d-block w-100 object-fit-cover" alt="...">
-                <div class="carousel-caption">
-                  <h5>Medicamento alternativo</h5>
-                  <p>Otra descripción breve.</p>
-                  <a href="#" class="btn btn-success btn-sm">Más información</a>
+    <!-- MODALES PARA CADA MEDICAMENTO -->
+    
+    <!-- Modal 1: Oxitetraciclina -->
+    <div class="modal fade" id="modalMed1" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Oxitetraciclina LA</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
-              </div>
-              <div class="carousel-item">
-                <img src="img/Gyr Imagen 4.webp" class="d-block w-100 object-fit-cover" alt="...">
-                <div class="carousel-caption">
-                  <h5>Otro medicamento</h5>
-                  <p>Detalles adicionales del producto.</p>
-                  <a href="#" class="btn btn-success btn-sm">Más información</a>
+                <div class="modal-body">
+                    <img src="img/OxitetraciclinaLA.png" class="modal-med-img" alt="Oxitetraciclina">
+                    
+                    <div class="modal-section">
+                        <div class="modal-section-title">
+                            <div class="modal-section-icon">📋</div>
+                            Categoría
+                        </div>
+                        <div class="modal-section-content">
+                            <strong>Antibiótico de amplio espectro - Tetraciclina de acción prolongada</strong>
+                        </div>
+                    </div>
+
+                    <div class="modal-section">
+                        <div class="modal-section-title">
+                            <div class="modal-section-icon">📝</div>
+                            Descripción
+                        </div>
+                        <div class="modal-section-content">
+                            Antibiótico bacteriostático de amplio espectro efectivo contra bacterias Gram positivas y Gram negativas. La formulación LA (Larga Acción) proporciona niveles terapéuticos prolongados en sangre, reduciendo la frecuencia de aplicación.
+                        </div>
+                    </div>
+
+                    <div class="modal-section">
+                        <div class="modal-section-title">
+                            <div class="modal-section-icon">⭐</div>
+                            Recomendaciones Principales
+                        </div>
+                        <div class="modal-section-content">
+                            <div class="recomendacion-item">
+                                <strong>Aplicación:</strong> Pulverizar sobre el animal a 20-30 cm de distancia
+                            </div>
+                            <div class="recomendacion-item">
+                                <strong>Frecuencia:</strong> Aplicar 1-2 veces al día o según necesidad
+                            </div>
+                            <div class="recomendacion-item">
+                                <strong>Protección:</strong> Efecto repelente dura 4-6 horas
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-section">
+                        <div class="modal-section-title">
+                            <div class="modal-section-icon">💡</div>
+                            Otras Recomendaciones
+                        </div>
+                        <div class="modal-section-content">
+                            <div class="recomendacion-item">
+                                Aplicar especialmente en época de lluvias y calor
+                            </div>
+                            <div class="recomendacion-item">
+                                Evitar contacto con ojos y mucosas
+                            </div>
+                            <div class="recomendacion-item">
+                                Usar en áreas de ordeño, corrales y comederos
+                            </div>
+                            <div class="recomendacion-item">
+                                No tiene tiempo de retiro para leche ni carne
+                            </div>
+                        </div>
+                    </div>
                 </div>
-              </div>
             </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#carouselRight" data-bs-slide="prev">
-              <span class="carousel-control-prev-icon"></span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carouselRight" data-bs-slide="next">
-              <span class="carousel-control-next-icon"></span>
-            </button>
-          </div>
         </div>
-      </div>
     </div>
-  </div><br>
 
-</main>
+    <!-- Modal 2: Ivermectina -->
+    <div class="modal fade" id="modalMed2" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Ivermectina 1%</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <img src="img/Ivermectina.webp" class="modal-med-img" alt="Ivermectina">
+                    
+                    <div class="modal-section">
+                        <div class="modal-section-title">
+                            <div class="modal-section-icon">📋</div>
+                            Categoría
+                        </div>
+                        <div class="modal-section-content">
+                            <strong>Antiparasitario de amplio espectro - Endectocida</strong>
+                        </div>
+                    </div>
+
+                    <div class="modal-section">
+                        <div class="modal-section-title">
+                            <div class="modal-section-icon">📝</div>
+                            Descripción
+                        </div>
+                        <div class="modal-section-content">
+                            Antiparasitario efectivo contra parásitos internos (nematodos gastrointestinales, pulmonares) y externos (garrapatas, piojos, moscas). Actúa paralizando el sistema nervioso de los parásitos.
+                        </div>
+                    </div>
+
+                    <div class="modal-section">
+                        <div class="modal-section-title">
+                            <div class="modal-section-icon">⭐</div>
+                            Recomendaciones Principales
+                        </div>
+                        <div class="modal-section-content">
+                            <div class="recomendacion-item">
+                                <strong>Dosis:</strong> 1 ml por cada 50 kg de peso vivo, vía subcutánea
+                            </div>
+                            <div class="recomendacion-item">
+                                <strong>Tiempo de retiro:</strong> 35 días para carne, 28 días para leche
+                            </div>
+                            <div class="recomendacion-item">
+                                <strong>Frecuencia:</strong> Repetir tratamiento cada 90 días o según necesidad
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-section">
+                        <div class="modal-section-title">
+                            <div class="modal-section-icon">💡</div>
+                            Otras Recomendaciones
+                        </div>
+                        <div class="modal-section-content">
+                            <div class="recomendacion-item">
+                                Aplicar preferentemente en el cuello, zona subcutánea
+                            </div>
+                            <div class="recomendacion-item">
+                                No aplicar en animales gestantes durante el primer tercio de gestación
+                            </div>
+                            <div class="recomendacion-item">
+                                Almacenar a temperatura ambiente, proteger de la luz directa
+                            </div>
+                            <div class="recomendacion-item">
+                                Combinar con rotación de potreros para mejor control parasitario
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 3: Complejo ADE -->
+    <div class="modal fade" id="modalMed3" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Complejo B</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <img src="img/complejo_b.png" class="modal-med-img" alt="Vitamina ADE">
+                    
+                    <div class="modal-section">
+                        <div class="modal-section-title">
+                            <div class="modal-section-icon">📋</div>
+                            Categoría
+                        </div>
+                        <div class="modal-section-content">
+                            <strong>Suplemento Vitamínico - Complejo vitamínico inyectable</strong>
+                        </div>
+                    </div>
+
+                    <div class="modal-section">
+                        <div class="modal-section-title">
+                            <div class="modal-section-icon">📝</div>
+                            Descripción
+                        </div>
+                        <div class="modal-section-content">
+                            Suplemento vitamínico que contiene vitaminas A, D3 y E. Mejora el sistema inmunológico, favorece el crecimiento, fortalece huesos y mejora la función reproductiva. Esencial en épocas de estrés o deficiencias nutricionales.
+                        </div>
+                    </div>
+
+                    <div class="modal-section">
+                        <div class="modal-section-title">
+                            <div class="modal-section-icon">⭐</div>
+                            Recomendaciones Principales
+                        </div>
+                        <div class="modal-section-content">
+                            <div class="recomendacion-item">
+                                <strong>Dosis:</strong> 5-10 ml por animal adulto, vía intramuscular
+                            </div>
+                            <div class="recomendacion-item">
+                                <strong>Frecuencia:</strong> Aplicar cada 30-60 días según necesidad
+                            </div>
+                            <div class="recomendacion-item">
+                                <strong>Indicado en:</strong> Gestación, lactancia, crecimiento, post-enfermedad
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-section">
+                        <div class="modal-section-title">
+                            <div class="modal-section-icon">💡</div>
+                            Otras Recomendaciones
+                        </div>
+                        <div class="modal-section-content">
+                            <div class="recomendacion-item">
+                                Especialmente importante en épocas de sequía o alimentación deficiente
+                            </div>
+                            <div class="recomendacion-item">
+                                Aplicar antes del parto para mejorar calidad del calostro
+                            </div>
+                            <div class="recomendacion-item">
+                                Almacenar en lugar fresco y oscuro, no refrigerar
+                            </div>
+                            <div class="recomendacion-item">
+                                No tiene tiempo de retiro para leche ni carne
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 4: Meloxicam -->
+    <div class="modal fade" id="modalMed4" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Meloxicam 2%</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <img src="img/meloxicam.png" class="modal-med-img" alt="Meloxicam">
+                    
+                    <div class="modal-section">
+                        <div class="modal-section-title">
+                            <div class="modal-section-icon">📋</div>
+                            Categoría
+                        </div>
+                        <div class="modal-section-content">
+                            <strong>Antiinflamatorio no esteroideo (AINE) - Analgésico y antipirético</strong>
+                        </div>
+                    </div>
+
+                    <div class="modal-section">
+                        <div class="modal-section-title">
+                            <div class="modal-section-icon">📝</div>
+                            Descripción
+                        </div>
+                        <div class="modal-section-content">
+                            Antiinflamatorio de acción prolongada efectivo para reducir dolor, inflamación y fiebre. Indicado en procesos inflamatorios agudos y crónicos, cirugías, mastitis, cojeras y problemas respiratorios.
+                        </div>
+                    </div>
+
+                    <div class="modal-section">
+                        <div class="modal-section-title">
+                            <div class="modal-section-icon">⭐</div>
+                            Recomendaciones Principales
+                        </div>
+                        <div class="modal-section-content">
+                            <div class="recomendacion-item">
+                                <strong>Dosis:</strong> 0.5 mg/kg (2.5 ml por 100 kg), vía subcutánea o intravenosa
+                            </div>
+                            <div class="recomendacion-item">
+                                <strong>Duración:</strong> Dosis única, repetir a las 24 horas si es necesario
+                            </div>
+                            <div class="recomendacion-item">
+                                <strong>Tiempo de retiro:</strong> 15 días para carne, 5 días para leche
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-section">
+                        <div class="modal-section-title">
+                            <div class="modal-section-icon">💡</div>
+                            Otras Recomendaciones
+                        </div>
+                        <div class="modal-section-content">
+                            <div class="recomendacion-item">
+                                Muy efectivo post-parto para reducir inflamación y dolor
+                            </div>
+                            <div class="recomendacion-item">
+                                No usar en animales deshidratados sin corregir primero
+                            </div>
+                            <div class="recomendacion-item">
+                                Puede combinarse con antibióticos en tratamientos
+                            </div>
+                            <div class="recomendacion-item">
+                                Evitar uso prolongado sin supervisión veterinaria
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 5: Dexametasona -->
+    <div class="modal fade" id="modalMed5" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Dexametasona 2mg</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <img src="img/dexametasona.png" class="modal-med-img" alt="Dexametasona">
+                    
+                    <div class="modal-section">
+                        <div class="modal-section-title">
+                            <div class="modal-section-icon">📋</div>
+                            Categoría
+                        </div>
+                        <div class="modal-section-content">
+                            <strong>Corticosteroide - Antiinflamatorio y antialérgico potente</strong>
+                        </div>
+                    </div>
+
+                    <div class="modal-section">
+                        <div class="modal-section-title">
+                            <div class="modal-section-icon">📝</div>
+                            Descripción
+                        </div>
+                        <div class="modal-section-content">
+                            Corticosteroide de alta potencia con acción antiinflamatoria, antialérgica e inmunosupresora. Indicado en shock, reacciones alérgicas severas, edemas, y como inductor de parto. Actúa rápidamente controlando procesos inflamatorios agudos.
+                        </div>
+                    </div>
+
+                    <div class="modal-section">
+                        <div class="modal-section-title">
+                            <div class="modal-section-icon">⭐</div>
+                            Recomendaciones Principales
+                        </div>
+                        <div class="modal-section-content">
+                            <div class="recomendacion-item">
+                                <strong>Dosis:</strong> 0.05-0.2 mg/kg, vía intramuscular o intravenosa
+                            </div>
+                            <div class="recomendacion-item">
+                                <strong>Tiempo de retiro:</strong> 7 días para carne, no usar en lactancia
+                            </div>
+                            <div class="recomendacion-item">
+                                <strong>Precaución:</strong> No usar en animales gestantes (excepto para inducir parto)
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-section">
+                        <div class="modal-section-title">
+                            <div class="modal-section-icon">💡</div>
+                            Otras Recomendaciones
+                        </div>
+                        <div class="modal-section-content">
+                            <div class="recomendacion-item">
+                                Usar solo bajo supervisión veterinaria
+                            </div>
+                            <div class="recomendacion-item">
+                                No aplicar en animales con infecciones sin antibiótico concomitante
+                            </div>
+                            <div class="recomendacion-item">
+                                Puede inducir parto 48 horas después de aplicación
+                            </div>
+                            <div class="recomendacion-item">
+                                Evitar tratamientos prolongados por efectos secundarios
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        <!-- Modal 11: Selenio -->
+    <div class="modal fade" id="modalMed11" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Selenio</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <img src="img/SelenioVitaminaE.png" class="modal-med-img" alt="Selenio">
+                    
+                    <div class="modal-section">
+                        <div class="modal-section-title">
+                            <div class="modal-section-icon">📋</div>
+                            Categoría
+                        </div>
+                        <div class="modal-section-content">
+                            <strong>Corticosteroide - Antiinflamatorio y antialérgico potente</strong>
+                        </div>
+                    </div>
+
+                    <div class="modal-section">
+                        <div class="modal-section-title">
+                            <div class="modal-section-icon">📝</div>
+                            Descripción
+                        </div>
+                        <div class="modal-section-content">
+                            Corticosteroide de alta potencia con acción antiinflamatoria, antialérgica e inmunosupresora. Indicado en shock, reacciones alérgicas severas, edemas, y como inductor de parto. Actúa rápidamente controlando procesos inflamatorios agudos.
+                        </div>
+                    </div>
+
+                    <div class="modal-section">
+                        <div class="modal-section-title">
+                            <div class="modal-section-icon">⭐</div>
+                            Recomendaciones Principales
+                        </div>
+                        <div class="modal-section-content">
+                            <div class="recomendacion-item">
+                                <strong>Dosis:</strong> 0.05-0.2 mg/kg, vía intramuscular o intravenosa
+                            </div>
+                            <div class="recomendacion-item">
+                                <strong>Tiempo de retiro:</strong> 7 días para carne, no usar en lactancia
+                            </div>
+                            <div class="recomendacion-item">
+                                <strong>Precaución:</strong> No usar en animales gestantes (excepto para inducir parto)
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-section">
+                        <div class="modal-section-title">
+                            <div class="modal-section-icon">💡</div>
+                            Otras Recomendaciones
+                        </div>
+                        <div class="modal-section-content">
+                            <div class="recomendacion-item">
+                                Usar solo bajo supervisión veterinaria
+                            </div>
+                            <div class="recomendacion-item">
+                                No aplicar en animales con infecciones sin antibiótico concomitante
+                            </div>
+                            <div class="recomendacion-item">
+                                Puede inducir parto 48 horas después de aplicación
+                            </div>
+                            <div class="recomendacion-item">
+                                Evitar tratamientos prolongados por efectos secundarios
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+      <!-- Modal 12: Vacuna clostridial -->
+    <div class="modal fade" id="modalMed12" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Vacuna Clostridial</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <img src="img/VacunaClostridial.png" class="modal-med-img" alt="clostridial">
+                    
+                    <div class="modal-section">
+                        <div class="modal-section-title">
+                            <div class="modal-section-icon">📋</div>
+                            Categoría
+                        </div>
+                        <div class="modal-section-content">
+                            <strong>Corticosteroide - Antiinflamatorio y antialérgico potente</strong>
+                        </div>
+                    </div>
+
+                    <div class="modal-section">
+                        <div class="modal-section-title">
+                            <div class="modal-section-icon">📝</div>
+                            Descripción
+                        </div>
+                        <div class="modal-section-content">
+                            Corticosteroide de alta potencia con acción antiinflamatoria, antialérgica e inmunosupresora. Indicado en shock, reacciones alérgicas severas, edemas, y como inductor de parto. Actúa rápidamente controlando procesos inflamatorios agudos.
+                        </div>
+                    </div>
+
+                    <div class="modal-section">
+                        <div class="modal-section-title">
+                            <div class="modal-section-icon">⭐</div>
+                            Recomendaciones Principales
+                        </div>
+                        <div class="modal-section-content">
+                            <div class="recomendacion-item">
+                                <strong>Dosis:</strong> 0.05-0.2 mg/kg, vía intramuscular o intravenosa
+                            </div>
+                            <div class="recomendacion-item">
+                                <strong>Tiempo de retiro:</strong> 7 días para carne, no usar en lactancia
+                            </div>
+                            <div class="recomendacion-item">
+                                <strong>Precaución:</strong> No usar en animales gestantes (excepto para inducir parto)
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-section">
+                        <div class="modal-section-title">
+                            <div class="modal-section-icon">💡</div>
+                            Otras Recomendaciones
+                        </div>
+                        <div class="modal-section-content">
+                            <div class="recomendacion-item">
+                                Usar solo bajo supervisión veterinaria
+                            </div>
+                            <div class="recomendacion-item">
+                                No aplicar en animales con infecciones sin antibiótico concomitante
+                            </div>
+                            <div class="recomendacion-item">
+                                Puede inducir parto 48 horas después de aplicación
+                            </div>
+                            <div class="recomendacion-item">
+                                Evitar tratamientos prolongados por efectos secundarios
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 13: Enrofloxacina -->
+    <div class="modal fade" id="modalMed13" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Enrofloxacina</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <img src="img/enrofloxacina.png" class="modal-med-img" alt="enrofloxacina">
+                    
+                    <div class="modal-section">
+                        <div class="modal-section-title">
+                            <div class="modal-section-icon">📋</div>
+                            Categoría
+                        </div>
+                        <div class="modal-section-content">
+                            <strong>Corticosteroide - Antiinflamatorio y antialérgico potente</strong>
+                        </div>
+                    </div>
+
+                    <div class="modal-section">
+                        <div class="modal-section-title">
+                            <div class="modal-section-icon">📝</div>
+                            Descripción
+                        </div>
+                        <div class="modal-section-content">
+                            Corticosteroide de alta potencia con acción antiinflamatoria, antialérgica e inmunosupresora. Indicado en shock, reacciones alérgicas severas, edemas, y como inductor de parto. Actúa rápidamente controlando procesos inflamatorios agudos.
+                        </div>
+                    </div>
+
+                    <div class="modal-section">
+                        <div class="modal-section-title">
+                            <div class="modal-section-icon">⭐</div>
+                            Recomendaciones Principales
+                        </div>
+                        <div class="modal-section-content">
+                            <div class="recomendacion-item">
+                                <strong>Dosis:</strong> 0.05-0.2 mg/kg, vía intramuscular o intravenosa
+                            </div>
+                            <div class="recomendacion-item">
+                                <strong>Tiempo de retiro:</strong> 7 días para carne, no usar en lactancia
+                            </div>
+                            <div class="recomendacion-item">
+                                <strong>Precaución:</strong> No usar en animales gestantes (excepto para inducir parto)
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-section">
+                        <div class="modal-section-title">
+                            <div class="modal-section-icon">💡</div>
+                            Otras Recomendaciones
+                        </div>
+                        <div class="modal-section-content">
+                            <div class="recomendacion-item">
+                                Usar solo bajo supervisión veterinaria
+                            </div>
+                            <div class="recomendacion-item">
+                                No aplicar en animales con infecciones sin antibiótico concomitante
+                            </div>
+                            <div class="recomendacion-item">
+                                Puede inducir parto 48 horas después de aplicación
+                            </div>
+                            <div class="recomendacion-item">
+                                Evitar tratamientos prolongados por efectos secundarios
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 14: Flunixin Meglumine -->
+    <div class="modal fade" id="modalMed14" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Flunixin Meglumine</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <img src="img/flunixin_meglumine.png" class="modal-med-img" alt="flunixin_meglumine">
+                    
+                    <div class="modal-section">
+                        <div class="modal-section-title">
+                            <div class="modal-section-icon">📋</div>
+                            Categoría
+                        </div>
+                        <div class="modal-section-content">
+                            <strong>Corticosteroide - Antiinflamatorio y antialérgico potente</strong>
+                        </div>
+                    </div>
+
+                    <div class="modal-section">
+                        <div class="modal-section-title">
+                            <div class="modal-section-icon">📝</div>
+                            Descripción
+                        </div>
+                        <div class="modal-section-content">
+                            Corticosteroide de alta potencia con acción antiinflamatoria, antialérgica e inmunosupresora. Indicado en shock, reacciones alérgicas severas, edemas, y como inductor de parto. Actúa rápidamente controlando procesos inflamatorios agudos.
+                        </div>
+                    </div>
+
+                    <div class="modal-section">
+                        <div class="modal-section-title">
+                            <div class="modal-section-icon">⭐</div>
+                            Recomendaciones Principales
+                        </div>
+                        <div class="modal-section-content">
+                            <div class="recomendacion-item">
+                                <strong>Dosis:</strong> 0.05-0.2 mg/kg, vía intramuscular o intravenosa
+                            </div>
+                            <div class="recomendacion-item">
+                                <strong>Tiempo de retiro:</strong> 7 días para carne, no usar en lactancia
+                            </div>
+                            <div class="recomendacion-item">
+                                <strong>Precaución:</strong> No usar en animales gestantes (excepto para inducir parto)
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-section">
+                        <div class="modal-section-title">
+                            <div class="modal-section-icon">💡</div>
+                            Otras Recomendaciones
+                        </div>
+                        <div class="modal-section-content">
+                            <div class="recomendacion-item">
+                                Usar solo bajo supervisión veterinaria
+                            </div>
+                            <div class="recomendacion-item">
+                                No aplicar en animales con infecciones sin antibiótico concomitante
+                            </div>
+                            <div class="recomendacion-item">
+                                Puede inducir parto 48 horas después de aplicación
+                            </div>
+                            <div class="recomendacion-item">
+                                Evitar tratamientos prolongados por efectos secundarios
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 15: Sulfadoxina + Trimetoprima -->
+    <div class="modal fade" id="modalMed15" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Sulfadoxina + Trimetoprima</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <img src="img/sulfadoxina_trimethoprim.png" class="modal-med-img" alt="Sulfadoxina + Trimetoprima">
+                    
+                    <div class="modal-section">
+                        <div class="modal-section-title">
+                            <div class="modal-section-icon">📋</div>
+                            Categoría
+                        </div>
+                        <div class="modal-section-content">
+                            <strong>Corticosteroide - Antiinflamatorio y antialérgico potente</strong>
+                        </div>
+                    </div>
+
+                    <div class="modal-section">
+                        <div class="modal-section-title">
+                            <div class="modal-section-icon">📝</div>
+                            Descripción
+                        </div>
+                        <div class="modal-section-content">
+                            Corticosteroide de alta potencia con acción antiinflamatoria, antialérgica e inmunosupresora. Indicado en shock, reacciones alérgicas severas, edemas, y como inductor de parto. Actúa rápidamente controlando procesos inflamatorios agudos.
+                        </div>
+                    </div>
+
+                    <div class="modal-section">
+                        <div class="modal-section-title">
+                            <div class="modal-section-icon">⭐</div>
+                            Recomendaciones Principales
+                        </div>
+                        <div class="modal-section-content">
+                            <div class="recomendacion-item">
+                                <strong>Dosis:</strong> 0.05-0.2 mg/kg, vía intramuscular o intravenosa
+                            </div>
+                            <div class="recomendacion-item">
+                                <strong>Tiempo de retiro:</strong> 7 días para carne, no usar en lactancia
+                            </div>
+                            <div class="recomendacion-item">
+                                <strong>Precaución:</strong> No usar en animales gestantes (excepto para inducir parto)
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-section">
+                        <div class="modal-section-title">
+                            <div class="modal-section-icon">💡</div>
+                            Otras Recomendaciones
+                        </div>
+                        <div class="modal-section-content">
+                            <div class="recomendacion-item">
+                                Usar solo bajo supervisión veterinaria
+                            </div>
+                            <div class="recomendacion-item">
+                                No aplicar en animales con infecciones sin antibiótico concomitante
+                            </div>
+                            <div class="recomendacion-item">
+                                Puede inducir parto 48 horas después de aplicación
+                            </div>
+                            <div class="recomendacion-item">
+                                Evitar tratamientos prolongados por efectos secundarios
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 16: Vacuna contra Fiebre Aftosa -->
+    <div class="modal fade" id="modalMed16" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Vacuna contra Fiebre Aftosa</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <img src="img/vacuna_aftosa.png" class="modal-med-img" alt="Vacuna contra Fiebre Aftosa">
+                    
+                    <div class="modal-section">
+                        <div class="modal-section-title">
+                            <div class="modal-section-icon">📋</div>
+                            Categoría
+                        </div>
+                        <div class="modal-section-content">
+                            <strong>Corticosteroide - Antiinflamatorio y antialérgico potente</strong>
+                        </div>
+                    </div>
+
+                    <div class="modal-section">
+                        <div class="modal-section-title">
+                            <div class="modal-section-icon">📝</div>
+                            Descripción
+                        </div>
+                        <div class="modal-section-content">
+                            Corticosteroide de alta potencia con acción antiinflamatoria, antialérgica e inmunosupresora. Indicado en shock, reacciones alérgicas severas, edemas, y como inductor de parto. Actúa rápidamente controlando procesos inflamatorios agudos.
+                        </div>
+                    </div>
+
+                    <div class="modal-section">
+                        <div class="modal-section-title">
+                            <div class="modal-section-icon">⭐</div>
+                            Recomendaciones Principales
+                        </div>
+                        <div class="modal-section-content">
+                            <div class="recomendacion-item">
+                                <strong>Dosis:</strong> 0.05-0.2 mg/kg, vía intramuscular o intravenosa
+                            </div>
+                            <div class="recomendacion-item">
+                                <strong>Tiempo de retiro:</strong> 7 días para carne, no usar en lactancia
+                            </div>
+                            <div class="recomendacion-item">
+                                <strong>Precaución:</strong> No usar en animales gestantes (excepto para inducir parto)
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-section">
+                        <div class="modal-section-title">
+                            <div class="modal-section-icon">💡</div>
+                            Otras Recomendaciones
+                        </div>
+                        <div class="modal-section-content">
+                            <div class="recomendacion-item">
+                                Usar solo bajo supervisión veterinaria
+                            </div>
+                            <div class="recomendacion-item">
+                                No aplicar en animales con infecciones sin antibiótico concomitante
+                            </div>
+                            <div class="recomendacion-item">
+                                Puede inducir parto 48 horas después de aplicación
+                            </div>
+                            <div class="recomendacion-item">
+                                Evitar tratamientos prolongados por efectos secundarios
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 17: Vacuna contra Brucelosis -->
+    <div class="modal fade" id="modalMed17" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Vacuna contra Brucelosis</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <img src="img/vacuna_brucelosis.png" class="modal-med-img" alt="Vacuna contra Brucelosis">
+                    
+                    <div class="modal-section">
+                        <div class="modal-section-title">
+                            <div class="modal-section-icon">📋</div>
+                            Categoría
+                        </div>
+                        <div class="modal-section-content">
+                            <strong>Corticosteroide - Antiinflamatorio y antialérgico potente</strong>
+                        </div>
+                    </div>
+
+                    <div class="modal-section">
+                        <div class="modal-section-title">
+                            <div class="modal-section-icon">📝</div>
+                            Descripción
+                        </div>
+                        <div class="modal-section-content">
+                            Corticosteroide de alta potencia con acción antiinflamatoria, antialérgica e inmunosupresora. Indicado en shock, reacciones alérgicas severas, edemas, y como inductor de parto. Actúa rápidamente controlando procesos inflamatorios agudos.
+                        </div>
+                    </div>
+
+                    <div class="modal-section">
+                        <div class="modal-section-title">
+                            <div class="modal-section-icon">⭐</div>
+                            Recomendaciones Principales
+                        </div>
+                        <div class="modal-section-content">
+                            <div class="recomendacion-item">
+                                <strong>Dosis:</strong> 0.05-0.2 mg/kg, vía intramuscular o intravenosa
+                            </div>
+                            <div class="recomendacion-item">
+                                <strong>Tiempo de retiro:</strong> 7 días para carne, no usar en lactancia
+                            </div>
+                            <div class="recomendacion-item">
+                                <strong>Precaución:</strong> No usar en animales gestantes (excepto para inducir parto)
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-section">
+                        <div class="modal-section-title">
+                            <div class="modal-section-icon">💡</div>
+                            Otras Recomendaciones
+                        </div>
+                        <div class="modal-section-content">
+                            <div class="recomendacion-item">
+                                Usar solo bajo supervisión veterinaria
+                            </div>
+                            <div class="recomendacion-item">
+                                No aplicar en animales con infecciones sin antibiótico concomitante
+                            </div>
+                            <div class="recomendacion-item">
+                                Puede inducir parto 48 horas después de aplicación
+                            </div>
+                            <div class="recomendacion-item">
+                                Evitar tratamientos prolongados por efectos secundarios
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 6: Albendazol -->
+    <div class="modal fade" id="modalMed6" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Albendazol 10%</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <img src="https://via.placeholder.com/800x300/36ac42/ffffff?text=Albendazol+10%25" class="modal-med-img" alt="Albendazol">
+                    
+                    <div class="modal-section">
+                        <div class="modal-section-title">
+                            <div class="modal-section-icon">📋</div>
+                            Categoría
+                        </div>
+                        <div class="modal-section-content">
+                            <strong>Antiparasitario oral de amplio espectro - Benzimidazol</strong>
+                        </div>
+                    </div>
+
+                    <div class="modal-section">
+                        <div class="modal-section-title">
+                            <div class="modal-section-icon">📝</div>
+                            Descripción
+                        </div>
+                        <div class="modal-section-content">
+                            Antiparasitario oral efectivo contra nematodos gastrointestinales, pulmonares y tenias. Actúa inhibiendo la formación de microtúbulos en las células parasitarias. Ampliamente usado en programas de desparasitación.
+                        </div>
+                    </div>
+
+                    <div class="modal-section">
+                        <div class="modal-section-title">
+                            <div class="modal-section-icon">⭐</div>
+                            Recomendaciones Principales
+                        </div>
+                        <div class="modal-section-content">
+                            <div class="recomendacion-item">
+                                <strong>Dosis:</strong> 7.5 mg/kg (1 ml por 13 kg de peso), vía oral
+                            </div>
+                            <div class="recomendacion-item">
+                                <strong>Tiempo de retiro:</strong> 14 días para carne, 4 días para leche
+                            </div>
+                            <div class="recomendacion-item">
+                                <strong>Aplicación:</strong> Directamente en la boca con dosificador oral
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-section">
+                        <div class="modal-section-title">
+                            <div class="modal-section-icon">💡</div>
+                            Otras Recomendaciones
+                        </div>
+                        <div class="modal-section-content">
+                            <div class="recomendacion-item">
+                                No usar en el primer tercio de gestación
+                            </div>
+                            <div class="recomendacion-item">
+                                Aplicar en ayunas para mejor absorción
+                            </div>
+                            <div class="recomendacion-item">
+                                Repetir tratamiento cada 3-4 meses según carga parasitaria
+                            </div>
+                            <div class="recomendacion-item">
+                                Rotar con otros principios activos para evitar resistencia
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 7: Probióticos -->
+    <div class="modal fade" id="modalMed7" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Probióticos Bovinos</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <img src="https://via.placeholder.com/800x300/2b8c35/ffffff?text=Probioticos+Bovinos" class="modal-med-img" alt="Probióticos">
+                    
+                    <div class="modal-section">
+                        <div class="modal-section-title">
+                            <div class="modal-section-icon">📋</div>
+                            Categoría
+                        </div>
+                        <div class="modal-section-content">
+                            <strong>Suplemento oral - Microorganismos beneficiosos para flora ruminal</strong>
+                        </div>
+                    </div>
+
+                    <div class="modal-section">
+                        <div class="modal-section-title">
+                            <div class="modal-section-icon">📝</div>
+                            Descripción
+                        </div>
+                        <div class="modal-section-content">
+                            Mezcla de microorganismos vivos (levaduras y bacterias) que mejoran la salud digestiva del rumen. Incrementa la eficiencia alimenticia, mejora la digestión de fibra, estabiliza el pH ruminal y fortalece el sistema inmune.
+                        </div>
+                    </div>
+
+                    <div class="modal-section">
+                        <div class="modal-section-title">
+                            <div class="modal-section-icon">⭐</div>
+                            Recomendaciones Principales
+                        </div>
+                        <div class="modal-section-content">
+                            <div class="recomendacion-item">
+                                <strong>Dosis:</strong> 10-20 gramos por animal al día, mezclado con alimento
+                            </div>
+                            <div class="recomendacion-item">
+                                <strong>Administración:</strong> Uso continuo o periódico según necesidad
+                            </div>
+                            <div class="recomendacion-item">
+                                <strong>Ideal en:</strong> Cambios de dieta, estrés, post-tratamiento con antibióticos
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-section">
+                        <div class="modal-section-title">
+                            <div class="modal-section-icon">💡</div>
+                            Otras Recomendaciones
+                        </div>
+                        <div class="modal-section-content">
+                            <div class="recomendacion-item">
+                                Mezclar con alimento fresco, no con agua caliente
+                            </div>
+                            <div class="recomendacion-item">
+                                Almacenar en lugar fresco y seco, cerrado herméticamente
+                            </div>
+                            <div class="recomendacion-item">
+                                Aumenta producción de leche y ganancia de peso
+                            </div>
+                            <div class="recomendacion-item">
+                                No tiene tiempo de retiro, totalmente natural
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 8: Pomada Cicatrizante -->
+    <div class="modal fade" id="modalMed8" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Pomada Cicatrizante</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <img src="https://via.placeholder.com/800x300/1e7e34/ffffff?text=Pomada+Cicatrizante" class="modal-med-img" alt="Pomada">
+                    
+                    <div class="modal-section">
+                        <div class="modal-section-title">
+                            <div class="modal-section-icon">📋</div>
+                            Categoría
+                        </div>
+                        <div class="modal-section-content">
+                            <strong>Uso tópico - Cicatrizante y antiséptico de uso externo</strong>
+                        </div>
+                    </div>
+
+                    <div class="modal-section">
+                        <div class="modal-section-title">
+                            <div class="modal-section-icon">📝</div>
+                            Descripción
+                        </div>
+                        <div class="modal-section-content">
+                            Pomada de uso externo con propiedades cicatrizantes, antisépticas y antibacterianas. Acelera la regeneración de tejidos, previene infecciones en heridas, cortes, laceraciones y quemaduras. Forma una barrera protectora.
+                        </div>
+                    </div>
+
+                    <div class="modal-section">
+                        <div class="modal-section-title">
+                            <div class="modal-section-icon">⭐</div>
+                            Recomendaciones Principales
+                        </div>
+                        <div class="modal-section-content">
+                            <div class="recomendacion-item">
+                                <strong>Aplicación:</strong> Limpiar la herida y aplicar capa fina 2-3 veces al día
+                            </div>
+                            <div class="recomendacion-item">
+                                <strong>Uso en:</strong> Heridas, cortes, laceraciones, quemaduras, dermatitis
+                            </div>
+                            <div class="recomendacion-item">
+                                <strong>Precaución:</strong> Solo uso externo, no ingerir
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-section">
+                        <div class="modal-section-title">
+                            <div class="modal-section-icon">💡</div>
+                            Otras Recomendaciones
+                        </div>
+                        <div class="modal-section-content">
+                            <div class="recomendacion-item">
+                                Lavar la herida con agua y jabón antes de aplicar
+                            </div>
+                            <div class="recomendacion-item">
+                                Puede usarse bajo vendaje en heridas grandes
+                            </div>
+                            <div class="recomendacion-item">
+                                Evitar que el animal lama la zona tratada
+                            </div>
+                            <div class="recomendacion-item">
+                                No tiene tiempo de retiro para carne ni leche
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 9: Spray Repelente -->
+    <div class="modal fade" id="modalMed9" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Spray Repelente</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <img src="https://via.placeholder.com/800x300/36ac42/ffffff?text=Spray+Repelente" class="modal-med-img" alt="Spray">
+                    
+                    <div class="modal-section">
+                        <div class="modal-section-title">
+                            <div class="modal-section-icon">📋</div>
+                            Categoría
+                        </div>
+                        <div class="modal-section-content">
+                            <strong>Uso tópico - Repelente e insecticida de contacto</strong>
+                        </div>
+                    </div>
+
+                    <div class="modal-section">
+                        <div class="modal-section-title">
+                            <div class="modal-section-icon">📝</div>
+                            Descripción
+                        </div>
+                        <div class="modal-section-content">
+                            Spray repelente e insecticida de acción rápida contra moscas, tábanos, garrapatas y otros ectoparásitos. Proporciona protección inmediata y duradera. Previene el estrés causado por insectos y la transmisión de enfermedades.
+                        </div>
+                    </div>
+
+                    <div class="modal-section">
+                        <div class="modal-section-title">
+                            <div class="modal-section-icon">⭐</div>
+                            Recomendaciones Principales
+                        </div>
+                        <div class="modal-section-content">
+                            <div class="recomendacion-item">
+                                <strong>Dosis:</strong> 20 mg/kg de peso vivo, aplicación única intramuscular profunda
+                            </div>
+                            <div class="recomendacion-item">
+                                <strong>Tiempo de retiro:</strong> 28 días para carne, no usar en vacas en lactancia
+                            </div>
+                            <div class="recomendacion-item">
+                                <strong>Aplicación:</strong> Inyectar en grupos musculares grandes alternando sitios de aplicación
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-section">
+                        <div class="modal-section-title">
+                            <div class="modal-section-icon">💡</div>
+                            Otras Recomendaciones
+                        </div>
+                        <div class="modal-section-content">
+                            <div class="recomendacion-item">
+                                Mantener refrigerado entre 2-8°C, proteger de la luz
+                            </div>
+                            <div class="recomendacion-item">
+                                No mezclar con otros medicamentos en la misma jeringa
+                            </div>
+                            <div class="recomendacion-item">
+                                Evitar contacto con piel y ojos, usar guantes de protección
+                            </div>
+                            <div class="recomendacion-item">
+                                No aplicar más de 20 ml por sitio de inyección
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 10: Electrolitos Orales -->
+    <div class="modal fade" id="modalMed10" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Electrolitos Orales</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <img src="https://via.placeholder.com/800x300/2b8c35/ffffff?text=Electrolitos+Orales" class="modal-med-img" alt="Electrolitos">
+                    
+                    <div class="modal-section">
+                        <div class="modal-section-title">
+                            <div class="modal-section-icon">📋</div>
+                            Categoría
+                        </div>
+                        <div class="modal-section-content">
+                            <strong>Suplemento oral - Rehidratante y reponedor de electrolitos</strong>
+                        </div>
+                    </div>
+
+                    <div class="modal-section">
+                        <div class="modal-section-title">
+                            <div class="modal-section-icon">📝</div>
+                            Descripción
+                        </div>
+                        <div class="modal-section-content">
+                            Solución oral con electrolitos esenciales (sodio, potasio, cloro) y glucosa. Corrige deshidratación y desequilibrios electrolíticos causados por diarrea, estrés calórico, transporte o enfermedades. Restablece el balance hidroelectrolítico rápidamente.
+                        </div>
+                    </div>
+
+                    <div class="modal-section">
+                        <div class="modal-section-title">
+                            <div class="modal-section-icon">⭐</div>
+                            Recomendaciones Principales
+                        </div>
+                        <div class="modal-section-content">
+                            <div class="recomendacion-item">
+                                <strong>Dosis:</strong> 50-100 gramos disueltos en 2 litros de agua tibia
+                            </div>
+                            <div class="recomendacion-item">
+                                <strong>Administración:</strong> Vía oral, 2-3 veces al día según severidad
+                            </div>
+                            <div class="recomendacion-item">
+                                <strong>Uso en:</strong> Diarreas, deshidratación, estrés calórico, post-parto
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-section">
+                        <div class="modal-section-title">
+                            <div class="modal-section-icon">💡</div>
+                            Otras Recomendaciones
+                        </div>
+                        <div class="modal-section-content">
+                            <div class="recomendacion-item">
+                                Preparar solución fresca cada vez, no almacenar preparada
+                            </div>
+                            <div class="recomendacion-item">
+                                Administrar con jeringa o sonda oral en casos severos
+                            </div>
+                            <div class="recomendacion-item">
+                                Combinar con terapia antibiótica si hay infección
+                            </div>
+                            <div class="recomendacion-item">
+                                No sustituye la terapia intravenosa en deshidratación severa
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+    
+    <script>
+        // Base de datos de medicamentos
+        const medicamentos = [
+            { id: 'modalMed1', nombre: 'Oxitetraciclina LA', categoria: 'Antibiótico', tipo: 'inyectable', img: src="img/OxitetraciclinaLA.png" },
+            { id: 'modalMed2', nombre: 'Ivermectina 1%', categoria: 'Antiparasitario', tipo: 'inyectable', img: src="img/Ivermectina.webp" },
+            { id: 'modalMed3', nombre: 'Complejo B', categoria: 'Vitamínico', tipo: 'inyectable', img: src="img/complejo_b.png" },
+            { id: 'modalMed4', nombre: 'Meloxicam 2%', categoria: 'Antiinflamatorio', tipo: 'inyectable', img: src="img/meloxicam.png" },
+            { id: 'modalMed5', nombre: 'Dexametasona 2mg', categoria: 'Corticosteroide', tipo: 'inyectable', img: src="img/dexametasona.png" },
+            { id: 'modalMed6', nombre: 'Albendazol 10%', categoria: 'Antiparasitario Oral', tipo: 'oral', img: 'https://via.placeholder.com/300x180/36ac42/ffffff?text=Desparasitante' },
+            { id: 'modalMed7', nombre: 'Probióticos Bovinos', categoria: 'Suplemento Oral', tipo: 'oral', img: 'https://via.placeholder.com/300x180/2b8c35/ffffff?text=Probioticos' },
+            { id: 'modalMed8', nombre: 'Pomada Cicatrizante', categoria: 'Tópico', tipo: 'oral', img: 'https://via.placeholder.com/300x180/1e7e34/ffffff?text=Pomada' },
+            { id: 'modalMed9', nombre: 'Spray Repelente', categoria: 'Tópico', tipo: 'oral', img: 'https://via.placeholder.com/300x180/36ac42/ffffff?text=Spray' },
+            { id: 'modalMed10', nombre: 'Electrolitos Orales', categoria: 'Suplemento Oral', tipo: 'oral', img: 'https://via.placeholder.com/300x180/2b8c35/ffffff?text=Electrolitos' },
+            { id: 'modalMed11', nombre: 'Selenio', categoria: 'Corticosteroide (cambia)', tipo: 'inyectable', img: src="img/SelenioVitaminaE.png" },
+            { id: 'modalMed12', nombre: 'Vacuna Clostridial', categoria: 'Corticosteroide (cambia)', tipo: 'inyectable', img: src="img/VacunaClostridial.png" },
+            { id: 'modalMed13', nombre: 'Enrofloxacina', categoria: 'Corticosteroide (cambia)', tipo: 'inyectable', img: src="img/enrofloxacina.png" },
+            { id: 'modalMed14', nombre: 'Flunixin Meglumine', categoria: 'Corticosteroide (cambia)', tipo: 'inyectable', img: src="img/flunixin_meglumine.png" },
+            { id: 'modalMed15', nombre: 'Sulfadoxina + Trimetoprima', categoria: 'Corticosteroide (cambia)', tipo: 'inyectable', img: src="img/sulfadoxina_trimethoprim.png" },
+            { id: 'modalMed16', nombre: 'Vacuna contra Fiebre Aftosa', categoria: 'Corticosteroide (cambia)', tipo: 'inyectable', img: src="img/vacuna_aftosa.png" },
+            { id: 'modalMed17', nombre: 'Vacuna contra Brucelosis', categoria: 'Corticosteroide (cambia)', tipo: 'inyectable', img: src="img/vacuna_brucelosis.png" },
+            { id: 'modalMed18', nombre: 'Vacuna Clostridial', categoria: 'Corticosteroide (cambia)', tipo: 'inyectable', img: src="img/VacunaClostridial.png" },
+            { id: 'modalMed19', nombre: 'Vacuna Clostridial', categoria: 'Corticosteroide (cambia)', tipo: 'inyectable', img: src="img/VacunaClostridial.png" },
+            { id: 'modalMed20', nombre: 'Vacuna Clostridial', categoria: 'Corticosteroide (cambia)', tipo: 'inyectable', img: src="img/VacunaClostridial.png" },
+        ];
+
+        const searchInput = document.getElementById('searchInput');
+        const searchResults = document.getElementById('searchResults');
+        const clearSearch = document.getElementById('clearSearch');
+
+        // Función de búsqueda
+        searchInput.addEventListener('input', function() {
+            const query = this.value.toLowerCase().trim();
+            
+            if (query.length > 0) {
+                clearSearch.style.display = 'flex';
+                const resultados = medicamentos.filter(med => 
+                    med.nombre.toLowerCase().includes(query) || 
+                    med.categoria.toLowerCase().includes(query) ||
+                    med.tipo.toLowerCase().includes(query)
+                );
+                
+                mostrarResultados(resultados, query);
+            } else {
+                clearSearch.style.display = 'none';
+                searchResults.style.display = 'none';
+            }
+        });
+
+        // Función para mostrar resultados
+        function mostrarResultados(resultados, query) {
+            if (resultados.length === 0) {
+                searchResults.innerHTML = `
+                    <div class="no-results">
+                        <div class="no-results-icon">🔍</div>
+                        <p>No se encontraron medicamentos para "${query}"</p>
+                    </div>
+                `;
+                searchResults.style.display = 'block';
+                return;
+            }
+
+            let html = '';
+            resultados.forEach(med => {
+                html += `
+                    <div class="search-result-item" onclick="abrirModal('${med.id}')">
+                        <img src="${med.img}" alt="${med.nombre}" class="search-result-icon">
+                        <div class="search-result-info">
+                            <div class="search-result-title">${med.nombre}</div>
+                            <div class="search-result-category">${med.categoria} • ${med.tipo === 'inyectable' ? 'Inyectable' : 'Oral/Corporal'}</div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            searchResults.innerHTML = html;
+            searchResults.style.display = 'block';
+        }
+
+        // Función para abrir modal
+        function abrirModal(modalId) {
+            searchInput.value = '';
+            clearSearch.style.display = 'none';
+            searchResults.style.display = 'none';
+            
+            const modal = new bootstrap.Modal(document.getElementById(modalId));
+            modal.show();
+        }
+
+        // Limpiar búsqueda
+        clearSearch.addEventListener('click', function() {
+            searchInput.value = '';
+            clearSearch.style.display = 'none';
+            searchResults.style.display = 'none';
+            searchInput.focus();
+        });
+
+        // Cerrar resultados al hacer clic fuera
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.search-wrapper') && !e.target.closest('.search-results')) {
+                searchResults.style.display = 'none';
+            }
+        });
+    </script>
 </body>
 </html>
