@@ -98,221 +98,416 @@
                 <div id="searchResults" class="search-results" style="display: none;"></div>
             </div>
 
-            <!-- Carrusel de Medicamentos Inyectables -->
-            <div class="carousel-container">
-                <div class="carousel-header">
-                    <div class="carousel-icon">💉</div>
-                    <h3>Medicamentos Inyectables</h3>
-                </div>
+<!-- Carrusel de Medicamentos Inyectables -->
+<div class="carousel-container">
+    <div class="carousel-header">
+        <div class="carousel-icon">💉</div>
+        <h3>Medicamentos Inyectables</h3>
+    </div>
 
-                <div id="carouselInyectables" class="carousel slide" data-bs-ride="carousel">
-                    <div class="carousel-inner">
-                        <div class="carousel-item active">
-                            <div class="row">
-                                <div class="col-md-4 mb-3">
-                                    <div class="med-card">
-                                        <img src="img/OxitetraciclinaLA.png" class="med-card-img" alt="Oxitetraciclina">
-                                        <span class="med-card-category">Antibiótico</span>
-                                        <h4 class="med-card-title">Oxitetraciclina LA</h4>
-                                        <p class="med-card-desc">Antibiótico de amplio espectro para infecciones bacterianas.</p>
-                                        <button class="btn-info-med" data-bs-toggle="modal" data-bs-target="#modalMed1">Más información</button>
-                                    </div>
-                                </div>
-                                <div class="col-md-4 mb-3">
-                                    <div class="med-card">
-                                        <img src="img/Ivermectina.webp" class="med-card-img" alt="Ivermectina">
-                                        <span class="med-card-category">Antiparasitario</span>
-                                        <h4 class="med-card-title">Ivermectina 1%</h4>
-                                        <p class="med-card-desc">Tratamiento contra parásitos internos y externos.</p>
-                                        <button class="btn-info-med" data-bs-toggle="modal" data-bs-target="#modalMed2">Más información</button>
-                                    </div>
-                                </div>
-                                <div class="col-md-4 mb-3">
-                                    <div class="med-card">
-                                        <img src="img/complejo_b.png" class="med-card-img" alt="Vitamina ADE">
-                                        <span class="med-card-category">Vitamínico</span>
-                                        <h4 class="med-card-title">Complejo B</h4>
-                                        <p class="med-card-desc">Suplemento vitamínico (cambiar info).</p>
-                                        <button class="btn-info-med" data-bs-toggle="modal" data-bs-target="#modalMed3">Más información</button>
-                                    </div>
-                                </div>
-                            </div>
+    <div id="carouselInyectables" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+
+            <!-- ITEM 1 -->
+            <div class="carousel-item active">
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <div class="med-card">
+                            <img src="img/OxitetraciclinaLA.png" class="med-card-img" alt="Oxitetraciclina">
+                            <span class="med-card-category">Antibiótico</span>
+                            <h4 class="med-card-title">Oxitetraciclina LA</h4>
+                            <p class="med-card-desc">Antibiótico de amplio espectro para infecciones bacterianas.</p>
+                            <button class="btn-info-med" data-bs-toggle="modal" data-bs-target="#modalMed1">Más información</button>
                         </div>
-                        <div class="carousel-item">
-                            <div class="row">
-                                <div class="col-md-4 mb-3">
-                                    <div class="med-card">
-                                        <img src="img/meloxicam.png" class="med-card-img" alt="Meloxicam">
-                                        <span class="med-card-category">Antiinflamatorio</span>
-                                        <h4 class="med-card-title">Meloxicam 2%</h4>
-                                        <p class="med-card-desc">Antiinflamatorio no esteroideo para dolor y fiebre.</p>
-                                        <button class="btn-info-med" data-bs-toggle="modal" data-bs-target="#modalMed4">Más información</button>
-                                    </div>
-                                </div>
-                                <div class="col-md-4 mb-3">
-                                    <div class="med-card">
-                                        <img src="img/dexametasona.png" class="med-card-img" alt="Dexametasona">
-                                        <span class="med-card-category">Corticosteroide</span>
-                                        <h4 class="med-card-title">Dexametasona 2mg</h4>
-                                        <p class="med-card-desc">Corticosteroide para procesos inflamatorios y alérgicos.</p>
-                                        <button class="btn-info-med" data-bs-toggle="modal" data-bs-target="#modalMed5">Más información</button>
-                                    </div>
-                                </div>
-                                <div class="col-md-4 mb-3">
-                                    <div class="med-card">
-                                        <img src="img/SelenioVitaminaE.png" class="med-card-img" alt="Dexametasona">
-                                        <span class="med-card-category">Vitamínico</span>
-                                        <h4 class="med-card-title">Selenio</h4>
-                                        <p class="med-card-desc">Suplemento vitamínico-mineral.</p>
-                                        <button class="btn-info-med" data-bs-toggle="modal" data-bs-target="#modalMed11">Más información</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="carousel-item">
-                            <div class="row">
-                                <div class="col-md-4 mb-3">
-                                    <div class="med-card">
-                                        <img src="img/VacunaClostridial.png" class="med-card-img" alt="Meloxicam">
-                                        <span class="med-card-category">Prevención</span>
-                                        <h4 class="med-card-title">Vacuna Clostridial</h4>
-                                        <p class="med-card-desc">Vacuna preventiva.</p>
-                                        <button class="btn-info-med" data-bs-toggle="modal" data-bs-target="#modalMed12">Más información</button>
-                                    </div>
-                                </div>
-                                <div class="col-md-4 mb-3">
-                                    <div class="med-card">
-                                        <img src="img/enrofloxacina.png" class="med-card-img" alt="Dexametasona">
-                                        <span class="med-card-category">Antibiótico</span>
-                                        <h4 class="med-card-title">Enrofloxacina</h4>
-                                        <p class="med-card-desc">Antibiótico de amplio espectro.</p>
-                                        <button class="btn-info-med" data-bs-toggle="modal" data-bs-target="#modalMed13">Más información</button>
-                                    </div>
-                                </div>
-                                <div class="col-md-4 mb-3">
-                                    <div class="med-card">
-                                        <img src="img/flunixin_meglumine.png" class="med-card-img" alt="Dexametasona">
-                                        <span class="med-card-category">Antiinflamatorio</span>
-                                        <h4 class="med-card-title">Flunixin Meglumine</h4>
-                                        <p class="med-card-desc">Antiinflamatorio no esteroideo.</p>
-                                        <button class="btn-info-med" data-bs-toggle="modal" data-bs-target="#modalMed14">Más información</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>  
-                        <div class="carousel-item">
-                            <div class="row">
-                                <div class="col-md-4 mb-3">
-                                    <div class="med-card">
-                                        <img src="img/sulfadoxina_trimethoprim.png" class="med-card-img" alt="Meloxicam">
-                                        <span class="med-card-category">Antibiótico</span>
-                                        <h4 class="med-card-title">Sulfadoxina + Trimetoprima </h4>
-                                        <p class="med-card-desc">Combinación antibacteriana.</p>
-                                        <button class="btn-info-med" data-bs-toggle="modal" data-bs-target="#modalMed15">Más información</button>
-                                    </div>
-                                </div>
-                                <div class="col-md-4 mb-3">
-                                    <div class="med-card">
-                                        <img src="img/vacuna_aftosa.png" class="med-card-img" alt="Dexametasona">
-                                        <span class="med-card-category">Vacuna obligatoria</span>
-                                        <h4 class="med-card-title">Vacuna contra Fiebre Aftosa</h4>
-                                        <p class="med-card-desc">Vacuna obligatoria en la mayoría de países.</p>
-                                        <button class="btn-info-med" data-bs-toggle="modal" data-bs-target="#modalMed16">Más información</button>
-                                    </div>
-                                </div>
-                                <div class="col-md-4 mb-3">
-                                    <div class="med-card">
-                                        <img src="img/vacuna_brucelosis.png" class="med-card-img" alt="Dexametasona">
-                                        <span class="med-card-category">Prevención</span>
-                                        <h4 class="med-card-title">Vacuna contra Brucelosis</h4>
-                                        <p class="med-card-desc">Vacuna para prevenir la brucelosis bovina.</p>
-                                        <button class="btn-info-med" data-bs-toggle="modal" data-bs-target="#modalMed17">Más información</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>                                        
                     </div>
-                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselInyectables" data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon"></span>
-                    </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#carouselInyectables" data-bs-slide="next">
-                        <span class="carousel-control-next-icon"></span>
-                    </button>
+
+                    <div class="col-md-4 mb-3">
+                        <div class="med-card">
+                            <img src="img/Ivermectina.webp" class="med-card-img" alt="Ivermectina">
+                            <span class="med-card-category">Antiparasitario</span>
+                            <h4 class="med-card-title">Ivermectina 1%</h4>
+                            <p class="med-card-desc">Tratamiento contra parásitos internos y externos.</p>
+                            <button class="btn-info-med" data-bs-toggle="modal" data-bs-target="#modalMed2">Más información</button>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <div class="med-card">
+                            <img src="img/complejo_b.png" class="med-card-img" alt="Complejo B">
+                            <span class="med-card-category">Vitamínico</span>
+                            <h4 class="med-card-title">Complejo B</h4>
+                            <p class="med-card-desc">Suplemento vitamínico.</p>
+                            <button class="btn-info-med" data-bs-toggle="modal" data-bs-target="#modalMed3">Más información</button>
+                        </div>
+                    </div>
                 </div>
             </div>
+
+            <!-- ITEM 2 -->
+            <div class="carousel-item">
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <div class="med-card">
+                            <img src="img/meloxicam.png" class="med-card-img" alt="Meloxicam">
+                            <span class="med-card-category">Antiinflamatorio</span>
+                            <h4 class="med-card-title">Meloxicam 2%</h4>
+                            <p class="med-card-desc">Antiinflamatorio no esteroideo para dolor y fiebre.</p>
+                            <button class="btn-info-med" data-bs-toggle="modal" data-bs-target="#modalMed4">Más información</button>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <div class="med-card">
+                            <img src="img/dexametasona.png" class="med-card-img" alt="Dexametasona">
+                            <span class="med-card-category">Corticosteroide</span>
+                            <h4 class="med-card-title">Dexametasona 2mg</h4>
+                            <p class="med-card-desc">Corticosteroide para procesos inflamatorios y alérgicos.</p>
+                            <button class="btn-info-med" data-bs-toggle="modal" data-bs-target="#modalMed5">Más información</button>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <div class="med-card">
+                            <img src="img/SelenioVitaminaE.png" class="med-card-img" alt="Selenio">
+                            <span class="med-card-category">Vitamínico</span>
+                            <h4 class="med-card-title">Selenio</h4>
+                            <p class="med-card-desc">Suplemento vitamínico-mineral.</p>
+                            <button class="btn-info-med" data-bs-toggle="modal" data-bs-target="#modalMed11">Más información</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ITEM 3 -->
+            <div class="carousel-item">
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <div class="med-card">
+                            <img src="img/VacunaClostridial.png" class="med-card-img" alt="clostridial">
+                            <span class="med-card-category">Prevención</span>
+                            <h4 class="med-card-title">Vacuna Clostridial</h4>
+                            <p class="med-card-desc">Vacuna preventiva.</p>
+                            <button class="btn-info-med" data-bs-toggle="modal" data-bs-target="#modalMed12">Más información</button>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <div class="med-card">
+                            <img src="img/enrofloxacina.png" class="med-card-img" alt="enrofloxacina">
+                            <span class="med-card-category">Antibiótico</span>
+                            <h4 class="med-card-title">Enrofloxacina</h4>
+                            <p class="med-card-desc">Antibiótico de amplio espectro.</p>
+                            <button class="btn-info-med" data-bs-toggle="modal" data-bs-target="#modalMed13">Más información</button>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <div class="med-card">
+                            <img src="img/flunixin_meglumine.png" class="med-card-img" alt="flunixin_meglumine">
+                            <span class="med-card-category">Antiinflamatorio</span>
+                            <h4 class="med-card-title">Flunixin Meglumine</h4>
+                            <p class="med-card-desc">Antiinflamatorio no esteroideo.</p>
+                            <button class="btn-info-med" data-bs-toggle="modal" data-bs-target="#modalMed14">Más información</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ITEM 4 -->
+            <div class="carousel-item">
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <div class="med-card">
+                            <img src="img/sulfadoxina_trimethoprim.png" class="med-card-img" alt="sulfadoxina_trimethoprim">
+                            <span class="med-card-category">Antibiótico</span>
+                            <h4 class="med-card-title">Sulfadoxina + Trimetoprima</h4>
+                            <p class="med-card-desc">Combinación antibacteriana.</p>
+                            <button class="btn-info-med" data-bs-toggle="modal" data-bs-target="#modalMed15">Más información</button>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <div class="med-card">
+                            <img src="img/vacuna_aftosa.png" class="med-card-img" alt="aftosa">
+                            <span class="med-card-category">Vacuna obligatoria</span>
+                            <h4 class="med-card-title">Vacuna contra Fiebre Aftosa</h4>
+                            <p class="med-card-desc">Vacuna obligatoria en la mayoría de países.</p>
+                            <button class="btn-info-med" data-bs-toggle="modal" data-bs-target="#modalMed16">Más información</button>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <div class="med-card">
+                            <img src="img/vacuna_brucelosis.png" class="med-card-img" alt="Brucelosis">
+                            <span class="med-card-category">Prevención</span>
+                            <h4 class="med-card-title">Vacuna contra Brucelosis</h4>
+                            <p class="med-card-desc">Vacuna para prevenir la brucelosis bovina.</p>
+                            <button class="btn-info-med" data-bs-toggle="modal" data-bs-target="#modalMed17">Más información</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ITEM 5 -->
+            <div class="carousel-item">
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <div class="med-card">
+                            <img src="img/cobre.png" class="med-card-img" alt="cobre">
+                            <span class="med-card-category">Suplemento</span>
+                            <h4 class="med-card-title">Cobre</h4>
+                            <p class="med-card-desc">Suplemento mineral que mejora la pigmentación.</p>
+                            <button class="btn-info-med" data-bs-toggle="modal" data-bs-target="#modalMed18">Más información</button>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <div class="med-card">
+                            <img src="img/hierro_dextrano.png" class="med-card-img" alt="Hierro">
+                            <span class="med-card-category">Suplemento</span>
+                            <h4 class="med-card-title">Hierro Dextrano</h4>
+                            <p class="med-card-desc">Suplemento de hierro.</p>
+                            <button class="btn-info-med" data-bs-toggle="modal" data-bs-target="#modalMed19">Más información</button>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <div class="med-card">
+                            <img src="img/ketoprofeno.png" class="med-card-img" alt="ketoprofeno">
+                            <span class="med-card-category">Antiinflamatorio</span>
+                            <h4 class="med-card-title">Ketoprofeno</h4>
+                            <p class="med-card-desc">Antiinflamatorio no esteroideo.</p>
+                            <button class="btn-info-med" data-bs-toggle="modal" data-bs-target="#modalMed20">Más información</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ITEM 6 -->
+            <div class="carousel-item">
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <div class="med-card">
+                            <img src="img/penicilina_estreptomicina.png" class="med-card-img" alt="penicilina">
+                            <span class="med-card-category">Antibiótico</span>
+                            <h4 class="med-card-title">Penicilina + Estreptomicina</h4>
+                            <p class="med-card-desc">Asociación antibiótica clásica efectiva contra bacterias.</p>
+                            <button class="btn-info-med" data-bs-toggle="modal" data-bs-target="#modalMed21">Más información</button>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <div class="med-card">
+                            <img src="img/vitamina_ade.png" class="med-card-img" alt="vitamina">
+                            <span class="med-card-category">Suplemento</span>
+                            <h4 class="med-card-title">Vitamina A, D3 y E</h4>
+                            <p class="med-card-desc">Suplemento liposoluble.</p>
+                            <button class="btn-info-med" data-bs-toggle="modal" data-bs-target="#modalMed22">Más información</button>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <div class="med-card">
+                            <img src="img/b12_fosforo.png" class="med-card-img" alt="b12">
+                            <span class="med-card-category">Estimulante metabólico</span>
+                            <h4 class="med-card-title">Complejo B12 + Fósforo</h4>
+                            <p class="med-card-desc">Estimulante metabólico que mejora apetito.</p>
+                            <button class="btn-info-med" data-bs-toggle="modal" data-bs-target="#modalMed23">Más información</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ITEM 7 -->
+            <div class="carousel-item">
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <div class="med-card">
+                            <img src="img/glucosa_50.png" class="med-card-img" alt="glucosa">
+                            <span class="med-card-category">Estimulante</span>
+                            <h4 class="med-card-title">Glucosa al 50%</h4>
+                            <p class="med-card-desc">Fuente de energía rápida.</p>
+                            <button class="btn-info-med" data-bs-toggle="modal" data-bs-target="#modalMed24">Más información</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- CONTROLES -->
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselInyectables" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon"></span>
+        </button>
+
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselInyectables" data-bs-slide="next">
+            <span class="carousel-control-next-icon"></span>
+        </button>
+
+    </div>
+</div>
 
             <!-- Carrusel de Medicamentos Orales/Corporales -->
-            <div class="carousel-container">
-                <div class="carousel-header">
-                    <div class="carousel-icon">💊</div>
-                    <h3>Medicamentos Orales y Corporales</h3>
-                </div>
+<div class="carousel-container">
+    <div class="carousel-header">
+        <div class="carousel-icon">💊</div>
+        <h3>Medicamentos Orales y Corporales</h3>
+    </div>
 
-                <div id="carouselOrales" class="carousel slide" data-bs-ride="carousel">
-                    <div class="carousel-inner">
-                        <div class="carousel-item active">
-                            <div class="row">
-                                <div class="col-md-4 mb-3">
-                                    <div class="med-card">
-                                        <img src="https://via.placeholder.com/300x180/36ac42/ffffff?text=Desparasitante" class="med-card-img" alt="Desparasitante">
-                                        <span class="med-card-category">Antiparasitario Oral</span>
-                                        <h4 class="med-card-title">Albendazol 10%</h4>
-                                        <p class="med-card-desc">Desparasitante oral de amplio espectro.</p>
-                                        <button class="btn-info-med" data-bs-toggle="modal" data-bs-target="#modalMed6">Más información</button>
-                                    </div>
-                                </div>
-                                <div class="col-md-4 mb-3">
-                                    <div class="med-card">
-                                        <img src="https://via.placeholder.com/300x180/2b8c35/ffffff?text=Probioticos" class="med-card-img" alt="Probióticos">
-                                        <span class="med-card-category">Suplemento Oral</span>
-                                        <h4 class="med-card-title">Probióticos Bovinos</h4>
-                                        <p class="med-card-desc">Mejora la flora ruminal y digestión.</p>
-                                        <button class="btn-info-med" data-bs-toggle="modal" data-bs-target="#modalMed7">Más información</button>
-                                    </div>
-                                </div>
-                                <div class="col-md-4 mb-3">
-                                    <div class="med-card">
-                                        <img src="https://via.placeholder.com/300x180/1e7e34/ffffff?text=Pomada" class="med-card-img" alt="Pomada">
-                                        <span class="med-card-category">Tópico</span>
-                                        <h4 class="med-card-title">Pomada Cicatrizante</h4>
-                                        <p class="med-card-desc">Para heridas y lesiones cutáneas.</p>
-                                        <button class="btn-info-med" data-bs-toggle="modal" data-bs-target="#modalMed8">Más información</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="carousel-item">
-                            <div class="row">
-                                <div class="col-md-4 mb-3">
-                                    <div class="med-card">
-                                        <img src="https://via.placeholder.com/300x180/36ac42/ffffff?text=Spray" class="med-card-img" alt="Spray">
-                                        <span class="med-card-category">Tópico</span>
-                                        <h4 class="med-card-title">Spray Repelente</h4>
-                                        <p class="med-card-desc">Protección contra moscas y parásitos externos.</p>
-                                        <button class="btn-info-med" data-bs-toggle="modal" data-bs-target="#modalMed9">Más información</button>
-                                    </div>
-                                </div>
-                                <div class="col-md-4 mb-3">
-                                    <div class="med-card">
-                                        <img src="https://via.placeholder.com/300x180/2b8c35/ffffff?text=Electrolitos" class="med-card-img" alt="Electrolitos">
-                                        <span class="med-card-category">Suplemento Oral</span>
-                                        <h4 class="med-card-title">Electrolitos Orales</h4>
-                                        <p class="med-card-desc">Rehidratación y balance electrolítico.</p>
-                                        <button class="btn-info-med" data-bs-toggle="modal" data-bs-target="#modalMed10">Más información</button>
-                                    </div>
-                                </div>
-                            </div>
+    <div id="carouselOrales" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+
+            <!-- ITEM 1 -->
+            <div class="carousel-item active">
+                <div class="row">
+
+                    <!-- Levamisol -->
+                    <div class="col-md-4 mb-3">
+                        <div class="med-card">
+                            <img src="img/LevamisolOral.png" class="med-card-img" alt="Levamisol">
+                            <span class="med-card-category">Antiparasitario Oral</span>
+                            <h4 class="med-card-title">Levamisol</h4>
+                            <p class="med-card-desc">Antihelmíntico eficaz contra nematodos gastrointestinales.</p>
+                            <button class="btn-info-med" data-bs-toggle="modal" data-bs-target="#modalLevamisol">Más información</button>
                         </div>
                     </div>
-                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselOrales" data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon"></span>
-                    </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#carouselOrales" data-bs-slide="next">
-                        <span class="carousel-control-next-icon"></span>
-                    </button>
+
+                    <!-- Albendazol -->
+                    <div class="col-md-4 mb-3">
+                        <div class="med-card">
+                            <img src="img/albendazol.png" class="med-card-img" alt="Albendazol">
+                            <span class="med-card-category">Antiparasitario</span>
+                            <h4 class="med-card-title">Albendazol 10%</h4>
+                            <p class="med-card-desc">Desparasitante oral de amplio espectro.</p>
+                            <button class="btn-info-med" data-bs-toggle="modal" data-bs-target="#modalAlbendazol">Más información</button>
+                        </div>
+                    </div>
+
+                    <!-- Monensina -->
+                    <div class="col-md-4 mb-3">
+                        <div class="med-card">
+                            <img src="img/monensina.png" class="med-card-img" alt="Monensina">
+                            <span class="med-card-category">Aditivo Oral</span>
+                            <h4 class="med-card-title">Monensina</h4>
+                            <p class="med-card-desc">Mejora la eficiencia alimenticia y previene acidosis.</p>
+                            <button class="btn-info-med" data-bs-toggle="modal" data-bs-target="#modalMonensina">Más información</button>
+                        </div>
+                    </div>
+
                 </div>
             </div>
+
+            <!-- ITEM 2 -->
+            <div class="carousel-item">
+                <div class="row">
+
+                    <!-- Calcio Oral -->
+                    <div class="col-md-4 mb-3">
+                        <div class="med-card">
+                            <img src="img/CalcioGluconatoBorogluconato.png" class="med-card-img" alt="Calcio Oral">
+                            <span class="med-card-category">Suplemento Mineral</span>
+                            <h4 class="med-card-title">Calcio Oral</h4>
+                            <p class="med-card-desc">Suplemento para prevenir hipocalcemia periparto.</p>
+                            <button class="btn-info-med" data-bs-toggle="modal" data-bs-target="#modalCalcioOral">Más información</button>
+                        </div>
+                    </div>
+
+                    <!-- Teat Dips -->
+                    <div class="col-md-4 mb-3">
+                        <div class="med-card">
+                            <img src="img/TeatDips.png" class="med-card-img" alt="Teat Dips">
+                            <span class="med-card-category">Tópico</span>
+                            <h4 class="med-card-title">Teat Dips</h4>
+                            <p class="med-card-desc">Antiséptico post-ordeño para prevenir mastitis.</p>
+                            <button class="btn-info-med" data-bs-toggle="modal" data-bs-target="#modalTeatDips">Más información</button>
+                        </div>
+                    </div>
+
+                    <!-- Probióticos -->
+                    <div class="col-md-4 mb-3">
+                        <div class="med-card">
+                            <img src="img/ProbioticosPrebioticosOrales.png" class="med-card-img" alt="Probioticos">
+                            <span class="med-card-category">Suplemento Oral</span>
+                            <h4 class="med-card-title">Probióticos</h4>
+                            <p class="med-card-desc">Apoyo digestivo para flora ruminal.</p>
+                            <button class="btn-info-med" data-bs-toggle="modal" data-bs-target="#modalProbioticos">Más información</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- ITEM 3 -->
+            <div class="carousel-item">
+                <div class="row">
+
+                    <!-- Fosfato Dicálcico -->
+                    <div class="col-md-4 mb-3">
+                        <div class="med-card">
+                            <img src="img/fosfato_dicalcico.png" class="med-card-img" alt="Fosfato">
+                            <span class="med-card-category">Suplemento Mineral</span>
+                            <h4 class="med-card-title">Fosfato Dicálcico</h4>
+                            <p class="med-card-desc">Fuente de fósforo y calcio para dieta bovina.</p>
+                            <button class="btn-info-med" data-bs-toggle="modal" data-bs-target="#modalFosfato">Más información</button>
+                        </div>
+                    </div>
+
+                    <!-- Antiparasitario Pour On -->
+                    <div class="col-md-4 mb-3">
+                        <div class="med-card">
+                            <img src="img/pour_on.png" class="med-card-img" alt="Pour-on">
+                            <span class="med-card-category">Antiparasitario Tópico</span>
+                            <h4 class="med-card-title">Antiparasitario Pour-On</h4>
+                            <p class="med-card-desc">Control de parásitos internos y externos.</p>
+                            <button class="btn-info-med" data-bs-toggle="modal" data-bs-target="#modalPourOn">Más información</button>
+                        </div>
+                    </div>
+
+                    <!-- Antiséptico Yodado -->
+                    <div class="col-md-4 mb-3">
+                        <div class="med-card">
+                            <img src="img/yodado.png" class="med-card-img" alt="Yodo">
+                            <span class="med-card-category">Desinfectante</span>
+                            <h4 class="med-card-title">Antiséptico Yodado</h4>
+                            <p class="med-card-desc">Desinfección de heridas y ombligos.</p>
+                            <button class="btn-info-med" data-bs-toggle="modal" data-bs-target="#modalYodo">Más información</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- ITEM 4 -->
+            <div class="carousel-item">
+                <div class="row">
+
+                    <!-- Suero Rehidratante -->
+                    <div class="col-md-4 mb-3">
+                        <div class="med-card">
+                            <img src="img/suero_oral.png" class="med-card-img" alt="Suero oral">
+                            <span class="med-card-category">Rehidratante Oral</span>
+                            <h4 class="med-card-title">Suero Rehidratante Oral</h4>
+                            <p class="med-card-desc">Para diarreas y deshidratación en terneros.</p>
+                            <button class="btn-info-med" data-bs-toggle="modal" data-bs-target="#modalSuero">Más información</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
         </div>
+
+        <!-- Controles -->
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselOrales" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon"></span>
+        </button>
+
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselOrales" data-bs-slide="next">
+            <span class="carousel-control-next-icon"></span>
+        </button>
+
+    </div>
+</div>
     </main>
 
     <!-- MODALES PARA CADA MEDICAMENTO -->
@@ -1205,16 +1400,16 @@
         </div>
     </div>
 
-    <!-- Modal 6: Albendazol -->
-    <div class="modal fade" id="modalMed6" tabindex="-1">
+    <!-- Modal 18: Cobre -->
+    <div class="modal fade" id="modalMed18" tabindex="-1">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Albendazol 10%</h5>
+                    <h5 class="modal-title">Cobre</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                    <img src="https://via.placeholder.com/800x300/36ac42/ffffff?text=Albendazol+10%25" class="modal-med-img" alt="Albendazol">
+                    <img src="img/cobre.png" class="modal-med-img" alt="cobre">
                     
                     <div class="modal-section">
                         <div class="modal-section-title">
@@ -1222,7 +1417,7 @@
                             Categoría
                         </div>
                         <div class="modal-section-content">
-                            <strong>Antiparasitario oral de amplio espectro - Benzimidazol</strong>
+                            <strong>Corticosteroide - Antiinflamatorio y antialérgico potente</strong>
                         </div>
                     </div>
 
@@ -1232,7 +1427,7 @@
                             Descripción
                         </div>
                         <div class="modal-section-content">
-                            Antiparasitario oral efectivo contra nematodos gastrointestinales, pulmonares y tenias. Actúa inhibiendo la formación de microtúbulos en las células parasitarias. Ampliamente usado en programas de desparasitación.
+                            Corticosteroide de alta potencia con acción antiinflamatoria, antialérgica e inmunosupresora. Indicado en shock, reacciones alérgicas severas, edemas, y como inductor de parto. Actúa rápidamente controlando procesos inflamatorios agudos.
                         </div>
                     </div>
 
@@ -1243,13 +1438,13 @@
                         </div>
                         <div class="modal-section-content">
                             <div class="recomendacion-item">
-                                <strong>Dosis:</strong> 7.5 mg/kg (1 ml por 13 kg de peso), vía oral
+                                <strong>Dosis:</strong> 0.05-0.2 mg/kg, vía intramuscular o intravenosa
                             </div>
                             <div class="recomendacion-item">
-                                <strong>Tiempo de retiro:</strong> 14 días para carne, 4 días para leche
+                                <strong>Tiempo de retiro:</strong> 7 días para carne, no usar en lactancia
                             </div>
                             <div class="recomendacion-item">
-                                <strong>Aplicación:</strong> Directamente en la boca con dosificador oral
+                                <strong>Precaución:</strong> No usar en animales gestantes (excepto para inducir parto)
                             </div>
                         </div>
                     </div>
@@ -1261,16 +1456,16 @@
                         </div>
                         <div class="modal-section-content">
                             <div class="recomendacion-item">
-                                No usar en el primer tercio de gestación
+                                Usar solo bajo supervisión veterinaria
                             </div>
                             <div class="recomendacion-item">
-                                Aplicar en ayunas para mejor absorción
+                                No aplicar en animales con infecciones sin antibiótico concomitante
                             </div>
                             <div class="recomendacion-item">
-                                Repetir tratamiento cada 3-4 meses según carga parasitaria
+                                Puede inducir parto 48 horas después de aplicación
                             </div>
                             <div class="recomendacion-item">
-                                Rotar con otros principios activos para evitar resistencia
+                                Evitar tratamientos prolongados por efectos secundarios
                             </div>
                         </div>
                     </div>
@@ -1279,16 +1474,16 @@
         </div>
     </div>
 
-    <!-- Modal 7: Probióticos -->
-    <div class="modal fade" id="modalMed7" tabindex="-1">
+    <!-- Modal 19: Hierro Dextrano -->
+    <div class="modal fade" id="modalMed19" tabindex="-1">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Probióticos Bovinos</h5>
+                    <h5 class="modal-title">Hierro Dextrano</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                    <img src="https://via.placeholder.com/800x300/2b8c35/ffffff?text=Probioticos+Bovinos" class="modal-med-img" alt="Probióticos">
+                    <img src="img/hierro_dextrano.png" class="modal-med-img" alt="Hierro Dextrano">
                     
                     <div class="modal-section">
                         <div class="modal-section-title">
@@ -1296,7 +1491,7 @@
                             Categoría
                         </div>
                         <div class="modal-section-content">
-                            <strong>Suplemento oral - Microorganismos beneficiosos para flora ruminal</strong>
+                            <strong>Corticosteroide - Antiinflamatorio y antialérgico potente</strong>
                         </div>
                     </div>
 
@@ -1306,7 +1501,7 @@
                             Descripción
                         </div>
                         <div class="modal-section-content">
-                            Mezcla de microorganismos vivos (levaduras y bacterias) que mejoran la salud digestiva del rumen. Incrementa la eficiencia alimenticia, mejora la digestión de fibra, estabiliza el pH ruminal y fortalece el sistema inmune.
+                            Corticosteroide de alta potencia con acción antiinflamatoria, antialérgica e inmunosupresora. Indicado en shock, reacciones alérgicas severas, edemas, y como inductor de parto. Actúa rápidamente controlando procesos inflamatorios agudos.
                         </div>
                     </div>
 
@@ -1317,13 +1512,13 @@
                         </div>
                         <div class="modal-section-content">
                             <div class="recomendacion-item">
-                                <strong>Dosis:</strong> 10-20 gramos por animal al día, mezclado con alimento
+                                <strong>Dosis:</strong> 0.05-0.2 mg/kg, vía intramuscular o intravenosa
                             </div>
                             <div class="recomendacion-item">
-                                <strong>Administración:</strong> Uso continuo o periódico según necesidad
+                                <strong>Tiempo de retiro:</strong> 7 días para carne, no usar en lactancia
                             </div>
                             <div class="recomendacion-item">
-                                <strong>Ideal en:</strong> Cambios de dieta, estrés, post-tratamiento con antibióticos
+                                <strong>Precaución:</strong> No usar en animales gestantes (excepto para inducir parto)
                             </div>
                         </div>
                     </div>
@@ -1335,16 +1530,16 @@
                         </div>
                         <div class="modal-section-content">
                             <div class="recomendacion-item">
-                                Mezclar con alimento fresco, no con agua caliente
+                                Usar solo bajo supervisión veterinaria
                             </div>
                             <div class="recomendacion-item">
-                                Almacenar en lugar fresco y seco, cerrado herméticamente
+                                No aplicar en animales con infecciones sin antibiótico concomitante
                             </div>
                             <div class="recomendacion-item">
-                                Aumenta producción de leche y ganancia de peso
+                                Puede inducir parto 48 horas después de aplicación
                             </div>
                             <div class="recomendacion-item">
-                                No tiene tiempo de retiro, totalmente natural
+                                Evitar tratamientos prolongados por efectos secundarios
                             </div>
                         </div>
                     </div>
@@ -1353,16 +1548,16 @@
         </div>
     </div>
 
-    <!-- Modal 8: Pomada Cicatrizante -->
-    <div class="modal fade" id="modalMed8" tabindex="-1">
+    <!-- Modal 20: Ketoprofeno -->
+    <div class="modal fade" id="modalMed20" tabindex="-1">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Pomada Cicatrizante</h5>
+                    <h5 class="modal-title">Ketoprofeno</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                    <img src="https://via.placeholder.com/800x300/1e7e34/ffffff?text=Pomada+Cicatrizante" class="modal-med-img" alt="Pomada">
+                    <img src="img/ketoprofeno.png" class="modal-med-img" alt="Ketoprofeno">
                     
                     <div class="modal-section">
                         <div class="modal-section-title">
@@ -1370,7 +1565,7 @@
                             Categoría
                         </div>
                         <div class="modal-section-content">
-                            <strong>Uso tópico - Cicatrizante y antiséptico de uso externo</strong>
+                            <strong>Corticosteroide - Antiinflamatorio y antialérgico potente</strong>
                         </div>
                     </div>
 
@@ -1380,7 +1575,7 @@
                             Descripción
                         </div>
                         <div class="modal-section-content">
-                            Pomada de uso externo con propiedades cicatrizantes, antisépticas y antibacterianas. Acelera la regeneración de tejidos, previene infecciones en heridas, cortes, laceraciones y quemaduras. Forma una barrera protectora.
+                            Corticosteroide de alta potencia con acción antiinflamatoria, antialérgica e inmunosupresora. Indicado en shock, reacciones alérgicas severas, edemas, y como inductor de parto. Actúa rápidamente controlando procesos inflamatorios agudos.
                         </div>
                     </div>
 
@@ -1391,13 +1586,13 @@
                         </div>
                         <div class="modal-section-content">
                             <div class="recomendacion-item">
-                                <strong>Aplicación:</strong> Limpiar la herida y aplicar capa fina 2-3 veces al día
+                                <strong>Dosis:</strong> 0.05-0.2 mg/kg, vía intramuscular o intravenosa
                             </div>
                             <div class="recomendacion-item">
-                                <strong>Uso en:</strong> Heridas, cortes, laceraciones, quemaduras, dermatitis
+                                <strong>Tiempo de retiro:</strong> 7 días para carne, no usar en lactancia
                             </div>
                             <div class="recomendacion-item">
-                                <strong>Precaución:</strong> Solo uso externo, no ingerir
+                                <strong>Precaución:</strong> No usar en animales gestantes (excepto para inducir parto)
                             </div>
                         </div>
                     </div>
@@ -1409,16 +1604,16 @@
                         </div>
                         <div class="modal-section-content">
                             <div class="recomendacion-item">
-                                Lavar la herida con agua y jabón antes de aplicar
+                                Usar solo bajo supervisión veterinaria
                             </div>
                             <div class="recomendacion-item">
-                                Puede usarse bajo vendaje en heridas grandes
+                                No aplicar en animales con infecciones sin antibiótico concomitante
                             </div>
                             <div class="recomendacion-item">
-                                Evitar que el animal lama la zona tratada
+                                Puede inducir parto 48 horas después de aplicación
                             </div>
                             <div class="recomendacion-item">
-                                No tiene tiempo de retiro para carne ni leche
+                                Evitar tratamientos prolongados por efectos secundarios
                             </div>
                         </div>
                     </div>
@@ -1427,16 +1622,16 @@
         </div>
     </div>
 
-    <!-- Modal 9: Spray Repelente -->
-    <div class="modal fade" id="modalMed9" tabindex="-1">
+    <!-- Modal 21: Penicilina + Estreptomicina -->
+    <div class="modal fade" id="modalMed21" tabindex="-1">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Spray Repelente</h5>
+                    <h5 class="modal-title">Penicilina + Estreptomicina</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                    <img src="https://via.placeholder.com/800x300/36ac42/ffffff?text=Spray+Repelente" class="modal-med-img" alt="Spray">
+                    <img src="img/penicilina_estreptomicina.png" class="modal-med-img" alt="Penicilina + Estreptomicina">
                     
                     <div class="modal-section">
                         <div class="modal-section-title">
@@ -1444,7 +1639,7 @@
                             Categoría
                         </div>
                         <div class="modal-section-content">
-                            <strong>Uso tópico - Repelente e insecticida de contacto</strong>
+                            <strong>Corticosteroide - Antiinflamatorio y antialérgico potente</strong>
                         </div>
                     </div>
 
@@ -1454,7 +1649,7 @@
                             Descripción
                         </div>
                         <div class="modal-section-content">
-                            Spray repelente e insecticida de acción rápida contra moscas, tábanos, garrapatas y otros ectoparásitos. Proporciona protección inmediata y duradera. Previene el estrés causado por insectos y la transmisión de enfermedades.
+                            Corticosteroide de alta potencia con acción antiinflamatoria, antialérgica e inmunosupresora. Indicado en shock, reacciones alérgicas severas, edemas, y como inductor de parto. Actúa rápidamente controlando procesos inflamatorios agudos.
                         </div>
                     </div>
 
@@ -1465,13 +1660,13 @@
                         </div>
                         <div class="modal-section-content">
                             <div class="recomendacion-item">
-                                <strong>Dosis:</strong> 20 mg/kg de peso vivo, aplicación única intramuscular profunda
+                                <strong>Dosis:</strong> 0.05-0.2 mg/kg, vía intramuscular o intravenosa
                             </div>
                             <div class="recomendacion-item">
-                                <strong>Tiempo de retiro:</strong> 28 días para carne, no usar en vacas en lactancia
+                                <strong>Tiempo de retiro:</strong> 7 días para carne, no usar en lactancia
                             </div>
                             <div class="recomendacion-item">
-                                <strong>Aplicación:</strong> Inyectar en grupos musculares grandes alternando sitios de aplicación
+                                <strong>Precaución:</strong> No usar en animales gestantes (excepto para inducir parto)
                             </div>
                         </div>
                     </div>
@@ -1483,16 +1678,16 @@
                         </div>
                         <div class="modal-section-content">
                             <div class="recomendacion-item">
-                                Mantener refrigerado entre 2-8°C, proteger de la luz
+                                Usar solo bajo supervisión veterinaria
                             </div>
                             <div class="recomendacion-item">
-                                No mezclar con otros medicamentos en la misma jeringa
+                                No aplicar en animales con infecciones sin antibiótico concomitante
                             </div>
                             <div class="recomendacion-item">
-                                Evitar contacto con piel y ojos, usar guantes de protección
+                                Puede inducir parto 48 horas después de aplicación
                             </div>
                             <div class="recomendacion-item">
-                                No aplicar más de 20 ml por sitio de inyección
+                                Evitar tratamientos prolongados por efectos secundarios
                             </div>
                         </div>
                     </div>
@@ -1501,16 +1696,16 @@
         </div>
     </div>
 
-    <!-- Modal 10: Electrolitos Orales -->
-    <div class="modal fade" id="modalMed10" tabindex="-1">
+    <!-- Modal 22: Vitamina A, D3 y E -->
+    <div class="modal fade" id="modalMed22" tabindex="-1">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Electrolitos Orales</h5>
+                    <h5 class="modal-title">Vitamina A, D3 y E</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                    <img src="https://via.placeholder.com/800x300/2b8c35/ffffff?text=Electrolitos+Orales" class="modal-med-img" alt="Electrolitos">
+                    <img src="img/vitamina_ade.png" class="modal-med-img" alt="Vitamina A, D3 y E">
                     
                     <div class="modal-section">
                         <div class="modal-section-title">
@@ -1518,7 +1713,7 @@
                             Categoría
                         </div>
                         <div class="modal-section-content">
-                            <strong>Suplemento oral - Rehidratante y reponedor de electrolitos</strong>
+                            <strong>Corticosteroide - Antiinflamatorio y antialérgico potente</strong>
                         </div>
                     </div>
 
@@ -1528,7 +1723,7 @@
                             Descripción
                         </div>
                         <div class="modal-section-content">
-                            Solución oral con electrolitos esenciales (sodio, potasio, cloro) y glucosa. Corrige deshidratación y desequilibrios electrolíticos causados por diarrea, estrés calórico, transporte o enfermedades. Restablece el balance hidroelectrolítico rápidamente.
+                            Corticosteroide de alta potencia con acción antiinflamatoria, antialérgica e inmunosupresora. Indicado en shock, reacciones alérgicas severas, edemas, y como inductor de parto. Actúa rápidamente controlando procesos inflamatorios agudos.
                         </div>
                     </div>
 
@@ -1539,13 +1734,13 @@
                         </div>
                         <div class="modal-section-content">
                             <div class="recomendacion-item">
-                                <strong>Dosis:</strong> 50-100 gramos disueltos en 2 litros de agua tibia
+                                <strong>Dosis:</strong> 0.05-0.2 mg/kg, vía intramuscular o intravenosa
                             </div>
                             <div class="recomendacion-item">
-                                <strong>Administración:</strong> Vía oral, 2-3 veces al día según severidad
+                                <strong>Tiempo de retiro:</strong> 7 días para carne, no usar en lactancia
                             </div>
                             <div class="recomendacion-item">
-                                <strong>Uso en:</strong> Diarreas, deshidratación, estrés calórico, post-parto
+                                <strong>Precaución:</strong> No usar en animales gestantes (excepto para inducir parto)
                             </div>
                         </div>
                     </div>
@@ -1557,16 +1752,16 @@
                         </div>
                         <div class="modal-section-content">
                             <div class="recomendacion-item">
-                                Preparar solución fresca cada vez, no almacenar preparada
+                                Usar solo bajo supervisión veterinaria
                             </div>
                             <div class="recomendacion-item">
-                                Administrar con jeringa o sonda oral en casos severos
+                                No aplicar en animales con infecciones sin antibiótico concomitante
                             </div>
                             <div class="recomendacion-item">
-                                Combinar con terapia antibiótica si hay infección
+                                Puede inducir parto 48 horas después de aplicación
                             </div>
                             <div class="recomendacion-item">
-                                No sustituye la terapia intravenosa en deshidratación severa
+                                Evitar tratamientos prolongados por efectos secundarios
                             </div>
                         </div>
                     </div>
@@ -1574,33 +1769,658 @@
             </div>
         </div>
     </div>
+
+    <!-- Modal 23: Complejo B12 + Fósforo -->
+    <div class="modal fade" id="modalMed23" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Complejo B12 + Fósforo</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <img src="img/b12_fosforo.png" class="modal-med-img" alt="Complejo B12 + Fósforo">
+                    
+                    <div class="modal-section">
+                        <div class="modal-section-title">
+                            <div class="modal-section-icon">📋</div>
+                            Categoría
+                        </div>
+                        <div class="modal-section-content">
+                            <strong>Corticosteroide - Antiinflamatorio y antialérgico potente</strong>
+                        </div>
+                    </div>
+
+                    <div class="modal-section">
+                        <div class="modal-section-title">
+                            <div class="modal-section-icon">📝</div>
+                            Descripción
+                        </div>
+                        <div class="modal-section-content">
+                            Corticosteroide de alta potencia con acción antiinflamatoria, antialérgica e inmunosupresora. Indicado en shock, reacciones alérgicas severas, edemas, y como inductor de parto. Actúa rápidamente controlando procesos inflamatorios agudos.
+                        </div>
+                    </div>
+
+                    <div class="modal-section">
+                        <div class="modal-section-title">
+                            <div class="modal-section-icon">⭐</div>
+                            Recomendaciones Principales
+                        </div>
+                        <div class="modal-section-content">
+                            <div class="recomendacion-item">
+                                <strong>Dosis:</strong> 0.05-0.2 mg/kg, vía intramuscular o intravenosa
+                            </div>
+                            <div class="recomendacion-item">
+                                <strong>Tiempo de retiro:</strong> 7 días para carne, no usar en lactancia
+                            </div>
+                            <div class="recomendacion-item">
+                                <strong>Precaución:</strong> No usar en animales gestantes (excepto para inducir parto)
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-section">
+                        <div class="modal-section-title">
+                            <div class="modal-section-icon">💡</div>
+                            Otras Recomendaciones
+                        </div>
+                        <div class="modal-section-content">
+                            <div class="recomendacion-item">
+                                Usar solo bajo supervisión veterinaria
+                            </div>
+                            <div class="recomendacion-item">
+                                No aplicar en animales con infecciones sin antibiótico concomitante
+                            </div>
+                            <div class="recomendacion-item">
+                                Puede inducir parto 48 horas después de aplicación
+                            </div>
+                            <div class="recomendacion-item">
+                                Evitar tratamientos prolongados por efectos secundarios
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 24: Glucosa al 50% -->
+    <div class="modal fade" id="modalMed24" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Glucosa al 50%</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <img src="img/glucosa_50.png" class="modal-med-img" alt="Glucosa al 50%">
+                    
+                    <div class="modal-section">
+                        <div class="modal-section-title">
+                            <div class="modal-section-icon">📋</div>
+                            Categoría
+                        </div>
+                        <div class="modal-section-content">
+                            <strong>Corticosteroide - Antiinflamatorio y antialérgico potente</strong>
+                        </div>
+                    </div>
+
+                    <div class="modal-section">
+                        <div class="modal-section-title">
+                            <div class="modal-section-icon">📝</div>
+                            Descripción
+                        </div>
+                        <div class="modal-section-content">
+                            Corticosteroide de alta potencia con acción antiinflamatoria, antialérgica e inmunosupresora. Indicado en shock, reacciones alérgicas severas, edemas, y como inductor de parto. Actúa rápidamente controlando procesos inflamatorios agudos.
+                        </div>
+                    </div>
+
+                    <div class="modal-section">
+                        <div class="modal-section-title">
+                            <div class="modal-section-icon">⭐</div>
+                            Recomendaciones Principales
+                        </div>
+                        <div class="modal-section-content">
+                            <div class="recomendacion-item">
+                                <strong>Dosis:</strong> 0.05-0.2 mg/kg, vía intramuscular o intravenosa
+                            </div>
+                            <div class="recomendacion-item">
+                                <strong>Tiempo de retiro:</strong> 7 días para carne, no usar en lactancia
+                            </div>
+                            <div class="recomendacion-item">
+                                <strong>Precaución:</strong> No usar en animales gestantes (excepto para inducir parto)
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-section">
+                        <div class="modal-section-title">
+                            <div class="modal-section-icon">💡</div>
+                            Otras Recomendaciones
+                        </div>
+                        <div class="modal-section-content">
+                            <div class="recomendacion-item">
+                                Usar solo bajo supervisión veterinaria
+                            </div>
+                            <div class="recomendacion-item">
+                                No aplicar en animales con infecciones sin antibiótico concomitante
+                            </div>
+                            <div class="recomendacion-item">
+                                Puede inducir parto 48 horas después de aplicación
+                            </div>
+                            <div class="recomendacion-item">
+                                Evitar tratamientos prolongados por efectos secundarios
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <!-- MODALES: Orales / Corporales (bloque completo) -->
+
+<!-- Modal: Levamisol -->
+<div class="modal fade" id="modalLevamisol" tabindex="-1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Levamisol</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <img src="img/LevamisolOral.png" class="modal-med-img" alt="Levamisol">
+        
+        <div class="modal-section">
+          <div class="modal-section-title"><div class="modal-section-icon">📋</div>Categoría</div>
+          <div class="modal-section-content">
+            <strong>Antiparasitario gastrointestinal / antihelmíntico</strong>
+          </div>
+        </div>
+
+        <div class="modal-section">
+          <div class="modal-section-title"><div class="modal-section-icon">📝</div>Descripción</div>
+          <div class="modal-section-content">
+            Antihelmíntico eficaz contra nematodos gastrointestinales y pulmonares en bovinos. Se presenta en formulaciones orales y también como inyectable/subcutáneo según producto.
+          </div>
+        </div>
+
+        <div class="modal-section">
+          <div class="modal-section-title"><div class="modal-section-icon">⭐</div>Recomendaciones Principales</div>
+          <div class="modal-section-content">
+            <div class="recomendacion-item"><strong>Dosis:</strong> Usar dosis exacta basada en peso corporal (varía según formulación; ejemplo orientativo: 1 mL/20 kg para formulaciones inyectables — confirmar etiqueta).</div>
+            <div class="recomendacion-item"><strong>Interacciones:</strong> No administrar junto con organofosforados, pirantel u otros que puedan interactuar.</div>
+            <div class="recomendacion-item"><strong>Tiempos de retiro:</strong> Respetar tiempos indicados en etiqueta (ejemplos típicos: leche 4 días, carne 14 días — varía por producto).</div>
+            <div class="recomendacion-item"><strong>Administración:</strong> Calcular dosis por peso; evitar sobredosificación que cause toxicidad.</div>
+          </div>
+        </div>
+
+        <div class="modal-section">
+          <div class="modal-section-title"><div class="modal-section-icon">💡</div>Otras Recomendaciones / Uso en gestación y terneros</div>
+          <div class="modal-section-content">
+            <div class="recomendacion-item">Terneros: puede usarse si la formulación lo permite (edad mínima depende del producto).</div>
+            <div class="recomendacion-item">Vacas gestantes: precaución, especialmente en etapas tempranas; consultar ficha técnica.</div>
+            <div class="recomendacion-item">Usar dentro de un programa de desparasitación rotativo y no como aplicación continua sin diagnóstico.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Albendazol 10% -->
+<div class="modal fade" id="modalAlbendazol" tabindex="-1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Albendazol 10%</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <img src="img/albendazol.png" class="modal-med-img" alt="Albendazol">
+        
+        <div class="modal-section">
+          <div class="modal-section-title"><div class="modal-section-icon">📋</div>Categoría</div>
+          <div class="modal-section-content">
+            <strong>Antiparasitario de amplio espectro (benzimidazol)</strong>
+          </div>
+        </div>
+
+        <div class="modal-section">
+          <div class="modal-section-title"><div class="modal-section-icon">📝</div>Descripción</div>
+          <div class="modal-section-content">
+            Antiparasitario oral que controla nematodos, cestodos y, a dosis mayores, trematodos (fasciola). Actúa inhibiendo la formación de microtúbulos en células parasitarias.
+          </div>
+        </div>
+
+        <div class="modal-section">
+          <div class="modal-section-title"><div class="modal-section-icon">⭐</div>Recomendaciones Principales</div>
+          <div class="modal-section-content">
+            <div class="recomendacion-item"><strong>Dosis (ejemplo):</strong> orientar por peso; ejemplo citado en ficha: 1 mL/12 kg (varía según producto).</div>
+            <div class="recomendacion-item"><strong>Tiempos de retiro:</strong> leche 4 días, carne 12 días (según etiqueta del producto).</div>
+            <div class="recomendacion-item"><strong>Aplicación:</strong> administración oral, verificar formulación y calcular por peso real.</div>
+          </div>
+        </div>
+
+        <div class="modal-section">
+          <div class="modal-section-title"><div class="modal-section-icon">💡</div>Otras Recomendaciones / Uso en gestación y terneros</div>
+          <div class="modal-section-content">
+            <div class="recomendacion-item">No usar en las primeras etapas de gestación (ej. no en los primeros 45 días según algunas etiquetas).</div>
+            <div class="recomendacion-item">Terneros: puede utilizarse si la edad/ formulación lo permiten.</div>
+            <div class="recomendacion-item">Usar como parte de programas de control parasitario, especialmente en épocas de riesgo.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Monensina -->
+<div class="modal fade" id="modalMonensina" tabindex="-1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Monensina</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <img src="img/monensina.png" class="modal-med-img" alt="Monensina">
+        
+        <div class="modal-section">
+          <div class="modal-section-title"><div class="modal-section-icon">📋</div>Categoría</div>
+          <div class="modal-section-content">
+            <strong>Aditivo ruminal / ionóforo alimenticio</strong>
+          </div>
+        </div>
+
+        <div class="modal-section">
+          <div class="modal-section-title"><div class="modal-section-icon">📝</div>Descripción</div>
+          <div class="modal-section-content">
+            Ionóforo que mejora la eficiencia de conversión del alimento y ayuda a prevenir acidosis ruminal en animales en producción.
+          </div>
+        </div>
+
+        <div class="modal-section">
+          <div class="modal-section-title"><div class="modal-section-icon">⭐</div>Recomendaciones Principales</div>
+          <div class="modal-section-content">
+            <div class="recomendacion-item"><strong>Administración:</strong> Incluir en la ración o TMR según dosis del fabricante.</div>
+            <div class="recomendacion-item"><strong>Monitoreo:</strong> No administrar con exceso de otros ionóforos; controlar estado corporal y producción al introducirlo.</div>
+            <div class="recomendacion-item"><strong>Uso:</strong> Uso continuo en lotes con ración formulada para producción; consultar nutricionista.</div>
+          </div>
+        </div>
+
+        <div class="modal-section">
+          <div class="modal-section-title"><div class="modal-section-icon">💡</div>Otras Recomendaciones</div>
+          <div class="modal-section-content">
+            <div class="recomendacion-item">Ajustar dosis según especie y fase productiva.</div>
+            <div class="recomendacion-item">Evitar su uso si no se controla la ración; requiere manejo técnico.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Calcio Oral (Gluconato / Borogluconato) -->
+<div class="modal fade" id="modalCalcioOral" tabindex="-1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Calcio Oral / IV (Gluconato / Borogluconato)</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <img src="img/CalcioGluconatoBorogluconato.png" class="modal-med-img" alt="Calcio">
+        
+        <div class="modal-section">
+          <div class="modal-section-title"><div class="modal-section-icon">📋</div>Categoría</div>
+          <div class="modal-section-content">
+            <strong>Suplemento mineral / tratamiento periparto (oral o intravenoso)</strong>
+          </div>
+        </div>
+
+        <div class="modal-section">
+          <div class="modal-section-title"><div class="modal-section-icon">📝</div>Descripción</div>
+          <div class="modal-section-content">
+            Gluconato y borogluconato de calcio se usan para tratar o prevenir hipocalcemia en vacas alrededor del parto. Pueden administrarse oralmente o por vía intravenosa según la gravedad.
+          </div>
+        </div>
+
+        <div class="modal-section">
+          <div class="modal-section-title"><div class="modal-section-icon">⭐</div>Recomendaciones Principales</div>
+          <div class="modal-section-content">
+            <div class="recomendacion-item"><strong>Uso:</strong> Aplicar en vacas cercanas al parto o con signos de hipocalcemia; elección de vía (oral o IV) según gravedad clínica.</div>
+            <div class="recomendacion-item"><strong>Precauciones IV:</strong> Administrar lentamente y vigilar ritmo cardíaco.</div>
+            <div class="recomendacion-item"><strong>Combinar:</strong> Puede combinarse con fósforo/magnesio si es necesario.</div>
+            <div class="recomendacion-item"><strong>Población:</strong> Principalmente para vacas en producción; no indicado para terneros.</div>
+          </div>
+        </div>
+
+        <div class="modal-section">
+          <div class="modal-section-title"><div class="modal-section-icon">💡</div>Otras Recomendaciones</div>
+          <div class="modal-section-content">
+            <div class="recomendacion-item">No usar rutinariamente en vacas sin riesgo; usar en protocolos de transición y bajo supervisión.</div>
+            <div class="recomendacion-item">Seguir protocolos veterinarios y dosis del fabricante.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Teat Dips (Clorhexidina / Yodo) -->
+<div class="modal fade" id="modalTeatDips" tabindex="-1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Teat Dips (Clorhexidina / Yodo)</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <img src="img/TeatDips.png" class="modal-med-img" alt="Teat Dips">
+        
+        <div class="modal-section">
+          <div class="modal-section-title"><div class="modal-section-icon">📋</div>Categoría</div>
+          <div class="modal-section-content">
+            <strong>Higiene / prevención - soluciones antisépticas para pezones</strong>
+          </div>
+        </div>
+
+        <div class="modal-section">
+          <div class="modal-section-title"><div class="modal-section-icon">📝</div>Descripción</div>
+          <div class="modal-section-content">
+            Soluciones antisépticas aplicadas en pezones inmediatamente después del ordeño para prevenir mastitis y mejorar higiene de la glándula mamaria.
+          </div>
+        </div>
+
+        <div class="modal-section">
+          <div class="modal-section-title"><div class="modal-section-icon">⭐</div>Recomendaciones Principales</div>
+          <div class="modal-section-content">
+            <div class="recomendacion-item"><strong>Aplicación:</strong> Aplicar inmediatamente tras el ordeño, asegurando cobertura completa del pezón.</div>
+            <div class="recomendacion-item"><strong>Integración:</strong> Parte de la rutina de higiene del ordeño junto con lavado y secado.</div>
+            <div class="recomendacion-item"><strong>Uso continuo:</strong> Usar durante toda la lactancia como medida preventiva.</div>
+          </div>
+        </div>
+
+        <div class="modal-section">
+          <div class="modal-section-title"><div class="modal-section-icon">💡</div>Otras Recomendaciones</div>
+          <div class="modal-section-content">
+            <div class="recomendacion-item">Mantener cadena de frío sólo si la presentación lo requiere (según producto).</div>
+            <div class="recomendacion-item">Complementar con buenas prácticas de ordeño para reducir riesgo de mastitis.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Probióticos / Prebióticos Orales -->
+<div class="modal fade" id="modalProbioticos" tabindex="-1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Probióticos / Prebióticos Orales</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <img src="img/ProbioticosPrebioticosOrales.png" class="modal-med-img" alt="Probióticos">
+        
+        <div class="modal-section">
+          <div class="modal-section-title"><div class="modal-section-icon">📋</div>Categoría</div>
+          <div class="modal-section-content">
+            <strong>Suplemento alimenticio / digestivo - microorganismos beneficiosos</strong>
+          </div>
+        </div>
+
+        <div class="modal-section">
+          <div class="modal-section-title"><div class="modal-section-icon">📝</div>Descripción</div>
+          <div class="modal-section-content">
+            Mezcla de microorganismos vivos (levaduras y bacterias) que mejoran la salud digestiva del rumen e intestinal, incrementando eficiencia alimenticia, digestión de fibra y estabilidad del pH ruminal.
+          </div>
+        </div>
+
+        <div class="modal-section">
+          <div class="modal-section-title"><div class="modal-section-icon">⭐</div>Recomendaciones Principales</div>
+          <div class="modal-section-content">
+            <div class="recomendacion-item"><strong>Dosis:</strong> Según producto; ejemplo orientativo en documento: 10-20 g/animal/día mezclado con alimento (ver etiqueta).</div>
+            <div class="recomendacion-item"><strong>Administración:</strong> Uso continuo o periódico; ideal en cambios de dieta, estrés o post-antibióticos.</div>
+            <div class="recomendacion-item"><strong>Beneficio:</strong> Mejora producción de leche y ganancia de peso en algunos casos.</div>
+          </div>
+        </div>
+
+        <div class="modal-section">
+          <div class="modal-section-title"><div class="modal-section-icon">💡</div>Otras Recomendaciones</div>
+          <div class="modal-section-content">
+            <div class="recomendacion-item">Mezclar con alimento fresco; no con agua caliente.</div>
+            <div class="recomendacion-item">Almacenar en lugar fresco, seco y cerrado herméticamente.</div>
+            <div class="recomendacion-item">No suelen tener tiempos de retiro; revisar ficha del producto.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Fosfato Dicálcico -->
+<div class="modal fade" id="modalFosfato" tabindex="-1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Fosfato Dicálcico</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <img src="img/fosfato_dicalcico.png" class="modal-med-img" alt="Fosfato Dicálcico">
+        
+        <div class="modal-section">
+          <div class="modal-section-title"><div class="modal-section-icon">📋</div>Categoría</div>
+          <div class="modal-section-content">
+            <strong>Suplemento mineral (fósforo y calcio)</strong>
+          </div>
+        </div>
+
+        <div class="modal-section">
+          <div class="modal-section-title"><div class="modal-section-icon">📝</div>Descripción</div>
+          <div class="modal-section-content">
+            Suplemento que aporta fósforo y calcio, esenciales para formación ósea, producción de leche y reproducción. Se administra mezclado en la dieta o como mineralización.
+          </div>
+        </div>
+
+        <div class="modal-section">
+          <div class="modal-section-title"><div class="modal-section-icon">⭐</div>Recomendaciones Principales</div>
+          <div class="modal-section-content">
+            <div class="recomendacion-item"><strong>Administración:</strong> Mezclar en la ración o suministrar como bloque/mineral según planificación nutricional.</div>
+            <div class="recomendacion-item"><strong>Control:</strong> No exceder dosis diarias; monitorizar disponibilidad de agua.</div>
+            <div class="recomendacion-item"><strong>Población:</strong> Útil desde terneros grandes hasta adultos.</div>
+          </div>
+        </div>
+
+        <div class="modal-section">
+          <div class="modal-section-title"><div class="modal-section-icon">💡</div>Otras Recomendaciones</div>
+          <div class="modal-section-content">
+            <div class="recomendacion-item">Usar como parte de un programa mineral basado en análisis de suelos y pasturas.</div>
+            <div class="recomendacion-item">Consultar nutricionista para dosis precisas.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Antiparasitario Pour-On -->
+<div class="modal fade" id="modalPourOn" tabindex="-1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Antiparasitario Pour-On (Ivermectina / Doramectina)</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <img src="img/pour_on.png" class="modal-med-img" alt="Pour-On">
+        
+        <div class="modal-section">
+          <div class="modal-section-title"><div class="modal-section-icon">📋</div>Categoría</div>
+          <div class="modal-section-content">
+            <strong>Antiparasitario tópico (pour-on) - control externo e interno</strong>
+          </div>
+        </div>
+
+        <div class="modal-section">
+          <div class="modal-section-title"><div class="modal-section-icon">📝</div>Descripción</div>
+          <div class="modal-section-content">
+            Producto de aplicación dorsal para control de garrapatas, piojos, ácaros y también con actividad sistémica contra algunos nematodos según formulación. Aplicar sobre línea dorsal según instrucciones.
+          </div>
+        </div>
+
+        <div class="modal-section">
+          <div class="modal-section-title"><div class="modal-section-icon">⭐</div>Recomendaciones Principales</div>
+          <div class="modal-section-content">
+            <div class="recomendacion-item"><strong>Aplicación:</strong> Verter sobre la línea dorsal sin diluir y sin mezclar con otros productos.</div>
+            <div class="recomendacion-item"><strong>Precauciones:</strong> No bañar animales 2–3 días antes ni después de la aplicación para asegurar absorción.</div>
+            <div class="recomendacion-item"><strong>Tiempos de retiro (ejemplos):</strong> carne 35 días, leche 14 días (según producto).</div>
+          </div>
+        </div>
+
+        <div class="modal-section">
+          <div class="modal-section-title"><div class="modal-section-icon">💡</div>Otras Recomendaciones</div>
+          <div class="modal-section-content">
+            <div class="recomendacion-item">Usar como parte de campañas antiparasitarias programadas y no como único método de control.</div>
+            <div class="recomendacion-item">Rotar principios activos para prevenir resistencia.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Antiséptico Yodado (tópico) -->
+<div class="modal fade" id="modalYodo" tabindex="-1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Antiséptico Yodado (uso tópico)</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <img src="img/yodado.png" class="modal-med-img" alt="Yodo">
+        
+        <div class="modal-section">
+          <div class="modal-section-title"><div class="modal-section-icon">📋</div>Categoría</div>
+          <div class="modal-section-content">
+            <strong>Desinfectante / antiséptico tópico</strong>
+          </div>
+        </div>
+
+        <div class="modal-section">
+          <div class="modal-section-title"><div class="modal-section-icon">📝</div>Descripción</div>
+          <div class="modal-section-content">
+            Solución desinfectante recomendada para heridas, ombligos de recién nacidos, material quirúrgico y zonas de ordeño.
+          </div>
+        </div>
+
+        <div class="modal-section">
+          <div class="modal-section-title"><div class="modal-section-icon">⭐</div>Recomendaciones Principales</div>
+          <div class="modal-section-content">
+            <div class="recomendacion-item"><strong>Aplicación:</strong> Aplicar directamente sobre la zona limpia; no exceder su uso en heridas profundas.</div>
+            <div class="recomendacion-item"><strong>Uso:</strong> Ombligos de terneros, primeros auxilios y limpieza de heridas superficiales.</div>
+          </div>
+        </div>
+
+        <div class="modal-section">
+          <div class="modal-section-title"><div class="modal-section-icon">💡</div>Otras Recomendaciones</div>
+          <div class="modal-section-content">
+            <div class="recomendacion-item">Usar según protocolo de higiene; evitar aplicar en grandes superficies abiertas sin control.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Suero Rehidratante Oral (Terneros) -->
+<div class="modal fade" id="modalSuero" tabindex="-1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Suero Rehidratante Oral (Terneros)</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <img src="img/suero_oral.png" class="modal-med-img" alt="Suero Oral">
+        
+        <div class="modal-section">
+          <div class="modal-section-title"><div class="modal-section-icon">📋</div>Categoría</div>
+          <div class="modal-section-content">
+            <strong>Rehidratante oral / terapéutico para terneros</strong>
+          </div>
+        </div>
+
+        <div class="modal-section">
+          <div class="modal-section-title"><div class="modal-section-icon">📝</div>Descripción</div>
+          <div class="modal-section-content">
+            Mezcla de sales, glucosa y electrolitos usada para tratar la deshidratación causada por diarreas en terneros; ayuda a restablecer el balance hidroelectrolítico.
+          </div>
+        </div>
+
+        <div class="modal-section">
+          <div class="modal-section-title"><div class="modal-section-icon">⭐</div>Recomendaciones Principales</div>
+          <div class="modal-section-content">
+            <div class="recomendacion-item"><strong>Administración:</strong> Con biberón o sonda oral; no sustituye la leche, alternar con alimentación.</div>
+            <div class="recomendacion-item"><strong>Dosis / Preparación:</strong> Preparar según indicaciones del producto (mezcla de sales y glucosa); mantener temperatura adecuada.</div>
+            <div class="recomendacion-item"><strong>Uso:</strong> Indicado en terneros con diarrea y deshidratación; vigilar signos clínicos.</div>
+          </div>
+        </div>
+
+        <div class="modal-section">
+          <div class="modal-section-title"><div class="modal-section-icon">💡</div>Otras Recomendaciones</div>
+          <div class="modal-section-content">
+            <div class="recomendacion-item">Administrar con biberón o sonda según gravedad; no sustituir la alimentación láctea.</div>
+            <div class="recomendacion-item">Vigilar evolución y requerir atención veterinaria si no mejora.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
     
     
     <script>
-        // Base de datos de medicamentos
         const medicamentos = [
-            { id: 'modalMed1', nombre: 'Oxitetraciclina LA', categoria: 'Antibiótico', tipo: 'inyectable', img: src="img/OxitetraciclinaLA.png" },
-            { id: 'modalMed2', nombre: 'Ivermectina 1%', categoria: 'Antiparasitario', tipo: 'inyectable', img: src="img/Ivermectina.webp" },
-            { id: 'modalMed3', nombre: 'Complejo B', categoria: 'Vitamínico', tipo: 'inyectable', img: src="img/complejo_b.png" },
-            { id: 'modalMed4', nombre: 'Meloxicam 2%', categoria: 'Antiinflamatorio', tipo: 'inyectable', img: src="img/meloxicam.png" },
-            { id: 'modalMed5', nombre: 'Dexametasona 2mg', categoria: 'Corticosteroide', tipo: 'inyectable', img: src="img/dexametasona.png" },
-            { id: 'modalMed6', nombre: 'Albendazol 10%', categoria: 'Antiparasitario Oral', tipo: 'oral', img: 'https://via.placeholder.com/300x180/36ac42/ffffff?text=Desparasitante' },
-            { id: 'modalMed7', nombre: 'Probióticos Bovinos', categoria: 'Suplemento Oral', tipo: 'oral', img: 'https://via.placeholder.com/300x180/2b8c35/ffffff?text=Probioticos' },
-            { id: 'modalMed8', nombre: 'Pomada Cicatrizante', categoria: 'Tópico', tipo: 'oral', img: 'https://via.placeholder.com/300x180/1e7e34/ffffff?text=Pomada' },
-            { id: 'modalMed9', nombre: 'Spray Repelente', categoria: 'Tópico', tipo: 'oral', img: 'https://via.placeholder.com/300x180/36ac42/ffffff?text=Spray' },
-            { id: 'modalMed10', nombre: 'Electrolitos Orales', categoria: 'Suplemento Oral', tipo: 'oral', img: 'https://via.placeholder.com/300x180/2b8c35/ffffff?text=Electrolitos' },
-            { id: 'modalMed11', nombre: 'Selenio', categoria: 'Corticosteroide (cambia)', tipo: 'inyectable', img: src="img/SelenioVitaminaE.png" },
-            { id: 'modalMed12', nombre: 'Vacuna Clostridial', categoria: 'Corticosteroide (cambia)', tipo: 'inyectable', img: src="img/VacunaClostridial.png" },
-            { id: 'modalMed13', nombre: 'Enrofloxacina', categoria: 'Corticosteroide (cambia)', tipo: 'inyectable', img: src="img/enrofloxacina.png" },
-            { id: 'modalMed14', nombre: 'Flunixin Meglumine', categoria: 'Corticosteroide (cambia)', tipo: 'inyectable', img: src="img/flunixin_meglumine.png" },
-            { id: 'modalMed15', nombre: 'Sulfadoxina + Trimetoprima', categoria: 'Corticosteroide (cambia)', tipo: 'inyectable', img: src="img/sulfadoxina_trimethoprim.png" },
-            { id: 'modalMed16', nombre: 'Vacuna contra Fiebre Aftosa', categoria: 'Corticosteroide (cambia)', tipo: 'inyectable', img: src="img/vacuna_aftosa.png" },
-            { id: 'modalMed17', nombre: 'Vacuna contra Brucelosis', categoria: 'Corticosteroide (cambia)', tipo: 'inyectable', img: src="img/vacuna_brucelosis.png" },
-            { id: 'modalMed18', nombre: 'Vacuna Clostridial', categoria: 'Corticosteroide (cambia)', tipo: 'inyectable', img: src="img/VacunaClostridial.png" },
-            { id: 'modalMed19', nombre: 'Vacuna Clostridial', categoria: 'Corticosteroide (cambia)', tipo: 'inyectable', img: src="img/VacunaClostridial.png" },
-            { id: 'modalMed20', nombre: 'Vacuna Clostridial', categoria: 'Corticosteroide (cambia)', tipo: 'inyectable', img: src="img/VacunaClostridial.png" },
-        ];
+    { id: 'modalMed1', nombre: 'Oxitetraciclina LA', categoria: 'Antibiótico', tipo: 'inyectable', img: "img/OxitetraciclinaLA.png" },
+    { id: 'modalMed2', nombre: 'Ivermectina 1%', categoria: 'Antiparasitario', tipo: 'inyectable', img: "img/Ivermectina.webp" },
+    { id: 'modalMed3', nombre: 'Complejo B', categoria: 'Vitamínico', tipo: 'inyectable', img: "img/complejo_b.png" },
+    { id: 'modalMed4', nombre: 'Meloxicam 2%', categoria: 'Antiinflamatorio', tipo: 'inyectable', img: "img/meloxicam.png" },
+    { id: 'modalMed5', nombre: 'Dexametasona 2mg', categoria: 'Corticosteroide', tipo: 'inyectable', img: "img/dexametasona.png" },
+    { id: 'modalLevamisol', nombre: 'Levamisol', categoria: 'Antiparasitario Oral', tipo: 'oral', img: "img/LevamisolOral.png" },
+    { id: 'modalAlbendazol', nombre: 'Albendazol 10%', categoria: 'Antiparasitario Oral', tipo: 'oral', img: "img/albendazol.png" },
+    { id: 'modalMonensina', nombre: 'Monensina', categoria: 'Aditivo Oral', tipo: 'oral', img: "img/monensina.png" },
+    { id: 'modalCalcioOral', nombre: 'Calcio Oral (Gluconato / Borogluconato)', categoria: 'Suplemento Mineral', tipo: 'oral', img: "img/CalcioGluconatoBorogluconato.png" },
+    { id: 'modalTeatDips', nombre: 'Teat Dips (Clorhexidina / Yodo)', categoria: 'Tópico', tipo: 'corporal', img: "img/TeatDips.png" },
+    { id: 'modalProbioticos', nombre: 'Probióticos / Prebióticos Orales', categoria: 'Suplemento Oral', tipo: 'oral', img: "img/ProbioticosPrebioticosOrales.png" },
+    { id: 'modalFosfato', nombre: 'Fosfato Dicálcico', categoria: 'Suplemento Mineral', tipo: 'oral', img: "img/fosfato_dicalcico.png" },
+    { id: 'modalPourOn', nombre: 'Antiparasitario Pour-On', categoria: 'Antiparasitario Tópico', tipo: 'corporal', img: "img/pour_on.png" },
+    { id: 'modalYodo', nombre: 'Antiséptico Yodado', categoria: 'Desinfectante Tópico', tipo: 'corporal', img: "img/yodado.png" },
+    { id: 'modalSuero', nombre: 'Suero Rehidratante Oral (Terneros)', categoria: 'Rehidratante Oral', tipo: 'oral', img: "img/suero_oral.png" },
+    { id: 'modalMed11', nombre: 'Selenio', categoria: 'Vitaminas y Minerales', tipo: 'inyectable', img: "img/SelenioVitaminaE.png" },
+    { id: 'modalMed12', nombre: 'Vacuna Clostridial', categoria: 'Vacuna', tipo: 'inyectable', img: "img/VacunaClostridial.png" },
+    { id: 'modalMed13', nombre: 'Enrofloxacina', categoria: 'Antibiótico', tipo: 'inyectable', img: "img/enrofloxacina.png" },
+    { id: 'modalMed14', nombre: 'Flunixin Meglumine', categoria: 'Antiinflamatorio', tipo: 'inyectable', img: "img/flunixin_meglumine.png" },
+    { id: 'modalMed15', nombre: 'Sulfadoxina + Trimetoprima', categoria: 'Antibiótico', tipo: 'inyectable', img: "img/sulfadoxina_trimethoprim.png" },
+    { id: 'modalMed16', nombre: 'Vacuna contra Fiebre Aftosa', categoria: 'Vacuna', tipo: 'inyectable', img: "img/vacuna_aftosa.png" },
+    { id: 'modalMed17', nombre: 'Vacuna contra Brucelosis', categoria: 'Vacuna', tipo: 'inyectable', img: "img/vacuna_brucelosis.png" },
+    { id: 'modalMed18', nombre: 'Cobre', categoria: 'Mineral inyectable', tipo: 'inyectable', img: "img/cobre.png" },
+    { id: 'modalMed19', nombre: 'Hierro Dextrano', categoria: 'Minerales', tipo: 'inyectable', img: "img/hierro_dextrano.png" },
+    { id: 'modalMed20', nombre: 'Ketoprofeno', categoria: 'Antiinflamatorio', tipo: 'inyectable', img: "img/ketoprofeno.png" },
+    { id: 'modalMed21', nombre: 'Penicilina + Estreptomicina', categoria: 'Antibiótico', tipo: 'inyectable', img: "img/penicilina_estreptomicina.png" },
+    { id: 'modalMed22', nombre: 'Vitamina A, D3 y E', categoria: 'Vitamínico', tipo: 'inyectable', img: "img/vitamina_ade.png" },
+    { id: 'modalMed23', nombre: 'Complejo B12 + Fósforo', categoria: 'Vitamínico / Mineral', tipo: 'inyectable', img: "img/b12_fosforo.png" },
+    { id: 'modalMed24', nombre: 'Glucosa al 50%', categoria: 'Energético', tipo: 'inyectable', img: "img/glucosa_50.png" }
+];
+
 
         const searchInput = document.getElementById('searchInput');
         const searchResults = document.getElementById('searchResults');
