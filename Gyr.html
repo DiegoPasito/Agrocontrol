@@ -42,17 +42,8 @@
               </ul>
             </li>
 
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Medicamentos</a>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="Medicamento Jersey.html">Jersey</a></li>
-                <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item" href="Medicamento Girolando.html">Girolando</a></li>
-                <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item" href="Medicamento Gyr.html">Gyr</a></li>
-                <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item" href="Medicamento Simmental.html">Simmental</a></li>
-              </ul>
+            <li class="nav-item">
+          <a class="nav-link" href="Medicamentos.html">Medicamentos</a>
             </li>
 
             <li class="nav-item">
@@ -393,7 +384,7 @@
       }
     });
 
-    // 🟢 Mostrar insumos recomendados para una vaca
+  // 🟢 Mostrar insumos recomendados para una vaca
 window.mostrarInsumos = async function (nombreVaca) {
   // Buscar los datos reales de la vaca seleccionada
   const q = query(collection(db, "users", usuarioId, "cows"), where("name", "==", nombreVaca));
@@ -410,78 +401,177 @@ window.mostrarInsumos = async function (nombreVaca) {
   document.getElementById("vacaSeleccionada").innerText =
     `🐄 ${nombreVaca} — Peso: ${weight} kg | Leche diaria: ${milkProduction} L`;
 
-    // Mostrar modal
-    const modal = new bootstrap.Modal(document.getElementById("insumosModal"));
-    modal.show();
+  // Mostrar modal
+  const modal = new bootstrap.Modal(document.getElementById("insumosModal"));
+  modal.show();
 
-    // Obtener insumos desde el HTML de insumos generales
-    const insumos = await obtenerInsumosDesdeHTML();
-    const contenedor = document.getElementById("listaInsumos");
-    contenedor.innerHTML = "";
+  // Obtener insumos desde el HTML de insumos generales
+  const insumos = await obtenerInsumosDesdeHTML();
+  const contenedor = document.getElementById("listaInsumos");
+  contenedor.innerHTML = "";
 
-    insumos.forEach(nombre => {
+  insumos.forEach(nombre => {
     const btn = document.createElement("button");
     btn.className = "btn btn-outline-success";
     btn.textContent = nombre;
 
-    btn.addEventListener("mouseover", () => {
+    // Usar click en lugar de mouseover para que el usuario decida cuándo calcular
+    btn.addEventListener("click", () => {
       calcularRecomendacion(nombre, weight, milkProduction);
+      //  resaltar el botón seleccionado
+      contenedor.querySelectorAll("button").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
     });
 
     contenedor.appendChild(btn);
-    });
-  };
+  });
+};
 
-    // 🟢 Leer los insumos automáticamente del HTML de insumos generales
-    async function obtenerInsumosDesdeHTML() {
-      try {
-        const res = await fetch("insumos.html");
-        const html = await res.text();
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(html, "text/html");
+// 🟢 Leer los insumos automáticamente del HTML de insumos generales
+async function obtenerInsumosDesdeHTML() {
+  try {
+    const res = await fetch("insumos.html");
+    const html = await res.text();
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(html, "text/html");
 
-        // Leer nombres de insumos (desde los títulos de las tarjetas)
-        return Array.from(doc.querySelectorAll(".card-title")).map(e => e.textContent.trim());
-      } catch (err) {
-        console.error("Error leyendo insumos:", err);
-        return [];
-      }
-    }
+    // Leer nombres de insumos (desde los títulos de las tarjetas)
+    return Array.from(doc.querySelectorAll(".card-title")).map(e => e.textContent.trim());
+  } catch (err) {
+    console.error("Error leyendo insumos:", err);
+    return [];
+  }
+}
 
-    function calcularRecomendacion(nombreInsumo, peso, leche) {
-    let cantidad = 0;
+// 🟢 Calcular recomendación y mostrar resultado en el modal
+function calcularRecomendacion(nombreInsumoOriginal, peso, leche) {
+  const nombreInsumo = nombreInsumoOriginal.toLowerCase();
+  let cantidad = 0;
 
-    if (nombreInsumo.includes("Concentrado")) {
-      cantidad = leche * 0.4; // 400g por litro de leche
-    } else if (nombreInsumo.includes("Heno")) {
-      cantidad = peso * 0.02; // 2% del peso
-    } else if (nombreInsumo.includes("Pastura")) {
-      cantidad = peso * 0.05; // 5% del peso corporal (forraje verde)
-    } else if (nombreInsumo.includes("Silo") || nombreInsumo.includes("Ensilaje")) {
-      cantidad = peso * 0.03; // 3% del peso corporal
-    } else if (nombreInsumo.includes("Melaza")) {
-      cantidad = (leche / 10) * 0.8; // 0.8 kg por cada 10 litros
-    } else if (nombreInsumo.includes("Sales")) {
-      cantidad = peso * 0.001; // 0.1% del peso corporal
-    } else {
-      cantidad = peso * 0.01; // valor genérico
-    }
-
-    const resultado = `
-      <div class="alert alert-success mt-3">
-        <h6><strong>${nombreInsumo}</strong></h6>
-        <p>
-          Cantidad recomendada diaria: 
-          <strong>${cantidad.toFixed(2)} kg</strong>
-          <br><small>(según peso ${peso} kg y ${leche} L leche/día)</small>
-        </p>
-      </div>
-    `;
-
-    document.getElementById("resultadoInsumo").innerHTML = resultado;
+  // ------------------------
+  // 1. CONCENTRADOS ENERGÉTICOS
+  // ------------------------
+  if (nombreInsumo.includes("concentrado balanceado") || nombreInsumo.includes("concentrado")) {
+    cantidad = leche * 0.4;
+  } else if (nombreInsumo.includes("harina de maíz") || nombreInsumo.includes("harina de maiz")) {
+    cantidad = peso * 0.005;
+  } else if (nombreInsumo.includes("maíz triturado") || nombreInsumo.includes("maiz triturado")) {
+    cantidad = peso * 0.006;
+  } else if (nombreInsumo.includes("maíz húmedo") || nombreInsumo.includes("maiz humedo") || nombreInsumo.includes("grano partido")) {
+    cantidad = peso * 0.007;
+  } else if (nombreInsumo.includes("harina de yuca")) {
+    cantidad = peso * 0.004;
   }
 
-  document.getElementById("insumosModal").addEventListener("hidden.bs.modal", () => {
+  // ------------------------
+  // 2. FORRAJES / HENOS / PASTOS
+  // ------------------------
+  else if (nombreInsumo.includes("forraje") || nombreInsumo.includes("pasto") || nombreInsumo.includes("verde")) {
+    cantidad = peso * 0.05;
+  } else if (nombreInsumo.includes("heno de alfalfa") || (nombreInsumo.includes("heno") && nombreInsumo.includes("alfalfa"))) {
+    cantidad = peso * 0.02;
+  } else if (nombreInsumo.includes("pasto de corte fresco")) {
+    cantidad = peso * 0.06;
+  } else if (nombreInsumo.includes("pellets de alfalfa")) {
+    cantidad = peso * 0.015;
+  } else if (nombreInsumo.includes("heno de pasto kikuyo")) {
+    cantidad = peso * 0.02;
+  }
+
+  // ------------------------
+  // 3. ENSILAJES 
+  // ------------------------
+  else if (nombreInsumo.includes("ensilaje de maíz") || nombreInsumo.includes("ensilaje de maiz")) {
+    cantidad = peso * 0.03;
+  } else if (nombreInsumo.includes("ensilado") || nombreInsumo.includes("silo")) {
+    cantidad = peso * 0.03;
+  } else if (nombreInsumo.includes("ensilaje de sorgo dulce") || nombreInsumo.includes("sorgo")) {
+    cantidad = peso * 0.025;
+  }
+
+  // ------------------------
+  // 4. SUBPRODUCTOS
+  // ------------------------
+  else if (nombreInsumo.includes("afrecho") || nombreInsumo.includes("afrecho de trigo")) {
+    cantidad = peso * 0.008;
+  } else if (nombreInsumo.includes("salvado") || nombreInsumo.includes("salvado de arroz")) {
+    cantidad = peso * 0.01;
+  } else if (nombreInsumo.includes("torta de algodón") || nombreInsumo.includes("torta de soya") || nombreInsumo.includes("torta") ) {
+    cantidad = peso * 0.01;
+  } else if (nombreInsumo.includes("torta de girasol")) {
+    cantidad = peso * 0.009;
+  } else if (nombreInsumo.includes("suero de leche")) {
+    cantidad = leche * 1.0; 
+  }
+
+  // ------------------------
+  // 5. SUPLEMENTOS PROTÉICOS
+  // ------------------------
+  else if (nombreInsumo.includes("suplemento proteico") || nombreInsumo.includes("proteico")) {
+    cantidad = peso * 0.01;
+  }
+
+  // ------------------------
+  // 6. AZÚCARES / ACEITES
+  // ------------------------
+  else if (nombreInsumo.includes("melaza")) {
+    cantidad = (leche / 10) * 0.8;
+  } else if (nombreInsumo.includes("aceite de palma") || nombreInsumo.includes("aceite de girasol")) {
+    cantidad = peso * 0.0015;
+  } else if (nombreInsumo.includes("aceite de palma en bloque")) {
+    cantidad = peso * 0.001;
+  }
+
+  // ------------------------
+  // 7. MINERALES / VITAMINAS
+  // ------------------------
+  else if (nombreInsumo.includes("sales minerales") || nombreInsumo.includes("sales") || nombreInsumo.includes("sal mineral")) {
+    cantidad = peso * 0.001;
+  } else if (nombreInsumo.includes("bloque de sal") || nombreInsumo.includes("bloques de sal mineral")) {
+    cantidad = peso * 0.0008;
+  } else if (nombreInsumo.includes("suplemento vitamínico") || nombreInsumo.includes("vitamínico") || nombreInsumo.includes("vitaminico")) {
+    cantidad = peso * 0.0005;
+  } else if (nombreInsumo.includes("mineralizado con fósforo") || nombreInsumo.includes("fosforo")) {
+    cantidad = peso * 0.0006;
+  } else if (nombreInsumo.includes("urea alimenticia") || nombreInsumo.includes("urea")) {
+    cantidad = peso * 0.0003;
+  } else if (nombreInsumo.includes("suplemento ca-p") || nombreInsumo.includes("2:1")) {
+    cantidad = peso * 0.0007;
+  }
+
+  // ------------------------
+  // 8. MICROADITIVOS
+  // ------------------------
+  else if (nombreInsumo.includes("levadura") || nombreInsumo.includes("levaduras")) {
+    cantidad = peso * 0.0008;
+  } else if (nombreInsumo.includes("premezcla probiótica") || nombreInsumo.includes("probiótica") || nombreInsumo.includes("premezcla")) {
+    cantidad = peso * 0.0005;
+  }
+
+  // ------------------------
+  // SI NO COINCIDE CON NINGUNO
+  // ------------------------
+  else {
+    cantidad = peso * 0.01; // valor genérico seguro
+  }
+
+  // construir resultado y mostrar en modal
+  const resultadoHTML = `
+    <div class="alert alert-success mt-3">
+      <h6><strong>${nombreInsumoOriginal}</strong></h6>
+      <p>
+        Cantidad recomendada diaria: 
+        <strong>${cantidad.toFixed(2)} kg</strong>
+        <br><small>(según peso ${peso} kg y ${leche} L leche/día)</small>
+      </p>
+    </div>
+  `;
+
+  document.getElementById("resultadoInsumo").innerHTML = resultadoHTML;
+}
+
+// limpiar resultado al cerrar el modal
+document.getElementById("insumosModal").addEventListener("hidden.bs.modal", () => {
   document.getElementById("resultadoInsumo").innerHTML = "";
 });
 

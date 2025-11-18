@@ -43,18 +43,10 @@
             <li><a class="dropdown-item" href="simmental.html">Simmental</a></li>
           </ul>
         </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" >Medicamentos</a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="Medicamento Jersey.html">Jersey</a></li>
-            <li><hr class="dropdown-divider" ></li>
-            <li><a class="dropdown-item" href="Medicamento Girolando.html">Girolando</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="Medicamento Gyr.html">Gyr</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="Medicamento Simmental.html">Simmental</a></li>
-          </ul>
+        <li class="nav-item">
+          <a class="nav-link" href="Medicamentos.html">Medicamentos</a>
         </li>
+        
         <li class="nav-item">
           <a class="nav-link" href="insumos.html">Insumos</a>
         </li>
@@ -83,314 +75,1286 @@
  </nav>
   </header>
 
-  <main>
-        <div class="container">
-            <h1 class="section-title">Insumos Ganaderos</h1>
-            
-            <div class="row g-4">
-                <!-- Tarjeta 1: Heno -->
-                <div class="col-lg-4 col-md-6">
-                    <div class="card insumo-card">
-                        <img src="img/Heno insumo.webp" class="card-img-top" alt="Heno">
-                        <div class="card-body">
-                            <h5 class="card-title">Heno</h5>
-                            <p class="card-text">Forraje seco fundamental para la alimentación del ganado. Rico en fibra y nutrientes esenciales.</p>
-                            <button type="button" class="btn btn-info-insumo" data-bs-toggle="modal" data-bs-target="#modalHeno">
-                                Más Información
-                            </button>
-                        </div>
-                    </div>
-                </div>
+ 
+<main>
+  <div class="container">
+    <h1 class="section-title">Insumos Ganaderos</h1>
 
-                <!-- Tarjeta 2: Pastura -->
-                <div class="col-lg-4 col-md-6">
-                    <div class="card insumo-card">
-                        <img src="img/Pasturas insumo.jpg" class="card-img-top" alt="Pastura">
-                        <div class="card-body">
-                            <h5 class="card-title">Pastura</h5>
-                            <p class="card-text">Forraje verde fresco que proporciona nutrientes naturales y vitaminas para el ganado en pastoreo.</p>
-                            <button type="button" class="btn btn-info-insumo" data-bs-toggle="modal" data-bs-target="#modalPastura">
-                                Más Información
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Tarjeta 3: Silo de Maíz -->
-                <div class="col-lg-4 col-md-6">
-                    <div class="card insumo-card">
-                        <img src="img/silo insumo.jpg" class="card-img-top" alt="Silo de Maíz">
-                        <div class="card-body">
-                            <h5 class="card-title">Silo de Maíz</h5>
-                            <p class="card-text">Ensilaje de maíz de alta energía, excelente para mejorar la producción lechera y ganancia de peso.</p>
-                            <button type="button" class="btn btn-info-insumo" data-bs-toggle="modal" data-bs-target="#modalSilo">
-                                Más Información
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Tarjeta 4: Concentrado -->
-                <div class="col-lg-4 col-md-6">
-                    <div class="card insumo-card">
-                        <img src="img/concentrado insumo.jpg" class="card-img-top" alt="Concentrado">
-                        <div class="card-body">
-                            <h5 class="card-title">Concentrado</h5>
-                            <p class="card-text">Suplemento alimenticio concentrado rico en proteínas, minerales y vitaminas para máximo rendimiento.</p>
-                            <button type="button" class="btn btn-info-insumo" data-bs-toggle="modal" data-bs-target="#modalConcentrado">
-                                Más Información
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Tarjeta 5: Sales Minerales -->
-                <div class="col-lg-4 col-md-6">
-                    <div class="card insumo-card">
-                        <img src="img/sales insumos.jpg" class="card-img-top" alt="Sales Minerales">
-                        <div class="card-body">
-                            <h5 class="card-title">Sales Minerales</h5>
-                            <p class="card-text">Suplemento mineral esencial para prevenir deficiencias nutricionales y mejorar la salud del ganado.</p>
-                            <button type="button" class="btn btn-info-insumo" data-bs-toggle="modal" data-bs-target="#modalSales">
-                                Más Información
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Tarjeta 6: Melaza -->
-                <div class="col-lg-4 col-md-6">
-                    <div class="card insumo-card">
-                        <img src="img/Melaza insumo.avif" class="card-img-top" alt="Melaza">
-                        <div class="card-body">
-                            <h5 class="card-title">Melaza</h5>
-                            <p class="card-text">Fuente natural de energía y palatabilizante que mejora el consumo de alimento en el ganado.</p>
-                            <button type="button" class="btn btn-info-insumo" data-bs-toggle="modal" data-bs-target="#modalMelaza">
-                                Más Información
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <!-- Barra de búsqueda para Insumos -->
+    <div class="search-container">
+        <div class="search-wrapper">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="searchInputInsumos" class="search-input" placeholder="Buscar insumo por nombre o categoría...">
+            <button class="search-clear" id="clearSearchInsumos" style="display: none;">✕</button>
         </div>
-    </main>
-
-    <!-- Modales con información detallada -->
-    
-    <!-- Modal Heno -->
-    <div class="modal fade" id="modalHeno" tabindex="-1" aria-labelledby="modalHenoLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modalHenoLabel">Heno - Información Detallada</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="info-section">
-                        <h5>Descripción</h5>
-                        <p>El heno es un forraje conservado mediante el proceso de secado de pastos o leguminosas. Es uno de los alimentos más importantes en la ganadería bovina, especialmente durante épocas de escasez de pasto fresco.</p>
-                    </div>
-                    <div class="info-section">
-                        <h5>Beneficios</h5>
-                        <ul>
-                            <li>Alto contenido de fibra que favorece la rumia</li>
-                            <li>Fuente importante de energía y proteína</li>
-                            <li>Fácil almacenamiento y conservación</li>
-                            <li>Disponible durante todo el año</li>
-                            <li>Mejora la salud digestiva del ganado</li>
-                        </ul>
-                    </div>
-                    <div class="info-section">
-                        <h5>Almacenamiento</h5>
-                        <p>Debe almacenarse en lugares secos, ventilados y protegidos de la humedad. La humedad óptima para el almacenamiento es menor al 20%. Se recomienda apilar sobre tarimas para evitar contacto con el suelo.</p>
-                    </div>
-                    <div class="info-section">
-                        <h5>Dosificación Recomendada</h5>
-                        <p>Para vacas lecheras: 8-12 kg por día. Para ganado de carne: 6-10 kg por día. Ajustar según peso del animal y condición corporal.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <div id="searchResultsInsumos" class="search-results" style="display: none;"></div>
     </div>
 
-    <!-- Modal Pastura -->
-    <div class="modal fade" id="modalPastura" tabindex="-1" aria-labelledby="modalPasturaLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modalPasturaLabel">Pastura - Información Detallada</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="info-section">
-                        <h5>Descripción</h5>
-                        <p>La pastura o forraje verde es el alimento natural más completo para el ganado bovino. Incluye diversas especies de gramíneas y leguminosas que crecen en praderas y potreros.</p>
-                    </div>
-                    <div class="info-section">
-                        <h5>Beneficios</h5>
-                        <ul>
-                            <li>Fuente natural de vitaminas y minerales</li>
-                            <li>Alto contenido de agua y nutrientes frescos</li>
-                            <li>Mejora la calidad de la leche</li>
-                            <li>Reduce costos de alimentación</li>
-                            <li>Favorece el comportamiento natural del ganado</li>
-                        </ul>
-                    </div>
-                    <div class="info-section">
-                        <h5>Manejo de Pastoreo</h5>
-                        <p>Implementar sistemas de pastoreo rotacional para mantener la calidad del pasto. El tiempo de descanso recomendado es de 25-35 días según la época del año. La altura ideal de entrada es de 25-30 cm.</p>
-                    </div>
-                    <div class="info-section">
-                        <h5>Especies Recomendadas</h5>
-                        <p>Brachiaria, kikuyo, estrella africana, ryegrass, trébol blanco y otras según la zona climática. Considerar la rotación de especies para mejor aprovechamiento.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <div class="row g-4">
 
-    <!-- Modal Silo de Maíz -->
-    <div class="modal fade" id="modalSilo" tabindex="-1" aria-labelledby="modalSiloLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modalSiloLabel">Silo de Maíz - Información Detallada</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="info-section">
-                        <h5>Descripción</h5>
-                        <p>El ensilaje de maíz es un forraje conservado mediante fermentación anaeróbica. Se cosecha la planta completa en estado lechoso-pastoso del grano, se pica y se compacta en estructuras herméticas.</p>
-                    </div>
-                    <div class="info-section">
-                        <h5>Beneficios</h5>
-                        <ul>
-                            <li>Alta concentración energética</li>
-                            <li>Excelente palatabilidad</li>
-                            <li>Aumenta la producción de leche</li>
-                            <li>Conservación prolongada (más de 1 año)</li>
-                            <li>Mayor ganancia de peso en ganado de carne</li>
-                        </ul>
-                    </div>
-                    <div class="info-section">
-                        <h5>Proceso de Elaboración</h5>
-                        <p>Cosechar cuando el grano tiene 30-35% de materia seca. Picar a 1-2 cm de longitud. Compactar bien para eliminar aire. Cubrir herméticamente con plástico. Dejar fermentar mínimo 21 días antes de usar.</p>
-                    </div>
-                    <div class="info-section">
-                        <h5>Suministro</h5>
-                        <p>Para vacas lecheras: 15-25 kg por día. Para ganado de carne: 10-20 kg por día. Siempre combinarlo con heno o pasto para equilibrar la dieta. Descartar material en mal estado.</p>
-                    </div>
-                </div>
-            </div>
+      <!-- Concentrado balanceado -->
+      <div class="col-lg-4 col-md-6">
+        <div class="card insumo-card">
+          <img src="img/concentrado insumo.jpg" class="card-img-top" alt="Concentrado">
+          <div class="card-body">
+            <h5 class="card-title">Concentrado balanceado</h5>
+            <p class="card-text">Mezcla homogénea de granos, harinas, minerales y vitaminas para complementar la dieta y optimizar rendimiento.</p>
+            <button type="button" class="btn btn-info-insumo" data-bs-toggle="modal" data-bs-target="#modalConcentrado">Más Información</button>
+          </div>
         </div>
-    </div>
+      </div>
 
-    <!-- Modal Concentrado -->
-    <div class="modal fade" id="modalConcentrado" tabindex="-1" aria-labelledby="modalConcentradoLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modalConcentradoLabel">Concentrado - Información Detallada</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="info-section">
-                        <h5>Descripción</h5>
-                        <p>El concentrado es un suplemento alimenticio formulado con alta densidad nutricional. Contiene mezclas de granos, proteínas, minerales y vitaminas diseñadas para complementar la dieta base del ganado.</p>
-                    </div>
-                    <div class="info-section">
-                        <h5>Beneficios</h5>
-                        <ul>
-                            <li>Aumenta significativamente la producción de leche</li>
-                            <li>Mejora la condición corporal</li>
-                            <li>Acelera el crecimiento en animales jóvenes</li>
-                            <li>Equilibra deficiencias nutricionales</li>
-                            <li>Mejora la eficiencia reproductiva</li>
-                        </ul>
-                    </div>
-                    <div class="info-section">
-                        <h5>Tipos de Concentrado</h5>
-                        <p>Existen concentrados para lechería (16-20% proteína), engorde (12-14% proteína), terneros (18-22% proteína) y minerales. Elegir según el objetivo productivo y etapa del animal.</p>
-                    </div>
-                    <div class="info-section">
-                        <h5>Dosificación</h5>
-                        <p>Vacas en producción: 1 kg por cada 2.5-3 litros de leche producidos sobre 10 litros. Ganado de carne: 0.5-1.5% del peso vivo. Introducir gradualmente en la dieta para evitar problemas digestivos.</p>
-                    </div>
-                </div>
-            </div>
+      <!-- Forraje verde (pasto / silo) -->
+      <div class="col-lg-4 col-md-6">
+        <div class="card insumo-card">
+          <img src="img/Pasturas insumo.jpg" class="card-img-top" alt="Forraje verde">
+          <div class="card-body">
+            <h5 class="card-title">Forraje verde (pasto / silo)</h5>
+            <p class="card-text">Pasto fresco o ensilado que constituye la principal fuente de fibra, agua y nutrientes del ganado.</p>
+            <button type="button" class="btn btn-info-insumo" data-bs-toggle="modal" data-bs-target="#modalForraje">Más Información</button>
+          </div>
         </div>
-    </div>
+      </div>
 
-    <!-- Modal Sales Minerales -->
-    <div class="modal fade" id="modalSales" tabindex="-1" aria-labelledby="modalSalesLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modalSalesLabel">Sales Minerales - Información Detallada</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="info-section">
-                        <h5>Descripción</h5>
-                        <p>Las sales minerales son suplementos esenciales que proporcionan minerales macro y micro que el forraje no cubre en su totalidad. Son fundamentales para la salud y productividad del ganado bovino.</p>
-                    </div>
-                    <div class="info-section">
-                        <h5>Beneficios</h5>
-                        <ul>
-                            <li>Previene deficiencias minerales</li>
-                            <li>Mejora la fertilidad y reproducción</li>
-                            <li>Fortalece el sistema inmunológico</li>
-                            <li>Optimiza el crecimiento óseo</li>
-                            <li>Aumenta la producción láctea</li>
-                        </ul>
-                    </div>
-                    <div class="info-section">
-                        <h5>Minerales Principales</h5>
-                        <p>Calcio, fósforo, magnesio, sodio, azufre (macrominerales). Cobre, zinc, selenio, cobalto, yodo, manganeso (microminerales). Cada mineral cumple funciones específicas en el metabolismo animal.</p>
-                    </div>
-                    <div class="info-section">
-                        <h5>Suministro</h5>
-                        <p>Consumo promedio: 80-120 gramos por animal por día. Colocar en comederos cubiertos de libre acceso. Cambiar regularmente para evitar apelmazamiento. Verificar consumo diario y ajustar según necesidad.</p>
-                    </div>
-                </div>
-            </div>
+      <!-- Sales Minerales -->
+      <div class="col-lg-4 col-md-6">
+        <div class="card insumo-card">
+          <img src="img/sales insumos.jpg" class="card-img-top" alt="Sales Minerales">
+          <div class="card-body">
+            <h5 class="card-title">Sales Minerales</h5>
+            <p class="card-text">Mezcla de macro y micro minerales esenciales para prevenir deficiencias nutricionales.</p>
+            <button type="button" class="btn btn-info-insumo" data-bs-toggle="modal" data-bs-target="#modalSales">Más Información</button>
+          </div>
         </div>
-    </div>
+      </div>
 
-    <!-- Modal Melaza -->
-    <div class="modal fade" id="modalMelaza" tabindex="-1" aria-labelledby="modalMelazaLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modalMelazaLabel">Melaza - Información Detallada</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="info-section">
-                        <h5>Descripción</h5>
-                        <p>La melaza es un subproducto líquido de la industria azucarera, rico en azúcares y minerales. Es altamente palatable y se utiliza como fuente de energía rápida y mejorador del sabor de otros alimentos.</p>
-                    </div>
-                    <div class="info-section">
-                        <h5>Beneficios</h5>
-                        <ul>
-                            <li>Fuente rápida de energía</li>
-                            <li>Mejora la palatabilidad de la dieta</li>
-                            <li>Aumenta el consumo de materia seca</li>
-                            <li>Aporta minerales como potasio y hierro</li>
-                            <li>Económica y fácil de usar</li>
-                        </ul>
-                    </div>
-                    <div class="info-section">
-                        <h5>Modo de Uso</h5>
-                        <p>Se puede mezclar con concentrados, ensilaje o alimentos secos. También se diluye en agua para preparar bloques nutricionales. Ayuda a reducir el desperdicio de alimentos al mejorar su aceptación.</p>
-                    </div>
-                    <div class="info-section">
-                        <h5>Dosificación</h5>
-                        <p>Dosis recomendada: 0.5-1.5 kg por animal por día. No exceder el 15% de la materia seca total de la dieta. Introducir gradualmente para evitar trastornos digestivos. Diluir con agua en proporción 1:1 para facilitar mezclado.</p>
-                    </div>
-                </div>
-            </div>
+      <!-- Melaza de caña -->
+      <div class="col-lg-4 col-md-6">
+        <div class="card insumo-card">
+          <img src="img/Melaza insumo.avif" class="card-img-top" alt="Melaza">
+          <div class="card-body">
+            <h5 class="card-title">Melaza de caña</h5>
+            <p class="card-text">Subproducto líquido rico en azúcares y minerales, usado como fuente de energía y palatabilizante.</p>
+            <button type="button" class="btn btn-info-insumo" data-bs-toggle="modal" data-bs-target="#modalMelaza">Más Información</button>
+          </div>
         </div>
+      </div>
+
+      <!-- Suplemento proteico -->
+      <div class="col-lg-4 col-md-6">
+        <div class="card insumo-card">
+          <img src="img/Insumos/suplemento_proteico.png" class="card-img-top" alt="Suplemento proteico">
+          <div class="card-body">
+            <h5 class="card-title">Suplemento proteico</h5>
+            <p class="card-text">Mezcla de harinas (soya, algodón, maíz) para aumentar proteína en la dieta.</p>
+            <button type="button" class="btn btn-info-insumo" data-bs-toggle="modal" data-bs-target="#modalSuplementoProteico">Más Información</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Harina de maíz -->
+      <div class="col-lg-4 col-md-6">
+        <div class="card insumo-card">
+          <img src="img/Insumos/harina_maiz.png" class="card-img-top" alt="Harina de maíz">
+          <div class="card-body">
+            <h5 class="card-title">Harina de maíz</h5>
+            <p class="card-text">Producto molido del maíz, rico en almidón y altamente digestible.</p>
+            <button type="button" class="btn btn-info-insumo" data-bs-toggle="modal" data-bs-target="#modalHarinaMaiz">Más Información</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Afrecho de trigo -->
+      <div class="col-lg-4 col-md-6">
+        <div class="card insumo-card">
+          <img src="img/Insumos/afrecho_trigo.png" class="card-img-top" alt="Afrecho de trigo">
+          <div class="card-body">
+            <h5 class="card-title">Afrecho de trigo</h5>
+            <p class="card-text">Subproducto del molido del trigo, rico en fibra y proteínas.</p>
+            <button type="button" class="btn btn-info-insumo" data-bs-toggle="modal" data-bs-target="#modalAfrecho">Más Información</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Salvado de arroz -->
+      <div class="col-lg-4 col-md-6">
+        <div class="card insumo-card">
+          <img src="img/Insumos/salvado_arroz.png" class="card-img-top" alt="Salvado de arroz">
+          <div class="card-body">
+            <h5 class="card-title">Salvado de arroz</h5>
+            <p class="card-text">Subproducto del pulido del arroz, rico en grasas y vitaminas B.</p>
+            <button type="button" class="btn btn-info-insumo" data-bs-toggle="modal" data-bs-target="#modalSalvado">Más Información</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Ensilaje de maíz -->
+      <div class="col-lg-4 col-md-6">
+        <div class="card insumo-card">
+          <img src="img/silo insumo.jpg" class="card-img-top" alt="Ensilaje de maíz">
+          <div class="card-body">
+            <h5 class="card-title">Ensilaje de maíz</h5>
+            <p class="card-text">Forraje conservado mediante fermentación anaeróbica, alta energía y palatabilidad.</p>
+            <button type="button" class="btn btn-info-insumo" data-bs-toggle="modal" data-bs-target="#modalEnsilajeMaiz">Más Información</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Suplemento vitamínico-mineral -->
+      <div class="col-lg-4 col-md-6">
+        <div class="card insumo-card">
+          <img src="img/Insumos/suplemento_vitaminico.png" class="card-img-top" alt="Suplemento vitamínico-mineral">
+          <div class="card-body">
+            <h5 class="card-title">Suplemento vitamínico-mineral</h5>
+            <p class="card-text">Combinación de vitaminas y minerales para mejorar inmunidad y metabolismo.</p>
+            <button type="button" class="btn btn-info-insumo" data-bs-toggle="modal" data-bs-target="#modalVitaMineral">Más Información</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Heno de alfalfa -->
+      <div class="col-lg-4 col-md-6">
+        <div class="card insumo-card">
+          <img src="img/Insumos/heno_alfalfa.png" class="card-img-top" alt="Heno de alfalfa">
+          <div class="card-body">
+            <h5 class="card-title">Heno de alfalfa</h5>
+            <p class="card-text">Forraje seco rico en proteína, calcio y fibra digestible.</p>
+            <button type="button" class="btn btn-info-insumo" data-bs-toggle="modal" data-bs-target="#modalHenoAlfalfa">Más Información</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pasto de corte fresco -->
+      <div class="col-lg-4 col-md-6">
+        <div class="card insumo-card">
+          <img src="img/Insumos/pasto_corte_fresco.png" class="card-img-top" alt="Pasto de corte">
+          <div class="card-body">
+            <h5 class="card-title">Pasto de corte fresco</h5>
+            <p class="card-text">Pasto fresco cortado (kikuyo, estrella africana) para suministro diario.</p>
+            <button type="button" class="btn btn-info-insumo" data-bs-toggle="modal" data-bs-target="#modalPastoCorte">Más Información</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Maíz triturado -->
+      <div class="col-lg-4 col-md-6">
+        <div class="card insumo-card">
+          <img src="img/Insumos/maiz_triturado.png" class="card-img-top" alt="Maíz triturado">
+          <div class="card-body">
+            <h5 class="card-title">Maíz triturado</h5>
+            <p class="card-text">Grano de maíz molido que aporta energía fácilmente digestible.</p>
+            <button type="button" class="btn btn-info-insumo" data-bs-toggle="modal" data-bs-target="#modalMaizTriturado">Más Información</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pasto ensilado de sorgo -->
+      <div class="col-lg-4 col-md-6">
+        <div class="card insumo-card">
+          <img src="img/Insumos/ensilado_sorgo.png" class="card-img-top" alt="Pasto ensilado de sorgo">
+          <div class="card-body">
+            <h5 class="card-title">Pasto ensilado de sorgo</h5>
+            <p class="card-text">Sorgo picado y fermentado, riqueza en energía y fibra digestible.</p>
+            <button type="button" class="btn btn-info-insumo" data-bs-toggle="modal" data-bs-target="#modalSorgo">Más Información</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Aceite de palma o girasol -->
+      <div class="col-lg-4 col-md-6">
+        <div class="card insumo-card">
+          <img src="img/Insumos/aceite_palma_girasol.png" class="card-img-top" alt="Aceite vegetal">
+          <div class="card-body">
+            <h5 class="card-title">Aceite de palma o girasol</h5>
+            <p class="card-text">Fuente concentrada de grasas vegetales para aumentar densidad energética.</p>
+            <button type="button" class="btn btn-info-insumo" data-bs-toggle="modal" data-bs-target="#modalAceite">Más Información</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Levaduras nutricionales -->
+      <div class="col-lg-4 col-md-6">
+        <div class="card insumo-card">
+          <img src="img/Insumos/levaduras_nutricionales.png" class="card-img-top" alt="Levaduras">
+          <div class="card-body">
+            <h5 class="card-title">Levaduras nutricionales</h5>
+            <p class="card-text">Microorganismos que equilibran flora ruminal y optimizan digestión.</p>
+            <button type="button" class="btn btn-info-insumo" data-bs-toggle="modal" data-bs-target="#modalLevaduras">Más Información</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bloques de sal mineral -->
+      <div class="col-lg-4 col-md-6">
+        <div class="card insumo-card">
+          <img src="img/Insumos/bloques_sal_mineral.png" class="card-img-top" alt="Bloques de sal mineral">
+          <div class="card-body">
+            <h5 class="card-title">Bloques de sal mineral</h5>
+            <p class="card-text">Bloques sólidos con minerales esenciales para libre consumo.</p>
+            <button type="button" class="btn btn-info-insumo" data-bs-toggle="modal" data-bs-target="#modalBloquesSal">Más Información</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tortas de algodón o soya -->
+      <div class="col-lg-4 col-md-6">
+        <div class="card insumo-card">
+          <img src="img/Insumos/tortas_algodon_soya.png" class="card-img-top" alt="Tortas">
+          <div class="card-body">
+            <h5 class="card-title">Tortas de algodón / soya</h5>
+            <p class="card-text">Subproducto rico en proteínas para mezclar con concentrado.</p>
+            <button type="button" class="btn btn-info-insumo" data-bs-toggle="modal" data-bs-target="#modalTortasAlgodon">Más Información</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Suero de leche -->
+      <div class="col-lg-4 col-md-6">
+        <div class="card insumo-card">
+          <img src="img/Insumos/suero_leche.png" class="card-img-top" alt="Suero de leche">
+          <div class="card-body">
+            <h5 class="card-title">Suero de leche</h5>
+            <p class="card-text">Subproducto líquido del procesamiento de leche, útil para terneros.</p>
+            <button type="button" class="btn btn-info-insumo" data-bs-toggle="modal" data-bs-target="#modalSueroLeche">Más Información</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Maíz húmedo (grano partido) -->
+      <div class="col-lg-4 col-md-6">
+        <div class="card insumo-card">
+          <img src="img/Insumos/maiz_humedo.png" class="card-img-top" alt="Maíz húmedo">
+          <div class="card-body">
+            <h5 class="card-title">Maíz húmedo (grano partido)</h5>
+            <p class="card-text">Grano partido y húmedo, altamente digestible y energético.</p>
+            <button type="button" class="btn btn-info-insumo" data-bs-toggle="modal" data-bs-target="#modalMaizHumedo">Más Información</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Ensilaje de sorgo dulce -->
+      <div class="col-lg-4 col-md-6">
+        <div class="card insumo-card">
+          <img src="img/Insumos/ensilaje_sorgo_dulce.png" class="card-img-top" alt="Ensilaje de sorgo dulce">
+          <div class="card-body">
+            <h5 class="card-title">Ensilaje de sorgo dulce</h5>
+            <p class="card-text">Sorgo fermentado rico en azúcares, mantiene energía en la dieta.</p>
+            <button type="button" class="btn btn-info-insumo" data-bs-toggle="modal" data-bs-target="#modalSorgoDulce">Más Información</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Aceite de palma en bloque -->
+      <div class="col-lg-4 col-md-6">
+        <div class="card insumo-card">
+          <img src="img/Insumos/aceite_palma_bloque.png" class="card-img-top" alt="Aceite en bloque">
+          <div class="card-body">
+            <h5 class="card-title">Aceite de palma en bloque</h5>
+            <p class="card-text">Bloques de grasa vegetal para suplementación energética controlada.</p>
+            <button type="button" class="btn btn-info-insumo" data-bs-toggle="modal" data-bs-target="#modalAceiteBloque">Más Información</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pellets de alfalfa -->
+      <div class="col-lg-4 col-md-6">
+        <div class="card insumo-card">
+          <img src="img/Insumos/pellets_alfalfa.png" class="card-img-top" alt="Pellets de alfalfa">
+          <div class="card-body">
+            <h5 class="card-title">Pellets de alfalfa</h5>
+            <p class="card-text">Forraje procesado y comprimido a partir de alfalfa deshidratada.</p>
+            <button type="button" class="btn btn-info-insumo" data-bs-toggle="modal" data-bs-target="#modalPelletsAlfalfa">Más Información</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Urea alimenticia -->
+      <div class="col-lg-4 col-md-6">
+        <div class="card insumo-card">
+          <img src="img/Insumos/urea_alimenticia.png" class="card-img-top" alt="Urea alimenticia">
+          <div class="card-body">
+            <h5 class="card-title">Urea alimenticia (grado bovino)</h5>
+            <p class="card-text">Fuente de nitrógeno no proteico para estimular proteína microbiana en el rumen.</p>
+            <button type="button" class="btn btn-info-insumo" data-bs-toggle="modal" data-bs-target="#modalUrea">Más Información</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mineralizado con fósforo alto -->
+      <div class="col-lg-4 col-md-6">
+        <div class="card insumo-card">
+          <img src="img/Insumos/mineralizado_fosforo.png" class="card-img-top" alt="Mineralizado con fósforo">
+          <div class="card-body">
+            <h5 class="card-title">Mineralizado con fósforo alto</h5>
+            <p class="card-text">Mezcla mineral específica con alto fósforo para vacas gestantes y en crecimiento.</p>
+            <button type="button" class="btn btn-info-insumo" data-bs-toggle="modal" data-bs-target="#modalMineralFosforo">Más Información</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Premezcla probiótica -->
+      <div class="col-lg-4 col-md-6">
+        <div class="card insumo-card">
+          <img src="img/Insumos/premezcla_probiotica.png" class="card-img-top" alt="Premezcla probiótica">
+          <div class="card-body">
+            <h5 class="card-title">Premezcla probiótica</h5>
+            <p class="card-text">Mezcla de microorganismos y enzimas para mejorar el equilibrio del rumen.</p>
+            <button type="button" class="btn btn-info-insumo" data-bs-toggle="modal" data-bs-target="#modalPremezclaProbiotica">Más Información</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Heno de pasto kikuyo -->
+      <div class="col-lg-4 col-md-6">
+        <div class="card insumo-card">
+          <img src="img/Insumos/heno_kikuyo.png" class="card-img-top" alt="Heno kikuyo">
+          <div class="card-body">
+            <h5 class="card-title">Heno de pasto kikuyo</h5>
+            <p class="card-text">Forraje conservado de kikuyo, buena fibra digestible y minerales.</p>
+            <button type="button" class="btn btn-info-insumo" data-bs-toggle="modal" data-bs-target="#modalHenoKikuyo">Más Información</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tortas de girasol -->
+      <div class="col-lg-4 col-md-6">
+        <div class="card insumo-card">
+          <img src="img/Insumos/tortas_girasol.png" class="card-img-top" alt="Tortas de girasol">
+          <div class="card-body">
+            <h5 class="card-title">Tortas de girasol</h5>
+            <p class="card-text">Subproducto proteinado útil en mezclas para engorde y lechería.</p>
+            <button type="button" class="btn btn-info-insumo" data-bs-toggle="modal" data-bs-target="#modalTortasGirasol">Más Información</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Harina de yuca -->
+      <div class="col-lg-4 col-md-6">
+        <div class="card insumo-card">
+          <img src="img/Insumos/harina_yuca.png" class="card-img-top" alt="Harina de yuca">
+          <div class="card-body">
+            <h5 class="card-title">Harina de yuca</h5>
+            <p class="card-text">Producto obtenido de la yuca, rico en carbohidratos de fácil digestión.</p>
+            <button type="button" class="btn btn-info-insumo" data-bs-toggle="modal" data-bs-target="#modalHarinaYuca">Más Información</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Suplemento Ca-P 2:1 -->
+      <div class="col-lg-4 col-md-6">
+        <div class="card insumo-card">
+          <img src="img/Insumos/calcio_fosforo.png" class="card-img-top" alt="Suplemento Ca-P 2:1">
+          <div class="card-body">
+            <h5 class="card-title">Suplemento Ca-P 2:1</h5>
+            <p class="card-text">Mezcla mineral con relación Ca:P 2:1 para soporte óseo y prevención de hipocalcemia.</p>
+            <button type="button" class="btn btn-info-insumo" data-bs-toggle="modal" data-bs-target="#modalCaP">Más Información</button>
+          </div>
+        </div>
+      </div>
+
+    </div> <!-- /.row -->
+  </div> <!-- /.container -->
+</main>
+
+<!-- ==========================
+     MODALES: INSUMOS 
+     ========================== -->
+
+<!-- Modal: Concentrado balanceado -->
+<div class="modal fade" id="modalConcentrado" tabindex="-1" aria-labelledby="modalConcentradoLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalConcentradoLabel">Concentrado balanceado</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="info-section">
+          <h5>Descripción</h5>
+          <p>Mezcla homogénea de granos molidos, harinas vegetales, minerales y vitaminas formulada para complementar la dieta del ganado bovino, optimizando su rendimiento productivo.</p>
+        </div>
+        <div class="info-section">
+          <h5>Beneficios</h5>
+          <ul>
+            <li>Aporte equilibrado de energía, proteínas y micronutrientes</li>
+            <li>Favorece crecimiento, condición corporal y producción de leche</li>
+            <li>Mejora eficiencia alimenticia</li>
+          </ul>
+        </div>
+        <div class="info-section">
+          <h5>Método de suministro</h5>
+          <p>Administrar en comederos limpios en 2-3 raciones diarias según peso, edad y tipo de producción. En vacas lecheras: 1 a 2 kg por cada 3 litros de leche producida.</p>
+        </div>
+        <div class="info-section">
+          <h5>Almacenamiento</h5>
+          <p>Conservar en lugar seco, ventilado y protegido de la humedad; mantener sacos sobre tarimas y rotar por fecha.</p>
+        </div>
+      </div>
     </div>
+  </div>
+</div>
+
+<!-- Modal: Forraje verde (pasto / silo) -->
+<div class="modal fade" id="modalForraje" tabindex="-1" aria-labelledby="modalForrajeLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalForrajeLabel">Forraje verde (pasto / silo)</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="info-section">
+          <h5>Descripción</h5>
+          <p>Pasto fresco o conservado (ensilado) que constituye la principal fuente de fibra, agua y nutrientes para el ganado bovino. Incluye especies como kikuyo, estrella africana, maíz forrajero o caña forrajera.</p>
+        </div>
+        <div class="info-section">
+          <h5>Beneficios</h5>
+          <ul>
+            <li>Favorece la digestión y funcionamiento del rumen</li>
+            <li>Aporta energía natural y reduce costos de alimentación</li>
+            <li>Contribuye al bienestar animal</li>
+          </ul>
+        </div>
+        <div class="info-section">
+          <h5>Método de suministro</h5>
+          <p>Suministrar directamente en potrero o comederos; en silo ofrecer picado en porciones controladas. Se recomienda que el forraje represente 60-80% de la dieta; 30-40 kg/día en lecheras como referencia.</p>
+        </div>
+        <div class="info-section">
+          <h5>Almacenamiento</h5>
+          <p>El pasto fresco debe consumirse al corte. El silo se conserva en bolsas o silos herméticos, en lugares secos y sombreados.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Sales Minerales -->
+<div class="modal fade" id="modalSales" tabindex="-1" aria-labelledby="modalSalesLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalSalesLabel">Sales Minerales</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="info-section">
+          <h5>Descripción</h5>
+          <p>Mezcla balanceada de minerales esenciales (calcio, fósforo, sodio, zinc, cobre, magnesio, etc.) que el forraje puede no suministrar completamente.</p>
+        </div>
+        <div class="info-section">
+          <h5>Beneficios</h5>
+          <ul>
+            <li>Previene deficiencias minerales</li>
+            <li>Mejora fertilidad, inmunidad y producción</li>
+            <li>Optimiza crecimiento óseo</li>
+          </ul>
+        </div>
+        <div class="info-section">
+          <h5>Método de suministro</h5>
+          <p>Ofrecer en saladeros o bloques de libre consumo (80-120 g/día). También se pueden mezclar cantidades con concentrado.</p>
+        </div>
+        <div class="info-section">
+          <h5>Almacenamiento</h5>
+          <p>Conservar en lugares secos y protegidos de humedad.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Melaza de caña -->
+<div class="modal fade" id="modalMelaza" tabindex="-1" aria-labelledby="modalMelazaLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalMelazaLabel">Melaza de caña</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="info-section">
+          <h5>Descripción</h5>
+          <p>Subproducto líquido de la industria azucarera, rico en azúcares simples, minerales y vitaminas B. Se utiliza como fuente de energía y palatabilizante.</p>
+        </div>
+        <div class="info-section">
+          <h5>Beneficios</h5>
+          <ul>
+            <li>Aumenta consumo de alimento</li>
+            <li>Mejora palatabilidad</li>
+            <li>Aporta energía inmediata</li>
+          </ul>
+        </div>
+        <div class="info-section">
+          <h5>Método de suministro</h5>
+          <p>Mezclar con concentrados o rociar sobre forraje (0.5–1.5 kg/animal/día). Diluir 1:1 con agua para bloques.</p>
+        </div>
+        <div class="info-section">
+          <h5>Dosificación</h5>
+          <p>0.5–1.5 kg por animal por día; no exceder 15% de la materia seca total.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Suplemento proteico -->
+<div class="modal fade" id="modalSuplementoProteico" tabindex="-1" aria-labelledby="modalSuplementoProteicoLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalSuplementoProteicoLabel">Suplemento proteico</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="info-section">
+          <h5>Descripción</h5>
+          <p>Mezcla concentrada de harinas vegetales (soya, algodón, maíz) diseñada para aumentar proteína en la dieta del bovino.</p>
+        </div>
+        <div class="info-section">
+          <h5>Beneficios</h5>
+          <ul>
+            <li>Promueve desarrollo muscular y ganancia de peso</li>
+            <li>Mejora producción láctea</li>
+          </ul>
+        </div>
+        <div class="info-section">
+          <h5>Método de suministro</h5>
+          <p>Mezclar con concentrado o suministrar directamente (0.5–1 kg/día según peso y etapa).</p>
+        </div>
+        <div class="info-section">
+          <h5>Almacenamiento</h5>
+          <p>Guardar en lugar fresco y seco, libre de humedad y plagas.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Harina de maíz -->
+<div class="modal fade" id="modalHarinaMaiz" tabindex="-1" aria-labelledby="modalHarinaMaizLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalHarinaMaizLabel">Harina de maíz</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="info-section">
+          <h5>Descripción</h5>
+          <p>Producto molido del grano de maíz seco, rico en almidón y altamente digestible.</p>
+        </div>
+        <div class="info-section">
+          <h5>Beneficios</h5>
+          <ul>
+            <li>Fuente de energía económica</li>
+            <li>Mejora conversión alimenticia y rendimiento productivo</li>
+          </ul>
+        </div>
+        <div class="info-section">
+          <h5>Método de suministro</h5>
+          <p>Mezclar con concentrado o forraje (1–2 kg diarios según peso y etapa).</p>
+        </div>
+        <div class="info-section">
+          <h5>Almacenamiento</h5>
+          <p>Conservar en sacos cerrados y en lugares ventilados, evitando roedores y humedad.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Afrecho de trigo -->
+<div class="modal fade" id="modalAfrecho" tabindex="-1" aria-labelledby="modalAfrechoLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalAfrechoLabel">Afrecho de trigo</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="info-section">
+          <h5>Descripción</h5>
+          <p>Subproducto del molido del trigo, rico en fibra, proteína y minerales, con buena palatabilidad.</p>
+        </div>
+        <div class="info-section">
+          <h5>Beneficios</h5>
+          <ul>
+            <li>Mejora digestión y estimula apetito</li>
+            <li>Aporta nutrientes complementarios</li>
+          </ul>
+        </div>
+        <div class="info-section">
+          <h5>Método de suministro</h5>
+          <p>Mezclar con concentrado o forraje (1–1.5 kg/día). Puede suministrarse húmedo para mayor aceptación.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Salvado de arroz -->
+<div class="modal fade" id="modalSalvado" tabindex="-1" aria-labelledby="modalSalvadoLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalSalvadoLabel">Salvado de arroz</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="info-section">
+          <h5>Descripción</h5>
+          <p>Subproducto del pulido del arroz, rico en grasas, proteínas y vitaminas del complejo B.</p>
+        </div>
+        <div class="info-section">
+          <h5>Beneficios</h5>
+          <ul>
+            <li>Aumenta densidad energética y condición corporal</li>
+            <li>Estimula producción de leche</li>
+          </ul>
+        </div>
+        <div class="info-section">
+          <h5>Método de suministro</h5>
+          <p>Mezclar con concentrado o forraje (0.5–1 kg/día).</p>
+        </div>
+        <div class="info-section">
+          <h5>Almacenamiento</h5>
+          <p>Guardar en recipientes secos y protegidos del calor para evitar enranciamiento.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Ensilaje de maíz -->
+<div class="modal fade" id="modalEnsilajeMaiz" tabindex="-1" aria-labelledby="modalEnsilajeMaizLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalEnsilajeMaizLabel">Ensilaje de maíz</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="info-section">
+          <h5>Descripción</h5>
+          <p>Ensilaje de maíz: planta completa cosechada en estado lechoso-pastoso, picada y compactada en estructuras herméticas para fermentación anaeróbica.</p>
+        </div>
+        <div class="info-section">
+          <h5>Beneficios</h5>
+          <ul>
+            <li>Alta concentración energética y palatabilidad</li>
+            <li>Aumenta producción de leche y ganancia de peso</li>
+            <li>Conservación prolongada si se manipula correctamente</li>
+          </ul>
+        </div>
+        <div class="info-section">
+          <h5>Proceso</h5>
+          <p>Cosechar con 30–35% de materia seca, picar 1–2 cm, compactar, cubrir herméticamente y fermentar mínimo 21 días.</p>
+        </div>
+        <div class="info-section">
+          <h5>Suministro</h5>
+          <p>Lecheras: 15–25 kg/día. Ganado de carne: 10–20 kg/día. Combinar con heno o pasto para equilibrar la dieta.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Suplemento vitamínico-mineral -->
+<div class="modal fade" id="modalVitaMineral" tabindex="-1" aria-labelledby="modalVitaMineralLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalVitaMineralLabel">Suplemento vitamínico-mineral</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="info-section">
+          <h5>Descripción</h5>
+          <p>Combinación de vitaminas (A, D, E, B-complejo) y minerales esenciales que fortalecen sistema inmunológico y metabolismo.</p>
+        </div>
+        <div class="info-section">
+          <h5>Beneficios</h5>
+          <ul>
+            <li>Mejora crecimiento, fertilidad y producción de leche</li>
+            <li>Previene deficiencias y enfermedades metabólicas</li>
+          </ul>
+        </div>
+        <div class="info-section">
+          <h5>Método de suministro</h5>
+          <p>Forma líquida, polvo o tabletas según producto (ej. 10–20 g/día); seguir indicaciones del fabricante.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Heno de alfalfa -->
+<div class="modal fade" id="modalHenoAlfalfa" tabindex="-1" aria-labelledby="modalHenoAlfalfaLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalHenoAlfalfaLabel">Heno de alfalfa</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="info-section">
+          <h5>Descripción</h5>
+          <p>Pasto de alfalfa cortado y secado, rico en proteínas, calcio y fibra digestible.</p>
+        </div>
+        <div class="info-section">
+          <h5>Beneficios</h5>
+          <ul>
+            <li>Mejora producción de leche</li>
+            <li>Favorece crecimiento de terneros</li>
+            <li>Buena salud digestiva</li>
+          </ul>
+        </div>
+        <div class="info-section">
+          <h5>Método de suministro</h5>
+          <p>5–10 kg/día por vaca como complemento. Guardar en pacas protegidas de humedad.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Pasto de corte fresco -->
+<div class="modal fade" id="modalPastoCorte" tabindex="-1" aria-labelledby="modalPastoCorteLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalPastoCorteLabel">Pasto de corte fresco</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="info-section">
+          <h5>Descripción</h5>
+          <p>Pasto fresco cortado destinado a alimentar vacas y terneros (ej: kikuyo, estrella africana).</p>
+        </div>
+        <div class="info-section">
+          <h5>Método de suministro</h5>
+          <p>Repartir diariamente 20–30 kg por vaca adulta; consumir al corte y evitar exposición a sol/lluvia.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Maíz triturado -->
+<div class="modal fade" id="modalMaizTriturado" tabindex="-1" aria-labelledby="modalMaizTrituradoLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalMaizTrituradoLabel">Maíz triturado</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="info-section">
+          <h5>Descripción</h5>
+          <p>Grano de maíz molido que aporta energía fácilmente digestible.</p>
+        </div>
+        <div class="info-section">
+          <h5>Método de suministro</h5>
+          <p>Mezclar con concentrado o forraje (1–2 kg/día). No sustituye la fibra del forraje.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Pasto ensilado de sorgo -->
+<div class="modal fade" id="modalSorgo" tabindex="-1" aria-labelledby="modalSorgoLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalSorgoLabel">Pasto ensilado de sorgo</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="info-section">
+          <h5>Descripción</h5>
+          <p>Sorgo picado y fermentado, rico en energía y fibra digestible; útil durante épocas secas.</p>
+        </div>
+        <div class="info-section">
+          <h5>Método de suministro</h5>
+          <p>20–35 kg/día por vaca adulta; ofrecer picado para evitar desperdicio.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Aceite de palma o girasol -->
+<div class="modal fade" id="modalAceite" tabindex="-1" aria-labelledby="modalAceiteLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalAceiteLabel">Aceite de palma o girasol</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="info-section">
+          <h5>Descripción</h5>
+          <p>Fuente concentrada de grasas vegetales que aumenta la densidad energética de la dieta.</p>
+        </div>
+        <div class="info-section">
+          <h5>Método de suministro</h5>
+          <p>Mezclar con concentrado (50–100 ml por vaca/día) según nivel productivo.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Levaduras nutricionales -->
+<div class="modal fade" id="modalLevaduras" tabindex="-1" aria-labelledby="modalLevadurasLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalLevadurasLabel">Levaduras nutricionales</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="info-section">
+          <h5>Descripción</h5>
+          <p>Microorganismos que equilibran la flora ruminal y optimizan la digestión.</p>
+        </div>
+        <div class="info-section">
+          <h5>Método de suministro</h5>
+          <p>Mezclar con concentrado o disolver en agua (10–20 g por vaca/día).</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Bloques de sal mineral -->
+<div class="modal fade" id="modalBloquesSal" tabindex="-1" aria-labelledby="modalBloquesSalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalBloquesSalLabel">Bloques de sal mineral</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="info-section">
+          <h5>Descripción</h5>
+          <p>Bloques sólidos con minerales esenciales para libre consumo.</p>
+        </div>
+        <div class="info-section">
+          <h5>Consumo</h5>
+          <p>Consumo promedio 80–120 g/día por vaca adulta; colocar en saladeros accesibles.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Tortas de algodón / soya -->
+<div class="modal fade" id="modalTortasAlgodon" tabindex="-1" aria-labelledby="modalTortasAlgodonLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalTortasAlgodonLabel">Tortas de algodón o soya</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="info-section">
+          <h5>Descripción</h5>
+          <p>Subproducto de extracción de aceite vegetal, rico en proteínas y aminoácidos esenciales.</p>
+        </div>
+        <div class="info-section">
+          <h5>Método de suministro</h5>
+          <p>Mezclar con concentrado (0.5–1 kg/día por vaca) y ajustar según análisis nutricional.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Suero de leche -->
+<div class="modal fade" id="modalSueroLeche" tabindex="-1" aria-labelledby="modalSueroLecheLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalSueroLecheLabel">Suero de leche</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="info-section">
+          <h5>Descripción</h5>
+          <p>Subproducto líquido del procesamiento de la leche, rico en proteínas solubles y minerales.</p>
+        </div>
+        <div class="info-section">
+          <h5>Método de suministro</h5>
+          <p>Mezclar con agua o concentrado (1–2 litros por día) según edad y peso; refrigerar o consumir inmediatamente.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Maíz húmedo (grano partido) -->
+<div class="modal fade" id="modalMaizHumedo" tabindex="-1" aria-labelledby="modalMaizHumedoLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalMaizHumedoLabel">Maíz húmedo (grano partido)</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="info-section">
+          <h5>Descripción</h5>
+          <p>Grano de maíz partido y húmedo, altamente digestible y rico en energía.</p>
+        </div>
+        <div class="info-section">
+          <h5>Método de suministro</h5>
+          <p>Mezclar con forraje o concentrado (2–3 kg/día por vaca adulta) y consumir en pocos días.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Ensilaje de sorgo dulce -->
+<div class="modal fade" id="modalSorgoDulce" tabindex="-1" aria-labelledby="modalSorgoDulceLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalSorgoDulceLabel">Ensilaje de sorgo dulce</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="info-section">
+          <h5>Descripción</h5>
+          <p>Sorgo de alto contenido en azúcar fermentado en silo, aporta energía constante y fibra.</p>
+        </div>
+        <div class="info-section">
+          <h5>Método de suministro</h5>
+          <p>20–35 kg/día por vaca adulta; ofrecer picado y consumir rápidamente tras abrir.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Aceite de palma en bloque -->
+<div class="modal fade" id="modalAceiteBloque" tabindex="-1" aria-labelledby="modalAceiteBloqueLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalAceiteBloqueLabel">Aceite de palma en bloque</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="info-section">
+          <h5>Descripción</h5>
+          <p>Bloques de grasa vegetal para suplementación energética de alta densidad calórica.</p>
+        </div>
+        <div class="info-section">
+          <h5>Método de suministro</h5>
+          <p>Ofrecer en raciones controladas o mezclar con concentrado (50–100 ml/día).</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Pellets de alfalfa -->
+<div class="modal fade" id="modalPelletsAlfalfa" tabindex="-1" aria-labelledby="modalPelletsAlfalfaLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalPelletsAlfalfaLabel">Pellets de alfalfa</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="info-section">
+          <h5>Descripción</h5>
+          <p>Alimento comprimido elaborado a partir de alfalfa deshidratada, rico en proteínas, calcio y fibra de alta digestibilidad.</p>
+        </div>
+        <div class="info-section">
+          <h5>Método de suministro</h5>
+          <p>1–3 kg/día por vaca adulta; mezclar con forraje o concentrado.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Urea alimenticia -->
+<div class="modal fade" id="modalUrea" tabindex="-1" aria-labelledby="modalUreaLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalUreaLabel">Urea alimenticia (grado bovino)</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="info-section">
+          <h5>Descripción</h5>
+          <p>Fuente de nitrógeno no proteico para estimular producción de proteína microbiana en el rumen.</p>
+        </div>
+        <div class="info-section">
+          <h5>Precaución y método</h5>
+          <p>Mezclar con melaza o concentrado (máximo 1% de la ración). Nunca ofrecer sola; el suministro debe ser controlado para evitar intoxicación.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Mineralizado con fósforo alto -->
+<div class="modal fade" id="modalMineralFosforo" tabindex="-1" aria-labelledby="modalMineralFosforoLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalMineralFosforoLabel">Mineralizado con fósforo alto</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="info-section">
+          <h5>Descripción</h5>
+          <p>Mezcla mineral con alto contenido de fósforo, calcio y microelementos esenciales para desarrollo óseo y reproductivo.</p>
+        </div>
+        <div class="info-section">
+          <h5>Método de suministro</h5>
+          <p>Libre consumo o mezclado con concentrado (80–120 g/día). Recomendado en suelos deficientes en fósforo.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Premezcla probiótica -->
+<div class="modal fade" id="modalPremezclaProbiotica" tabindex="-1" aria-labelledby="modalPremezclaProbioticaLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalPremezclaProbioticaLabel">Premezcla probiótica</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="info-section">
+          <h5>Descripción</h5>
+          <p>Mezcla de microorganismos benéficos y enzimas que mejoran equilibrio del rumen y absorción de nutrientes.</p>
+        </div>
+        <div class="info-section">
+          <h5>Método de suministro</h5>
+          <p>Mezclar con concentrado (10–20 g por vaca/día); útil en cambios de dieta y post-parto.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Heno de pasto kikuyo -->
+<div class="modal fade" id="modalHenoKikuyo" tabindex="-1" aria-labelledby="modalHenoKikuyoLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalHenoKikuyoLabel">Heno de pasto kikuyo</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="info-section">
+          <h5>Descripción</h5>
+          <p>Pasto kikuyo cortado y secado, con buen contenido de fibra digestible y minerales.</p>
+        </div>
+        <div class="info-section">
+          <h5>Método de suministro</h5>
+          <p>5–10 kg por vaca adulta como complemento; almacenar en pacas protegidas de la humedad.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Tortas de girasol -->
+<div class="modal fade" id="modalTortasGirasol" tabindex="-1" aria-labelledby="modalTortasGirasolLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalTortasGirasolLabel">Tortas de girasol</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="info-section">
+          <h5>Descripción</h5>
+          <p>Subproducto de extracción de aceite de girasol, rico en proteínas y fibra.</p>
+        </div>
+        <div class="info-section">
+          <h5>Método de suministro</h5>
+          <p>Mezclar con concentrado (0.5–1 kg/día) según necesidades proteicas.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Harina de yuca -->
+<div class="modal fade" id="modalHarinaYuca" tabindex="-1" aria-labelledby="modalHarinaYucaLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalHarinaYucaLabel">Harina de yuca</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="info-section">
+          <h5>Descripción</h5>
+          <p>Producto obtenido del secado y molienda de la yuca, rico en carbohidratos de fácil digestión.</p>
+        </div>
+        <div class="info-section">
+          <h5>Método de suministro</h5>
+          <p>Mezclar con concentrado (0.5–2 kg/día). Nunca ofrecer yuca cruda fresca.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Suplemento Ca-P 2:1 -->
+<div class="modal fade" id="modalCaP" tabindex="-1" aria-labelledby="modalCaPLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalCaPLabel">Suplemento de calcio y fósforo (Ca-P 2:1)</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="info-section">
+          <h5>Descripción</h5>
+          <p>Mezcla mineral con relación 2:1 entre calcio y fósforo para apoyar desarrollo óseo y producción de leche.</p>
+        </div>
+        <div class="info-section">
+          <h5>Método de suministro</h5>
+          <p>Mezclar con concentrado o suministrar en saladeros (50–120 g/día según etapa).</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+
+    const insumos = [
+    { id: 'modalConcentrado', nombre: 'Concentrado balanceado', categoria: 'Suplemento Nutricional', tipo: 'suplemento', img: "img/concentrado insumo.jpg" },
+    { id: 'modalForraje', nombre: 'Forraje verde (pasto / silo)', categoria: 'Forraje Verde', tipo: 'forraje', img: "img/Pasturas insumo.jpg" },
+    { id: 'modalSales', nombre: 'Sales Minerales', categoria: 'Mineral', tipo: 'suplemento', img: "img/sales insumos.jpg" },
+    { id: 'modalMelaza', nombre: 'Melaza de caña', categoria: 'Energético', tipo: 'suplemento', img: "img/Melaza insumo.avif" },
+    { id: 'modalSuplementoProteico', nombre: 'Suplemento proteico', categoria: 'Proteína', tipo: 'suplemento', img: "img/Insumos/suplemento_proteico.png" },
+    { id: 'modalHarinaMaiz', nombre: 'Harina de maíz', categoria: 'Energético', tipo: 'grano', img: "img/Insumos/harina_maiz.png" },
+    { id: 'modalAfrecho', nombre: 'Afrecho de trigo', categoria: 'Fibra', tipo: 'subproducto', img: "img/Insumos/afrecho_trigo.png" },
+    { id: 'modalSalvado', nombre: 'Salvado de arroz', categoria: 'Fibra/Energético', tipo: 'subproducto', img: "img/Insumos/salvado_arroz.png" },
+    { id: 'modalEnsilajeMaiz', nombre: 'Ensilaje de maíz', categoria: 'Ensilaje', tipo: 'forraje', img: "img/silo insumo.jpg" },
+    { id: 'modalVitaMineral', nombre: 'Suplemento vitamínico-mineral', categoria: 'Vitaminas y Minerales', tipo: 'suplemento', img: "img/Insumos/suplemento_vitaminico.png" },
+    { id: 'modalHenoAlfalfa', nombre: 'Heno de alfalfa', categoria: 'Forraje Seco', tipo: 'heno', img: "img/Insumos/heno_alfalfa.png" },
+    { id: 'modalPastoCorte', nombre: 'Pasto de corte fresco', categoria: 'Forraje Verde', tipo: 'forraje', img: "img/Insumos/pasto_corte_fresco.png" },
+    { id: 'modalMaizTriturado', nombre: 'Maíz triturado', categoria: 'Energético', tipo: 'grano', img: "img/Insumos/maiz_triturado.png" },
+    { id: 'modalSorgo', nombre: 'Pasto ensilado de sorgo', categoria: 'Ensilaje', tipo: 'forraje', img: "img/Insumos/ensilado_sorgo.png" },
+    { id: 'modalAceite', nombre: 'Aceite de palma o girasol', categoria: 'Energético', tipo: 'suplemento', img: "img/Insumos/aceite_palma_girasol.png" },
+    { id: 'modalLevaduras', nombre: 'Levaduras nutricionales', categoria: 'Probióticos', tipo: 'suplemento', img: "img/Insumos/levaduras_nutricionales.png" },
+    { id: 'modalBloquesSal', nombre: 'Bloques de sal mineral', categoria: 'Mineral', tipo: 'bloque', img: "img/Insumos/bloques_sal_mineral.png" },
+    { id: 'modalTortasAlgodon', nombre: 'Tortas de algodón / soya', categoria: 'Proteína', tipo: 'subproducto', img: "img/Insumos/tortas_algodon_soya.png" },
+    { id: 'modalSueroLeche', nombre: 'Suero de leche', categoria: 'Lácteo', tipo: 'suplemento', img: "img/Insumos/suero_leche.png" },
+    { id: 'modalMaizHumedo', nombre: 'Maíz húmedo (grano partido)', categoria: 'Energético', tipo: 'grano', img: "img/Insumos/maiz_humedo.png" },
+    { id: 'modalSorgoDulce', nombre: 'Ensilaje de sorgo dulce', categoria: 'Ensilaje', tipo: 'forraje', img: "img/Insumos/ensilaje_sorgo_dulce.png" },
+    { id: 'modalAceiteBloque', nombre: 'Aceite de palma en bloque', categoria: 'Energético', tipo: 'bloque', img: "img/Insumos/aceite_palma_bloque.png" },
+    { id: 'modalPelletsAlfalfa', nombre: 'Pellets de alfalfa', categoria: 'Forraje Procesado', tipo: 'pellets', img: "img/Insumos/pellets_alfalfa.png" },
+    { id: 'modalUrea', nombre: 'Urea alimenticia (grado bovino)', categoria: 'Nitrógeno No Proteico', tipo: 'suplemento', img: "img/Insumos/urea_alimenticia.png" },
+    { id: 'modalMineralFosforo', nombre: 'Mineralizado con fósforo alto', categoria: 'Mineral', tipo: 'suplemento', img: "img/Insumos/mineralizado_fosforo.png" },
+    { id: 'modalPremezclaProbiotica', nombre: 'Premezcla probiótica', categoria: 'Probióticos', tipo: 'suplemento', img: "img/Insumos/premezcla_probiotica.png" },
+    { id: 'modalHenoKikuyo', nombre: 'Heno de pasto kikuyo', categoria: 'Forraje Seco', tipo: 'heno', img: "img/Insumos/heno_kikuyo.png" },
+    { id: 'modalTortasGirasol', nombre: 'Tortas de girasol', categoria: 'Proteína', tipo: 'subproducto', img: "img/Insumos/tortas_girasol.png" },
+    { id: 'modalHarinaYuca', nombre: 'Harina de yuca', categoria: 'Energético', tipo: 'grano', img: "img/Insumos/harina_yuca.png" },
+    { id: 'modalCaP', nombre: 'Suplemento Ca-P 2:1', categoria: 'Mineral', tipo: 'suplemento', img: "img/Insumos/calcio_fosforo.png" }
+];
+
+
+    const searchInputInsumos = document.getElementById('searchInputInsumos');
+    const searchResultsInsumos = document.getElementById('searchResultsInsumos');
+    const clearSearchInsumos = document.getElementById('clearSearchInsumos');
+
+    // Evento de escritura
+    searchInputInsumos.addEventListener('input', function () {
+        const query = this.value.toLowerCase().trim();
+
+        if (query.length > 0) {
+            clearSearchInsumos.style.display = 'flex';
+
+            const resultados = insumos.filter(ins => 
+                ins.nombre.toLowerCase().includes(query) ||
+                ins.categoria.toLowerCase().includes(query) ||
+                ins.tipo.toLowerCase().includes(query)
+            );
+
+            mostrarResultadosInsumos(resultados, query);
+
+        } else {
+            clearSearchInsumos.style.display = 'none';
+            searchResultsInsumos.style.display = 'none';
+        }
+    });
+
+    // Mostrar resultados
+    function mostrarResultadosInsumos(resultados, query) {
+        if (resultados.length === 0) {
+            searchResultsInsumos.innerHTML = `
+                <div class="no-results">
+                    <div class="no-results-icon">🔍</div>
+                    <p>No se encontraron insumos para "${query}"</p>
+                </div>
+            `;
+            searchResultsInsumos.style.display = 'block';
+            return;
+        }
+
+        let html = '';
+
+        resultados.forEach(ins => {
+            html += `
+                <div class="search-result-item" onclick="abrirModalInsumos('${ins.id}')">
+                    <img src="${ins.img}" alt="${ins.nombre}" class="search-result-icon">
+                    <div class="search-result-info">
+                        <div class="search-result-title">${ins.nombre}</div>
+                        <div class="search-result-category">${ins.categoria} • ${ins.tipo}</div>
+                    </div>
+                </div>
+            `;
+        });
+
+        searchResultsInsumos.innerHTML = html;
+        searchResultsInsumos.style.display = 'block';
+    }
+
+    // Abrir modal al seleccionar
+    function abrirModalInsumos(modalId) {
+        searchInputInsumos.value = '';
+        clearSearchInsumos.style.display = 'none';
+        searchResultsInsumos.style.display = 'none';
+
+        const modal = new bootstrap.Modal(document.getElementById(modalId));
+        modal.show();
+    }
+
+    // Botón de limpiar
+    clearSearchInsumos.addEventListener('click', function () {
+        searchInputInsumos.value = '';
+        clearSearchInsumos.style.display = 'none';
+        searchResultsInsumos.style.display = 'none';
+        searchInputInsumos.focus();
+    });
+
+    // Cerrar al hacer clic fuera
+    document.addEventListener('click', function (e) {
+        if (
+            !e.target.closest('.search-wrapper') &&
+            !e.target.closest('.search-results')
+        ) {
+            searchResultsInsumos.style.display = 'none';
+        }
+    });
+</script>
+
 </body>
 </html>
