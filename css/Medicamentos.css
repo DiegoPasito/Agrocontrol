@@ -488,3 +488,11 @@ body {
                 padding-left: 0;
             }
         }
+
+        .med-card-desc {
+    white-space: nowrap;      /* NO permite saltos de línea */
+    overflow: hidden;         /* Oculta el texto que sobrepasa */
+    text-overflow: ellipsis;  /* Agrega "..." si el texto es largo */
+    height: 20px;             /* Altura fija del renglón */
+    margin-bottom: 15px;
+}
