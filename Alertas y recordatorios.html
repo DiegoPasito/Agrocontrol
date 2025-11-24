@@ -5,11 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Agrocontrol</title>
 
-  <!-- Bootstrap CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"/>
-
-  <!-- FullCalendar CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.css" rel="stylesheet"/>
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
 
   <!-- Tu CSS -->
   <link rel="stylesheet" href="css/Alertas y recordatorios.css"/>
@@ -80,76 +77,60 @@
  </nav>
   </header>
 
-<main>
-  <div class="container mt-4 text-center">
-    <h2 class="mb-4">📅 Calendario de Recordatorios</h2>
-    <button class="btn btn-success mb-3" id="btnNuevo">➕ Nuevo Recordatorio</button>
-    <div id="calendar"></div>
-  </div>
+<main class="container py-5">
 
-  <!-- Modal crear / editar -->
-  <div class="modal fade" id="recordatorioModal" tabindex="-1">
-    <div class="modal-dialog">
-      <form id="recordatorioForm" class="modal-content">
-        <div class="modal-header bg-success text-white">
-          <h5 class="modal-title">Nuevo Recordatorio</h5>
-          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-        </div>
-        <div class="modal-body">
-          <input type="hidden" id="editingId">
-          <div class="mb-3">
-            <label class="form-label">Fecha y Hora</label>
-            <input type="datetime-local" id="fechaHora" class="form-control" required>
-          </div>
-          <div class="mb-3">
-            <label class="form-label">Título</label>
-            <input type="text" id="titulo" class="form-control" required>
-          </div>
-          <div class="mb-3">
-            <label class="form-label">Descripción</label>
-            <textarea id="descripcion" class="form-control" rows="3" placeholder="Opcional"></textarea>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-          <button type="submit" class="btn btn-success">Guardar</button>
-        </div>
-      </form>
-    </div>
-  </div>
+  <h2 class="mb-4 text-center fw-bold">📋 Mis Recordatorios</h2>
 
-  <!-- Modal detalle -->
-  <div class="modal fade" id="detalleModal" tabindex="-1">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header bg-primary text-white">
-          <h5 class="modal-title">Detalle del Recordatorio</h5>
-          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-        </div>
-        <div class="modal-body">
-          <p><strong>Título:</strong> <span id="detalleTitulo"></span></p>
-          <p><strong>Fecha:</strong> <span id="detalleFecha"></span></p>
-          <p><strong>Descripción:</strong> <span id="detalleDesc"></span></p>
-        </div>
-        <div class="modal-footer">
-          <button id="btnEliminar" type="button" class="btn btn-danger">Eliminar</button>
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-        </div>
+  <!-- SECCIÓN DE FILTROS -->
+  <div class="filters-section">
+    <div class="row g-3">
+      <div class="col-12">
+        <label class="filter-label">🔍 Filtrar por Prioridad</label>
+        <select id="filtroPrioridad" class="form-select">
+          <option value="all">📌 Mostrar todos los recordatorios</option>
+          <option value="high">🔴 Solo prioridad Alta</option>
+          <option value="medium">🟡 Solo prioridad Media</option>
+          <option value="low">🟢 Solo prioridad Baja</option>
+        </select>
       </div>
     </div>
   </div>
 
-  <!-- 🔔 audio alerta -->
-  <audio id="alertSound" src="audio/Sonido Musica Waos pa la alerta.mpeg" preload="auto"></audio>
+  <!-- CONTENEDOR TARJETAS -->
+  <div id="contenedorRecordatorios" class="row g-4">
+    <!-- Aqui se generan las tarjetas -->
+  </div>
+
 </main>
 
-<!-- Dependencias -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js"></script>
+<!-- MODAL DE CONFIRMACIÓN -->
+<div class="modal fade" id="modalEliminar" tabindex="-1" aria-labelledby="modalEliminarLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header" id="modalHeader">
+        <h5 class="modal-title" id="modalEliminarLabel">Confirmar Eliminación</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p class="mb-2"><strong>¿Estás seguro de que deseas eliminar este recordatorio?</strong></p>
+        <p class="mb-3" id="modalRecordatorioNombre" style="font-size: 1.1rem; color: #1e7e34; font-weight: 600;"></p>
+        <p class="mb-0" style="color: #d32f2f; font-weight: 500;">⚠️ Esta acción no se puede deshacer.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-modal-cancel flex-fill" data-bs-dismiss="modal">
+           Cancelar
+        </button>
+        <button type="button" class="btn btn-modal-confirm flex-fill" id="btnConfirmarEliminar">
+           Sí, Eliminar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-app.js";
-import { getFirestore, collection, addDoc, onSnapshot, deleteDoc, doc, updateDoc, Timestamp  } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-firestore.js";
+import { getFirestore, collection, onSnapshot, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-firestore.js";
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js";
 
 const firebaseConfig = {
@@ -166,125 +147,193 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const auth = getAuth(app);
 
-const calendarEl = document.getElementById("calendar");
-const alertSound = document.getElementById("alertSound");
-const recordatorioModal = new bootstrap.Modal(document.getElementById("recordatorioModal"));
-const detalleModal = new bootstrap.Modal(document.getElementById("detalleModal"));
+const container = document.getElementById("contenedorRecordatorios");
 
-const calendar = new FullCalendar.Calendar(calendarEl, {
-  initialView: "dayGridMonth",
-  locale: "es",
-  headerToolbar: { left: "prev,next today", center: "title", right: "dayGridMonth,timeGridWeek,timeGridDay" },
-  dateClick: (info) => {
-    document.getElementById("fechaHora").value = info.dateStr + "T09:00";
-    document.getElementById("editingId").value = "";
-    recordatorioModal.show();
-  },
-  eventClick: (info) => {
-    const ev = info.event;
-    document.getElementById("detalleTitulo").innerText = ev.title;
-    document.getElementById("detalleFecha").innerText = ev.start.toLocaleString();
-    document.getElementById("detalleDesc").innerText = ev.extendedProps.description || "Sin descripción";
-    document.getElementById("btnEliminar").onclick = async () => {
-      const user = auth.currentUser;
-      if (!user) return alert("Debes iniciar sesión");
-      await deleteDoc(doc(db, "users", user.uid, "reminders", ev.id));
-      detalleModal.hide();
-    };
-    detalleModal.show();
-  }
-});
-calendar.render();
+let recordatorios = [];
+let recordatorioAEliminar = null;
+let modalEliminar = null;
 
-document.getElementById("btnNuevo").addEventListener("click", () => {
-  document.getElementById("editingId").value = "";
-  recordatorioModal.show();
-});
-
+// 🟢 Carga de recordatorios
 onAuthStateChanged(auth, (user) => {
   if (!user) {
-    console.warn("⚠️ No hay usuario logueado.");
+    container.innerHTML = `<p class="text-muted">Debes iniciar sesión para ver tus recordatorios.</p>`;
     return;
   }
 
   const colRef = collection(db, "users", user.uid, "reminders");
 
-  // Guardar recordatorio
-  document.getElementById("recordatorioForm").addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const idEditing = document.getElementById("editingId").value || null;
-    const fechaHora = document.getElementById("fechaHora").value;
-    const titulo = document.getElementById("titulo").value.trim();
-    const descripcion = document.getElementById("descripcion").value.trim();
-
-    if (!fechaHora || !titulo) return alert("⚠️ Completa los campos obligatorios.");
-
-    const payload = {
-      title: titulo,
-      description: descripcion,
-      dateTime: Timestamp.fromDate(new Date(fechaHora)),
-      createdAt: Timestamp.now(),
-    };
-
-    if (idEditing) {
-      await updateDoc(doc(db, "users", user.uid, "reminders", idEditing), payload);
-    } else {
-      const docRef = await addDoc(colRef, payload);
-      calendar.addEvent({
-        id: docRef.id,
-        title: titulo,
-        start: payload.dateTime,
-        extendedProps: { description: descripcion },
-      });
-    }
-
-    recordatorioModal.hide();
-    e.target.reset();
-  });
-
-  // Escuchar cambios en tiempo real
   onSnapshot(colRef, (snapshot) => {
-    calendar.getEvents().forEach(ev => ev.remove());
+    recordatorios = [];
+
     snapshot.forEach(docSnap => {
-      const d = docSnap.data();
-      calendar.addEvent({
-        id: docSnap.id,
-        title: d.title,
-        start: d.dateTime.toDate(),
-        extendedProps: { description: d.description },
-      });
+      recordatorios.push({ id: docSnap.id, ...docSnap.data() });
     });
+
+    renderTodos();
   });
 });
 
-// Revisar recordatorios cercanos cada 10s
-setInterval(() => {
-  const ahora = new Date();
-  calendar.getEvents().forEach(ev => {
-    const evDate = new Date(ev.start);
-    const diff = (evDate - ahora) / 1000; // segundos
-    if (diff >= 0 && diff <= 15) { // margen 15 s
-      if ("Notification" in window && Notification.permission === "granted") {
-        new Notification("Recordatorio", { body: ev.title });
-      } else {
-        alert("🔔 Recordatorio: " + ev.title);
-      }
-      try { alertSound.play(); } catch {}
-    }
-  });
-}, 5000); // revisa cada 5 s
+// Inicializar modal
+document.addEventListener('DOMContentLoaded', () => {
+  modalEliminar = new bootstrap.Modal(document.getElementById('modalEliminar'));
+});
 
-// Pedir permisos de notificación al cargar
-if ("Notification" in window) {
-  if (Notification.permission === "default") {
-    Notification.requestPermission().then(permission => {
-      if (permission !== "granted") {
-        console.warn("🚫 Permiso de notificación denegado. Se usará alerta visual.");
-      }
-    });
+// ----------------------------------------------------------------
+// 🔥 RENDERIZAR TODOS LOS RECORDATORIOS CON FILTRO
+// ----------------------------------------------------------------
+function renderTodos() {
+  const filtro = document.getElementById("filtroPrioridad").value;
+  
+  container.innerHTML = "";
+
+  if (recordatorios.length === 0) {
+    container.innerHTML = `<div class="col-12"><p class="text-muted">No tienes recordatorios programados.</p></div>`;
+    return;
   }
+
+  // Filtrar por prioridad
+  let listaFiltrada = [...recordatorios];
+  if (filtro !== "all") {
+    listaFiltrada = listaFiltrada.filter(item => item.priority === filtro);
+  }
+
+  // Ordenar por fecha (próximos primero)
+  listaFiltrada.sort((a, b) => {
+    const fa = a.dateTime?.toDate() ?? new Date(0);
+    const fb = b.dateTime?.toDate() ?? new Date(0);
+    return fa - fb;
+  });
+
+  if (listaFiltrada.length === 0) {
+    container.innerHTML = `<div class="col-12"><p class="text-muted">No se encontraron recordatorios con este filtro.</p></div>`;
+    return;
+  }
+
+  listaFiltrada.forEach(item => renderCard(item));
 }
+
+// Escuchar cambios en el filtro
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById("filtroPrioridad").addEventListener("change", renderTodos);
+});
+
+// ----------------------------------------------------------------
+// 🟢 RENDER DE CADA TARJETA
+// ----------------------------------------------------------------
+function renderCard(data) {
+  const fecha = data.dateTime?.toDate().toLocaleString('es-ES', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit'
+  }) || "Sin fecha programada";
+
+  const card = document.createElement("div");
+  card.classList.add("col-12", "col-md-6", "col-lg-4");
+
+  // Determinar clase y badge de prioridad
+  const priorityClass = 
+    data.priority === "high" ? "card-priority-high" :
+    data.priority === "medium" ? "card-priority-medium" : "card-priority-low";
+
+  const badgeClass = 
+    data.priority === "high" ? "badge-high" :
+    data.priority === "medium" ? "badge-medium" : "badge-low";
+
+  const btnClass = 
+    data.priority === "high" ? "btn-danger-high" :
+    data.priority === "medium" ? "btn-danger-medium" : "btn-danger-low";
+
+  const priorityText = 
+    data.priority === "high" ? "🔴 Alta" :
+    data.priority === "medium" ? "🟡 Media" : "🟢 Baja";
+
+  card.innerHTML = `
+    <div class="card shadow-lg ${priorityClass}">
+      <div class="card-body">
+        <h5 class="card-title">${data.title}</h5>
+        <p class="card-text">${data.description || "Sin descripción adicional"}</p>
+
+        <p class="mb-3">
+          <span class="fecha-icon">📅</span>
+          <strong>Fecha:</strong><br>
+          <span style="font-size: 1.05rem; margin-left: 32px;">${fecha}</span>
+        </p>
+
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <span class="badge ${badgeClass}">${priorityText}</span>
+        </div>
+
+        <button class="btn ${btnClass} w-100 btnEliminar" data-id="${data.id}" data-title="${data.title}" data-priority="${data.priority}">
+          🗑️ Eliminar
+        </button>
+      </div>
+    </div>
+  `;
+
+  container.appendChild(card);
+
+  // 🗑️ ABRIR MODAL DE CONFIRMACIÓN
+  card.querySelector(".btnEliminar").addEventListener("click", (e) => {
+    const id = e.currentTarget.getAttribute("data-id");
+    const title = e.currentTarget.getAttribute("data-title");
+    const priority = e.currentTarget.getAttribute("data-priority");
+
+    recordatorioAEliminar = id;
+
+    // Cambiar color del header del modal según prioridad
+    const modalHeader = document.getElementById("modalHeader");
+    modalHeader.className = "modal-header";
+    
+    if (priority === "high") {
+      modalHeader.classList.add("modal-header-high");
+    } else if (priority === "medium") {
+      modalHeader.classList.add("modal-header-medium");
+    } else {
+      modalHeader.classList.add("modal-header-low");
+    }
+
+    // Cambiar color del botón confirmar según prioridad
+    const btnConfirmar = document.getElementById("btnConfirmarEliminar");
+    btnConfirmar.className = "btn btn-modal-confirm flex-fill";
+    
+    if (priority === "high") {
+      btnConfirmar.classList.add("btn-danger-high");
+    } else if (priority === "medium") {
+      btnConfirmar.classList.add("btn-danger-medium");
+    } else {
+      btnConfirmar.classList.add("btn-danger-low");
+    }
+
+    // Mostrar nombre del recordatorio
+    document.getElementById("modalRecordatorioNombre").innerText = `"${title}"`;
+
+    // Mostrar modal
+    if (!modalEliminar) {
+      modalEliminar = new bootstrap.Modal(document.getElementById('modalEliminar'));
+    }
+    modalEliminar.show();
+  });
+}
+
+// ----------------------------------------------------------------
+// 🟥 CONFIRMAR ELIMINACIÓN
+// ----------------------------------------------------------------
+document.getElementById("btnConfirmarEliminar").addEventListener("click", async () => {
+  if (!recordatorioAEliminar) return;
+  
+  try {
+    await deleteDoc(doc(db, "users", auth.currentUser.uid, "reminders", recordatorioAEliminar));
+    modalEliminar.hide();
+    recordatorioAEliminar = null;
+  } catch (error) {
+    console.error("Error al eliminar:", error);
+    alert("Hubo un error al eliminar el recordatorio.");
+  }
+});
 </script>
+
 
 </body>
 </html>
