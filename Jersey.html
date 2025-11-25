@@ -276,6 +276,36 @@
   </div>
 </div>
 
+<!-- Modal Registro General -->
+<div class="modal fade" id="registroModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+
+      <div class="modal-header bg-primary text-white">
+        <h5 class="modal-title" id="tituloRegistro">Registrar</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body">
+
+        <div class="mb-3">
+          <label class="form-label" id="labelSeleccion">Seleccione</label>
+          <select id="selectOpciones" class="form-select"></select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Nota (opcional)</label>
+          <textarea class="form-control" id="notaRegistro" rows="3"></textarea>
+        </div>
+
+        <button class="btn btn-success w-100" onclick="guardarRegistro()">Guardar Registro</button>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
   <!-- Firebase y Script principal -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-app.js";
@@ -326,13 +356,28 @@
               Eliminar
             </button>
 
-            <button class="btn btn-info btn-sm text-white" onclick="mostrarMedicamentos('${v.data.name}')">
-              Medicamentos
-            </button>
-
             <button class="btn btn-success btn-sm text-white" onclick="mostrarInsumos('${v.data.name}')">
               Insumos
             </button>
+
+            <!-- 🔵 Nuevo botón: Medicamentos -->
+            <button class="btn btn-info btn-sm text-white"
+              onclick="abrirModalRegistro('${v.id}', 'medicamento')">
+              Medicamentos
+            </button>
+
+            <!-- 🔵 Nuevo botón: Enfermedades -->
+            <button class="btn btn-warning btn-sm text-black"
+              onclick="abrirModalRegistro('${v.id}', 'enfermedad')">
+              Enfermedades
+            </button>
+
+            <!-- 🔵 Nuevo botón: Historial -->
+            <button class="btn btn-secondary btn-sm text-white"
+              onclick="verHistorial('${v.id}')">
+              Historial
+            </button>
+
           </div>
         </td>
         </tr>
@@ -418,196 +463,95 @@
       }
     });
 
-// 🟢 Mostrar insumos recomendados para una vaca
-window.mostrarInsumos = async function (nombreVaca) {
-  // Buscar los datos reales de la vaca seleccionada
-  const q = query(collection(db, "users", usuarioId, "cows"), where("name", "==", nombreVaca));
-  const snap = await getDocs(q);
+    let vacaActual = null;
+let tipoRegistro = null;
 
-  if (snap.empty) {
-    alert("No se encontraron datos de la vaca.");
-    return;
-  }
+// 🔵 Abrir modal y cargar opciones
+window.abrirModalRegistro = async function(idVaca, tipo) {
+  vacaActual = idVaca;
+  tipoRegistro = tipo;
 
-  const vaca = snap.docs[0].data();
-  const { weight, milkProduction } = vaca;
+  const titulo = document.getElementById("tituloRegistro");
+  const select = document.getElementById("selectOpciones");
+  const label = document.getElementById("labelSeleccion");
 
-  document.getElementById("vacaSeleccionada").innerText =
-    `🐄 ${nombreVaca} — Peso: ${weight} kg | Leche diaria: ${milkProduction} L`;
+  select.innerHTML = "";
 
-  // Mostrar modal
-  const modal = new bootstrap.Modal(document.getElementById("insumosModal"));
-  modal.show();
+  if (tipo === "medicamento") {
+    titulo.innerText = "Registrar Medicamento";
+    label.innerText = "Medicamento aplicado";
 
-  // Obtener insumos desde el HTML de insumos generales
-  const insumos = await obtenerInsumosDesdeHTML();
-  const contenedor = document.getElementById("listaInsumos");
-  contenedor.innerHTML = "";
-
-  insumos.forEach(nombre => {
-    const btn = document.createElement("button");
-    btn.className = "btn btn-outline-success";
-    btn.textContent = nombre;
-
-    // Usar click en lugar de mouseover para que el usuario decida cuándo calcular
-    btn.addEventListener("click", () => {
-      calcularRecomendacion(nombre, weight, milkProduction);
-      //  resaltar el botón seleccionado
-      contenedor.querySelectorAll("button").forEach(b => b.classList.remove("active"));
-      btn.classList.add("active");
+    const lista = await obtenerMedicamentos();
+    lista.forEach(m => {
+      const op = document.createElement("option");
+      op.textContent = m;
+      select.appendChild(op);
     });
 
-    contenedor.appendChild(btn);
-  });
+  } else if (tipo === "enfermedad") {
+    titulo.innerText = "Registrar Enfermedad";
+    label.innerText = "Enfermedad detectada";
+
+    const lista = await obtenerEnfermedades();
+    lista.forEach(m => {
+      const op = document.createElement("option");
+      op.textContent = m;
+      select.appendChild(op);
+    });
+  }
+
+  const modal = new bootstrap.Modal(document.getElementById("registroModal"));
+  modal.show();
 };
 
-// 🟢 Leer los insumos automáticamente del HTML de insumos generales
-async function obtenerInsumosDesdeHTML() {
-  try {
-    const res = await fetch("insumos.html");
-    const html = await res.text();
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(html, "text/html");
-
-    // Leer nombres de insumos (desde los títulos de las tarjetas)
-    return Array.from(doc.querySelectorAll(".card-title")).map(e => e.textContent.trim());
-  } catch (err) {
-    console.error("Error leyendo insumos:", err);
-    return [];
-  }
+// 🔵 Leer Medicamentos desde tu HTML
+async function obtenerMedicamentos() {
+  const res = await fetch("Medicamentos.html");
+  const html = await res.text();
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(html, "text/html");
+  return [...doc.querySelectorAll(".card-title")].map(e => e.textContent.trim());
 }
 
-// 🟢 Calcular recomendación y mostrar resultado en el modal
-function calcularRecomendacion(nombreInsumoOriginal, peso, leche) {
-  const nombreInsumo = nombreInsumoOriginal.toLowerCase();
-  let cantidad = 0;
-
-  // ------------------------
-  // 1. CONCENTRADOS ENERGÉTICOS
-  // ------------------------
-  if (nombreInsumo.includes("concentrado balanceado") || nombreInsumo.includes("concentrado")) {
-    cantidad = leche * 0.4;
-  } else if (nombreInsumo.includes("harina de maíz") || nombreInsumo.includes("harina de maiz")) {
-    cantidad = peso * 0.005;
-  } else if (nombreInsumo.includes("maíz triturado") || nombreInsumo.includes("maiz triturado")) {
-    cantidad = peso * 0.006;
-  } else if (nombreInsumo.includes("maíz húmedo") || nombreInsumo.includes("maiz humedo") || nombreInsumo.includes("grano partido")) {
-    cantidad = peso * 0.007;
-  } else if (nombreInsumo.includes("harina de yuca")) {
-    cantidad = peso * 0.004;
-  }
-
-  // ------------------------
-  // 2. FORRAJES / HENOS / PASTOS
-  // ------------------------
-  else if (nombreInsumo.includes("forraje") || nombreInsumo.includes("pasto") || nombreInsumo.includes("verde")) {
-    cantidad = peso * 0.05;
-  } else if (nombreInsumo.includes("heno de alfalfa") || (nombreInsumo.includes("heno") && nombreInsumo.includes("alfalfa"))) {
-    cantidad = peso * 0.02;
-  } else if (nombreInsumo.includes("pasto de corte fresco")) {
-    cantidad = peso * 0.06;
-  } else if (nombreInsumo.includes("pellets de alfalfa")) {
-    cantidad = peso * 0.015;
-  } else if (nombreInsumo.includes("heno de pasto kikuyo")) {
-    cantidad = peso * 0.02;
-  }
-
-  // ------------------------
-  // 3. ENSILAJES 
-  // ------------------------
-  else if (nombreInsumo.includes("ensilaje de maíz") || nombreInsumo.includes("ensilaje de maiz")) {
-    cantidad = peso * 0.03;
-  } else if (nombreInsumo.includes("ensilado") || nombreInsumo.includes("silo")) {
-    cantidad = peso * 0.03;
-  } else if (nombreInsumo.includes("ensilaje de sorgo dulce") || nombreInsumo.includes("sorgo")) {
-    cantidad = peso * 0.025;
-  }
-
-  // ------------------------
-  // 4. SUBPRODUCTOS
-  // ------------------------
-  else if (nombreInsumo.includes("afrecho") || nombreInsumo.includes("afrecho de trigo")) {
-    cantidad = peso * 0.008;
-  } else if (nombreInsumo.includes("salvado") || nombreInsumo.includes("salvado de arroz")) {
-    cantidad = peso * 0.01;
-  } else if (nombreInsumo.includes("torta de algodón") || nombreInsumo.includes("torta de soya") || nombreInsumo.includes("torta") ) {
-    cantidad = peso * 0.01;
-  } else if (nombreInsumo.includes("torta de girasol")) {
-    cantidad = peso * 0.009;
-  } else if (nombreInsumo.includes("suero de leche")) {
-    cantidad = leche * 1.0; 
-  }
-
-  // ------------------------
-  // 5. SUPLEMENTOS PROTÉICOS
-  // ------------------------
-  else if (nombreInsumo.includes("suplemento proteico") || nombreInsumo.includes("proteico")) {
-    cantidad = peso * 0.01;
-  }
-
-  // ------------------------
-  // 6. AZÚCARES / ACEITES
-  // ------------------------
-  else if (nombreInsumo.includes("melaza")) {
-    cantidad = (leche / 10) * 0.8;
-  } else if (nombreInsumo.includes("aceite de palma") || nombreInsumo.includes("aceite de girasol")) {
-    cantidad = peso * 0.0015;
-  } else if (nombreInsumo.includes("aceite de palma en bloque")) {
-    cantidad = peso * 0.001;
-  }
-
-  // ------------------------
-  // 7. MINERALES / VITAMINAS
-  // ------------------------
-  else if (nombreInsumo.includes("sales minerales") || nombreInsumo.includes("sales") || nombreInsumo.includes("sal mineral")) {
-    cantidad = peso * 0.001;
-  } else if (nombreInsumo.includes("bloque de sal") || nombreInsumo.includes("bloques de sal mineral")) {
-    cantidad = peso * 0.0008;
-  } else if (nombreInsumo.includes("suplemento vitamínico") || nombreInsumo.includes("vitamínico") || nombreInsumo.includes("vitaminico")) {
-    cantidad = peso * 0.0005;
-  } else if (nombreInsumo.includes("mineralizado con fósforo") || nombreInsumo.includes("fosforo")) {
-    cantidad = peso * 0.0006;
-  } else if (nombreInsumo.includes("urea alimenticia") || nombreInsumo.includes("urea")) {
-    cantidad = peso * 0.0003;
-  } else if (nombreInsumo.includes("suplemento ca-p") || nombreInsumo.includes("2:1")) {
-    cantidad = peso * 0.0007;
-  }
-
-  // ------------------------
-  // 8. MICROADITIVOS
-  // ------------------------
-  else if (nombreInsumo.includes("levadura") || nombreInsumo.includes("levaduras")) {
-    cantidad = peso * 0.0008;
-  } else if (nombreInsumo.includes("premezcla probiótica") || nombreInsumo.includes("probiótica") || nombreInsumo.includes("premezcla")) {
-    cantidad = peso * 0.0005;
-  }
-
-  // ------------------------
-  // SI NO COINCIDE CON NINGUNO
-  // ------------------------
-  else {
-    cantidad = peso * 0.01; // valor genérico seguro
-  }
-
-  // construir resultado y mostrar en modal
-  const resultadoHTML = `
-    <div class="alert alert-success mt-3">
-      <h6><strong>${nombreInsumoOriginal}</strong></h6>
-      <p>
-        Cantidad recomendada diaria: 
-        <strong>${cantidad.toFixed(2)} kg</strong>
-        <br><small>(según peso ${peso} kg y ${leche} L leche/día)</small>
-      </p>
-    </div>
-  `;
-
-  document.getElementById("resultadoInsumo").innerHTML = resultadoHTML;
+// 🔵 Leer Enfermedades desde tu HTML
+async function obtenerEnfermedades() {
+  const res = await fetch("enfermedades.html");
+  const html = await res.text();
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(html, "text/html");
+  return [...doc.querySelectorAll(".card-title")].map(e => e.textContent.trim());
 }
 
-// limpiar resultado al cerrar el modal
-document.getElementById("insumosModal").addEventListener("hidden.bs.modal", () => {
-  document.getElementById("resultadoInsumo").innerHTML = "";
-});
+// 🔵 Guardar el registro en Firebase
+window.guardarRegistro = async function() {
+  const seleccion = document.getElementById("selectOpciones").value;
+  const nota = document.getElementById("notaRegistro").value;
+
+  await addDoc(collection(db, "users", usuarioId, "cows", vacaActual, "history"), {
+    tipo: tipoRegistro,
+    nombre: seleccion,
+    nota: nota.trim() || "",
+    fecha: new Date()
+  });
+
+  alert("Registro guardado correctamente");
+  bootstrap.Modal.getInstance(document.getElementById("registroModal")).hide();
+};
+
+window.verHistorial = async function(idVaca) {
+  const q = collection(db, "users", usuarioId, "cows", idVaca, "history");
+  const snap = await getDocs(q);
+
+  let texto = "📋 HISTORIAL:\n\n";
+
+  snap.forEach(doc => {
+    const h = doc.data();
+    texto += `• ${h.tipo.toUpperCase()} – ${h.nombre}\n  Nota: ${h.nota}\n\n`;
+  });
+
+  alert(texto);
+};
+
 
 
   </script>
