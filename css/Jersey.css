@@ -266,7 +266,7 @@
 
         .table-striped tbody tr:hover {
             background: linear-gradient(135deg, #a9eeb0, #8de89a);
-            transform: scale(1.02);
+           
             box-shadow: 0 3px 10px rgba(54, 172, 66, 0.3);
         }
 
@@ -466,11 +466,7 @@
         flex: 1 1 45%;
         }
 
-        
-
-        
-        
-
+  
         /* === Encabezado del modal (verde elegante) === */
     .modal-header-verde {
     background: linear-gradient(135deg, #54ce60, #36ac42);
