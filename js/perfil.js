@@ -1,6 +1,7 @@
 // ================================
 //  IMPORTAR FIREBASE v12.5.0
 // ================================
+
 import {
   initializeApp
 } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-app.js";
@@ -46,6 +47,7 @@ const auth = getAuth(app);
 const db = getFirestore(app);
 const storage = getStorage(app);
 
+
 // ================================
 //  ELEMENTOS DEL DOM
 // ================================
@@ -68,8 +70,13 @@ const cancelPreviewBtn = document.getElementById("cancel-preview-btn");
 const totalCowsEl = document.getElementById("vacas-registradas");
 const totalRemindersEl = document.getElementById("recordatorios-activos");
 
+// ================================
+//  VARIABLES GLOBALES
+// ================================
 let selectedFile = null;
+let selectedBase64 = null;  // ← REQUIRED
 let currentPhotoURL = null;
+
 
 // ================================
 //  CARGAR DATOS DEL USUARIO
@@ -121,74 +128,93 @@ onAuthStateChanged(auth, async (user) => {
 });
 
 // ================================
-//  EVENTOS DE FOTO
+//  EVENTOS DE FOTO (Base64)
 // ================================
 
-// Abrir selector
+// Abrir el selector de archivos
 updatePhotoBtn.addEventListener("click", () => fileInput.click());
 
 // Vista previa
 fileInput.addEventListener("change", (e) => {
-  selectedFile = e.target.files[0];
-  if (!selectedFile) return;
+    selectedFile = e.target.files[0];
+    if (!selectedFile) return;
 
-  previewImage.src = URL.createObjectURL(selectedFile);
-  previewContainer.style.display = "block";
+    const reader = new FileReader();
+    reader.onload = () => {
+        selectedBase64 = reader.result; // Guardamos la imagen en Base64
+        previewImage.src = selectedBase64;
+
+        previewContainer.style.display = "block";
+    };
+    reader.readAsDataURL(selectedFile);
 });
 
 // Cancelar preview
 cancelPreviewBtn.addEventListener("click", () => {
-  previewContainer.style.display = "none";
-  fileInput.value = "";
-  selectedFile = null;
+    previewContainer.style.display = "none";
+    fileInput.value = "";
+    selectedFile = null;
+    selectedBase64 = null;
 });
 
-// SUBIR FOTO
 uploadBtn.addEventListener("click", async () => {
-  if (!selectedFile) return;
+    if (!selectedBase64) return;
 
-  const user = auth.currentUser;
-  const photoRef = ref(storage, `users/${user.uid}/profile.jpg`);
+    const user = auth.currentUser;
+    const userRef = doc(db, "users", user.uid);
 
-  await uploadBytes(photoRef, selectedFile);
-  const downloadURL = await getDownloadURL(photoRef);
+    try {
+        // Guardamos la imagen en Firestore
+        await updateDoc(userRef, {
+            photoURL: selectedBase64
+        });
 
-  await updateProfile(user, { photoURL: downloadURL });
-  await updateDoc(doc(db, "users", user.uid), { photoURL: downloadURL });
+        // Actualizamos la foto en pantalla
+        profileImage.src = selectedBase64;
+        currentPhotoURL = selectedBase64;
 
-  profileImage.src = downloadURL;
-  currentPhotoURL = downloadURL;
+        // Limpiar preview
+        previewContainer.style.display = "none";
+        selectedFile = null;
+        selectedBase64 = null;
+        fileInput.value = "";
 
-  previewContainer.style.display = "none";
-  fileInput.value = "";
-  selectedFile = null;
+        alert("Foto actualizada con éxito");
+
+    } catch (error) {
+        console.error("Error subiendo foto:", error);
+        alert("No se pudo actualizar la foto.");
+    }
 });
 
 // Ver foto
 viewPhotoBtn.addEventListener("click", () => {
-  if (!currentPhotoURL) return;
-  window.open(currentPhotoURL, "_blank");
+    if (!currentPhotoURL) {
+        alert("Aún no tienes foto de perfil.");
+        return;
+    }
+
+    const win = window.open();
+    win.document.write(`<img src="${currentPhotoURL}" style="width:100%; height:auto;">`);
 });
 
 // Eliminar foto
 deletePhotoBtn.addEventListener("click", async () => {
-  const user = auth.currentUser;
-  const photoRef = ref(storage, `users/${user.uid}/profile.jpg`);
-
-  try {
-    await deleteObject(photoRef);
+    const user = auth.currentUser;
+    const userRef = doc(db, "users", user.uid);
 
     const defaultPhoto = "img/avatar-placeholder.png";
 
-    await updateProfile(user, { photoURL: null });
-    await updateDoc(doc(db, "users", user.uid), { photoURL: defaultPhoto });
+    try {
+        await updateDoc(userRef, { photoURL: defaultPhoto });
 
-    profileImage.src = defaultPhoto;
-    currentPhotoURL = defaultPhoto;
+        profileImage.src = defaultPhoto;
+        currentPhotoURL = defaultPhoto;
 
-    alert("Foto eliminada con éxito");
+        alert("Foto eliminada correctamente.");
 
-  } catch (error) {
-    alert("Error eliminando la foto.");
-  }
+    } catch (error) {
+        console.error("Error eliminando foto:", error);
+        alert("No se pudo eliminar la foto.");
+    }
 });
