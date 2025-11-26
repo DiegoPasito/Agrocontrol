@@ -472,3 +472,48 @@
         opacity: 1;
         transform: rotate(90deg);
         }
+
+                /* Contenedor para centrar el botón */
+                .btn-container {
+                    display: flex;
+                    justify-content: center;
+                    margin: 20px 0;
+                    /* espacio opcional arriba y abajo */
+                }
+        
+                #toggle-btn {
+                    padding: 4px 10px;
+                    /* Más pequeño */
+                    font-weight: 600;
+                    font-size: 0.78rem;
+                    /* Texto más pequeño */
+                    border: none;
+                    border-radius: 14px;
+                    /* Semi-redondo más compacto */
+                    background: linear-gradient(135deg, #41c552, #2d9f3a);
+                    color: rgb(236, 243, 233);
+                    cursor: pointer;
+                    display: inline-flex;
+                    /* mantenemos inline-flex para la flecha */
+                    align-items: center;
+                    gap: 6px;
+                    box-shadow: 0 2px 6px rgba(0, 128, 0, 0.25);
+                    transition: all 0.25s ease;
+                }
+        
+                #toggle-btn:hover {
+                    background: linear-gradient(135deg, #4ee665, #34b549);
+                    box-shadow: 0 3px 8px rgba(0, 128, 0, 0.35);
+                }
+        
+                #toggle-btn:active {
+                    transform: scale(0.95);
+                    box-shadow: 0 2px 5px rgba(0, 128, 0, 0.3);
+                }
+        
+                #chev {
+                    font-size: 0.9rem;
+                    /* Flecha más pequeña */
+                    transition: transform 0.3s ease;
+                    /* Movimiento sigue funcionando */
+                }

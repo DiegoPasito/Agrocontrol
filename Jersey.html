@@ -73,7 +73,10 @@
     </nav>
   </header>
 
-  <main class="container mt-4">
+
+
+  <main class="container mt-4" id="card-jersey">
+    
     <div class="text-center mb-5">
       <h2 class="page-title">🐄 Perfil de la Vaca Jersey</h2>
       <p class="page-subtitle">Una raza lechera pequeña pero de gran corazón 💚</p>
@@ -104,6 +107,15 @@
         </div>
       </div>
     </div>
+
+    <!-- btn ocultar -->
+    <div class="text-center mt-2">
+      <button id="toggle-btn">
+        <span id="chev">▶</span> Mostrar información
+      </button>
+    </div>
+    <br>
+    <div id="contenido" class="d-none">
 
     <!-- Alimentación -->
     <div class="card shadow-sm border-left-accent mb-4">
@@ -182,10 +194,13 @@
       </div>
     </div>
 
+    </div>
 
     <h2 class="mb-4 text-center page-title">🐄 Mis Vacas Jersey</h2>
     <div id="tabla-jersey" class="table-responsive" ></div>
   </main>
+
+
 
   <!-- Modal Editar -->
   <div class="modal fade" id="editarModal" tabindex="-1" aria-labelledby="editarLabel" aria-hidden="true">
@@ -632,6 +647,34 @@ document.getElementById("insumosModal").addEventListener("hidden.bs.modal", () =
   }
   });
 </script>
+
+
+
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+
+    const btnToggle = document.getElementById("toggle-btn");
+    const contenido = document.getElementById("contenido");
+    const chev = document.getElementById("chev");
+
+    btnToggle.addEventListener("click", () => {
+      const oculto = contenido.classList.contains("d-none");
+
+      if (oculto) {
+        contenido.classList.remove("d-none");
+        chev.style.transform = "rotate(90deg)";
+      } else {
+        contenido.classList.add("d-none");
+        chev.style.transform = "rotate(0deg)";
+      }
+    });
+
+  });
+</script>
+
+
+
 
 
 
