@@ -112,15 +112,6 @@
       </div>
     </div>
 
-    <!-- btn ocultar -->
-    <div class="text-center mt-2">
-      <button id="toggle-btn">
-        <span id="chev">▶</span> Mostrar información
-      </button>
-    </div>
-    <br>
-    <div id="contenido" class="d-none">
-    
     <!-- Alimentación -->
     <div class="card shadow-sm border-left-accent mb-4">
       <div class="card-body">
@@ -198,7 +189,6 @@
       </div>
     </div>
     
-  </div>
 
     <h2 class="mb-4 text-center page-title">🐮 Mis Vacas Girolando</h2>
     <div id="tabla-girolando" class="table-responsive"></div>
@@ -620,27 +610,7 @@ document.getElementById("insumosModal").addEventListener("hidden.bs.modal", () =
   });
 </script>
 
-<script>
-  document.addEventListener("DOMContentLoaded", () => {
 
-    const btnToggle = document.getElementById("toggle-btn");
-    const contenido = document.getElementById("contenido");
-    const chev = document.getElementById("chev");
-
-    btnToggle.addEventListener("click", () => {
-      const oculto = contenido.classList.contains("d-none");
-
-      if (oculto) {
-        contenido.classList.remove("d-none");
-        chev.style.transform = "rotate(90deg)";
-      } else {
-        contenido.classList.add("d-none");
-        chev.style.transform = "rotate(0deg)";
-      }
-    });
-
-  });
-</script>
 
 </body>
 </html>

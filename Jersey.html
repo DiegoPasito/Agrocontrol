@@ -112,14 +112,7 @@
       </div>
     </div>
 
-    <!-- btn ocultar -->
-    <div class="text-center mt-2">
-      <button id="toggle-btn">
-        <span id="chev">▶</span> Mostrar información
-      </button>
-    </div>
-    <br>
-    <div id="contenido" class="d-none">
+
 
     <!-- Alimentación -->
     <div class="card shadow-sm border-left-accent mb-4">
@@ -196,8 +189,6 @@
           </div>
         </div>
       </div>
-    </div>
-
     </div>
 
     <h2 class="mb-4 text-center page-title">🐄 Mis Vacas Jersey</h2>
@@ -597,29 +588,6 @@ window.verHistorial = async function(idVaca) {
 </script>
 
 
-
-
-<script>
-  document.addEventListener("DOMContentLoaded", () => {
-
-    const btnToggle = document.getElementById("toggle-btn");
-    const contenido = document.getElementById("contenido");
-    const chev = document.getElementById("chev");
-
-    btnToggle.addEventListener("click", () => {
-      const oculto = contenido.classList.contains("d-none");
-
-      if (oculto) {
-        contenido.classList.remove("d-none");
-        chev.style.transform = "rotate(90deg)";
-      } else {
-        contenido.classList.add("d-none");
-        chev.style.transform = "rotate(0deg)";
-      }
-    });
-
-  });
-</script>
 
 
 
