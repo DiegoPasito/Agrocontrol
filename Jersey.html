@@ -334,6 +334,59 @@
     </div>
   </div>
 
+  <!-- 🟢 Modal Selección de Insumo -->
+<div class="modal fade" id="modalInsumos" tabindex="-1">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+
+      <div class="modal-header bg-success text-white">
+        <h5 class="modal-title">Seleccionar Insumo</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body">
+
+        <!-- 🔍 Buscador -->
+        <input type="text" id="buscarInsumo" class="form-control mb-3"
+               placeholder="Buscar insumo..." oninput="filtrarInsumos()">
+
+        <!-- Tarjetas -->
+        <div id="contenedorTarjetasInsumos" class="row g-3"></div>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- 🟢 Modal Registrar Insumo -->
+<div class="modal fade" id="modalRegistrarInsumo" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <div class="modal-header bg-primary text-white">
+        <h5 class="modal-title">Registrar Insumo</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body">
+        <p><strong>Insumo seleccionado:</strong> <span id="insumoNombreSeleccionado"></span></p>
+
+        <label>Cantidad suministrada:</label>
+        <input type="number" step="0.01" id="insumoCantidad"
+               class="form-control mb-3" placeholder="Ej: 12.5">
+
+        <label>Observaciones:</label>
+        <textarea id="insumoObservaciones" class="form-control mb-3" rows="3"></textarea>
+
+        <button class="btn btn-primary w-100" onclick="guardarRegistroInsumo()">Guardar registro</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
 
   <!-- Firebase y Script principal -->
   <script type="module">
@@ -385,7 +438,9 @@
               Eliminar
             </button>
 
-            <button class="btn btn-success btn-sm text-white" onclick="mostrarInsumos('${v.data.name}')">
+            <!-- 🔵 Nuevo botón: Insumos -->
+            <button class="btn btn-success btn-sm text-white"
+              onclick="abrirModalRegistro('${v.id}', 'insumo')">
               Insumos
             </button>
 
@@ -577,13 +632,21 @@ window.guardarRegistroMedicamento = async function () {
 };
 
 
+// MODALES DEL REGISTRO 
 window.abrirModalRegistro = async function (vacaId, tipo) {
   window.vacaSeleccionada = vacaId;
 
+  if (tipo === "insumo") {
+    await cargarTarjetasInsumosEstaticos();
+    bootstrap.Modal.getOrCreateInstance(document.getElementById("modalInsumos")).show();
+  }
   if (tipo === "medicamento") {
     await cargarTarjetasMedicamentosEstaticas();
-    const modal = new bootstrap.Modal(document.getElementById("modalMedicamentos"));
-    modal.show();
+    bootstrap.Modal.getOrCreateInstance(document.getElementById("modalMedicamentos")).show();
+  }
+
+  if (tipo === "enfermedad") {
+    // luego te hago este igual
   }
 };
 
@@ -598,35 +661,74 @@ window.filtrarMedicamentos = function () {
 
 // funcion para llenar el modal del historial 
 
-// Eliminar backdrops duplicados antes de abrir otro modal
-document.querySelectorAll('.modal-backdrop').forEach(b => b.remove());
-
-
 window.verHistorial = async function (vacaId) {
-  const q = await getDocs(collection(db, "users", usuarioId, "cows", vacaId, "applied_medications"));
 
-  let html = `<h4 class="mb-3">Medicamentos aplicados</h4>`;
+  let html = "";
 
-  q.forEach(docu => {
-    const m = docu.data();
+  // ===============================
+  // 💊 MEDICAMENTOS
+  // ===============================
+  const medsSnap = await getDocs(
+    collection(db, "users", usuarioId, "cows", vacaId, "applied_medications")
+  );
 
-    html += `
-  <div class="card mb-2 shadow-sm p-3">
-    <strong>${m.name}</strong><br>
-    <small>Fecha: ${new Date(m.date).toLocaleString()}</small><br>
-    <small>Dosis: ${m.dose_administered_ml} ml</small><br>
-    <small>Notas: ${m.observations || "Sin observaciones"}</small>
+  html += `<h4 class="mb-3">💊 Medicamentos aplicados</h4>`;
 
-    <button class="btn btn-danger btn-sm mt-2"
-      onclick="eliminarRegistroMedicamento('${docu.id}', '${vacaId}')">
-      Eliminar
-    </button>
-  </div>
-`;
-  });
+  if (medsSnap.empty) {
+    html += `<p class="text-muted">No hay medicamentos registrados.</p>`;
+  } else {
+    medsSnap.forEach(docu => {
+      const m = docu.data();
 
+      html += `
+        <div class="card mb-2 shadow-sm p-3">
+          <strong>${m.name}</strong><br>
+          <small>Fecha: ${new Date(m.date).toLocaleString()}</small><br>
+          <small>Dosis: ${m.dose_administered_ml} ml</small><br>
+          <small>Notas: ${m.observations || "Sin observaciones"}</small>
 
+          <button class="btn btn-danger btn-sm mt-2"
+            onclick="eliminarRegistroMedicamento('${docu.id}', '${vacaId}')">
+            Eliminar
+          </button>
+        </div>
+      `;
+    });
+  }
 
+  // ===============================
+  // 🌾 INSUMOS
+  // ===============================
+  const feedsSnap = await getDocs(
+    collection(db, "users", usuarioId, "cows", vacaId, "applied_feeds")
+  );
+
+  html += `<h4 class="mt-4 mb-3">🌾 Insumos aplicados</h4>`;
+
+  if (feedsSnap.empty) {
+    html += `<p class="text-muted">No hay insumos registrados.</p>`;
+  } else {
+    feedsSnap.forEach(docu => {
+      const d = docu.data();
+
+      html += `
+        <div class="card mb-2 shadow-sm p-3">
+          <strong>${d.feedName}</strong><br>
+          <small>Descripción: ${d.description}</small><br>
+          <small>Cantidad: ${d.amountGiven}</small><br>
+          <small>Fecha: ${new Date(d.date).toLocaleString()}</small><br>
+          <small>Notas: ${d.observations || "Sin observaciones"}</small>
+
+          <button class="btn btn-danger btn-sm mt-2"
+            onclick="eliminarRegistroInsumo('${docu.id}', '${vacaId}')">
+            Eliminar
+          </button>
+        </div>
+      `;
+    });
+  }
+
+  // Mostrar resultado
   document.getElementById("historialContenido").innerHTML = html;
 
   document.querySelectorAll('.modal-backdrop').forEach(b => b.remove());
@@ -673,6 +775,111 @@ window.verHistorial = async function (vacaId) {
   await deleteDoc(doc(db, "users", usuarioId, "cows", vacaId, "applied_medications", id));
   verHistorial(vacaId); // recargar historial
 };
+
+//Insumos
+
+async function cargarTarjetasInsumosEstaticos() {
+  try {
+    const resp = await fetch("insumos.html"); 
+
+    if (!resp.ok) {
+      console.error("No se encontró insumos.html");
+      return;
+    }
+
+    const htmlTexto = await resp.text();
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(htmlTexto, "text/html");
+
+    const tarjetas = doc.querySelectorAll(".insumo-card");
+
+    let html = "";
+
+    tarjetas.forEach(card => {
+      const nombre = card.querySelector(".card-title")?.textContent.trim() || "Insumo";
+      const descripcion = card.querySelector(".card-text")?.textContent.trim() || "";
+      let imagen = card.querySelector(".card-img-top")?.getAttribute("src") || "";
+
+      imagen = imagen.startsWith("http") ? imagen : "img/" + imagen.replace("img/", "");
+
+      html += `
+        <div class="col-md-4">
+          <div class="card shadow-sm h-100">
+            <img src="${imagen}" class="card-img-top" style="height:160px; object-fit:cover;">
+            <div class="card-body">
+              <h5 class="card-title">${nombre}</h5>
+              <p class="card-text small">${descripcion}</p>
+
+              <button class="btn btn-success w-100 text-white"
+                onclick="seleccionarInsumo('${nombre}', \`${descripcion}\`)">
+                Seleccionar
+              </button>
+            </div>
+          </div>
+        </div>
+      `;
+    });
+
+    document.getElementById("contenedorTarjetasInsumos").innerHTML = html;
+
+  } catch (error) {
+    console.error("Error cargando insumos.html:", error);
+  }
+}
+
+window.seleccionarInsumo = function(nombre, descripcion) {
+
+  window.insumoSeleccionado = nombre;
+  window.insumoDescripcion = descripcion;
+
+  document.getElementById("insumoNombreSeleccionado").innerText = nombre;
+
+  const modalSel = bootstrap.Modal.getInstance(document.getElementById("modalInsumos"));
+  modalSel.hide();
+
+  bootstrap.Modal.getOrCreateInstance(document.getElementById("modalRegistrarInsumo")).show();
+
+  window.modalSeleccionInsumo = modalSel;
+};
+
+window.guardarRegistroInsumo = async function () {
+
+  const vacaId = window.vacaSeleccionada;
+  const cantidad = parseFloat(document.getElementById("insumoCantidad").value) || 0;
+  const obs = document.getElementById("insumoObservaciones").value || "";
+
+  await addDoc(collection(db, "users", usuarioId, "cows", vacaId, "applied_feeds"), {
+    feedName: window.insumoSeleccionado,
+    description: window.insumoDescripcion,
+    amountGiven: cantidad,
+    observations: obs,
+    date: new Date().toISOString()
+  });
+
+  alert("Insumo registrado correctamente.");
+
+  document.getElementById("insumoCantidad").value = "";
+  document.getElementById("insumoObservaciones").value = "";
+
+  bootstrap.Modal.getInstance(document.getElementById("modalRegistrarInsumo")).hide();
+  bootstrap.Modal.getInstance(document.getElementById("modalInsumos")).hide();
+};
+
+window.filtrarInsumos = function () {
+  const texto = document.getElementById("buscarInsumo").value.toLowerCase();
+
+  document.querySelectorAll("#contenedorTarjetasInsumos .card").forEach(card => {
+    const titulo = card.querySelector(".card-title").innerText.toLowerCase();
+    card.parentElement.style.display = titulo.includes(texto) ? "" : "none";
+  });
+};
+
+window.eliminarRegistroInsumo = async function(id, vacaId) {
+  await deleteDoc(doc(db, "users", usuarioId, "cows", vacaId, "applied_feeds", id));
+  verHistorial(vacaId);
+};
+
+
 
 
   </script>
