@@ -7,6 +7,10 @@ body {
     padding: 20px 0;
 }
 
+        body {
+    font-size: 19px;  
+}
+
 /* Estilos de la tarjeta */
 .card {
     border: none;

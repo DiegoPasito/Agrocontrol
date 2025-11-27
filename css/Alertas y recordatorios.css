@@ -5,6 +5,10 @@
       min-height: 100vh;
     }
 
+            body {
+    font-size: 19px;  
+    }
+
     header {
       position: sticky;
       top: 0;

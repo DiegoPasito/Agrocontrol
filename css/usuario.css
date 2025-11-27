@@ -8,6 +8,10 @@ body {
       padding: 20px;
     }
 
+        body {
+            font-size: 19px;  
+        }
+
     .login-container {
       background-color: #ffffff;
       border-radius: 20px;

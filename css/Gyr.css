@@ -4,6 +4,9 @@ body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
             min-height: 100vh;
         }
+            body {
+            font-size: 19px;  
+        }
 
         /* ---- FIX: header fijo  ---- */
         header {
