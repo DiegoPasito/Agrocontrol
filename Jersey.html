@@ -264,52 +264,75 @@
   <!-- Botón flotante -->
   <button id="btn-flotante" onclick="scrollToTabla()">🐄 Tus vacas registradas</button>
 
+  <!-- 🟢 Modal Selección de Medicamento -->
+  <div class="modal fade" id="modalMedicamentos" tabindex="-1">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
 
-  <!-- Modal Insumos -->
-<div class="modal fade" id="insumosModal" tabindex="-1" aria-labelledby="insumosLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-header bg-info text-white">
+          <h5 class="modal-title">Seleccionar Medicamento</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+
+        <div class="modal-body">
+
+          <!-- 🔍 Buscador -->
+          <input type="text" id="buscarMedicamento" class="form-control mb-3"
+                placeholder="Buscar medicamento..." oninput="filtrarMedicamentos()">
+
+          <!-- Tarjetas -->
+          <div id="contenedorTarjetasMedicamentos" class="row g-3"></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- 🟢 Modal para completar registro -->
+<div class="modal fade" id="modalRegistrarMed" tabindex="-1">
+  <div class="modal-dialog">
     <div class="modal-content">
+
       <div class="modal-header bg-success text-white">
-        <h5 class="modal-title" id="insumosLabel">Insumos Recomendados</h5>
-        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        <h5 class="modal-title">Registrar Medicamento</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
+
       <div class="modal-body">
-        <h6 id="vacaSeleccionada" class="text-center mb-3"></h6>
-        <div id="listaInsumos" class="d-flex flex-wrap justify-content-center gap-2"></div>
-        <div id="resultadoInsumo" class="mt-4 text-center"></div>
+        <p><strong>Medicamento seleccionado:</strong> <span id="medNombreSeleccionado"></span></p>
+
+        <label>Dosis administrada (ml):</label>
+        <input type="number" id="medDosis" class="form-control mb-3"
+        placeholder="Ej: 30.5" step="0.01">
+
+
+        <label>Observaciones:</label>
+        <textarea id="medObservaciones" class="form-control mb-3" rows="3"></textarea>
+
+        <button class="btn btn-success w-100" onclick="guardarRegistroMedicamento()">Guardar registro</button>
       </div>
+
     </div>
   </div>
 </div>
 
-<!-- Modal Registro General -->
-<div class="modal fade" id="registroModal" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
+  <!-- 🟡 Modal Historial -->
+  <div class="modal fade" id="modalHistorial" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
 
-      <div class="modal-header bg-primary text-white">
-        <h5 class="modal-title" id="tituloRegistro">Registrar</h5>
-        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-      </div>
-
-      <div class="modal-body">
-
-        <div class="mb-3">
-          <label class="form-label" id="labelSeleccion">Seleccione</label>
-          <select id="selectOpciones" class="form-select"></select>
+        <div class="modal-header bg-secondary text-white">
+          <h5 class="modal-title">Historial de la vaca</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
 
-        <div class="mb-3">
-          <label class="form-label">Nota (opcional)</label>
-          <textarea class="form-control" id="notaRegistro" rows="3"></textarea>
+        <div class="modal-body">
+          <div id="historialContenido"></div>
         </div>
-
-        <button class="btn btn-success w-100" onclick="guardarRegistro()">Guardar Registro</button>
 
       </div>
     </div>
   </div>
-</div>
 
 
   <!-- Firebase y Script principal -->
@@ -318,7 +341,7 @@
     import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js";
     import {
       getFirestore, collection, query, where, getDocs,
-      doc, deleteDoc, updateDoc
+      doc, deleteDoc, updateDoc, addDoc
     } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-firestore.js";
 
     const firebaseConfig = {
@@ -469,95 +492,187 @@
       }
     });
 
-    let vacaActual = null;
-let tipoRegistro = null;
+    //Medicamento
 
-// 🔵 Abrir modal y cargar opciones
-window.abrirModalRegistro = async function(idVaca, tipo) {
-  vacaActual = idVaca;
-  tipoRegistro = tipo;
+async function cargarTarjetasMedicamentosEstaticas() {
+  try {
+    const resp = await fetch("Medicamentos.html");
 
-  const titulo = document.getElementById("tituloRegistro");
-  const select = document.getElementById("selectOpciones");
-  const label = document.getElementById("labelSeleccion");
+    if (!resp.ok) {
+      console.error("No se encontró Medicamentos.html");
+      return;
+    }
 
-  select.innerHTML = "";
+    const htmlTexto = await resp.text();
+
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(htmlTexto, "text/html");
+
+    const tarjetas = doc.querySelectorAll(".med-card");
+
+    let html = "";
+
+    tarjetas.forEach(card => {
+      const nombre = card.querySelector(".med-card-title")?.textContent.trim() || "Medicamento";
+
+      let imagen = card.querySelector(".med-card-img")?.getAttribute("src") || "";
+      imagen = imagen.startsWith("http") ? imagen : "img/" + imagen.replace("img/", "");
+
+      const categoria = card.querySelector(".med-card-category")?.textContent || "";
+      const desc = card.querySelector(".med-card-desc")?.textContent || "";
+
+      html += `
+        <div class="col-md-4">
+          <div class="card shadow-sm h-100">
+            <img src="${imagen}" class="card-img-top" style="height:160px; object-fit:cover;">
+            <div class="card-body">
+              <span class="badge bg-success mb-1">${categoria}</span>
+              <h5 class="card-title">${nombre}</h5>
+              <p class="card-text small">${desc}</p>
+              <button class="btn btn-info w-100 text-white"
+                onclick="seleccionarMedicamento('${nombre}')">
+                Seleccionar
+              </button>
+            </div>
+          </div>
+        </div>
+      `;
+    });
+
+    document.getElementById("contenedorTarjetasMedicamentos").innerHTML = html;
+
+  } catch (error) {
+    console.error("Error cargando Medicamentos.html:", error);
+  }
+}
+
+
+  //Registro
+
+ window.cerradoPorGuardar = false;
+
+window.guardarRegistroMedicamento = async function () {
+
+  window.cerradoPorGuardar = true; // 🟢 Para evitar abrir el otro modal
+
+  const vacaId = window.vacaSeleccionada;
+  const dosis = parseFloat(document.getElementById("medDosis").value) || 0;
+  const obs = document.getElementById("medObservaciones").value || "";
+
+  await addDoc(collection(db, "users", usuarioId, "cows", vacaId, "applied_medications"), {
+    name: window.medicamentoSeleccionado,
+    dose_administered_ml: dosis,
+    observations: obs,
+    date: new Date().toISOString()
+  });
+
+  alert("Medicamento registrado correctamente.");
+
+  // LIMPIAR CAMPOS 😁
+  document.getElementById("medDosis").value = "";
+  document.getElementById("medObservaciones").value = "";
+
+  bootstrap.Modal.getInstance(document.getElementById("modalRegistrarMed")).hide();
+  bootstrap.Modal.getInstance(document.getElementById("modalMedicamentos")).hide();
+};
+
+
+window.abrirModalRegistro = async function (vacaId, tipo) {
+  window.vacaSeleccionada = vacaId;
 
   if (tipo === "medicamento") {
-    titulo.innerText = "Registrar Medicamento";
-    label.innerText = "Medicamento aplicado";
-
-    const lista = await obtenerMedicamentos();
-    lista.forEach(m => {
-      const op = document.createElement("option");
-      op.textContent = m;
-      select.appendChild(op);
-    });
-
-  } else if (tipo === "enfermedad") {
-    titulo.innerText = "Registrar Enfermedad";
-    label.innerText = "Enfermedad detectada";
-
-    const lista = await obtenerEnfermedades();
-    lista.forEach(m => {
-      const op = document.createElement("option");
-      op.textContent = m;
-      select.appendChild(op);
-    });
+    await cargarTarjetasMedicamentosEstaticas();
+    const modal = new bootstrap.Modal(document.getElementById("modalMedicamentos"));
+    modal.show();
   }
+};
 
-  const modal = new bootstrap.Modal(document.getElementById("registroModal"));
+window.filtrarMedicamentos = function () {
+  const texto = document.getElementById("buscarMedicamento").value.toLowerCase();
+
+  document.querySelectorAll("#contenedorTarjetasMedicamentos .card").forEach(card => {
+    const titulo = card.querySelector(".card-title").innerText.toLowerCase();
+    card.parentElement.style.display = titulo.includes(texto) ? "" : "none";
+  });
+};
+
+// funcion para llenar el modal del historial 
+
+// Eliminar backdrops duplicados antes de abrir otro modal
+document.querySelectorAll('.modal-backdrop').forEach(b => b.remove());
+
+
+window.verHistorial = async function (vacaId) {
+  const q = await getDocs(collection(db, "users", usuarioId, "cows", vacaId, "applied_medications"));
+
+  let html = `<h4 class="mb-3">Medicamentos aplicados</h4>`;
+
+  q.forEach(docu => {
+    const m = docu.data();
+
+    html += `
+  <div class="card mb-2 shadow-sm p-3">
+    <strong>${m.name}</strong><br>
+    <small>Fecha: ${new Date(m.date).toLocaleString()}</small><br>
+    <small>Dosis: ${m.dose_administered_ml} ml</small><br>
+    <small>Notas: ${m.observations || "Sin observaciones"}</small>
+
+    <button class="btn btn-danger btn-sm mt-2"
+      onclick="eliminarRegistroMedicamento('${docu.id}', '${vacaId}')">
+      Eliminar
+    </button>
+  </div>
+`;
+  });
+
+
+
+  document.getElementById("historialContenido").innerHTML = html;
+
+  document.querySelectorAll('.modal-backdrop').forEach(b => b.remove());
+
+  // Mostrar modal sin duplicarlo
+  const modalElement = document.getElementById("modalHistorial");
+  const modal = bootstrap.Modal.getOrCreateInstance(modalElement);
   modal.show();
+
 };
 
-// 🔵 Leer Medicamentos desde tu HTML
-async function obtenerMedicamentos() {
-  const res = await fetch("Medicamentos.html");
-  const html = await res.text();
-  const parser = new DOMParser();
-  const doc = parser.parseFromString(html, "text/html");
-  return [...doc.querySelectorAll(".card-title")].map(e => e.textContent.trim());
-}
+  window.seleccionarMedicamento = function(nombre) {
 
-// 🔵 Leer Enfermedades desde tu HTML
-async function obtenerEnfermedades() {
-  const res = await fetch("enfermedades.html");
-  const html = await res.text();
-  const parser = new DOMParser();
-  const doc = parser.parseFromString(html, "text/html");
-  return [...doc.querySelectorAll(".card-title")].map(e => e.textContent.trim());
-}
+    window.medicamentoSeleccionado = nombre;
+    document.getElementById("medNombreSeleccionado").innerText = nombre;
 
-// 🔵 Guardar el registro en Firebase
-window.guardarRegistro = async function() {
-  const seleccion = document.getElementById("selectOpciones").value;
-  const nota = document.getElementById("notaRegistro").value;
+     // Limpiar inputs
+    document.getElementById("medDosis").value = "";
+    document.getElementById("medObservaciones").value = "";
 
-  await addDoc(collection(db, "users", usuarioId, "cows", vacaActual, "history"), {
-    tipo: tipoRegistro,
-    nombre: seleccion,
-    nota: nota.trim() || "",
-    fecha: new Date()
+    // Ocultar temporalmente el modal de selección
+    const modalSel = bootstrap.Modal.getInstance(document.getElementById("modalMedicamentos"));
+    modalSel.hide();
+
+    // Abrir modal de registro
+    const modalReg = new bootstrap.Modal(document.getElementById("modalRegistrarMed"));
+    modalReg.show();
+
+    // Guardar referencia para reabrir si se cancela
+    window.modalSeleccionMedicamento = modalSel;
+  };
+
+    document.getElementById("modalRegistrarMed").addEventListener("hidden.bs.modal", function () {
+
+    if (!window.cerradoPorGuardar && window.modalSeleccionMedicamento) {
+      window.modalSeleccionMedicamento.show();
+    }
+
+    // Reset siempre
+    window.cerradoPorGuardar = false;
   });
 
-  alert("Registro guardado correctamente");
-  bootstrap.Modal.getInstance(document.getElementById("registroModal")).hide();
+  window.eliminarRegistroMedicamento = async function(id, vacaId) {
+  await deleteDoc(doc(db, "users", usuarioId, "cows", vacaId, "applied_medications", id));
+  verHistorial(vacaId); // recargar historial
 };
-
-window.verHistorial = async function(idVaca) {
-  const q = collection(db, "users", usuarioId, "cows", idVaca, "history");
-  const snap = await getDocs(q);
-
-  let texto = "📋 HISTORIAL:\n\n";
-
-  snap.forEach(doc => {
-    const h = doc.data();
-    texto += `• ${h.tipo.toUpperCase()} – ${h.nombre}\n  Nota: ${h.nota}\n\n`;
-  });
-
-  alert(texto);
-};
-
 
 
   </script>
