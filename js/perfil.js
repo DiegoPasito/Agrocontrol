@@ -55,28 +55,8 @@ const userNameEl = document.getElementById("profile-name");
 const userEmailEl = document.getElementById("profile-email");
 const fechaRegistroEl = document.getElementById("miembro-desde");
 
-const profileImage = document.getElementById("profile-image");
-const fileInput = document.getElementById("foto-input");
-
-const updatePhotoBtn = document.getElementById("update-photo-btn");
-const deletePhotoBtn = document.getElementById("delete-photo-btn");
-const viewPhotoBtn = document.getElementById("view-photo-btn");
-
-const previewContainer = document.getElementById("preview-container");
-const previewImage = document.getElementById("preview-image");
-const uploadBtn = document.getElementById("upload-btn");
-const cancelPreviewBtn = document.getElementById("cancel-preview-btn");
-
 const totalCowsEl = document.getElementById("vacas-registradas");
 const totalRemindersEl = document.getElementById("recordatorios-activos");
-
-// ================================
-//  VARIABLES GLOBALES
-// ================================
-let selectedFile = null;
-let selectedBase64 = null;  // ← REQUIRED
-let currentPhotoURL = null;
-
 
 // ================================
 //  CARGAR DATOS DEL USUARIO
@@ -107,11 +87,6 @@ onAuthStateChanged(auth, async (user) => {
           day: "numeric"
         });
       }
-
-      if (data.photoURL) {
-        profileImage.src = data.photoURL;
-        currentPhotoURL = data.photoURL;
-      }
     }
 
     const cowsCol = collection(db, "users", uid, "cows");
@@ -125,96 +100,4 @@ onAuthStateChanged(auth, async (user) => {
   } catch (error) {
     console.error("Error cargando perfil:", error);
   }
-});
-
-// ================================
-//  EVENTOS DE FOTO (Base64)
-// ================================
-
-// Abrir el selector de archivos
-updatePhotoBtn.addEventListener("click", () => fileInput.click());
-
-// Vista previa
-fileInput.addEventListener("change", (e) => {
-    selectedFile = e.target.files[0];
-    if (!selectedFile) return;
-
-    const reader = new FileReader();
-    reader.onload = () => {
-        selectedBase64 = reader.result; // Guardamos la imagen en Base64
-        previewImage.src = selectedBase64;
-
-        previewContainer.style.display = "block";
-    };
-    reader.readAsDataURL(selectedFile);
-});
-
-// Cancelar preview
-cancelPreviewBtn.addEventListener("click", () => {
-    previewContainer.style.display = "none";
-    fileInput.value = "";
-    selectedFile = null;
-    selectedBase64 = null;
-});
-
-uploadBtn.addEventListener("click", async () => {
-    if (!selectedBase64) return;
-
-    const user = auth.currentUser;
-    const userRef = doc(db, "users", user.uid);
-
-    try {
-        // Guardamos la imagen en Firestore
-        await updateDoc(userRef, {
-            photoURL: selectedBase64
-        });
-
-        // Actualizamos la foto en pantalla
-        profileImage.src = selectedBase64;
-        currentPhotoURL = selectedBase64;
-
-        // Limpiar preview
-        previewContainer.style.display = "none";
-        selectedFile = null;
-        selectedBase64 = null;
-        fileInput.value = "";
-
-        alert("Foto actualizada con éxito");
-
-    } catch (error) {
-        console.error("Error subiendo foto:", error);
-        alert("No se pudo actualizar la foto.");
-    }
-});
-
-// Ver foto
-viewPhotoBtn.addEventListener("click", () => {
-    if (!currentPhotoURL) {
-        alert("Aún no tienes foto de perfil.");
-        return;
-    }
-
-    const win = window.open();
-    win.document.write(`<img src="${currentPhotoURL}" style="width:100%; height:auto;">`);
-});
-
-// Eliminar foto
-deletePhotoBtn.addEventListener("click", async () => {
-    const user = auth.currentUser;
-    const userRef = doc(db, "users", user.uid);
-
-    const defaultPhoto = "img/avatar-placeholder.png";
-
-    try {
-        await updateDoc(userRef, { photoURL: defaultPhoto });
-
-        profileImage.src = defaultPhoto;
-        currentPhotoURL = defaultPhoto;
-
-        alert("Foto eliminada correctamente.");
-
-    } catch (error) {
-        console.error("Error eliminando foto:", error);
-        alert("No se pudo eliminar la foto.");
-    }
 });

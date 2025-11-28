@@ -396,3 +396,46 @@
         ::-webkit-scrollbar-thumb:hover {
             background: linear-gradient(135deg, #2b8c35, #1e7e34);
         }
+
+        /* TÍTULO: máximo 1 línea */
+        .card-title {
+        font-size: 1.1rem;
+        font-weight: 600;
+
+        display: -webkit-box;
+        display: box;
+        display: -moz-box;
+        display: -ms-flexbox;
+
+        overflow: hidden;
+        text-overflow: ellipsis;
+
+        /* Standard + prefijos */
+        line-clamp: 1;
+        -webkit-line-clamp: 1;
+
+        -webkit-box-orient: vertical;
+        box-orient: vertical;
+        }
+
+        /* DESCRIPCIÓN: máximo 2 líneas */
+        .card-text {
+        font-size: 0.9rem;
+        color: #555;
+
+        display: -webkit-box;
+        display: box;
+        display: -moz-box;
+        display: -ms-flexbox;
+
+        overflow: hidden;
+        text-overflow: ellipsis;
+
+        /* Standard + prefijos */
+        line-clamp: 2;
+        -webkit-line-clamp: 2;
+
+        -webkit-box-orient: vertical;
+        box-orient: vertical;
+        }
+

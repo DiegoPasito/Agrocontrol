@@ -353,3 +353,40 @@ aside.col-md-4 *::after {
   transform: translateY(-1px);
   transition: 0.2s;
 }
+
+/* Estilo base compartido */
+.btn-uniforme {
+    width: 100%;
+    padding: 15px;
+    font-size: 18px;
+    border-radius: 40px;
+    font-weight: 600;
+    transition: background-color 0.25s ease, border-color 0.25s ease;
+    text-decoration: none !important;
+    display: block;
+    text-align: center;
+}
+
+/* Botón rojo */
+.btn-cerrar {
+    background-color: #ffffff !important;
+    border: 2px solid #e53935 !important;
+    color: #e53935 !important;
+}
+
+.btn-cerrar:hover {
+    background-color: #e53935 !important;
+    color: white !important;
+}
+
+/* Botón verde */
+.btn-cambiar {
+    background-color: white !important;
+    border: 2px solid #33a852 !important;
+    color: #33a852 !important;
+}
+
+.btn-cambiar:hover {
+    background-color: #33a852 !important;
+    color: white !important;
+}

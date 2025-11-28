@@ -91,39 +91,11 @@
       <div class="card shadow-lg border-0 rounded-4 h-100">
         <div class="card-body text-center p-5">
 
-          <!-- Foto -->
-          <div class="profile-image-wrapper mb-4">
-            <img src="img/avatar-placeholder.png"
-                 id="profile-image"
-                 alt="Foto de perfil"
-                 class="profile-avatar shadow-sm">
-          </div>
-
-          <!-- Botones foto -->
-          <div class="d-flex justify-content-center gap-2 flex-wrap mb-4">
-            <input type="file" id="foto-input" accept="image/*" hidden>
-
-            <button id="update-photo-btn" class="btn btn-success btn-sm">Actualizar foto</button>
-            <button id="delete-photo-btn" class="btn btn-outline-danger btn-sm">Eliminar</button>
-            <button id="view-photo-btn" class="btn btn-outline-primary btn-sm">Ver foto</button>
-
-            <!-- Vista previa -->
-              <div id="preview-container" class="text-center mt-3" style="display:none;">
-                <h6>Vista previa:</h6>
-                <img id="preview-image" class="rounded shadow" style="width:140px; height:140px; object-fit:cover;">
-  
-              <div class="mt-3 d-flex gap-2 justify-content-center">
-                <button id="upload-btn" class="btn btn-success btn-sm">Confirmar</button>
-                <button id="cancel-preview-btn" class="btn btn-secondary btn-sm">Cancelar</button>
-              </div>
-            </div>
-          </div>
-
           <!-- Datos importantes -->
-          <h4 id="profile-name" class="fw-bold mb-1">Juan Perez</h4>
-          <p id="profile-email" class="text-muted mb-1">juanperez@example.com</p>
+          <h4 id="profile-name" class="fw-bold mb-1">--</h4>
+          <p id="profile-email" class="text-muted mb-1">---</p>
 
-          <span class="badge rounded-pill text-bg-success px-3 py-2">Administrador</span>
+          <span class="badge rounded-pill text-bg-success px-3 py-2">Ganadero</span>
 
           <p class="text-muted mt-3 mb-1">
             Miembro desde: <span id="miembro-desde">-</span>
@@ -133,8 +105,8 @@
 
           <!-- Acciones -->
           <div class="d-grid gap-3">
-            <a href="index.html" class="btn btn-danger btn-lg">Cerrar sesión</a>
-            <a href="CambioContra.html" class="btn btn-outline-success btn-lg">Editar perfil</a>
+            <a href="index.html" class="btn-uniforme btn-cerrar">Cerrar sesión</a>
+            <a href="CambioContra.html" class="btn-uniforme btn-cambiar">Cambiar Contraseña</a>
           </div>
         </div>
       </div>
@@ -150,8 +122,8 @@
         </div>
         <div class="card-body">
           <ul class="list-unstyled mb-0">
-            <li>Vacas registradas: <span id="vacas-registradas">0</span></li>
-            <li>Recordatorios activos: <span id="recordatorios-activos">0</span></li>
+            <li>Vacas registradas: <span id="vacas-registradas">-</span></li>
+            <li>Recordatorios activos: <span id="recordatorios-activos">-</span></li>
           </ul>
         </div>
       </div>
@@ -168,9 +140,6 @@
     </section>
   </div>
 </main>
-
-<script type="module" src="js/perfil.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
 document.addEventListener("DOMContentLoaded", () => {
@@ -199,6 +168,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
+
 </script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script type="module" src="js/perfil.js"></script>
 </body>
 </html>

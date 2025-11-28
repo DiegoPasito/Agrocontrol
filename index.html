@@ -1,12 +1,74 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Iniciar Sesión - Agrocontrol</title>
+
   <!-- Bootstrap 5 -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="css/usuario.css">
+
+  <style>
+    #custom-prompt-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.65);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+#custom-prompt-box {
+  background: white;
+  padding: 40px;
+  width: 450px;     /* MÁS ANCHO */
+  max-width: 90%;
+  border-radius: 18px;  /* MÁS REDONDO */
+  box-shadow: 0px 4px 20px rgba(0,0,0,0.3);
+  text-align: center;
+  animation: scaleIn 0.25s ease-out;
+}
+
+#custom-prompt-box h3 {
+  font-size: 24px;   /* MÁS GRANDE */
+  font-weight: bold;
+  margin-bottom: 15px;
+  color: #333;
+}
+
+#custom-prompt-box p {
+  font-size: 18px;   /* MÁS GRANDE */
+  margin-bottom: 25px;
+}
+
+#custom-prompt-btn {
+  background: #28a745;
+  color: white;
+  border: none;
+  padding: 14px 28px; /* MÁS GRANDE */
+  font-size: 18px;    /* MÁS GRANDE */
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.25s;
+  width: 100%;
+}
+
+#custom-prompt-btn:hover {
+  background: #218838;
+  transform: scale(1.03);
+}
+
+@keyframes scaleIn {
+  from { transform: scale(0.85); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+  </style>
 </head>
 <body>
 
@@ -94,68 +156,149 @@
     </div>
   </div>
 
+<!-- =======================
+   MODAL DE MENSAJE GLOBAL
+========================== -->
+<div id="custom-prompt-overlay">
+  <div id="custom-prompt-box">
+    <h3 id="custom-prompt-title">Mensaje</h3>
+    <p id="custom-prompt-message"></p>
+    <button id="custom-prompt-btn">Aceptar</button>
+  </div>
+</div>
+
   <!-- Firebase SDK -->
 <script type="module">
-  // Importar Firebase desde CDN
   import { initializeApp } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-app.js";
-  import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, sendPasswordResetEmail} 
-    from "https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js";
+  import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js";
+  import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-firestore.js";
 
-  // Configuración de Firebase (esta la copias de tu consola de Firebase)
   const firebaseConfig = {
-      apiKey: "AIzaSyAzonIFbhlOnnIs9xG9Lb4uBJHLrhCi3qU",
-      authDomain: "web-y-movil-agroncontrol.firebaseapp.com",
-      projectId: "web-y-movil-agroncontrol",
-      storageBucket: "web-y-movil-agroncontrol.firebasestorage.app",
-      messagingSenderId: "180502593551",
-      appId: "1:180502593551:web:f4ae5111ac99ec70fa237a",
-      measurementId: "G-BJ9G9WSKNY"
+    apiKey: "AIzaSyAzonIFbhlOnnIs9xG9Lb4uBJHLrhCi3qU",
+    authDomain: "web-y-movil-agroncontrol.firebaseapp.com",
+    projectId: "web-y-movil-agroncontrol",
+    storageBucket: "web-y-movil-agroncontrol.firebasestorage.app",
+    messagingSenderId: "180502593551",
+    appId: "1:180502593551:web:f4ae5111ac99ec70fa237a",
+    measurementId: "G-BJ9G9WSKNY"
   };
 
-  // Inicializar Firebase
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
+  const db = getFirestore(app);
 
-  // 🔐 LOGIN
-  const loginForm = document.querySelector("form");
-  if (loginForm) {
-    loginForm.addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const email = document.getElementById("email").value;
-      const password = document.getElementById("password").value;
+  // ---------- ELEMENTOS DEL PROMPT (ya están en tu HTML) ----------
+  const overlay = document.getElementById("custom-prompt-overlay");
+  const boxTitle = document.getElementById("custom-prompt-title");
+  const boxMessage = document.getElementById("custom-prompt-message");
+  const boxBtn = document.getElementById("custom-prompt-btn");
 
-      try {
-        await signInWithEmailAndPassword(auth, email, password);
-        alert("✅ Inicio de sesión exitoso");
-        window.location.href = "contenidoPrincipal.html"; // página principal
-      } catch (error) {
-        alert("❌ Error: usuario no encontrado" );
+  /**
+   * Muestra el prompt custom y devuelve una Promise que se resuelve
+   * cuando el usuario pulsa aceptar (o se cierra).
+   * @param {string} message
+   * @param {string} [title]
+   * @returns {Promise<void>}
+   */
+  function showPrompt(message, title = "Mensaje") {
+    return new Promise((resolve) => {
+      if (!overlay || !boxBtn || !boxMessage || !boxTitle) {
+        // Si por alguna razón no existe el overlay, fallback a alert
+        alert(message);
+        resolve();
+        return;
       }
+
+      boxTitle.textContent = title;
+      boxMessage.textContent = message;
+
+      // mostrar
+      overlay.style.display = "flex";
+
+      // handler único: quitar overlay al hacer click
+      function handleClose() {
+        overlay.style.display = "none";
+        boxBtn.removeEventListener("click", handleClose);
+        resolve();
+      }
+
+      boxBtn.addEventListener("click", handleClose, { once: true });
     });
   }
 
-  // 🔑 Recuperar contraseña (modal)
+  // ------------------ LOGIN FORM ------------------
+const loginForm = document.querySelector("form");
+if (loginForm) {
+  loginForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value.trim();
+
+    if (!email || !password) {
+      showPrompt("Por favor completa todos los campos.", "Error");
+      return;
+    }
+
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+
+      showPrompt("Inicio de sesión exitoso");
+      setTimeout(() => {
+        window.location.href = "contenidoPrincipal.html";
+      }, 900);
+
+    } catch (error) {
+  if (error.code === "auth/user-not-found") {
+    showPrompt("El usuario no existe.", "Error");
+  } else if (error.code === "auth/wrong-password") {
+    showPrompt("Contraseña incorrecta.", "Error");
+  } else {
+    showPrompt("Error al iniciar sesión.", "Error");
+  }
+}
+  });
+}
+
+  // ------------------ RESET PASSWORD BUTTON ------------------
   const sendResetEmailBtn = document.getElementById("sendResetEmailBtn");
   if (sendResetEmailBtn) {
     sendResetEmailBtn.addEventListener("click", async () => {
       const email = document.getElementById("resetEmail").value.trim();
       if (!email) {
-        alert("Por favor, ingresa un correo válido.");
+        await showPrompt("Por favor, ingresa un correo válido.");
         return;
       }
 
       try {
+        // import dinámico porque ya importaste getAuth arriba
+        // usamos sendPasswordResetEmail directamente importándolo
+        const { sendPasswordResetEmail } = await import("https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js");
         await sendPasswordResetEmail(auth, email);
-        alert("✅ Se ha enviado un enlace de recuperación a tu correo.");
+
+        await showPrompt("Se ha enviado un enlace de recuperación a tu correo.", "Enviado");
         document.getElementById("resetEmail").value = "";
-        const modal = bootstrap.Modal.getInstance(document.getElementById("forgotPasswordModal"));
-        modal.hide();
+
+        // cerrar modal bootstrap (si existe)
+        const modalEl = document.getElementById("forgotPasswordModal");
+        if (modalEl) {
+          const bsModal = bootstrap.Modal.getInstance(modalEl) || new bootstrap.Modal(modalEl);
+          bsModal.hide();
+        }
       } catch (error) {
-        alert("❌ Error: " + error.message);
+        await showPrompt(error.message || "Error al enviar enlace de recuperación.", "Error");
       }
     });
   }
 
+  // Opcional: cerrar el prompt si el usuario pulsa fuera del cuadro (click en overlay)
+  if (overlay) {
+    overlay.addEventListener("click", (ev) => {
+      if (ev.target === overlay) {
+        // cerrar si está visible
+        if (overlay.style.display === "flex") overlay.style.display = "none";
+      }
+    });
+  }
 </script>
 
 
