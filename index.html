@@ -240,21 +240,6 @@ if (loginForm) {
     }
 
     try {
-      // ===============================
-      // 1️⃣ Verificar si el usuario existe en Firestore
-      // ===============================
-      const usersRef = collection(db, "users");
-      const q = query(usersRef, where("Email", "==", email));
-      const querySnapshot = await getDocs(q);
-
-      if (querySnapshot.empty) {
-        showPrompt("El usuario no existe.", "Error");
-        return;
-      }
-
-      // ===============================
-      // 2️⃣ Intentar iniciar sesión
-      // ===============================
       await signInWithEmailAndPassword(auth, email, password);
 
       showPrompt("Inicio de sesión exitoso");
@@ -263,8 +248,14 @@ if (loginForm) {
       }, 900);
 
     } catch (error) {
-      showPrompt("Correo o Contraseña incorrectos.", "Error");
-    }
+  if (error.code === "auth/user-not-found") {
+    showPrompt("El usuario no existe.", "Error");
+  } else if (error.code === "auth/wrong-password") {
+    showPrompt("Contraseña incorrecta.", "Error");
+  } else {
+    showPrompt("Error al iniciar sesión.", "Error");
+  }
+}
   });
 }
 
