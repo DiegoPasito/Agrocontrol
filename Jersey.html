@@ -248,14 +248,14 @@
   <div class="modal fade" id="eliminarModal" tabindex="-1" aria-labelledby="eliminarLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
-        <div class="modal-header bg-danger text-white">
+        <div class="modal-header modal-header-verde text-white">
           <h5 class="modal-title" id="eliminarLabel">Eliminar Vaca</h5>
           <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
         </div>
         <div class="modal-body">
           <p>¿Seguro que deseas eliminar la vaca <strong id="nombreEliminar"></strong>?</p>
           <input type="hidden" id="delete-id">
-          <button id="btnConfirmEliminar" class="btn btn-danger w-100">Sí, eliminar</button>
+          <button id="btnConfirmEliminar" class="btn btn-verde w-100">Sí, eliminar</button>
         </div>
       </div>
     </div>
@@ -269,7 +269,7 @@
     <div class="modal-dialog modal-xl">
       <div class="modal-content">
 
-        <div class="modal-header bg-info text-white">
+        <div class="modal-header modal-header-verde-pastel">
           <h5 class="modal-title">Seleccionar Medicamento</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
@@ -282,6 +282,7 @@
 
           <!-- Tarjetas -->
           <div id="contenedorTarjetasMedicamentos" class="row g-3"></div>
+          
         </div>
 
       </div>
@@ -293,7 +294,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
 
-      <div class="modal-header bg-success text-white">
+      <div class="modal-header modal-header-verde">
         <h5 class="modal-title">Registrar Medicamento</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
@@ -309,7 +310,7 @@
         <label>Observaciones:</label>
         <textarea id="medObservaciones" class="form-control mb-3" rows="3"></textarea>
 
-        <button class="btn btn-success w-100" onclick="guardarRegistroMedicamento()">Guardar registro</button>
+        <button class="btn btn-verde w-100" onclick="guardarRegistroMedicamento()">Guardar registro</button>
       </div>
 
     </div>
@@ -317,29 +318,45 @@
 </div>
 
   <!-- 🟡 Modal Historial -->
-  <div class="modal fade" id="modalHistorial" tabindex="-1">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
+<div class="modal fade" id="modalHistorial" tabindex="-1">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content shadow-lg">
 
-        <div class="modal-header bg-secondary text-white">
-          <h5 class="modal-title">Historial de la vaca</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      <div class="modal-header modal-header-verde">
+        <h5 class="modal-title">📜 Historial de la vaca</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body">
+
+          <div class="col-md-6">
+            <div class="historial-filtros d-flex flex-wrap gap-2 mb-3 justify-content-center">
+
+              <button class="filtro-btn active" data-filtro="todo">Todos</button>
+              <button class="filtro-btn" data-filtro="med">Medicamentos</button>
+              <button class="filtro-btn" data-filtro="insumo">Insumos</button>
+              <button class="filtro-btn" data-filtro="enf">Enfermedades</button>
+
+            </div>
+
+          </div>
         </div>
 
-        <div class="modal-body">
-          <div id="historialContenido"></div>
-        </div>
+        <div id="historialContenido"></div>
 
       </div>
+
     </div>
   </div>
+</div>
+
 
   <!-- 🟢 Modal Selección de Insumo -->
 <div class="modal fade" id="modalInsumos" tabindex="-1">
   <div class="modal-dialog modal-xl">
     <div class="modal-content">
 
-      <div class="modal-header bg-success text-white">
+      <div class="modal-header modal-header-verde-pastel">
         <h5 class="modal-title">Seleccionar Insumo</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
@@ -364,7 +381,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
 
-      <div class="modal-header bg-primary text-white">
+      <div class="modal-header modal-header-verde-pastel">
         <h5 class="modal-title">Registrar Insumo</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
@@ -372,17 +389,110 @@
       <div class="modal-body">
         <p><strong>Insumo seleccionado:</strong> <span id="insumoNombreSeleccionado"></span></p>
 
-        <label>Cantidad suministrada:</label>
+        <label>Cantidad suministrada(kg):</label>
         <input type="number" step="0.01" id="insumoCantidad"
                class="form-control mb-3" placeholder="Ej: 12.5">
 
         <label>Observaciones:</label>
         <textarea id="insumoObservaciones" class="form-control mb-3" rows="3"></textarea>
 
-        <button class="btn btn-primary w-100" onclick="guardarRegistroInsumo()">Guardar registro</button>
+        <button class="btn btn-verde w-100" onclick="guardarRegistroInsumo()">Guardar registro</button>
       </div>
 
     </div>
+  </div>
+</div>
+
+<!-- 🟣 Modal Selección de Enfermedades -->
+<div class="modal fade" id="modalEnfermedades" tabindex="-1">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+
+      <div class="modal-header modal-header-limon">
+        <h5 class="modal-title">Seleccionar Enfermedad</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body">
+
+        <input type="text" id="buscarEnfermedad" class="form-control mb-3"
+               placeholder="Buscar enfermedad..." oninput="filtrarEnfermedades()">
+
+        <div id="contenedorTarjetasEnfermedades" class="row g-3"></div>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- 🟣 Modal Registrar Enfermedad -->
+<div class="modal fade" id="modalRegistrarEnfermedad" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <div class="modal-header modal-header-limon">
+        <h5 class="modal-title">Registrar Enfermedad</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body">
+
+        <p><strong>Enfermedad seleccionada:</strong> <span id="enfNombreSeleccionada"></span></p>
+
+        <label>Fecha en la que surgió:</label>
+        <input type="date" id="enfFecha" class="form-control mb-3">
+
+        <label>Notas / descripción:</label>
+        <textarea id="enfObservaciones" class="form-control mb-3" rows="3"></textarea>
+
+        <button class="btn btn-verde w-100" onclick="guardarRegistroEnfermedad()">
+          Guardar enfermedad
+        </button>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- 🟦 PANEL DE REGISTROS -->
+<div class="modal fade" id="modalPanelRegistros" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <div class="modal-header modal-header-verde">
+        <h5 class="modal-title">Seleccionar tipo de registro</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body text-center">
+
+        <button class="btn btn-verde-pastel w-100 mb-3"
+          onclick="abrirModalRegistro(window.vacaSeleccionada,'medicamento')">
+          💊 Medicamentos
+        </button>
+
+        <button class="btn btn-verde-pastel w-100 mb-3"
+          onclick="abrirModalRegistro(window.vacaSeleccionada,'insumo')">
+          🌾 Insumos
+        </button>
+
+        <button class="btn btn-verde-pastel w-100"
+          onclick="abrirModalRegistro(window.vacaSeleccionada,'enfermedad')">
+          🟥 Enfermedades
+        </button>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div id="toast" class="toast align-items-center text-white bg-success border-0 position-fixed bottom-0 end-0 m-3" role="alert">
+  <div class="d-flex">
+    <div class="toast-body" id="toastMsg"></div>
+    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
   </div>
 </div>
 
@@ -426,38 +536,26 @@
           <td>${v.data.isLactating ? "Sí" : "No"}</td>
           <td class="text-center">
           <div class="d-flex flex-wrap justify-content-center gap-2 w-100 text-center">
-            <button class="btn btn-warning btn-sm"
+            <button class="btn btn-verde-pastel btn-sm"
               data-bs-toggle="modal" data-bs-target="#editarModal"
               onclick="llenarFormulario('${v.id}','${v.data.name}','${v.data.weight}','${v.data.age}','${v.data.milkProduction ?? 0}','${v.data.isLactating}')">
               Editar
             </button>
 
-            <button class="btn btn-danger btn-sm"
+            <button class="btn btn-verde-pastel btn-sm"
               data-bs-toggle="modal" data-bs-target="#eliminarModal"
               onclick="prepararEliminar('${v.id}','${v.data.name}')">
               Eliminar
             </button>
 
-            <!-- 🔵 Nuevo botón: Insumos -->
-            <button class="btn btn-success btn-sm text-white"
-              onclick="abrirModalRegistro('${v.id}', 'insumo')">
-              Insumos
-            </button>
-
-            <!-- 🔵 Nuevo botón: Medicamentos -->
-            <button class="btn btn-info btn-sm text-white"
-              onclick="abrirModalRegistro('${v.id}', 'medicamento')">
-              Medicamentos
-            </button>
-
-            <!-- 🔵 Nuevo botón: Enfermedades -->
-            <button class="btn btn-warning btn-sm text-black"
-              onclick="abrirModalRegistro('${v.id}', 'enfermedad')">
-              Enfermedades
+            <!-- NUEVO BOTÓN -->
+            <button class="btn btn-verde-pastel btn-sm text-white"
+              onclick="abrirPanelRegistros('${v.id}')">
+              Registros
             </button>
 
             <!-- 🔵 Nuevo botón: Historial -->
-            <button class="btn btn-secondary btn-sm text-white"
+            <button class="btn btn-verde-pastel btn-sm text-black"
               onclick="verHistorial('${v.id}')">
               Historial
             </button>
@@ -584,7 +682,7 @@ async function cargarTarjetasMedicamentosEstaticas() {
               <span class="badge bg-success mb-1">${categoria}</span>
               <h5 class="card-title">${nombre}</h5>
               <p class="card-text small">${desc}</p>
-              <button class="btn btn-info w-100 text-white"
+              <button class="btn btn-verde-pastel w-100 text-white"
                 onclick="seleccionarMedicamento('${nombre}')">
                 Seleccionar
               </button>
@@ -621,7 +719,7 @@ window.guardarRegistroMedicamento = async function () {
     date: new Date().toISOString()
   });
 
-  alert("Medicamento registrado correctamente.");
+ mostrarToast("Medicamento registrado correctamente");
 
   // LIMPIAR CAMPOS 😁
   document.getElementById("medDosis").value = "";
@@ -636,19 +734,47 @@ window.guardarRegistroMedicamento = async function () {
 window.abrirModalRegistro = async function (vacaId, tipo) {
   window.vacaSeleccionada = vacaId;
 
+   // 🛑 Cerrar panel antes de abrir otro modal
+  const panel = bootstrap.Modal.getInstance(
+    document.getElementById("modalPanelRegistros")
+  );
+  if (panel) panel.hide();
+
+
+  // ==========================
+  // 🌾 INSUMOS
+  // ==========================
   if (tipo === "insumo") {
     await cargarTarjetasInsumosEstaticos();
-    bootstrap.Modal.getOrCreateInstance(document.getElementById("modalInsumos")).show();
-  }
-  if (tipo === "medicamento") {
-    await cargarTarjetasMedicamentosEstaticas();
-    bootstrap.Modal.getOrCreateInstance(document.getElementById("modalMedicamentos")).show();
+    bootstrap.Modal.getOrCreateInstance(
+      document.getElementById("modalInsumos")
+    ).show();
   }
 
+  // ==========================
+  // 💊 MEDICAMENTOS
+  // ==========================
+  if (tipo === "medicamento") {
+    await cargarTarjetasMedicamentosEstaticas();
+    bootstrap.Modal.getOrCreateInstance(
+      document.getElementById("modalMedicamentos")
+    ).show();
+  }
+
+  // ==========================
+  // 🟥 ENFERMEDADES
+  // ==========================
   if (tipo === "enfermedad") {
-    // luego te hago este igual
+    await cargarTarjetasEnfermedadesEstaticas();  
+    bootstrap.Modal.getOrCreateInstance(
+      document.getElementById("modalEnfermedades")
+    ).show();
   }
 };
+
+
+
+
 
 window.filtrarMedicamentos = function () {
   const texto = document.getElementById("buscarMedicamento").value.toLowerCase();
@@ -672,7 +798,7 @@ window.verHistorial = async function (vacaId) {
     collection(db, "users", usuarioId, "cows", vacaId, "applied_medications")
   );
 
-  html += `<h4 class="mb-3">💊 Medicamentos aplicados</h4>`;
+  html += `<div class="titulo-seccion-historial">Medicamentos aplicados</div>`;
 
   if (medsSnap.empty) {
     html += `<p class="text-muted">No hay medicamentos registrados.</p>`;
@@ -681,18 +807,25 @@ window.verHistorial = async function (vacaId) {
       const m = docu.data();
 
       html += `
-        <div class="card mb-2 shadow-sm p-3">
-          <strong>${m.name}</strong><br>
-          <small>Fecha: ${new Date(m.date).toLocaleString()}</small><br>
-          <small>Dosis: ${m.dose_administered_ml} ml</small><br>
-          <small>Notas: ${m.observations || "Sin observaciones"}</small>
+  <div class="hist-item card mb-3 p-3 border-left-success" data-type="med">
+    <h5 class="text-success"><b>💊 ${m.name}</b></h5>
+    <small><b>Fecha:</b> ${new Date(m.date).toLocaleString()}</small><br>
+    <small><b>Dosis:</b> ${m.dose_administered_ml} ml</small><br>
+    <small><b>Notas:</b> ${m.observations || "Sin observaciones"}</small>
 
-          <button class="btn btn-danger btn-sm mt-2"
-            onclick="eliminarRegistroMedicamento('${docu.id}', '${vacaId}')">
-            Eliminar
-          </button>
-        </div>
-      `;
+    <div class="mt-2 d-flex gap-2">
+      <button class="btn btn-warning btn-sm"
+        onclick="editarMedicamento('${docu.id}', '${vacaId}')">
+        Editar
+      </button>
+
+      <button class="btn btn-danger btn-sm"
+        onclick="eliminarRegistroMedicamento('${docu.id}', '${vacaId}')">
+        Eliminar
+      </button>
+    </div>
+  </div>
+`;
     });
   }
 
@@ -703,7 +836,7 @@ window.verHistorial = async function (vacaId) {
     collection(db, "users", usuarioId, "cows", vacaId, "applied_feeds")
   );
 
-  html += `<h4 class="mt-4 mb-3">🌾 Insumos aplicados</h4>`;
+  html += `<div class="titulo-seccion-historial">Insumos aplicados</div>`;
 
   if (feedsSnap.empty) {
     html += `<p class="text-muted">No hay insumos registrados.</p>`;
@@ -712,19 +845,65 @@ window.verHistorial = async function (vacaId) {
       const d = docu.data();
 
       html += `
-        <div class="card mb-2 shadow-sm p-3">
-          <strong>${d.feedName}</strong><br>
-          <small>Descripción: ${d.description}</small><br>
-          <small>Cantidad: ${d.amountGiven}</small><br>
-          <small>Fecha: ${new Date(d.date).toLocaleString()}</small><br>
-          <small>Notas: ${d.observations || "Sin observaciones"}</small>
+        <div class="hist-item card mb-3 p-3 border-left-green" data-type="insumo">
+          <h5 class="text-success"><b>🌾 ${d.feedName}</b></h5>
+          <small><b>Descripción:</b> ${d.description}</small><br>
+          <small><b>Cantidad:</b> ${d.amountGiven}</small><br>
+          <small><b>Fecha:</b> ${new Date(d.date).toLocaleString()}</small><br>
+          <small><b>Notas:</b> ${d.observations || "Sin observaciones"}</small>
 
-          <button class="btn btn-danger btn-sm mt-2"
-            onclick="eliminarRegistroInsumo('${docu.id}', '${vacaId}')">
-            Eliminar
-          </button>
+          <div class="mt-2 d-flex gap-2">
+            <button class="btn btn-warning btn-sm"
+              onclick="editarInsumo('${docu.id}', '${vacaId}')">
+              Editar
+            </button>
+
+            <button class="btn btn-danger btn-sm"
+              onclick="eliminarRegistroInsumo('${docu.id}', '${vacaId}')">
+              Eliminar
+            </button>
+          </div>
         </div>
       `;
+    });
+  }
+
+  // ===============================
+  // 🟥 ENFERMEDADES
+  // ===============================
+  const disSnap = await getDocs(
+    collection(db, "users", usuarioId, "cows", vacaId, "diseases_history")
+  );
+
+  html += `<div class="titulo-seccion-historial">Enfermedades registradas</div>`;
+
+  if (disSnap.empty) {
+    html += `<p class="text-muted">No hay enfermedades registradas.</p>`;
+  } else {
+    disSnap.forEach(docu => {
+      const d = docu.data();
+
+      html += `
+  <div class="hist-item card mb-3 p-3 border-left-danger" data-type="enf">
+    <h5 class="text-danger"><b>🟥 ${d.name}</b></h5>
+    <small><b>Gravedad:</b> ${d.severity}</small><br>
+    <small><b>Fecha inicio:</b> ${new Date(d.date).toLocaleDateString()}</small><br>
+    <small><b>Registrado el:</b> ${new Date(d.registeredAt).toLocaleString()}</small><br>
+    <small><b>Notas:</b> ${d.notes || "Sin observaciones"}</small>
+
+    <div class="mt-2 d-flex gap-2">
+      <button class="btn btn-warning btn-sm"
+        onclick="editarEnfermedad('${docu.id}', '${vacaId}')">
+        Editar
+      </button>
+
+      <button class="btn btn-danger btn-sm"
+        onclick="eliminarRegistroEnfermedad('${docu.id}', '${vacaId}')">
+        Eliminar
+      </button>
+    </div>
+  </div>
+`;
     });
   }
 
@@ -733,12 +912,35 @@ window.verHistorial = async function (vacaId) {
 
   document.querySelectorAll('.modal-backdrop').forEach(b => b.remove());
 
-  // Mostrar modal sin duplicarlo
   const modalElement = document.getElementById("modalHistorial");
   const modal = bootstrap.Modal.getOrCreateInstance(modalElement);
   modal.show();
-
 };
+
+
+
+// ⭐ FILTRO POR BOTONES
+document.querySelectorAll(".filtro-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const filtro = btn.getAttribute("data-filtro");
+
+    // activar visualmente el botón
+    document.querySelectorAll(".filtro-btn").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+
+    // Aplicar filtro
+    document.querySelectorAll("#historialContenido .hist-item").forEach(card => {
+      const tipo = card.getAttribute("data-type");
+
+      card.style.display = (filtro === "todo" || tipo === filtro)
+        ? ""
+        : "none";
+    });
+  });
+});
+
+
+
 
   window.seleccionarMedicamento = function(nombre) {
 
@@ -810,7 +1012,7 @@ async function cargarTarjetasInsumosEstaticos() {
               <h5 class="card-title">${nombre}</h5>
               <p class="card-text small">${descripcion}</p>
 
-              <button class="btn btn-success w-100 text-white"
+              <button class="btn btn-verde-pastel w-100 text-white"
                 onclick="seleccionarInsumo('${nombre}', \`${descripcion}\`)">
                 Seleccionar
               </button>
@@ -842,6 +1044,14 @@ window.seleccionarInsumo = function(nombre, descripcion) {
   window.modalSeleccionInsumo = modalSel;
 };
 
+document.getElementById("modalRegistrarInsumo").addEventListener("hidden.bs.modal", function () {
+  if (window.modalSeleccionInsumo && !window.cerradoPorGuardar) {
+    window.modalSeleccionInsumo.show();
+  }
+  window.cerradoPorGuardar = false;
+});
+
+
 window.guardarRegistroInsumo = async function () {
 
   const vacaId = window.vacaSeleccionada;
@@ -856,7 +1066,7 @@ window.guardarRegistroInsumo = async function () {
     date: new Date().toISOString()
   });
 
-  alert("Insumo registrado correctamente.");
+  mostrarToast("Insumo registrado correctamente");
 
   document.getElementById("insumoCantidad").value = "";
   document.getElementById("insumoObservaciones").value = "";
@@ -877,6 +1087,160 @@ window.filtrarInsumos = function () {
 window.eliminarRegistroInsumo = async function(id, vacaId) {
   await deleteDoc(doc(db, "users", usuarioId, "cows", vacaId, "applied_feeds", id));
   verHistorial(vacaId);
+};
+
+// Enfermedades 
+async function cargarTarjetasEnfermedadesEstaticas() {
+  try {
+    const resp = await fetch("enfermedades.html");
+
+    if (!resp.ok) {
+      console.error("No se encontró enfermedades.html");
+      return;
+    }
+
+    const htmlTexto = await resp.text();
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(htmlTexto, "text/html");
+
+    const tarjetas = doc.querySelectorAll(".enfermedad-card");
+
+    let html = "";
+
+    tarjetas.forEach(card => {
+      const nombre = card.querySelector(".card-title-custom")?.textContent.trim() || "Sin nombre";
+      const subtitulo = card.querySelector(".card-subtitle")?.textContent.trim() || "";
+      const gravedad = card.querySelector(".severity-badge")?.textContent.trim() || "";
+      const image = card.querySelector(".card-image")?.getAttribute("src") || "";
+
+      html += `
+        <div class="col-md-6">
+          <div class="card shadow-sm h-100">
+
+            <img src="${image}" class="card-img-top" style="height:200px; object-fit:cover;">
+
+            <div class="card-body">
+              <span class="badge bg-success mb-1">${gravedad}</span>
+
+              <h5 class="card-title">${nombre}</h5>
+              <p class="small">${subtitulo}</p>
+
+              <button class="btn btn-verde-pastel w-100"
+                onclick='seleccionarEnfermedad(${JSON.stringify({
+                  name: nombre,
+                  severity: gravedad,
+                  image: image
+                })})'>
+                Seleccionar
+              </button>
+
+            </div>
+          </div>
+        </div>
+      `;
+    });
+
+    document.getElementById("contenedorTarjetasEnfermedades").innerHTML = html;
+
+  } catch (error) {
+    console.error("Error cargando enfermedades:", error);
+  }
+}
+
+window.seleccionarEnfermedad = function(data) {
+
+  window.enfermedadSeleccionada = data;
+
+  document.getElementById("enfNombreSeleccionada").innerText = data.name;
+
+  const modalSel = bootstrap.Modal.getInstance(document.getElementById("modalEnfermedades"));
+  modalSel.hide();
+
+  bootstrap.Modal.getOrCreateInstance(document.getElementById("modalRegistrarEnfermedad")).show();
+
+  window.modalSeleccionEnfermedad = modalSel;
+};
+
+document.getElementById("modalRegistrarEnfermedad").addEventListener("hidden.bs.modal", function () {
+  if (window.modalSeleccionEnfermedad && !window.cerradoPorGuardar) {
+    window.modalSeleccionEnfermedad.show();
+  }
+  window.cerradoPorGuardar = false;
+});
+
+
+window.guardarRegistroEnfermedad = async function () {
+
+  const vacaId = window.vacaSeleccionada;
+  const fecha = document.getElementById("enfFecha").value;
+  const notas = document.getElementById("enfObservaciones").value || "";
+
+  if (!fecha) {
+    alert("Debes seleccionar la fecha en la que surgió la enfermedad.");
+    return;
+  }
+
+  await addDoc(
+    collection(db, "users", usuarioId, "cows", vacaId, "diseases_history"),
+    {
+      ...window.enfermedadSeleccionada,
+      notes: notas,
+      date: new Date(fecha).toISOString(),
+      registeredAt: new Date().toISOString()
+    }
+  );
+
+  mostrarToast("Enfermedad registrado correctamente");
+
+  document.getElementById("enfFecha").value = "";
+  document.getElementById("enfObservaciones").value = "";
+
+  bootstrap.Modal.getInstance(document.getElementById("modalRegistrarEnfermedad")).hide();
+  bootstrap.Modal.getInstance(document.getElementById("modalEnfermedades")).hide();
+};
+
+window.filtrarEnfermedades = function () {
+  const texto = document.getElementById("buscarEnfermedad").value.toLowerCase();
+
+  document.querySelectorAll("#contenedorTarjetasEnfermedades .card").forEach(card => {
+    const titulo = card.querySelector(".card-title").innerText.toLowerCase();
+    card.parentElement.style.display = titulo.includes(texto) ? "" : "none";
+  });
+};
+
+window.eliminarRegistroEnfermedad = async function (id, vacaId) {
+  await deleteDoc(
+    doc(db, "users", usuarioId, "cows", vacaId, "diseases_history", id)
+  );
+  verHistorial(vacaId);
+};
+
+window.abrirPanelRegistros = function(vacaId) {
+  window.vacaSeleccionada = vacaId;
+
+  const modal = new bootstrap.Modal(
+    document.getElementById("modalPanelRegistros")
+  );
+  modal.show();
+};
+
+//Alertas
+
+window.mostrarToast = function (mensaje, tipo = "success") {
+  const toastEl = document.getElementById("toast");
+  const toastMsg = document.getElementById("toastMsg");
+
+  toastMsg.textContent = mensaje;
+
+  toastEl.classList.remove("bg-success", "bg-danger", "bg-warning");
+  toastEl.classList.add(
+    tipo === "success" ? "bg-success" :
+    tipo === "danger" ? "bg-danger" :
+    "bg-warning"
+  );
+
+  const bsToast = new bootstrap.Toast(toastEl);
+  bsToast.show();
 };
 
 
