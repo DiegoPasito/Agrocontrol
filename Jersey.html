@@ -497,6 +497,101 @@
 </div>
 
 
+<!-- Modales para editar -->
+
+<div class="modal fade" id="modalEditarMedicamento" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content border-0 shadow">
+
+      <div class="modal-header modal-header-verde-pastel" >
+        <h5 class="modal-title">✏️ Editar Medicamento</h5>
+        <button class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body">
+
+        <input type="hidden" id="editMedId">
+
+        <label class="fw-bold">Nombre:</label>
+        <input type="text" id="editMedNombre" class="form-control mb-3" disabled>
+
+        <label class="fw-bold">Dosis administrada (ml)</label>
+        <input type="number" id="editMedDosis" class="form-control mb-3">
+
+        <label class="fw-bold">Notas</label>
+        <textarea id="editMedNotas" class="form-control mb-3" rows="3"></textarea>
+
+        <button class="btn btn-verde-pastel w-100" onclick="guardarEdicionMedicamento()">Guardar cambios</button>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modalEditarInsumo" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content border-0 shadow">
+
+      <div class="modal-header modal-header-verde-pastel">
+        <h5 class="modal-title">✏️ Editar Insumo</h5>
+        <button class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body">
+
+        <input type="hidden" id="editInsumoId">
+
+        <label class="fw-bold">Nombre:</label>
+        <input type="text" id="editInsumoNombre" class="form-control mb-3" disabled>
+
+        <label class="fw-bold">Cantidad (kg):</label>
+        <input type="number" id="editInsumoCantidad" class="form-control mb-3">
+
+        <label class="fw-bold">Notas</label>
+        <textarea id="editInsumoNotas" class="form-control mb-3" rows="3"></textarea>
+
+        <button class="btn btn-verde-pastel w-100" onclick="guardarEdicionInsumo()">Guardar cambios</button>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modalEditarEnfermedad" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content border-0 shadow">
+
+      <div class="modal-header" style="background:#e86a6a; color:white;">
+        <h5 class="modal-title">✏️ Editar Enfermedad</h5>
+        <button class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body">
+
+        <input type="hidden" id="editEnfId">
+
+        <label class="fw-bold">Nombre:</label>
+        <input type="text" id="editEnfNombre" class="form-control mb-3" disabled>
+
+        <label class="fw-bold">Fecha en que surgió:</label>
+        <input type="date" id="editEnfFecha" class="form-control mb-3">
+
+        <label class="fw-bold">Notas:</label>
+        <textarea id="editEnfNotas" class="form-control mb-3" rows="3"></textarea>
+
+        <button class="btn btn-verde-pastel w-100" onclick="guardarEdicionEnfermedad()">Guardar cambios</button>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+
+
 
   <!-- Firebase y Script principal -->
   <script type="module">
@@ -504,7 +599,7 @@
     import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js";
     import {
       getFirestore, collection, query, where, getDocs,
-      doc, deleteDoc, updateDoc, addDoc
+      doc, deleteDoc, updateDoc, addDoc, getDoc 
     } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-firestore.js";
 
     const firebaseConfig = {
@@ -809,8 +904,8 @@ window.verHistorial = async function (vacaId) {
       html += `
   <div class="hist-item card mb-3 p-3 border-left-success" data-type="med">
     <h5 class="text-success"><b>💊 ${m.name}</b></h5>
-    <small><b>Fecha:</b> ${new Date(m.date).toLocaleString()}</small><br>
-    <small><b>Dosis:</b> ${m.dose_administered_ml} ml</small><br>
+    <small><b>Fecha:</b> ${new Date(m.date).toLocaleString()}</small>
+    <small><b>Dosis:</b> ${m.dose_administered_ml} ml</small>
     <small><b>Notas:</b> ${m.observations || "Sin observaciones"}</small>
 
     <div class="mt-2 d-flex gap-2">
@@ -819,7 +914,7 @@ window.verHistorial = async function (vacaId) {
         Editar
       </button>
 
-      <button class="btn btn-danger btn-sm"
+      <button class="btn btn-verde btn-sm"
         onclick="eliminarRegistroMedicamento('${docu.id}', '${vacaId}')">
         Eliminar
       </button>
@@ -847,9 +942,9 @@ window.verHistorial = async function (vacaId) {
       html += `
         <div class="hist-item card mb-3 p-3 border-left-green" data-type="insumo">
           <h5 class="text-success"><b>🌾 ${d.feedName}</b></h5>
-          <small><b>Descripción:</b> ${d.description}</small><br>
-          <small><b>Cantidad:</b> ${d.amountGiven}</small><br>
-          <small><b>Fecha:</b> ${new Date(d.date).toLocaleString()}</small><br>
+          <small><b>Descripción:</b> ${d.description}</small>
+          <small><b>Cantidad:</b> ${d.amountGiven}</small>
+          <small><b>Fecha:</b> ${new Date(d.date).toLocaleString()}</small>
           <small><b>Notas:</b> ${d.observations || "Sin observaciones"}</small>
 
           <div class="mt-2 d-flex gap-2">
@@ -858,7 +953,7 @@ window.verHistorial = async function (vacaId) {
               Editar
             </button>
 
-            <button class="btn btn-danger btn-sm"
+            <button class="btn btn-verde btn-sm"
               onclick="eliminarRegistroInsumo('${docu.id}', '${vacaId}')">
               Eliminar
             </button>
@@ -886,9 +981,9 @@ window.verHistorial = async function (vacaId) {
       html += `
   <div class="hist-item card mb-3 p-3 border-left-danger" data-type="enf">
     <h5 class="text-danger"><b>🟥 ${d.name}</b></h5>
-    <small><b>Gravedad:</b> ${d.severity}</small><br>
-    <small><b>Fecha inicio:</b> ${new Date(d.date).toLocaleDateString()}</small><br>
-    <small><b>Registrado el:</b> ${new Date(d.registeredAt).toLocaleString()}</small><br>
+    <small><b>Gravedad:</b> ${d.severity}</small>
+    <small><b>Fecha inicio:</b> ${new Date(d.date).toLocaleDateString()}</small>
+    <small><b>Registrado el:</b> ${new Date(d.registeredAt).toLocaleString()}</small>
     <small><b>Notas:</b> ${d.notes || "Sin observaciones"}</small>
 
     <div class="mt-2 d-flex gap-2">
@@ -897,7 +992,7 @@ window.verHistorial = async function (vacaId) {
         Editar
       </button>
 
-      <button class="btn btn-danger btn-sm"
+      <button class="btn btn-verde btn-sm"
         onclick="eliminarRegistroEnfermedad('${docu.id}', '${vacaId}')">
         Eliminar
       </button>
@@ -917,29 +1012,28 @@ window.verHistorial = async function (vacaId) {
   modal.show();
 };
 
+// 🔥 Activar botones cuando se abra el modal de historial
+document.getElementById("modalHistorial").addEventListener("shown.bs.modal", () => {
 
+  document.querySelectorAll(".filtro-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
 
-// ⭐ FILTRO POR BOTONES
-document.querySelectorAll(".filtro-btn").forEach(btn => {
-  btn.addEventListener("click", () => {
-    const filtro = btn.getAttribute("data-filtro");
+      const filtro = btn.getAttribute("data-filtro");
 
-    // activar visualmente el botón
-    document.querySelectorAll(".filtro-btn").forEach(b => b.classList.remove("active"));
-    btn.classList.add("active");
+      // activar visualmente el botón
+      document.querySelectorAll(".filtro-btn").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
 
-    // Aplicar filtro
-    document.querySelectorAll("#historialContenido .hist-item").forEach(card => {
-      const tipo = card.getAttribute("data-type");
+      // aplicar filtro
+      document.querySelectorAll("#historialContenido .hist-item").forEach(card => {
+        const tipo = card.getAttribute("data-type");
+        card.style.display = (filtro === "todo" || tipo === filtro) ? "" : "none";
+      });
 
-      card.style.display = (filtro === "todo" || tipo === filtro)
-        ? ""
-        : "none";
     });
   });
+
 });
-
-
 
 
   window.seleccionarMedicamento = function(nombre) {
@@ -1053,6 +1147,8 @@ document.getElementById("modalRegistrarInsumo").addEventListener("hidden.bs.moda
 
 
 window.guardarRegistroInsumo = async function () {
+
+  window.cerradoPorGuardar = true;
 
   const vacaId = window.vacaSeleccionada;
   const cantidad = parseFloat(document.getElementById("insumoCantidad").value) || 0;
@@ -1171,6 +1267,8 @@ document.getElementById("modalRegistrarEnfermedad").addEventListener("hidden.bs.
 
 window.guardarRegistroEnfermedad = async function () {
 
+  window.cerradoPorGuardar = true;
+
   const vacaId = window.vacaSeleccionada;
   const fecha = document.getElementById("enfFecha").value;
   const notas = document.getElementById("enfObservaciones").value || "";
@@ -1243,7 +1341,100 @@ window.mostrarToast = function (mensaje, tipo = "success") {
   bsToast.show();
 };
 
+//Modales para editar 
 
+window.editarMedicamento = async function(id, vacaId) {
+
+  window.vacaSeleccionada = vacaId;
+
+  const ref = doc(db, "users", usuarioId, "cows", vacaId, "applied_medications", id);
+  const snap = await getDoc(ref);
+
+  const d = snap.data();
+
+  document.getElementById("editMedId").value = id;
+  document.getElementById("editMedNombre").value = d.name;
+  document.getElementById("editMedDosis").value = d.dose_administered_ml;
+  document.getElementById("editMedNotas").value = d.observations;
+
+  new bootstrap.Modal(document.getElementById("modalEditarMedicamento")).show();
+};
+
+window.guardarEdicionMedicamento = async function () {
+
+  const id = document.getElementById("editMedId").value;
+
+  await updateDoc(doc(db, "users", usuarioId, "cows", window.vacaSeleccionada, "applied_medications", id), {
+    dose_administered_ml: parseFloat(document.getElementById("editMedDosis").value),
+    observations: document.getElementById("editMedNotas").value
+  });
+
+  mostrarToast("Medicamento actualizado");
+
+  bootstrap.Modal.getInstance(document.getElementById("modalEditarMedicamento")).hide();
+  verHistorial(window.vacaSeleccionada);
+};
+
+window.editarInsumo = async function(id, vacaId) {
+  window.vacaSeleccionada = vacaId;
+
+  const ref = doc(db, "users", usuarioId, "cows", vacaId, "applied_feeds", id);
+  const snap = await getDoc(ref);
+  const d = snap.data();
+
+  document.getElementById("editInsumoId").value = id;
+  document.getElementById("editInsumoNombre").value = d.feedName;
+  document.getElementById("editInsumoCantidad").value = d.amountGiven;
+  document.getElementById("editInsumoNotas").value = d.observations;
+
+  new bootstrap.Modal(document.getElementById("modalEditarInsumo")).show();
+};
+
+window.guardarEdicionInsumo = async function () {
+
+  const id = document.getElementById("editInsumoId").value;
+
+  await updateDoc(doc(db, "users", usuarioId, "cows", window.vacaSeleccionada, "applied_feeds", id), {
+    amountGiven: parseFloat(document.getElementById("editInsumoCantidad").value),
+    observations: document.getElementById("editInsumoNotas").value
+  });
+
+  mostrarToast("Insumo actualizado");
+
+  bootstrap.Modal.getInstance(document.getElementById("modalEditarInsumo")).hide();
+  verHistorial(window.vacaSeleccionada);
+};
+
+window.editarEnfermedad = async function(id, vacaId) {
+  window.vacaSeleccionada = vacaId;
+
+  const ref = doc(db, "users", usuarioId, "cows", vacaId, "diseases_history", id);
+  const snap = await getDoc(ref);
+
+  const d = snap.data();
+
+  document.getElementById("editEnfId").value = id;
+  document.getElementById("editEnfNombre").value = d.name;
+  document.getElementById("editEnfFecha").value = d.date.split("T")[0];
+  document.getElementById("editEnfNotas").value = d.notes;
+
+  new bootstrap.Modal(document.getElementById("modalEditarEnfermedad")).show();
+};
+
+window.guardarEdicionEnfermedad = async function () {
+
+  const id = document.getElementById("editEnfId").value;
+
+  await updateDoc(doc(db, "users", usuarioId, "cows", window.vacaSeleccionada, "diseases_history", id), {
+    notes: document.getElementById("editEnfNotas").value,
+    date: new Date(document.getElementById("editEnfFecha").value).toISOString()
+  });
+
+  mostrarToast("Enfermedad actualizada");
+
+  bootstrap.Modal.getInstance(document.getElementById("modalEditarEnfermedad")).hide();
+  verHistorial(window.vacaSeleccionada);
+};
 
 
   </script>
