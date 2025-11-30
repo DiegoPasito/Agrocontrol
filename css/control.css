@@ -95,7 +95,7 @@ body {
         }
 
         /* Estilos mejorados para el contenido */
-        main {
+ main {
             padding: 40px 20px;
         }
 
@@ -140,6 +140,16 @@ body {
             font-weight: 600;
             margin-bottom: 8px;
             font-size: 0.95rem;
+        }
+
+        .section-subtitle {
+            color: #1e7e34;
+            font-weight: 700;
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            text-align: center;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #c8f0cd;
         }
 
         .form-control, .form-select {
@@ -253,7 +263,45 @@ body {
             margin-bottom: 20px;
         }
 
-        /* Animación de entrada */
+        .lote-item {
+            background: linear-gradient(135deg, #f0fdf1, #e8f8ea);
+            border: 2px solid #c8f0cd;
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .lote-item:hover {
+            background: linear-gradient(135deg, #e8f8ea, #ddf5df);
+            border-color: #36ac42;
+            transform: translateX(5px);
+        }
+
+        .lote-item.selected {
+            background: linear-gradient(135deg, #36ac42, #2b8c35);
+            border-color: #1e7e34;
+            color: white;
+        }
+
+        .lote-item h5 {
+            margin-bottom: 5px;
+            color: #1e7e34;
+            font-size: 1rem;
+        }
+
+        .lote-item.selected h5,
+        .lote-item.selected p {
+            color: white;
+        }
+
+        .lote-item p {
+            margin: 0;
+            color: #2b8c35;
+            font-size: 0.9rem;
+        }
+
         .form-card {
             animation: fadeInUp 0.6s ease;
         }
@@ -269,7 +317,16 @@ body {
             }
         }
 
-        /* Responsive */
+        .hidden {
+            display: none;
+        }
+
+        .divider {
+            height: 2px;
+            background: linear-gradient(to right, transparent, #c8f0cd, transparent);
+            margin: 30px 0;
+        }
+
         @media (max-width: 768px) {
             .page-title {
                 font-size: 2rem;
@@ -285,7 +342,6 @@ body {
             }
         }
 
-        /* Scroll personalizado */
         ::-webkit-scrollbar {
             width: 10px;
         }

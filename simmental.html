@@ -236,18 +236,18 @@
     </div>
   </div>
 
-  <!-- Modal Eliminar -->
+<!-- Modal Eliminar -->
   <div class="modal fade" id="eliminarModal" tabindex="-1" aria-labelledby="eliminarLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
-        <div class="modal-header bg-danger text-white">
+        <div class="modal-header modal-header-verde text-white">
           <h5 class="modal-title" id="eliminarLabel">Eliminar Vaca</h5>
           <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
         </div>
         <div class="modal-body">
           <p>¿Seguro que deseas eliminar la vaca <strong id="nombreEliminar"></strong>?</p>
           <input type="hidden" id="delete-id">
-          <button id="btnConfirmEliminar" class="btn btn-danger w-100">Sí, eliminar</button>
+          <button id="btnConfirmEliminar" class="btn btn-verde w-100">Sí, eliminar</button>
         </div>
       </div>
     </div>
@@ -256,19 +256,327 @@
   <!-- Botón flotante -->
   <button id="btn-flotante" onclick="scrollToTabla()">🐄 Tus vacas registradas</button>
 
-  <!-- Modal Insumos -->
-<div class="modal fade" id="insumosModal" tabindex="-1" aria-labelledby="insumosLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-lg">
+<!-- 🟢 Modal Selección de Medicamento -->
+  <div class="modal fade" id="modalMedicamentos" tabindex="-1">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+
+        <div class="modal-header modal-header-verde-pastel">
+          <h5 class="modal-title">Seleccionar Medicamento</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+
+        <div class="modal-body">
+
+          <!-- 🔍 Buscador -->
+          <input type="text" id="buscarMedicamento" class="form-control mb-3"
+                placeholder="Buscar medicamento..." oninput="filtrarMedicamentos()">
+
+          <!-- Tarjetas -->
+          <div id="contenedorTarjetasMedicamentos" class="row g-3"></div>
+          
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- 🟢 Modal para completar registro -->
+<div class="modal fade" id="modalRegistrarMed" tabindex="-1">
+  <div class="modal-dialog">
     <div class="modal-content">
-      <div class="modal-header bg-success text-white">
-        <h5 class="modal-title" id="insumosLabel">Insumos Recomendados</h5>
-        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+
+      <div class="modal-header modal-header-verde">
+        <h5 class="modal-title">Registrar Medicamento</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
+
       <div class="modal-body">
-        <h6 id="vacaSeleccionada" class="text-center mb-3"></h6>
-        <div id="listaInsumos" class="d-flex flex-wrap justify-content-center gap-2"></div>
-        <div id="resultadoInsumo" class="mt-4 text-center"></div>
+        <p><strong>Medicamento seleccionado:</strong> <span id="medNombreSeleccionado"></span></p>
+
+        <label>Dosis administrada (ml):</label>
+        <input type="number" id="medDosis" class="form-control mb-3"
+        placeholder="Ej: 30.5" step="0.01">
+
+
+        <label>Observaciones:</label>
+        <textarea id="medObservaciones" class="form-control mb-3" rows="3"></textarea>
+
+        <button class="btn btn-verde w-100" onclick="guardarRegistroMedicamento()">Guardar registro</button>
       </div>
+
+    </div>
+  </div>
+</div>
+
+  <!-- 🟡 Modal Historial -->
+<div class="modal fade" id="modalHistorial" tabindex="-1">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content shadow-lg">
+
+      <div class="modal-header modal-header-verde">
+        <h5 class="modal-title">📜 Historial de la vaca</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body">
+
+          <div class="col-md-6">
+            <div class="historial-filtros d-flex flex-wrap gap-2 mb-3 justify-content-center">
+
+              <button class="filtro-btn active" data-filtro="todo">Todos</button>
+              <button class="filtro-btn" data-filtro="med">Medicamentos</button>
+              <button class="filtro-btn" data-filtro="insumo">Insumos</button>
+              <button class="filtro-btn" data-filtro="enf">Enfermedades</button>
+
+            </div>
+
+          </div>
+        </div>
+
+        <div id="historialContenido"></div>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+  <!-- 🟢 Modal Selección de Insumo -->
+<div class="modal fade" id="modalInsumos" tabindex="-1">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+
+      <div class="modal-header modal-header-verde-pastel">
+        <h5 class="modal-title">Seleccionar Insumo</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body">
+
+        <!-- 🔍 Buscador -->
+        <input type="text" id="buscarInsumo" class="form-control mb-3"
+               placeholder="Buscar insumo..." oninput="filtrarInsumos()">
+
+        <!-- Tarjetas -->
+        <div id="contenedorTarjetasInsumos" class="row g-3"></div>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- 🟢 Modal Registrar Insumo -->
+<div class="modal fade" id="modalRegistrarInsumo" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <div class="modal-header modal-header-verde">
+        <h5 class="modal-title">Registrar Insumo</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body">
+        <p><strong>Insumo seleccionado:</strong> <span id="insumoNombreSeleccionado"></span></p>
+
+        <label>Cantidad suministrada(kg):</label>
+        <input type="number" step="0.01" id="insumoCantidad"
+               class="form-control mb-3" placeholder="Ej: 12.5">
+
+        <label>Observaciones:</label>
+        <textarea id="insumoObservaciones" class="form-control mb-3" rows="3"></textarea>
+
+        <button class="btn btn-verde w-100" onclick="guardarRegistroInsumo()">Guardar registro</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- 🟣 Modal Selección de Enfermedades -->
+<div class="modal fade" id="modalEnfermedades" tabindex="-1">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+
+      <div class="modal-header modal-header-limon">
+        <h5 class="modal-title">Seleccionar Enfermedad</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body">
+
+        <input type="text" id="buscarEnfermedad" class="form-control mb-3"
+               placeholder="Buscar enfermedad..." oninput="filtrarEnfermedades()">
+
+        <div id="contenedorTarjetasEnfermedades" class="row g-3"></div>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- 🟣 Modal Registrar Enfermedad -->
+<div class="modal fade" id="modalRegistrarEnfermedad" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <div class="modal-header modal-header-verde">
+        <h5 class="modal-title">Registrar Enfermedad</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body">
+
+        <p><strong>Enfermedad seleccionada:</strong> <span id="enfNombreSeleccionada"></span></p>
+
+        <label>Fecha en la que surgió:</label>
+        <input type="date" id="enfFecha" class="form-control mb-3">
+
+        <label>Notas / descripción:</label>
+        <textarea id="enfObservaciones" class="form-control mb-3" rows="3"></textarea>
+
+        <button class="btn btn-verde w-100" onclick="guardarRegistroEnfermedad()">
+          Guardar enfermedad
+        </button>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- 🟦 PANEL DE REGISTROS -->
+<div class="modal fade" id="modalPanelRegistros" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <div class="modal-header modal-header-verde">
+        <h5 class="modal-title">Seleccionar tipo de registro</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body text-center">
+
+        <button class="btn btn-verde-pastel w-100 mb-3"
+          onclick="abrirModalRegistro(window.vacaSeleccionada,'medicamento')">
+          💊 Medicamentos
+        </button>
+
+        <button class="btn btn-verde-pastel w-100 mb-3"
+          onclick="abrirModalRegistro(window.vacaSeleccionada,'insumo')">
+          🌾 Insumos
+        </button>
+
+        <button class="btn btn-verde-pastel w-100"
+          onclick="abrirModalRegistro(window.vacaSeleccionada,'enfermedad')">
+          🟥 Enfermedades
+        </button>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div id="toast" class="toast align-items-center text-white bg-success border-0 position-fixed bottom-0 end-0 m-3" role="alert">
+  <div class="d-flex">
+    <div class="toast-body" id="toastMsg"></div>
+    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+  </div>
+</div>
+
+
+<!-- Modales para editar -->
+
+<div class="modal fade" id="modalEditarMedicamento" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content border-0 shadow">
+
+      <div class="modal-header modal-header-verde-pastel" >
+        <h5 class="modal-title">✏️ Editar Medicamento</h5>
+        <button class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body">
+
+        <input type="hidden" id="editMedId">
+
+        <label class="fw-bold">Nombre:</label>
+        <input type="text" id="editMedNombre" class="form-control mb-3" disabled>
+
+        <label class="fw-bold">Dosis administrada (ml)</label>
+        <input type="number" id="editMedDosis" class="form-control mb-3">
+
+        <label class="fw-bold">Notas</label>
+        <textarea id="editMedNotas" class="form-control mb-3" rows="3"></textarea>
+
+        <button class="btn btn-verde-pastel w-100" onclick="guardarEdicionMedicamento()">Guardar cambios</button>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modalEditarInsumo" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content border-0 shadow">
+
+      <div class="modal-header modal-header-verde-pastel">
+        <h5 class="modal-title">✏️ Editar Insumo</h5>
+        <button class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body">
+
+        <input type="hidden" id="editInsumoId">
+
+        <label class="fw-bold">Nombre:</label>
+        <input type="text" id="editInsumoNombre" class="form-control mb-3" disabled>
+
+        <label class="fw-bold">Cantidad (kg):</label>
+        <input type="number" id="editInsumoCantidad" class="form-control mb-3">
+
+        <label class="fw-bold">Notas</label>
+        <textarea id="editInsumoNotas" class="form-control mb-3" rows="3"></textarea>
+
+        <button class="btn btn-verde-pastel w-100" onclick="guardarEdicionInsumo()">Guardar cambios</button>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modalEditarEnfermedad" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content border-0 shadow">
+
+      <div class="modal-header" style="background:#e86a6a; color:white;">
+        <h5 class="modal-title">✏️ Editar Enfermedad</h5>
+        <button class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body">
+
+        <input type="hidden" id="editEnfId">
+
+        <label class="fw-bold">Nombre:</label>
+        <input type="text" id="editEnfNombre" class="form-control mb-3" disabled>
+
+        <label class="fw-bold">Fecha en que surgió:</label>
+        <input type="date" id="editEnfFecha" class="form-control mb-3">
+
+        <label class="fw-bold">Notas:</label>
+        <textarea id="editEnfNotas" class="form-control mb-3" rows="3"></textarea>
+
+        <button class="btn btn-verde-pastel w-100" onclick="guardarEdicionEnfermedad()">Guardar cambios</button>
+
+      </div>
+
     </div>
   </div>
 </div>
@@ -277,7 +585,7 @@
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-app.js";
     import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js";
-    import { getFirestore, collection, query, where, getDocs, doc, deleteDoc, updateDoc } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-firestore.js";
+    import { getFirestore, collection, query, where, getDocs, doc, deleteDoc, updateDoc, addDoc, getDoc } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-firestore.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyAzonIFbhlOnnIs9xG9Lb4uBJHLrhCi3qU",
@@ -306,24 +614,28 @@
           <td>${v.data.isLactating ? "Sí" : "No"}</td>
           <td class="text-center">
           <div class="d-flex flex-wrap justify-content-center gap-2 w-100 text-center">
-            <button class="btn btn-warning btn-sm"
+            <button class="btn btn-verde-pastel btn-sm"
               data-bs-toggle="modal" data-bs-target="#editarModal"
               onclick="llenarFormulario('${v.id}','${v.data.name}','${v.data.weight}','${v.data.age}','${v.data.milkProduction ?? 0}','${v.data.isLactating}')">
               Editar
             </button>
 
-            <button class="btn btn-danger btn-sm"
+            <button class="btn btn-verde-pastel btn-sm"
               data-bs-toggle="modal" data-bs-target="#eliminarModal"
               onclick="prepararEliminar('${v.id}','${v.data.name}')">
               Eliminar
             </button>
 
-            <button class="btn btn-info btn-sm text-white" onclick="mostrarMedicamentos('${v.data.name}')">
-              Medicamentos
+            <!-- NUEVO BOTÓN -->
+            <button class="btn btn-verde-pastel btn-sm text-white"
+              onclick="abrirPanelRegistros('${v.id}')">
+              Registros
             </button>
 
-            <button class="btn btn-success btn-sm text-white" onclick="mostrarInsumos('${v.data.name}')">
-              Insumos
+            <!-- 🔵 Nuevo botón: Historial -->
+            <button class="btn btn-verde-pastel btn-sm text-black"
+              onclick="verHistorial('${v.id}')">
+              Historial
             </button>
           </div>
         </td>
@@ -334,14 +646,14 @@
           <th>Nombre</th><th>Peso</th><th>Edad</th><th>Leche (L/día)</th><th>Lactando</th><th>Acciones</th>
         </tr></thead><tbody>${filas}</tbody></table>`;
     }
-
+        // 🟢 Cargar vacas Simmental
     async function cargarVacas(userId) {
       const q = query(collection(db, "users", userId, "cows"), where("breed", "==", "Simmental"));
       const querySnap = await getDocs(q);
       const vacas = querySnap.docs.map(docSnap => ({ id: docSnap.id, data: docSnap.data() }));
       document.getElementById("tabla-simmental").innerHTML = crearTabla(vacas);
     }
-
+     // 🟢 Pasar datos al modal de edición
     window.llenarFormulario = function(id, nombre, peso, edad, leche, lactando) {
       document.getElementById("edit-id").value = id;
       document.getElementById("edit-nombre").value = nombre;
@@ -350,7 +662,7 @@
       document.getElementById("edit-leche").value = leche;
       document.getElementById("edit-lactando").value = lactando;
     };
-
+    // 🟢 Guardar cambios
     document.getElementById("formEditar").addEventListener("submit", async (e) => {
       e.preventDefault();
       const id = document.getElementById("edit-id").value;
@@ -360,12 +672,16 @@
       const leche = parseFloat(document.getElementById("edit-leche").value);
       const lactando = document.getElementById("edit-lactando").value === "true";
       await updateDoc(doc(db, "users", usuarioId, "cows", id), {
-        name: nombre, weight: peso, age: edad, milkProduction: leche, isLactating: lactando
+        name: nombre,
+        weight: peso,
+        age: edad,
+        milkProduction: leche,
+        isLactating: lactando
       });
       bootstrap.Modal.getInstance(document.getElementById("editarModal")).hide();
       cargarVacas(usuarioId);
     });
-
+    // 🟢 Eliminar vaca
     window.prepararEliminar = function(id, nombre) {
       document.getElementById("delete-id").value = id;
       document.getElementById("nombreEliminar").innerText = nombre;
@@ -377,7 +693,7 @@
       bootstrap.Modal.getInstance(document.getElementById("eliminarModal")).hide();
       cargarVacas(usuarioId);
     });
-
+    // 🟢 Detectar sesión
     onAuthStateChanged(auth, (user) => {
       if (user) {
         usuarioId = user.uid;
@@ -387,201 +703,700 @@
       }
     });
 
-// 🟢 Mostrar insumos recomendados para una vaca
-window.mostrarInsumos = async function (nombreVaca) {
-  // Buscar los datos reales de la vaca seleccionada
-  const q = query(collection(db, "users", usuarioId, "cows"), where("name", "==", nombreVaca));
-  const snap = await getDocs(q);
+   //Medicamento
 
-  if (snap.empty) {
-    alert("No se encontraron datos de la vaca.");
-    return;
-  }
+async function cargarTarjetasMedicamentosEstaticas() {
+  try {
+    const resp = await fetch("Medicamentos.html");
 
-  const vaca = snap.docs[0].data();
-  const { weight, milkProduction } = vaca;
+    if (!resp.ok) {
+      console.error("No se encontró Medicamentos.html");
+      return;
+    }
 
-  document.getElementById("vacaSeleccionada").innerText =
-    `🐄 ${nombreVaca} — Peso: ${weight} kg | Leche diaria: ${milkProduction} L`;
+    const htmlTexto = await resp.text();
 
-  // Mostrar modal
-  const modal = new bootstrap.Modal(document.getElementById("insumosModal"));
-  modal.show();
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(htmlTexto, "text/html");
 
-  // Obtener insumos desde el HTML de insumos generales
-  const insumos = await obtenerInsumosDesdeHTML();
-  const contenedor = document.getElementById("listaInsumos");
-  contenedor.innerHTML = "";
+    const tarjetas = doc.querySelectorAll(".med-card");
 
-  insumos.forEach(nombre => {
-    const btn = document.createElement("button");
-    btn.className = "btn btn-outline-success";
-    btn.textContent = nombre;
+    let html = "";
 
-    // Usar click en lugar de mouseover para que el usuario decida cuándo calcular
-    btn.addEventListener("click", () => {
-      calcularRecomendacion(nombre, weight, milkProduction);
-      //  resaltar el botón seleccionado
-      contenedor.querySelectorAll("button").forEach(b => b.classList.remove("active"));
-      btn.classList.add("active");
+    tarjetas.forEach(card => {
+      const nombre = card.querySelector(".med-card-title")?.textContent.trim() || "Medicamento";
+
+      let imagen = card.querySelector(".med-card-img")?.getAttribute("src") || "";
+      imagen = imagen.startsWith("http") ? imagen : "img/" + imagen.replace("img/", "");
+
+      const categoria = card.querySelector(".med-card-category")?.textContent || "";
+      const desc = card.querySelector(".med-card-desc")?.textContent || "";
+
+      html += `
+        <div class="col-md-4">
+          <div class="card shadow-sm h-100">
+            <img src="${imagen}" class="card-img-top" style="height:160px; object-fit:cover;">
+            <div class="card-body">
+              <span class="badge bg-success mb-1">${categoria}</span>
+              <h5 class="card-title">${nombre}</h5>
+              <p class="card-text small">${desc}</p>
+              <button class="btn btn-verde-pastel w-100 text-white"
+                onclick="seleccionarMedicamento('${nombre}')">
+                Seleccionar
+              </button>
+            </div>
+          </div>
+        </div>
+      `;
     });
 
-    contenedor.appendChild(btn);
+    document.getElementById("contenedorTarjetasMedicamentos").innerHTML = html;
+
+  } catch (error) {
+    console.error("Error cargando Medicamentos.html:", error);
+  }
+}
+
+
+  //Registro
+
+ window.cerradoPorGuardar = false;
+
+window.guardarRegistroMedicamento = async function () {
+
+  window.cerradoPorGuardar = true; // 🟢 Para evitar abrir el otro modal
+
+  const vacaId = window.vacaSeleccionada;
+  const dosis = parseFloat(document.getElementById("medDosis").value) || 0;
+  const obs = document.getElementById("medObservaciones").value || "";
+
+  await addDoc(collection(db, "users", usuarioId, "cows", vacaId, "applied_medications"), {
+    name: window.medicamentoSeleccionado,
+    dose_administered_ml: dosis,
+    observations: obs,
+    date: new Date().toISOString()
+  });
+
+ mostrarToast("Medicamento registrado correctamente");
+
+  // LIMPIAR CAMPOS 😁
+  document.getElementById("medDosis").value = "";
+  document.getElementById("medObservaciones").value = "";
+
+  bootstrap.Modal.getInstance(document.getElementById("modalRegistrarMed")).hide();
+  bootstrap.Modal.getInstance(document.getElementById("modalMedicamentos")).hide();
+};
+
+
+// MODALES DEL REGISTRO 
+window.abrirModalRegistro = async function (vacaId, tipo) {
+  window.vacaSeleccionada = vacaId;
+
+   // 🛑 Cerrar panel antes de abrir otro modal
+  const panel = bootstrap.Modal.getInstance(
+    document.getElementById("modalPanelRegistros")
+  );
+  if (panel) panel.hide();
+
+
+  // ==========================
+  // 🌾 INSUMOS
+  // ==========================
+  if (tipo === "insumo") {
+    await cargarTarjetasInsumosEstaticos();
+    bootstrap.Modal.getOrCreateInstance(
+      document.getElementById("modalInsumos")
+    ).show();
+  }
+
+  // ==========================
+  // 💊 MEDICAMENTOS
+  // ==========================
+  if (tipo === "medicamento") {
+    await cargarTarjetasMedicamentosEstaticas();
+    bootstrap.Modal.getOrCreateInstance(
+      document.getElementById("modalMedicamentos")
+    ).show();
+  }
+
+  // ==========================
+  // 🟥 ENFERMEDADES
+  // ==========================
+  if (tipo === "enfermedad") {
+    await cargarTarjetasEnfermedadesEstaticas();  
+    bootstrap.Modal.getOrCreateInstance(
+      document.getElementById("modalEnfermedades")
+    ).show();
+  }
+};
+
+window.filtrarMedicamentos = function () {
+  const texto = document.getElementById("buscarMedicamento").value.toLowerCase();
+
+  document.querySelectorAll("#contenedorTarjetasMedicamentos .card").forEach(card => {
+    const titulo = card.querySelector(".card-title").innerText.toLowerCase();
+    card.parentElement.style.display = titulo.includes(texto) ? "" : "none";
   });
 };
 
-// 🟢 Leer los insumos automáticamente del HTML de insumos generales
-async function obtenerInsumosDesdeHTML() {
-  try {
-    const res = await fetch("insumos.html");
-    const html = await res.text();
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(html, "text/html");
+// funcion para llenar el modal del historial 
 
-    // Leer nombres de insumos (desde los títulos de las tarjetas)
-    return Array.from(doc.querySelectorAll(".card-title")).map(e => e.textContent.trim());
-  } catch (err) {
-    console.error("Error leyendo insumos:", err);
-    return [];
-  }
-}
+window.verHistorial = async function (vacaId) {
 
-// 🟢 Calcular recomendación y mostrar resultado en el modal
-function calcularRecomendacion(nombreInsumoOriginal, peso, leche) {
-  const nombreInsumo = nombreInsumoOriginal.toLowerCase();
-  let cantidad = 0;
+  let html = "";
 
-  // ------------------------
-  // 1. CONCENTRADOS ENERGÉTICOS
-  // ------------------------
-  if (nombreInsumo.includes("concentrado balanceado") || nombreInsumo.includes("concentrado")) {
-    cantidad = leche * 0.4;
-  } else if (nombreInsumo.includes("harina de maíz") || nombreInsumo.includes("harina de maiz")) {
-    cantidad = peso * 0.005;
-  } else if (nombreInsumo.includes("maíz triturado") || nombreInsumo.includes("maiz triturado")) {
-    cantidad = peso * 0.006;
-  } else if (nombreInsumo.includes("maíz húmedo") || nombreInsumo.includes("maiz humedo") || nombreInsumo.includes("grano partido")) {
-    cantidad = peso * 0.007;
-  } else if (nombreInsumo.includes("harina de yuca")) {
-    cantidad = peso * 0.004;
-  }
+  // ===============================
+  // 💊 MEDICAMENTOS
+  // ===============================
+  const medsSnap = await getDocs(
+    collection(db, "users", usuarioId, "cows", vacaId, "applied_medications")
+  );
 
-  // ------------------------
-  // 2. FORRAJES / HENOS / PASTOS
-  // ------------------------
-  else if (nombreInsumo.includes("forraje") || nombreInsumo.includes("pasto") || nombreInsumo.includes("verde")) {
-    cantidad = peso * 0.05;
-  } else if (nombreInsumo.includes("heno de alfalfa") || (nombreInsumo.includes("heno") && nombreInsumo.includes("alfalfa"))) {
-    cantidad = peso * 0.02;
-  } else if (nombreInsumo.includes("pasto de corte fresco")) {
-    cantidad = peso * 0.06;
-  } else if (nombreInsumo.includes("pellets de alfalfa")) {
-    cantidad = peso * 0.015;
-  } else if (nombreInsumo.includes("heno de pasto kikuyo")) {
-    cantidad = peso * 0.02;
-  }
+  html += `<div class="titulo-seccion-historial">Medicamentos aplicados</div>`;
 
-  // ------------------------
-  // 3. ENSILAJES 
-  // ------------------------
-  else if (nombreInsumo.includes("ensilaje de maíz") || nombreInsumo.includes("ensilaje de maiz")) {
-    cantidad = peso * 0.03;
-  } else if (nombreInsumo.includes("ensilado") || nombreInsumo.includes("silo")) {
-    cantidad = peso * 0.03;
-  } else if (nombreInsumo.includes("ensilaje de sorgo dulce") || nombreInsumo.includes("sorgo")) {
-    cantidad = peso * 0.025;
-  }
+  if (medsSnap.empty) {
+    html += `<p class="text-muted">No hay medicamentos registrados.</p>`;
+  } else {
+    medsSnap.forEach(docu => {
+      const m = docu.data();
 
-  // ------------------------
-  // 4. SUBPRODUCTOS
-  // ------------------------
-  else if (nombreInsumo.includes("afrecho") || nombreInsumo.includes("afrecho de trigo")) {
-    cantidad = peso * 0.008;
-  } else if (nombreInsumo.includes("salvado") || nombreInsumo.includes("salvado de arroz")) {
-    cantidad = peso * 0.01;
-  } else if (nombreInsumo.includes("torta de algodón") || nombreInsumo.includes("torta de soya") || nombreInsumo.includes("torta") ) {
-    cantidad = peso * 0.01;
-  } else if (nombreInsumo.includes("torta de girasol")) {
-    cantidad = peso * 0.009;
-  } else if (nombreInsumo.includes("suero de leche")) {
-    cantidad = leche * 1.0; 
-  }
+      html += `
+  <div class="hist-item card mb-3 p-3 border-left-success" data-type="med">
+    <h5 class="text-success"><b>💊 ${m.name}</b></h5>
+    <small><b>Fecha:</b> ${new Date(m.date).toLocaleString()}</small>
+    <small><b>Dosis:</b> ${m.dose_administered_ml} ml</small>
+    <small><b>Notas:</b> ${m.observations || "Sin observaciones"}</small>
 
-  // ------------------------
-  // 5. SUPLEMENTOS PROTÉICOS
-  // ------------------------
-  else if (nombreInsumo.includes("suplemento proteico") || nombreInsumo.includes("proteico")) {
-    cantidad = peso * 0.01;
-  }
+    <div class="mt-2 d-flex gap-2">
+      <button class="btn btn-warning btn-sm"
+        onclick="editarMedicamento('${docu.id}', '${vacaId}')">
+        Editar
+      </button>
 
-  // ------------------------
-  // 6. AZÚCARES / ACEITES
-  // ------------------------
-  else if (nombreInsumo.includes("melaza")) {
-    cantidad = (leche / 10) * 0.8;
-  } else if (nombreInsumo.includes("aceite de palma") || nombreInsumo.includes("aceite de girasol")) {
-    cantidad = peso * 0.0015;
-  } else if (nombreInsumo.includes("aceite de palma en bloque")) {
-    cantidad = peso * 0.001;
-  }
-
-  // ------------------------
-  // 7. MINERALES / VITAMINAS
-  // ------------------------
-  else if (nombreInsumo.includes("sales minerales") || nombreInsumo.includes("sales") || nombreInsumo.includes("sal mineral")) {
-    cantidad = peso * 0.001;
-  } else if (nombreInsumo.includes("bloque de sal") || nombreInsumo.includes("bloques de sal mineral")) {
-    cantidad = peso * 0.0008;
-  } else if (nombreInsumo.includes("suplemento vitamínico") || nombreInsumo.includes("vitamínico") || nombreInsumo.includes("vitaminico")) {
-    cantidad = peso * 0.0005;
-  } else if (nombreInsumo.includes("mineralizado con fósforo") || nombreInsumo.includes("fosforo")) {
-    cantidad = peso * 0.0006;
-  } else if (nombreInsumo.includes("urea alimenticia") || nombreInsumo.includes("urea")) {
-    cantidad = peso * 0.0003;
-  } else if (nombreInsumo.includes("suplemento ca-p") || nombreInsumo.includes("2:1")) {
-    cantidad = peso * 0.0007;
-  }
-
-  // ------------------------
-  // 8. MICROADITIVOS
-  // ------------------------
-  else if (nombreInsumo.includes("levadura") || nombreInsumo.includes("levaduras")) {
-    cantidad = peso * 0.0008;
-  } else if (nombreInsumo.includes("premezcla probiótica") || nombreInsumo.includes("probiótica") || nombreInsumo.includes("premezcla")) {
-    cantidad = peso * 0.0005;
-  }
-
-  // ------------------------
-  // SI NO COINCIDE CON NINGUNO
-  // ------------------------
-  else {
-    cantidad = peso * 0.01; // valor genérico seguro
-  }
-
-  // construir resultado y mostrar en modal
-  const resultadoHTML = `
-    <div class="alert alert-success mt-3">
-      <h6><strong>${nombreInsumoOriginal}</strong></h6>
-      <p>
-        Cantidad recomendada diaria: 
-        <strong>${cantidad.toFixed(2)} kg</strong>
-        <br><small>(según peso ${peso} kg y ${leche} L leche/día)</small>
-      </p>
+      <button class="btn btn-verde btn-sm"
+        onclick="eliminarRegistroMedicamento('${docu.id}', '${vacaId}')">
+        Eliminar
+      </button>
     </div>
-  `;
+  </div>
+`;
+    });
+  }
 
-  document.getElementById("resultadoInsumo").innerHTML = resultadoHTML;
-}
+  // ===============================
+  // 🌾 INSUMOS
+  // ===============================
+  const feedsSnap = await getDocs(
+    collection(db, "users", usuarioId, "cows", vacaId, "applied_feeds")
+  );
 
-// limpiar resultado al cerrar el modal
-document.getElementById("insumosModal").addEventListener("hidden.bs.modal", () => {
-  document.getElementById("resultadoInsumo").innerHTML = "";
+  html += `<div class="titulo-seccion-historial">Insumos aplicados</div>`;
+
+  if (feedsSnap.empty) {
+    html += `<p class="text-muted">No hay insumos registrados.</p>`;
+  } else {
+    feedsSnap.forEach(docu => {
+      const d = docu.data();
+
+      html += `
+        <div class="hist-item card mb-3 p-3 border-left-green" data-type="insumo">
+          <h5 class="text-success"><b>🌾 ${d.feedName}</b></h5>
+          <small><b>Descripción:</b> ${d.description}</small>
+          <small><b>Cantidad:</b> ${d.amountGiven}</small>
+          <small><b>Fecha:</b> ${new Date(d.date).toLocaleString()}</small>
+          <small><b>Notas:</b> ${d.observations || "Sin observaciones"}</small>
+
+          <div class="mt-2 d-flex gap-2">
+            <button class="btn btn-warning btn-sm"
+              onclick="editarInsumo('${docu.id}', '${vacaId}')">
+              Editar
+            </button>
+
+            <button class="btn btn-verde btn-sm"
+              onclick="eliminarRegistroInsumo('${docu.id}', '${vacaId}')">
+              Eliminar
+            </button>
+          </div>
+        </div>
+      `;
+    });
+  }
+
+  // ===============================
+  // 🟥 ENFERMEDADES
+  // ===============================
+  const disSnap = await getDocs(
+    collection(db, "users", usuarioId, "cows", vacaId, "diseases_history")
+  );
+
+  html += `<div class="titulo-seccion-historial">Enfermedades registradas</div>`;
+
+  if (disSnap.empty) {
+    html += `<p class="text-muted">No hay enfermedades registradas.</p>`;
+  } else {
+    disSnap.forEach(docu => {
+      const d = docu.data();
+
+      html += `
+  <div class="hist-item card mb-3 p-3 border-left-danger" data-type="enf">
+    <h5 class="text-danger"><b>🟥 ${d.name}</b></h5>
+    <small><b>Gravedad:</b> ${d.severity}</small>
+    <small><b>Fecha inicio:</b> ${new Date(d.date).toLocaleDateString()}</small>
+    <small><b>Registrado el:</b> ${new Date(d.registeredAt).toLocaleString()}</small>
+    <small><b>Notas:</b> ${d.notes || "Sin observaciones"}</small>
+
+    <div class="mt-2 d-flex gap-2">
+      <button class="btn btn-warning btn-sm"
+        onclick="editarEnfermedad('${docu.id}', '${vacaId}')">
+        Editar
+      </button>
+
+      <button class="btn btn-verde btn-sm"
+        onclick="eliminarRegistroEnfermedad('${docu.id}', '${vacaId}')">
+        Eliminar
+      </button>
+    </div>
+  </div>
+`;
+    });
+  }
+
+  // Mostrar resultado
+  document.getElementById("historialContenido").innerHTML = html;
+
+  document.querySelectorAll('.modal-backdrop').forEach(b => b.remove());
+
+  const modalElement = document.getElementById("modalHistorial");
+  const modal = bootstrap.Modal.getOrCreateInstance(modalElement);
+  modal.show();
+};
+
+// 🔥 Activar botones cuando se abra el modal de historial
+document.getElementById("modalHistorial").addEventListener("shown.bs.modal", () => {
+
+  document.querySelectorAll(".filtro-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+
+      const filtro = btn.getAttribute("data-filtro");
+
+      // activar visualmente el botón
+      document.querySelectorAll(".filtro-btn").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+
+      // aplicar filtro
+      document.querySelectorAll("#historialContenido .hist-item").forEach(card => {
+        const tipo = card.getAttribute("data-type");
+        card.style.display = (filtro === "todo" || tipo === filtro) ? "" : "none";
+      });
+
+    });
+  });
+
 });
 
-  </script>
+
+  window.seleccionarMedicamento = function(nombre) {
+
+    window.medicamentoSeleccionado = nombre;
+    document.getElementById("medNombreSeleccionado").innerText = nombre;
+
+     // Limpiar inputs
+    document.getElementById("medDosis").value = "";
+    document.getElementById("medObservaciones").value = "";
+
+    // Ocultar temporalmente el modal de selección
+    const modalSel = bootstrap.Modal.getInstance(document.getElementById("modalMedicamentos"));
+    modalSel.hide();
+
+    // Abrir modal de registro
+    const modalReg = new bootstrap.Modal(document.getElementById("modalRegistrarMed"));
+    modalReg.show();
+
+    // Guardar referencia para reabrir si se cancela
+    window.modalSeleccionMedicamento = modalSel;
+  };
+
+    document.getElementById("modalRegistrarMed").addEventListener("hidden.bs.modal", function () {
+
+    if (!window.cerradoPorGuardar && window.modalSeleccionMedicamento) {
+      window.modalSeleccionMedicamento.show();
+    }
+
+    // Reset siempre
+    window.cerradoPorGuardar = false;
+  });
+
+  window.eliminarRegistroMedicamento = async function(id, vacaId) {
+  await deleteDoc(doc(db, "users", usuarioId, "cows", vacaId, "applied_medications", id));
+  verHistorial(vacaId); // recargar historial
+};
+
+//Insumos
+
+async function cargarTarjetasInsumosEstaticos() {
+  try {
+    const resp = await fetch("insumos.html"); 
+
+    if (!resp.ok) {
+      console.error("No se encontró insumos.html");
+      return;
+    }
+
+    const htmlTexto = await resp.text();
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(htmlTexto, "text/html");
+
+    const tarjetas = doc.querySelectorAll(".insumo-card");
+
+    let html = "";
+
+    tarjetas.forEach(card => {
+      const nombre = card.querySelector(".card-title")?.textContent.trim() || "Insumo";
+      const descripcion = card.querySelector(".card-text")?.textContent.trim() || "";
+      let imagen = card.querySelector(".card-img-top")?.getAttribute("src") || "";
+
+      imagen = imagen.startsWith("http") ? imagen : "img/" + imagen.replace("img/", "");
+
+      html += `
+        <div class="col-md-4">
+          <div class="card shadow-sm h-100">
+            <img src="${imagen}" class="card-img-top" style="height:160px; object-fit:cover;">
+            <div class="card-body">
+              <h5 class="card-title">${nombre}</h5>
+              <p class="card-text small">${descripcion}</p>
+
+              <button class="btn btn-verde-pastel w-100 text-white"
+                onclick="seleccionarInsumo('${nombre}', \`${descripcion}\`)">
+                Seleccionar
+              </button>
+            </div>
+          </div>
+        </div>
+      `;
+    });
+
+    document.getElementById("contenedorTarjetasInsumos").innerHTML = html;
+
+  } catch (error) {
+    console.error("Error cargando insumos.html:", error);
+  }
+}
+
+window.seleccionarInsumo = function(nombre, descripcion) {
+
+  window.insumoSeleccionado = nombre;
+  window.insumoDescripcion = descripcion;
+
+  document.getElementById("insumoNombreSeleccionado").innerText = nombre;
+
+  const modalSel = bootstrap.Modal.getInstance(document.getElementById("modalInsumos"));
+  modalSel.hide();
+
+  bootstrap.Modal.getOrCreateInstance(document.getElementById("modalRegistrarInsumo")).show();
+
+  window.modalSeleccionInsumo = modalSel;
+};
+
+document.getElementById("modalRegistrarInsumo").addEventListener("hidden.bs.modal", function () {
+  if (window.modalSeleccionInsumo && !window.cerradoPorGuardar) {
+    window.modalSeleccionInsumo.show();
+  }
+  window.cerradoPorGuardar = false;
+});
 
 
-  <script>
+window.guardarRegistroInsumo = async function () {
+
+  window.cerradoPorGuardar = true;
+
+  const vacaId = window.vacaSeleccionada;
+  const cantidad = parseFloat(document.getElementById("insumoCantidad").value) || 0;
+  const obs = document.getElementById("insumoObservaciones").value || "";
+
+  await addDoc(collection(db, "users", usuarioId, "cows", vacaId, "applied_feeds"), {
+    feedName: window.insumoSeleccionado,
+    description: window.insumoDescripcion,
+    amountGiven: cantidad,
+    observations: obs,
+    date: new Date().toISOString()
+  });
+
+  mostrarToast("Insumo registrado correctamente");
+
+  document.getElementById("insumoCantidad").value = "";
+  document.getElementById("insumoObservaciones").value = "";
+
+  bootstrap.Modal.getInstance(document.getElementById("modalRegistrarInsumo")).hide();
+  bootstrap.Modal.getInstance(document.getElementById("modalInsumos")).hide();
+};
+
+window.filtrarInsumos = function () {
+  const texto = document.getElementById("buscarInsumo").value.toLowerCase();
+
+  document.querySelectorAll("#contenedorTarjetasInsumos .card").forEach(card => {
+    const titulo = card.querySelector(".card-title").innerText.toLowerCase();
+    card.parentElement.style.display = titulo.includes(texto) ? "" : "none";
+  });
+};
+
+window.eliminarRegistroInsumo = async function(id, vacaId) {
+  await deleteDoc(doc(db, "users", usuarioId, "cows", vacaId, "applied_feeds", id));
+  verHistorial(vacaId);
+};
+
+// Enfermedades 
+async function cargarTarjetasEnfermedadesEstaticas() {
+  try {
+    const resp = await fetch("enfermedades.html");
+
+    if (!resp.ok) {
+      console.error("No se encontró enfermedades.html");
+      return;
+    }
+
+    const htmlTexto = await resp.text();
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(htmlTexto, "text/html");
+
+    const tarjetas = doc.querySelectorAll(".enfermedad-card");
+
+    let html = "";
+
+    tarjetas.forEach(card => {
+      const nombre = card.querySelector(".card-title-custom")?.textContent.trim() || "Sin nombre";
+      const subtitulo = card.querySelector(".card-subtitle")?.textContent.trim() || "";
+      const gravedad = card.querySelector(".severity-badge")?.textContent.trim() || "";
+      const image = card.querySelector(".card-image")?.getAttribute("src") || "";
+
+      html += `
+        <div class="col-md-6">
+          <div class="card shadow-sm h-100">
+
+            <img src="${image}" class="card-img-top" style="height:200px; object-fit:cover;">
+
+            <div class="card-body">
+              <span class="badge bg-success mb-1">${gravedad}</span>
+
+              <h5 class="card-title">${nombre}</h5>
+              <p class="small">${subtitulo}</p>
+
+              <button class="btn btn-verde-pastel w-100"
+                onclick='seleccionarEnfermedad(${JSON.stringify({
+                  name: nombre,
+                  severity: gravedad,
+                  image: image
+                })})'>
+                Seleccionar
+              </button>
+
+            </div>
+          </div>
+        </div>
+      `;
+    });
+
+    document.getElementById("contenedorTarjetasEnfermedades").innerHTML = html;
+
+  } catch (error) {
+    console.error("Error cargando enfermedades:", error);
+  }
+}
+
+window.seleccionarEnfermedad = function(data) {
+
+  window.enfermedadSeleccionada = data;
+
+  document.getElementById("enfNombreSeleccionada").innerText = data.name;
+
+  const modalSel = bootstrap.Modal.getInstance(document.getElementById("modalEnfermedades"));
+  modalSel.hide();
+
+  bootstrap.Modal.getOrCreateInstance(document.getElementById("modalRegistrarEnfermedad")).show();
+
+  window.modalSeleccionEnfermedad = modalSel;
+};
+
+document.getElementById("modalRegistrarEnfermedad").addEventListener("hidden.bs.modal", function () {
+  if (window.modalSeleccionEnfermedad && !window.cerradoPorGuardar) {
+    window.modalSeleccionEnfermedad.show();
+  }
+  window.cerradoPorGuardar = false;
+});
+
+
+window.guardarRegistroEnfermedad = async function () {
+
+  window.cerradoPorGuardar = true;
+
+  const vacaId = window.vacaSeleccionada;
+  const fecha = document.getElementById("enfFecha").value;
+  const notas = document.getElementById("enfObservaciones").value || "";
+
+  if (!fecha) {
+    alert("Debes seleccionar la fecha en la que surgió la enfermedad.");
+    return;
+  }
+
+  await addDoc(
+    collection(db, "users", usuarioId, "cows", vacaId, "diseases_history"),
+    {
+      ...window.enfermedadSeleccionada,
+      notes: notas,
+      date: new Date(fecha).toISOString(),
+      registeredAt: new Date().toISOString()
+    }
+  );
+
+  mostrarToast("Enfermedad registrado correctamente");
+
+  document.getElementById("enfFecha").value = "";
+  document.getElementById("enfObservaciones").value = "";
+
+  bootstrap.Modal.getInstance(document.getElementById("modalRegistrarEnfermedad")).hide();
+  bootstrap.Modal.getInstance(document.getElementById("modalEnfermedades")).hide();
+};
+
+window.filtrarEnfermedades = function () {
+  const texto = document.getElementById("buscarEnfermedad").value.toLowerCase();
+
+  document.querySelectorAll("#contenedorTarjetasEnfermedades .card").forEach(card => {
+    const titulo = card.querySelector(".card-title").innerText.toLowerCase();
+    card.parentElement.style.display = titulo.includes(texto) ? "" : "none";
+  });
+};
+
+window.eliminarRegistroEnfermedad = async function (id, vacaId) {
+  await deleteDoc(
+    doc(db, "users", usuarioId, "cows", vacaId, "diseases_history", id)
+  );
+  verHistorial(vacaId);
+};
+
+window.abrirPanelRegistros = function(vacaId) {
+  window.vacaSeleccionada = vacaId;
+
+  const modal = new bootstrap.Modal(
+    document.getElementById("modalPanelRegistros")
+  );
+  modal.show();
+};
+
+//Alertas
+
+window.mostrarToast = function (mensaje, tipo = "success") {
+  const toastEl = document.getElementById("toast");
+  const toastMsg = document.getElementById("toastMsg");
+
+  toastMsg.textContent = mensaje;
+
+  toastEl.classList.remove("bg-success", "bg-danger", "bg-warning");
+  toastEl.classList.add(
+    tipo === "success" ? "bg-success" :
+    tipo === "danger" ? "bg-danger" :
+    "bg-warning"
+  );
+
+  const bsToast = new bootstrap.Toast(toastEl);
+  bsToast.show();
+};
+
+//Modales para editar 
+
+window.editarMedicamento = async function(id, vacaId) {
+
+  window.vacaSeleccionada = vacaId;
+
+  const ref = doc(db, "users", usuarioId, "cows", vacaId, "applied_medications", id);
+  const snap = await getDoc(ref);
+
+  const d = snap.data();
+
+  document.getElementById("editMedId").value = id;
+  document.getElementById("editMedNombre").value = d.name;
+  document.getElementById("editMedDosis").value = d.dose_administered_ml;
+  document.getElementById("editMedNotas").value = d.observations;
+
+  new bootstrap.Modal(document.getElementById("modalEditarMedicamento")).show();
+};
+
+window.guardarEdicionMedicamento = async function () {
+
+  const id = document.getElementById("editMedId").value;
+
+  await updateDoc(doc(db, "users", usuarioId, "cows", window.vacaSeleccionada, "applied_medications", id), {
+    dose_administered_ml: parseFloat(document.getElementById("editMedDosis").value),
+    observations: document.getElementById("editMedNotas").value
+  });
+
+  mostrarToast("Medicamento actualizado");
+
+  bootstrap.Modal.getInstance(document.getElementById("modalEditarMedicamento")).hide();
+  verHistorial(window.vacaSeleccionada);
+};
+
+window.editarInsumo = async function(id, vacaId) {
+  window.vacaSeleccionada = vacaId;
+
+  const ref = doc(db, "users", usuarioId, "cows", vacaId, "applied_feeds", id);
+  const snap = await getDoc(ref);
+  const d = snap.data();
+
+  document.getElementById("editInsumoId").value = id;
+  document.getElementById("editInsumoNombre").value = d.feedName;
+  document.getElementById("editInsumoCantidad").value = d.amountGiven;
+  document.getElementById("editInsumoNotas").value = d.observations;
+
+  new bootstrap.Modal(document.getElementById("modalEditarInsumo")).show();
+};
+
+window.guardarEdicionInsumo = async function () {
+
+  const id = document.getElementById("editInsumoId").value;
+
+  await updateDoc(doc(db, "users", usuarioId, "cows", window.vacaSeleccionada, "applied_feeds", id), {
+    amountGiven: parseFloat(document.getElementById("editInsumoCantidad").value),
+    observations: document.getElementById("editInsumoNotas").value
+  });
+
+  mostrarToast("Insumo actualizado");
+
+  bootstrap.Modal.getInstance(document.getElementById("modalEditarInsumo")).hide();
+  verHistorial(window.vacaSeleccionada);
+};
+
+window.editarEnfermedad = async function(id, vacaId) {
+  window.vacaSeleccionada = vacaId;
+
+  const ref = doc(db, "users", usuarioId, "cows", vacaId, "diseases_history", id);
+  const snap = await getDoc(ref);
+
+  const d = snap.data();
+
+  document.getElementById("editEnfId").value = id;
+  document.getElementById("editEnfNombre").value = d.name;
+  document.getElementById("editEnfFecha").value = d.date.split("T")[0];
+  document.getElementById("editEnfNotas").value = d.notes;
+
+  new bootstrap.Modal(document.getElementById("modalEditarEnfermedad")).show();
+};
+
+window.guardarEdicionEnfermedad = async function () {
+
+  const id = document.getElementById("editEnfId").value;
+
+  await updateDoc(doc(db, "users", usuarioId, "cows", window.vacaSeleccionada, "diseases_history", id), {
+    notes: document.getElementById("editEnfNotas").value,
+    date: new Date(document.getElementById("editEnfFecha").value).toISOString()
+  });
+
+  mostrarToast("Enfermedad actualizada");
+
+  bootstrap.Modal.getInstance(document.getElementById("modalEditarEnfermedad")).hide();
+  verHistorial(window.vacaSeleccionada);
+}; 
+</script>
+
+<script>
   const btnFlotante = document.getElementById("btn-flotante");
   const seccionVacas = document.getElementById("tabla-simmental"); // Cambia el ID si tu tabla se llama distinto
 
@@ -603,28 +1418,6 @@ document.getElementById("insumosModal").addEventListener("hidden.bs.modal", () =
   } else {
     btnFlotante.classList.remove("oculto");
   }
-  });
-</script>
-
-<script>
-  document.addEventListener("DOMContentLoaded", () => {
-
-    const btnToggle = document.getElementById("toggle-btn");
-    const contenido = document.getElementById("contenido");
-    const chev = document.getElementById("chev");
-
-    btnToggle.addEventListener("click", () => {
-      const oculto = contenido.classList.contains("d-none");
-
-      if (oculto) {
-        contenido.classList.remove("d-none");
-        chev.style.transform = "rotate(90deg)";
-      } else {
-        contenido.classList.add("d-none");
-        chev.style.transform = "rotate(0deg)";
-      }
-    });
-
   });
 </script>
 

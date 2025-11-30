@@ -258,7 +258,7 @@
 
         .table-striped tbody tr:hover {
             background: linear-gradient(135deg, #a9eeb0, #8de89a);
-            transform: scale(1.02);
+            
             box-shadow: 0 3px 10px rgba(54, 172, 66, 0.3);
         }
 
@@ -476,3 +476,97 @@
         opacity: 1;
         transform: rotate(90deg);
         }
+
+         /* === ESTILOS UNIFICADOS PARA MODALES === */
+
+/* Verde oscuro elegante */
+.modal-header-verde {
+    background: linear-gradient(135deg, #2e8f3a, #36ac42);
+    color: #fff !important;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.25);
+}
+
+/* Verde pastel suave */
+.modal-header-verde-pastel {
+    background: linear-gradient(135deg, #c8f5cb, #a9eeb0);
+    color: #1d5f25 !important;
+    border-bottom: 2px solid rgba(54, 172, 66, 0.3);
+}
+
+/* Verde limón para advertencias */
+.modal-header-limon {
+    background: linear-gradient(135deg, #c8f5cb, #a9eeb0);
+    color: #355b1a !important;
+}
+
+/* Botón verde suave */
+.btn-verde {
+    background: linear-gradient(135deg, #54ce60, #36ac42);
+    border: none;
+    color: rgb(0, 0, 0) !important;
+}
+
+.btn-verde:hover {
+    box-shadow: 0 5px 15px rgba(54, 172, 66, 0.4);
+    transform: translateY(-2px);
+}
+
+/* Botón verde pastel */
+.btn-verde-pastel {
+    background: linear-gradient(135deg, #baf5c1, #98eba3);
+    border: 1px solid #54ce60;
+    color: #1a5e29 !important;
+}
+
+.btn-verde-pastel:hover {
+    background: linear-gradient(135deg, #a3edaa, #78da84);
+    transform: translateY(-2px);
+}
+
+/* Separador suave */
+.modal-body {
+    background: #f3fbf4;
+}
+
+.border-left-success { border-left: 6px solid #28a745; }
+.border-left-green { border-left: 6px solid #5cb85c; }
+.border-left-danger { border-left: 6px solid #28a745; }
+
+
+.hist-filtros {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+}
+
+.filtro-btn {
+  border: none;
+  padding: 8px 18px;
+  border-radius: 30px;
+  background: #e6e6e6;
+  cursor: pointer;
+  transition: .25s;
+  font-weight: 600;
+}
+
+.filtro-btn:hover {
+  background: #cccccc;
+}
+
+.filtro-btn.active {
+  background: #2ecc71;
+  color: white;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.15);
+}
+
+.titulo-seccion-historial {
+  background: linear-gradient(135deg, #57a564, #7bcf87);
+  padding: 10px 20px;
+  border-radius: 12px;
+  color: white;
+  font-weight: bold;
+  text-align: center;
+  width: fit-content;
+  margin: 20px auto;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+}

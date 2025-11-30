@@ -192,9 +192,19 @@
     </div>
 
     <h2 class="mb-4 text-center page-title">🐄 Mis Vacas Jersey</h2>
-    <div id="tabla-jersey" class="table-responsive" ></div>
-  </main>
+  
+    <!-- 🟦 Selector de Lote -->
+<div class="text-center mb-4">
+  <label class="fw-bold mb-2">Selecciona un lote</label>
 
+  <select id="selectorLote" class="form-select w-50 mx-auto">
+    <option value="">-- Selecciona un lote --</option>
+  </select>
+</div>
+
+    <div id="tabla-jersey" class="table-responsive" ></div>
+
+  </main>
 
 
   <!-- Modal Editar -->
@@ -381,7 +391,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
 
-      <div class="modal-header modal-header-verde-pastel">
+      <div class="modal-header modal-header-verde">
         <h5 class="modal-title">Registrar Insumo</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
@@ -431,7 +441,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
 
-      <div class="modal-header modal-header-limon">
+      <div class="modal-header modal-header-verde">
         <h5 class="modal-title">Registrar Enfermedad</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
@@ -589,10 +599,6 @@
   </div>
 </div>
 
-
-
-
-
   <!-- Firebase y Script principal -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-app.js";
@@ -678,12 +684,26 @@
     }
 
     // 🟢 Cargar vacas Jersey
-    async function cargarVacas(userId) {
-      const q = query(collection(db, "users", userId, "cows"), where("breed", "==", "Jersey"));
-      const querySnap = await getDocs(q);
-      const vacas = querySnap.docs.map(docSnap => ({ id: docSnap.id, data: docSnap.data() }));
-      document.getElementById("tabla-jersey").innerHTML = crearTabla(vacas);
-    }
+async function cargarVacas(userId, loteId = null) {
+  let filtros = [
+    where("breed", "==", "Jersey")
+  ];
+
+  if (loteId) {
+    filtros.push(where("lotId", "==", loteId));
+  }
+
+  const q = query(collection(db, "users", userId, "cows"), ...filtros);
+  const querySnap = await getDocs(q);
+
+  const vacas = querySnap.docs.map(docSnap => ({
+    id: docSnap.id,
+    data: docSnap.data()
+  }));
+
+  document.getElementById("tabla-jersey").innerHTML = crearTabla(vacas);
+}
+
 
     // 🟢 Pasar datos al modal de edición
     window.llenarFormulario = function(id, nombre, peso, edad, leche, lactando) {
@@ -734,11 +754,47 @@
     onAuthStateChanged(auth, (user) => {
       if (user) {
         usuarioId = user.uid;
-        cargarVacas(usuarioId);
+        cargarLotesUsuario(); // solo carga lotes
+        document.getElementById("tabla-jersey").innerHTML = `
+          <p class='text-center text-muted'>Selecciona un lote</p>
+        `;
       } else {
-        document.getElementById("tabla-jersey").innerHTML = "<p class='text-danger text-center'>Debes iniciar sesión para ver tus vacas.</p>";
+        document.getElementById("tabla-jersey").innerHTML =
+          "<p class='text-danger text-center'>Debes iniciar sesión para ver tus vacas.</p>";
       }
     });
+
+
+    //Filtro para los lotes
+
+async function cargarLotesUsuario() {
+  const lotesRef = collection(db, "users", usuarioId, "lots");
+  const snap = await getDocs(lotesRef);
+
+  const selector = document.getElementById("selectorLote");
+
+  snap.forEach(docu => {
+    const lote = docu.data();
+
+    selector.innerHTML += `
+      <option value="${docu.id}">${lote.name}</option>
+    `;
+  });
+}
+
+document.getElementById("selectorLote").addEventListener("change", function () {
+  const loteId = this.value;
+
+  if (loteId === "") {
+    document.getElementById("tabla-jersey").innerHTML =
+      "<p class='text-center text-muted'>Selecciona un lote</p>";
+  } else {
+    cargarVacas(usuarioId, loteId); // Filtrar por lote
+  }
+});
+
+
+
 
     //Medicamento
 
@@ -1436,8 +1492,7 @@ window.guardarEdicionEnfermedad = async function () {
   verHistorial(window.vacaSeleccionada);
 };
 
-
-  </script>
+</script>
 
   <script>
   const btnFlotante = document.getElementById("btn-flotante");
@@ -1463,14 +1518,5 @@ window.guardarEdicionEnfermedad = async function () {
   }
   });
 </script>
-
-
-
-
-
-
-
-
-
 </body>
 </html>

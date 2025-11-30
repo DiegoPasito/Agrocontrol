@@ -80,7 +80,7 @@
   </header> 
 <body >
 
-  <main>
+<main>
         <div class="control-container">
             <h1 class="page-title">Control de Ganado</h1>
             <p class="page-subtitle">Registra y gestiona la información de tus vacas</p>
@@ -91,6 +91,44 @@
                 <div class="icon-cow">🐄</div>
                 
                 <form id="form-vaca">
+                    <!-- Sección de Lote -->
+                    <h3 class="section-subtitle">📋 Gestión de Lote</h3>
+                    
+                    <div class="mb-4">
+                        <label class="form-label">Crear o Seleccionar Lote</label>
+                        <select id="opcion-lote" class="form-select" required>
+                            <option value="" disabled selected>Selecciona una opción</option>
+                            <option value="crear">Crear Nuevo Lote</option>
+                            <option value="seleccionar">Seleccionar Lote Existente</option>
+                        </select>
+                    </div>
+
+                    <!-- Campos para CREAR lote -->
+                    <div id="campos-crear-lote" class="hidden">
+                        <div class="mb-4">
+                            <label class="form-label">Nombre del Lote</label>
+                            <input type="text" id="nombre-lote" class="form-control" placeholder="Ej: Lote A">
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label">Descripción del Lote</label>
+                            <textarea id="descripcion-lote" class="form-control" placeholder="Ej: Lote para vacas lecheras" rows="3"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Campos para SELECCIONAR lote -->
+                    <div id="campos-seleccionar-lote" class="hidden">
+                        <div class="mb-4">
+                            <label class="form-label">Selecciona un Lote</label>
+                            <div id="lista-lotes"></div>
+                        </div>
+                    </div>
+
+                    <div class="divider"></div>
+
+                    <!-- Sección de Vaca -->
+                    <h3 class="section-subtitle">🐄 Datos de la Vaca</h3>
+
                     <div class="mb-4">
                         <label class="form-label">Nombre de la Vaca</label>
                         <input type="text" id="nombre" class="form-control" placeholder="Ej: Margarita" required>
@@ -142,7 +180,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-app.js";
         import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js";
-        import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, getDocs, query } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyAzonIFbhlOnnIs9xG9Lb4uBJHLrhCi3qU",
@@ -160,6 +198,75 @@
 
         const form = document.getElementById("form-vaca");
         const mensaje = document.getElementById("mensaje");
+        const opcionLote = document.getElementById("opcion-lote");
+        const camposCrearLote = document.getElementById("campos-crear-lote");
+        const camposSeleccionarLote = document.getElementById("campos-seleccionar-lote");
+        const listaLotes = document.getElementById("lista-lotes");
+
+        let currentUser = null;
+        let selectedLoteId = null;
+        let selectedLoteName = null;
+
+        // Mostrar campos según la opción seleccionada
+        opcionLote.addEventListener("change", async function() {
+            camposCrearLote.classList.add("hidden");
+            camposSeleccionarLote.classList.add("hidden");
+            selectedLoteId = null;
+            selectedLoteName = null;
+
+            if (this.value === "crear") {
+                camposCrearLote.classList.remove("hidden");
+                document.getElementById("nombre-lote").setAttribute("required", "");
+                document.getElementById("descripcion-lote").setAttribute("required", "");
+            } else if (this.value === "seleccionar") {
+                camposSeleccionarLote.classList.remove("hidden");
+                document.getElementById("nombre-lote").removeAttribute("required");
+                document.getElementById("descripcion-lote").removeAttribute("required");
+                await cargarLotes();
+            }
+        });
+
+        async function cargarLotes() {
+            listaLotes.innerHTML = "<p style='text-align: center; color: #2b8c35;'>Cargando lotes...</p>";
+
+            try {
+                // COLECCIÓN CORRECTA
+                const lotesRef = collection(db, "users", currentUser.uid, "lots");
+                const lotesSnapshot = await getDocs(query(lotesRef));
+
+                if (lotesSnapshot.empty) {
+                    listaLotes.innerHTML = "<p style='text-align: center; color: #721c24;'>No hay lotes creados.</p>";
+                    return;
+                }
+
+                listaLotes.innerHTML = "";
+                lotesSnapshot.forEach((doc) => {
+                    const lote = doc.data();
+                    const loteDiv = document.createElement("div");
+                    loteDiv.className = "lote-item";
+                    loteDiv.onclick = function() {
+
+                        document.querySelectorAll('.lote-item').forEach(item => {
+                            item.classList.remove('selected');
+                        });
+
+                        this.classList.add('selected');
+                        selectedLoteId = doc.id;
+                        selectedLoteName = lote.name;  // <- CORRECTO
+                    };
+
+                    loteDiv.innerHTML = `
+                        <h5>${lote.name}</h5>
+                        <p>${lote.description}</p>
+                    `;
+                    listaLotes.appendChild(loteDiv);
+                });
+            } catch (error) {
+                console.error("Error al cargar lotes:", error);
+                listaLotes.innerHTML = "<p style='text-align: center; color: #721c24;'>Error al cargar los lotes.</p>";
+            }
+        }
+
 
         onAuthStateChanged(auth, (user) => {
             if (!user) {
@@ -168,47 +275,86 @@
                 return;
             }
 
+            currentUser = user;
             form.style.display = "block";
             mensaje.innerHTML = "<div class='alert-custom alert-success-custom'>✅ Bienvenido, puedes registrar tus vacas</div>";
+        });
 
-            form.addEventListener("submit", async (e) => {
-                e.preventDefault();
+        form.addEventListener("submit", async (e) => {
+            e.preventDefault();
 
-                const nombre = document.getElementById("nombre").value;
-                const raza = document.getElementById("raza").value;
-                const peso = parseFloat(document.getElementById("peso").value);
-                const edad = parseInt(document.getElementById("edad").value);
-                const leche = parseFloat(document.getElementById("leche").value);
-                const lactando = document.getElementById("lactando").checked;
+            const opcion = opcionLote.value;
+            
+            // Validar lote según la opción
+            if (opcion === "crear") {
+                const nombreLote = document.getElementById("nombre-lote").value;
+                const descripcionLote = document.getElementById("descripcion-lote").value;
 
+                if (!nombreLote || !descripcionLote) {
+                    mensaje.innerHTML = "<div class='alert-custom alert-danger-custom'>❌ Por favor completa los datos del lote.</div>";
+                    return;
+                }
+
+                // Crear el lote primero
                 try {
-                    await addDoc(collection(db, "users", user.uid, "cows"), {
-                        name: nombre,
-                        breed: raza,
-                        weight: peso,
-                        age: edad,
-                        milkProduction: leche,
-                        isLactating: lactando,
+                    const docRef = await addDoc(collection(db, "users", currentUser.uid, "lots"), {
+                        name: nombreLote,
+                        description: descripcionLote,
+                        userId: currentUser.uid,
                         createdAt: new Date()
                     });
-
-                    mensaje.innerHTML = "<div class='alert-custom alert-success-custom'>✅ Vaca registrada con éxito</div>";
-                    form.reset();
-                    
-                    setTimeout(() => {
-                        mensaje.innerHTML = "<div class='alert-custom alert-success-custom'>✅ Bienvenido, puedes registrar tus vacas</div>";
-                    }, 3000);
+                    selectedLoteId = docRef.id;
+                    selectedLoteName = nombreLote;
                 } catch (error) {
-                    console.error("Error al guardar vaca:", error);
-                    mensaje.innerHTML = "<div class='alert-custom alert-danger-custom'>❌ Error al guardar la vaca. Intenta nuevamente.</div>";
+                    console.error("Error al crear lote:", error);
+                    mensaje.innerHTML = "<div class='alert-custom alert-danger-custom'>❌ Error al crear el lote.</div>";
+                    return;
                 }
-            });
+            } else if (opcion === "seleccionar") {
+                if (!selectedLoteId) {
+                    mensaje.innerHTML = "<div class='alert-custom alert-danger-custom'>❌ Por favor selecciona un lote de la lista.</div>";
+                    return;
+                }
+            } else {
+                mensaje.innerHTML = "<div class='alert-custom alert-danger-custom'>❌ Por favor selecciona crear o seleccionar lote.</div>";
+                return;
+            }
+
+            // Ahora guardar la vaca
+            const nombre = document.getElementById("nombre").value;
+            const raza = document.getElementById("raza").value;
+            const peso = parseFloat(document.getElementById("peso").value);
+            const edad = parseInt(document.getElementById("edad").value);
+            const leche = parseFloat(document.getElementById("leche").value);
+            const lactando = document.getElementById("lactando").checked;
+
+            try {
+                await addDoc(collection(db, "users", currentUser.uid, "cows"), {
+                    name: nombre,
+                    breed: raza,
+                    weight: peso,
+                    age: edad,
+                    milkProduction: leche,
+                    isLactating: lactando,
+                    lotId: selectedLoteId,
+                    lotName: selectedLoteName, 
+                    createdAt: new Date()
+                });
+
+                mensaje.innerHTML = "<div class='alert-custom alert-success-custom'>✅ Vaca registrada con éxito en el lote: " + selectedLoteName + "</div>";
+                form.reset();
+                camposCrearLote.classList.add("hidden");
+                camposSeleccionarLote.classList.add("hidden");
+                
+                setTimeout(() => {
+                    mensaje.innerHTML = "<div class='alert-custom alert-success-custom'>✅ Bienvenido, puedes registrar tus vacas</div>";
+                }, 3000);
+            } catch (error) {
+                console.error("Error al guardar vaca:", error);
+                mensaje.innerHTML = "<div class='alert-custom alert-danger-custom'>❌ Error al guardar la vaca. Intenta nuevamente.</div>";
+            }
         });
     </script>
 
-
-
-
-  
 </body>
 </html>
