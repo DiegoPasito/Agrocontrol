@@ -186,6 +186,15 @@
     
     
     <h2 class="mb-4 text-center page-title">🐄 Mis Vacas Simmental</h2>
+    <!-- 🟦 Selector de Lote -->
+<div class="text-center mb-4">
+  <label class="fw-bold mb-2">Selecciona un lote</label>
+
+  <select id="selectorLote" class="form-select w-50 mx-auto">
+    <option value="">-- Selecciona un lote --</option>
+  </select>
+</div>
+
     <div id="tabla-simmental" class="table-responsive"></div>
   </main>
 
@@ -647,12 +656,26 @@
         </tr></thead><tbody>${filas}</tbody></table>`;
     }
         // 🟢 Cargar vacas Simmental
-    async function cargarVacas(userId) {
-      const q = query(collection(db, "users", userId, "cows"), where("breed", "==", "Simmental"));
-      const querySnap = await getDocs(q);
-      const vacas = querySnap.docs.map(docSnap => ({ id: docSnap.id, data: docSnap.data() }));
-      document.getElementById("tabla-simmental").innerHTML = crearTabla(vacas);
-    }
+    async function cargarVacas(userId, loteId = null) {
+  let filtros = [
+    where("breed", "==", "Simmental")
+  ];
+
+  if (loteId) {
+    filtros.push(where("lotId", "==", loteId));
+  }
+
+  const q = query(collection(db, "users", userId, "cows"), ...filtros);
+  const querySnap = await getDocs(q);
+
+  const vacas = querySnap.docs.map(docSnap => ({
+    id: docSnap.id,
+    data: docSnap.data()
+  }));
+
+  document.getElementById("tabla-simmental").innerHTML = crearTabla(vacas);
+}
+
      // 🟢 Pasar datos al modal de edición
     window.llenarFormulario = function(id, nombre, peso, edad, leche, lactando) {
       document.getElementById("edit-id").value = id;
@@ -695,13 +718,48 @@
     });
     // 🟢 Detectar sesión
     onAuthStateChanged(auth, (user) => {
-      if (user) {
-        usuarioId = user.uid;
-        cargarVacas(usuarioId);
-      } else {
-        document.getElementById("tabla-simmental").innerHTML = "<p class='text-danger text-center'>Debes iniciar sesión para ver tus vacas.</p>";
-      }
-    });
+  if (user) {
+    usuarioId = user.uid;
+    cargarLotesUsuario(); // solo carga lotes
+    document.getElementById("tabla-simmental").innerHTML = `
+      <p class='text-center text-muted'>Selecciona un lote</p>
+    `;
+  } else {
+    document.getElementById("tabla-simmental").innerHTML =
+      "<p class='text-danger text-center'>Debes iniciar sesión para ver tus vacas.</p>";
+  }
+});
+
+
+//Lotes
+async function cargarLotesUsuario() {
+  const lotesRef = collection(db, "users", usuarioId, "lots");
+  const snap = await getDocs(lotesRef);
+
+  const selector = document.getElementById("selectorLote");
+
+  snap.forEach(docu => {
+    const lote = docu.data();
+
+    selector.innerHTML += `
+      <option value="${docu.id}">${lote.name}</option>
+    `;
+  });
+}
+
+document.getElementById("selectorLote").addEventListener("change", function () {
+  const loteId = this.value;
+
+  if (loteId === "") {
+    document.getElementById("tabla-simmental").innerHTML =
+      "<p class='text-center text-muted'>Selecciona un lote</p>";
+  } else {
+    cargarVacas(usuarioId, loteId); // Filtrar por lote
+  }
+});
+
+
+
 
    //Medicamento
 
@@ -757,8 +815,7 @@ async function cargarTarjetasMedicamentosEstaticas() {
   }
 }
 
-
-  //Registro
+//Registro
 
  window.cerradoPorGuardar = false;
 
