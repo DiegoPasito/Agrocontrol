@@ -81,59 +81,120 @@
 <main class="mt-4">
 <div class="container">
  
+<section class="hero-banner">
+  <div class="carousel-container">
+    <img src="img/licensed-image.jpeg" class="carousel-image active" alt="Ganado en pastoreo">
+    <img src="img/photo-1451372116829-ba19e28465fc.avif" class="carousel-image"
+      alt="Vacas en un granero">
+    <img src="img/photo-1552639629-90f75f8cdfba.avif" class="carousel-image" alt="Vaca pastando">
+    <img src="img/photo-1620123357390-86c161acbb7e.avif" class="carousel-image" alt="Retrato de vaca">
+    <img src="img/photo-1653273269687-b50a21df1889.avif" class="carousel-image" alt="Ganado en campo">
+    <img src="img/photo-1655932651548-8163fe685d6c.avif" class="carousel-image"
+      alt="Vaca bebiendo agua">
+  </div>
 
+  <div class="banner-overlay">
+    <h1 id="saludo-dinamico">¡Buenas Tardes!</h1>
+    <h2>Gestión Inteligente para tu Ganado Bovino</h2>
+    <p>Usa este panel de control para obtener acceso rápido a tareas y estado actual de la finca.</p>
+  </div>
+</section>
 
-<div class="card mb-3" >
-  <div class="row g-0">
-    <div class="col-md-4  ">
-      <img src="img/Jersey Imagen 2.webp" class="img-fluid rounded-start" alt="...">
-    </div>
-    <div class="col-md-8">
-      <div class="card-body">
-    <h3 id="saludo-dinamico">👋 ¡Bienvenido!</h3>
-    <p>Este panel es exclusivo para quienes gestionan AGROCONTOL. Úsalo para tener acceso rápido a tareas y estado actual de la finca.</p>
-    <p id="fecha-hoy" class="fecha-panel"></p>
+<section class="stats-cards-grid mt-4">
+  <div class="row g-4">
+
+    <div class="col-lg-4 col-md-6 col-sm-12">
+      <div class="card stat-card vacas-reg">
+        <h3>Vacas Registradas</h3>
+        <h2 id="dato-vacas">...</h2>
+        <span class="stat-detail">Total de animales activos ↑</span>
       </div>
     </div>
-  </div>
-</div>
 
-
-<div class="row">
-  <div class="col-sm-6 mb-3 mb-sm-0">
-    <div class="card h-100">
-      <div class="card-body">
-        <h4>⚡ Accesos Rápidos</h4>
-        <ul>
-      <li><a href="#">➕ Registrar medicamento aplicado</a></li>
-      <li><a href="#">🐄 Ver vaca registrada</a></li>
-      <li><a href="#">📋 Añadir nueva vaca</a></li>
-      <li><a href="#">📈 Generar reporte mensual</a></li>
-      <li><a href="#">📅 Ver calendario de alertas</a></li>
-    </ul>
-        
+    <div class="col-lg-4 col-md-6 col-sm-12">
+      <div class="card stat-card salud-hato">
+        <h3>Salud del Hato</h3>
+        <div class="chart-circle">
+          <div class="circle-progress" id="porcentaje-salud">...</div>
+          <p class="stat-detail">Sano</p>
+        </div>
+        <span class="stat-detail small-detail">Última revisión: Hoy</span>
       </div>
     </div>
-  </div>
-  
-  <div class="col-sm-6">
-    <div class="card h-100">
-      <div class="card-body">
-        <h4>📊 Estadísticas</h4>
-          <p>Tipo de vacas:</p>
-            <ul>
-                <li>🐄 Lecheras: 6</li>
-                <li>🥩 Engorde: 3</li>
-                <li>❤️ Reproductoras: 2</li>
-            </ul>
-                <p>Último reporte generado: <strong>21/06/2025</strong></p>
+
+    <div class="col-lg-4 col-md-6 col-sm-12">
+      <div class="card stat-card proximo-evento">
+        <h3>Próximo Evento</h3>
+        <div class="event-icon-text">
+          <i class="fas fa-calendar-check fa-4x"></i>
+          <span id="proximo-evento-titulo" class="stat-number">...</span>
+        </div>
+        <span class="stat-detail small-detail" id="proximo-evento-fecha">
+          Próximo evento: ...
+        </span>
       </div>
     </div>
-  </div>
-</div>
-</div> <br>
 
+  </div>
+</section>
+
+<section class="secondary-content-grid mt-5">
+  <div class="row g-4">
+
+    <div class="col-lg-4 col-md-6 col-sm-12">
+      <div class="card quick-access-card">
+        <h3>Accesos Rápidos</h3>
+        <div class="access-list">
+          <a href="control.html" class="access-item">
+            <i class="bi bi-cow"></i> Registrar Vacas
+          </a>
+          <a href="Medicamentos.html" class="access-item">
+            <i class="bi bi-capsule"></i> Buscar Medicamentos
+          </a>
+          <a href="enfermedades.html" class="access-item">
+            <i class="bi bi-hospital"></i> Buscar Enfermedades
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-4 col-md-6 col-sm-12">
+      <div class="card chart-card salud-clave">
+        <h3>Producción (Litros/Día)</h3>
+        <p>Promedio Semanal</p>
+        <div class="chart-container">
+          <canvas id="produccion-chart"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-4 col-md-6 col-sm-12">
+      <div class="card chart-card estadisticas-clave">
+        <h3>Estadísticas Clave</h3>
+        <div class="chart-donut-sim">
+          <div class="chart-container">
+            <canvas id="hato-composition"></canvas>
+          </div>
+          <p>Vacas del hato (Lechera/Engorde)</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
 
   </main>
+  
+  <script>
+        const images = document.querySelectorAll(".carousel-image");
+        let current = 0;
+
+        function changeImage() {
+            images[current].classList.remove("active");
+            current = (current + 1) % images.length;
+            images[current].classList.add("active");
+        }
+
+        setInterval(changeImage, 3500);
+    </script>
 </body>
 </html>
