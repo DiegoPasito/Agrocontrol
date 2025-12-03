@@ -156,18 +156,101 @@
                             <input type="number" id="edad" class="form-control" placeholder="Ej: 3" required>
                         </div>
                     </div>
-
                     <div class="mb-4">
-                        <label class="form-label">Producción de Leche Diaria (Litros)</label>
-                        <input type="number" id="leche" class="form-control" placeholder="Ej: 15.5" step="any" required>
-                    </div>
+                            <label class="form-label">Género</label>
+                            <select id="genero" class="form-select" required>
+                                <option value="" disabled selected>Selecciona un género</option>
+                                <option value="Macho">Macho</option>
+                                <option value="Hembra">Hembra</option>
+                            </select>
+                        </div>
 
-                    <div class="mb-4">
+                        <!-- ETAPA CALCULADA -->
+                        <div id="etapa-box" class="alert alert-success d-none">
+                            <strong>Etapa:</strong> <span id="etapa-label"></span>
+                        </div>
+
+                    <div id="lactancia-container" class="mb-4 d-none">
                         <div class="form-check">
                             <input type="checkbox" id="lactando" class="form-check-input">
-                            <label class="form-check-label" for="lactando">¿Está actualmente lactando?</label>
+                            <label class="form-check-label" for="lactando">¿Está lactando?</label>
                         </div>
                     </div>
+
+                    <div id="produccion-container" class="mb-4 d-none">
+                        <label class="form-label">Producción de Leche (L/día)</label>
+                        <input type="number" id="leche" class="form-control" step="any">
+                    </div>
+
+                    <!-- BOTÓN MOSTRAR/OCULTAR -->
+                    <button type="button" id="toggle-avanzados" class="btn btn-outline-success mb-3">
+                        Mostrar detalles avanzados
+                    </button>
+
+                    <div id="detalles-avanzados" class="d-none">
+
+                        <div class="mb-3">
+                            <label class="form-label">Fecha de nacimiento</label>
+                            <input type="date" id="fecha-nacimiento" class="form-control">
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Propósito</label>
+                            <select id="proposito" class="form-select">
+                                <option value="">Selecciona</option>
+                                <option>Leche</option>
+                                <option>Engorde</option>
+                                <option>Venta</option>
+                                <option>Reproducción</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Origen</label>
+                            <select id="origen" class="form-select">
+                                <option value="">Selecciona</option>
+                                <option>Nacido en la finca</option>
+                                <option>Comprado</option>
+                                <option>Transferido</option>
+                                <option>Regalo</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Padre</label>
+                            <select id="padre" class="form-select">
+                                <option value="">Ninguno</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Madre</label>
+                            <select id="madre" class="form-select">
+                                <option value="">Ninguna</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">ID interno</label>
+                            <input type="text" id="id-interno" class="form-control">
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Chip ID</label>
+                            <input type="text" id="chip-id" class="form-control">
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Notas</label>
+                            <textarea id="notas" class="form-control" rows="3"></textarea>
+                        </div>
+
+                        <div class="mb-3 d-none" id="estado-container">
+                            <label class="form-label">Estado reproductivo</label>
+                            <input type="text" id="estado-reproductivo" class="form-control">
+                        </div>
+                    </div>
+
 
                     <button type="submit" class="btn btn-success">
                         Guardar Registro
@@ -196,80 +279,80 @@
         const auth = getAuth(app);
         const db = getFirestore(app);
 
-        const form = document.getElementById("form-vaca");
-        const mensaje = document.getElementById("mensaje");
-        const opcionLote = document.getElementById("opcion-lote");
-        const camposCrearLote = document.getElementById("campos-crear-lote");
-        const camposSeleccionarLote = document.getElementById("campos-seleccionar-lote");
-        const listaLotes = document.getElementById("lista-lotes");
+        /* =======================================
+   📌 VARIABLES BASE
+======================================= */
+const form = document.getElementById("form-vaca");
+const mensaje = document.getElementById("mensaje");
+const opcionLote = document.getElementById("opcion-lote");
+const camposCrearLote = document.getElementById("campos-crear-lote");
+const camposSeleccionarLote = document.getElementById("campos-seleccionar-lote");
+const listaLotes = document.getElementById("lista-lotes");
 
-        let currentUser = null;
-        let selectedLoteId = null;
-        let selectedLoteName = null;
+let currentUser = null;
+let selectedLoteId = null;
+let selectedLoteName = null;
 
-        // Mostrar campos según la opción seleccionada
-        opcionLote.addEventListener("change", async function() {
-            camposCrearLote.classList.add("hidden");
-            camposSeleccionarLote.classList.add("hidden");
-            selectedLoteId = null;
-            selectedLoteName = null;
+/* =======================================
+   🟦 MOSTRAR CAMPOS SEGÚN OPCIÓN LOTE
+======================================= */
+opcionLote.addEventListener("change", async () => {
+    camposCrearLote.classList.add("hidden");
+    camposSeleccionarLote.classList.add("hidden");
+    selectedLoteId = null;
 
-            if (this.value === "crear") {
-                camposCrearLote.classList.remove("hidden");
-                document.getElementById("nombre-lote").setAttribute("required", "");
-                document.getElementById("descripcion-lote").setAttribute("required", "");
-            } else if (this.value === "seleccionar") {
-                camposSeleccionarLote.classList.remove("hidden");
-                document.getElementById("nombre-lote").removeAttribute("required");
-                document.getElementById("descripcion-lote").removeAttribute("required");
-                await cargarLotes();
-            }
-        });
+    if (opcionLote.value === "crear") {
+        camposCrearLote.classList.remove("hidden");
+    }
 
-        async function cargarLotes() {
-            listaLotes.innerHTML = "<p style='text-align: center; color: #2b8c35;'>Cargando lotes...</p>";
+    if (opcionLote.value === "seleccionar") {
+        camposSeleccionarLote.classList.remove("hidden");
+        await cargarLotes();
+    }
+});
 
-            try {
-                // COLECCIÓN CORRECTA
-                const lotesRef = collection(db, "users", currentUser.uid, "lots");
-                const lotesSnapshot = await getDocs(query(lotesRef));
+/* =======================================
+   📥 CARGAR LOTES DEL USUARIO
+======================================= */
+async function cargarLotes() {
+    listaLotes.innerHTML = "<p>Cargando lotes...</p>";
 
-                if (lotesSnapshot.empty) {
-                    listaLotes.innerHTML = "<p style='text-align: center; color: #721c24;'>No hay lotes creados.</p>";
-                    return;
-                }
+    const lotesRef = collection(db, "users", currentUser.uid, "lots");
+    const lotesSnapshot = await getDocs(query(lotesRef));
 
-                listaLotes.innerHTML = "";
-                lotesSnapshot.forEach((doc) => {
-                    const lote = doc.data();
-                    const loteDiv = document.createElement("div");
-                    loteDiv.className = "lote-item";
-                    loteDiv.onclick = function() {
+    if (lotesSnapshot.empty) {
+        listaLotes.innerHTML = "<p>No hay lotes creados.</p>";
+        return;
+    }
 
-                        document.querySelectorAll('.lote-item').forEach(item => {
-                            item.classList.remove('selected');
-                        });
+    listaLotes.innerHTML = "";
 
-                        this.classList.add('selected');
-                        selectedLoteId = doc.id;
-                        selectedLoteName = lote.name;  // <- CORRECTO
-                    };
+    lotesSnapshot.forEach((doc) => {
+        const lote = doc.data();
 
-                    loteDiv.innerHTML = `
-                        <h5>${lote.name}</h5>
-                        <p>${lote.description}</p>
-                    `;
-                    listaLotes.appendChild(loteDiv);
-                });
-            } catch (error) {
-                console.error("Error al cargar lotes:", error);
-                listaLotes.innerHTML = "<p style='text-align: center; color: #721c24;'>Error al cargar los lotes.</p>";
-            }
-        }
+        const item = document.createElement("div");
+        item.className = "lote-item";
+        item.innerHTML = `
+            <h5>${lote.name}</h5>
+            <p>${lote.description}</p>
+        `;
 
+        item.onclick = () => {
+            document.querySelectorAll('.lote-item').forEach(i => i.classList.remove('selected'));
+            item.classList.add('selected');
+            selectedLoteId = doc.id;
+            selectedLoteName = lote.name;
+        };
 
-        onAuthStateChanged(auth, (user) => {
-            if (!user) {
+        listaLotes.appendChild(item);
+    });
+}
+
+/* =======================================
+   🔐 AUTENTICACIÓN
+======================================= */
+onAuthStateChanged(auth, (user) => {
+    if (!user) {
                 mensaje.innerHTML = "<div class='alert-custom alert-danger-custom'>⚠️ Debes iniciar sesión para registrar vacas.</div>";
                 form.style.display = "none";
                 return;
@@ -278,70 +361,201 @@
             currentUser = user;
             form.style.display = "block";
             mensaje.innerHTML = "<div class='alert-custom alert-success-custom'>✅ Bienvenido, puedes registrar tus vacas</div>";
-        });
 
-        form.addEventListener("submit", async (e) => {
-            e.preventDefault();
+    cargarPadresMadres();
+});
 
-            const opcion = opcionLote.value;
-            
-            // Validar lote según la opción
-            if (opcion === "crear") {
-                const nombreLote = document.getElementById("nombre-lote").value;
-                const descripcionLote = document.getElementById("descripcion-lote").value;
+/* =======================================
+   🎛 MOSTRAR/OCULTAR DETALLES AVANZADOS
+======================================== */
+const toggleBtn = document.getElementById("toggle-avanzados");
+const detalles = document.getElementById("detalles-avanzados");
 
-                if (!nombreLote || !descripcionLote) {
-                    mensaje.innerHTML = "<div class='alert-custom alert-danger-custom'>❌ Por favor completa los datos del lote.</div>";
-                    return;
-                }
+toggleBtn.addEventListener("click", () => {
+    detalles.classList.toggle("d-none");
 
-                // Crear el lote primero
-                try {
-                    const docRef = await addDoc(collection(db, "users", currentUser.uid, "lots"), {
-                        name: nombreLote,
-                        description: descripcionLote,
-                        userId: currentUser.uid,
-                        createdAt: new Date()
-                    });
-                    selectedLoteId = docRef.id;
-                    selectedLoteName = nombreLote;
-                } catch (error) {
-                    console.error("Error al crear lote:", error);
-                    mensaje.innerHTML = "<div class='alert-custom alert-danger-custom'>❌ Error al crear el lote.</div>";
-                    return;
-                }
-            } else if (opcion === "seleccionar") {
-                if (!selectedLoteId) {
-                    mensaje.innerHTML = "<div class='alert-custom alert-danger-custom'>❌ Por favor selecciona un lote de la lista.</div>";
-                    return;
-                }
-            } else {
-                mensaje.innerHTML = "<div class='alert-custom alert-danger-custom'>❌ Por favor selecciona crear o seleccionar lote.</div>";
-                return;
-            }
+    if (detalles.classList.contains("d-none")) {
+        toggleBtn.textContent = "Mostrar detalles avanzados";
+    } else {
+        toggleBtn.textContent = "Ocultar detalles avanzados";
+    }
+});
 
-            // Ahora guardar la vaca
-            const nombre = document.getElementById("nombre").value;
-            const raza = document.getElementById("raza").value;
-            const peso = parseFloat(document.getElementById("peso").value);
-            const edad = parseInt(document.getElementById("edad").value);
-            const leche = parseFloat(document.getElementById("leche").value);
-            const lactando = document.getElementById("lactando").checked;
 
-            try {
-                await addDoc(collection(db, "users", currentUser.uid, "cows"), {
-                    name: nombre,
-                    breed: raza,
-                    weight: peso,
-                    age: edad,
-                    milkProduction: leche,
-                    isLactating: lactando,
-                    lotId: selectedLoteId,
-                    lotName: selectedLoteName, 
-                    createdAt: new Date()
-                });
+/* =======================================
+   🐄 CARGAR PADRES Y MADRES EXISTENTES
+======================================= */
+async function cargarPadresMadres() {
+    if (!currentUser) return;
 
-                mensaje.innerHTML = "<div class='alert-custom alert-success-custom'>✅ Vaca registrada con éxito en el lote: " + selectedLoteName + "</div>";
+    const padreSel = document.getElementById("padre");
+    const madreSel = document.getElementById("madre");
+
+    padreSel.innerHTML = "<option value=''>Ninguno</option>";
+    madreSel.innerHTML = "<option value=''>Ninguna</option>";
+
+    const cowsRef = collection(db, "users", currentUser.uid, "cows");
+    const snap = await getDocs(cowsRef);
+
+    snap.forEach(doc => {
+    const cow = doc.data();
+
+    // SOLO MACHOS PARA PADRE
+    if (cow.gender === "Macho") {
+        padreSel.innerHTML += `
+            <option value="${doc.id}" data-name="${cow.name}">
+                ${cow.name}
+            </option>`;
+    }
+
+    // SOLO HEMBRAS PARA MADRE
+    if (cow.gender === "Hembra") {
+        madreSel.innerHTML += `
+            <option value="${doc.id}" data-name="${cow.name}">
+                ${cow.name}
+            </option>`;
+    }
+});
+
+}
+
+/* =======================================
+   🧮 CALCULAR ETAPA AUTOMÁTICA
+======================================= */
+const edad = document.getElementById("edad");
+const genero = document.getElementById("genero");
+const etapaBox = document.getElementById("etapa-box");
+const etapaLabel = document.getElementById("etapa-label");
+
+function calcularEtapa() {
+    if (!edad.value || !genero.value) return etapaBox.classList.add("d-none");
+
+    let e = "";
+    const age = parseFloat(edad.value);
+
+    if (genero.value === "Macho") {
+        if (age < 1) e = "Ternero";
+        else if (age < 2) e = "Novillo";
+        else e = "Toro";
+    } else {
+        if (age < 1) e = "Ternera";
+        else if (age < 2) e = "Novilla";
+        else e = "Vaca adulta";
+    }
+
+    etapaLabel.textContent = e;
+    etapaBox.classList.remove("d-none");
+}
+
+edad.addEventListener("input", calcularEtapa);
+genero.addEventListener("change", calcularEtapa);
+
+/* =======================================
+   🍼 MOSTRAR CAMPOS: LACTANCIA Y PRODUCCIÓN
+======================================= */
+const lactanciaContainer = document.getElementById("lactancia-container");
+const produccionContainer = document.getElementById("produccion-container");
+const lactandoCheck = document.getElementById("lactando");
+
+genero.addEventListener("change", () => {
+    if (genero.value === "Hembra") lactanciaContainer.classList.remove("d-none");
+    else {
+        lactanciaContainer.classList.add("d-none");
+        lactandoCheck.checked = false;
+        produccionContainer.classList.add("d-none");
+    }
+});
+
+lactandoCheck.addEventListener("change", () => {
+    produccionContainer.classList.toggle("d-none", !lactandoCheck.checked);
+});
+
+const estadoContainer = document.getElementById("estado-container");
+
+genero.addEventListener("change", () => {
+
+    // manejo lactancia ya existente...
+    if (genero.value === "Hembra") {
+        lactanciaContainer.classList.remove("d-none");
+        estadoContainer.classList.remove("d-none"); // 👈 MOSTRAR ESTADO
+    } else {
+        lactanciaContainer.classList.add("d-none");
+        estadoContainer.classList.add("d-none");   // 👈 OCULTAR ESTADO
+        lactandoCheck.checked = false;
+        produccionContainer.classList.add("d-none");
+    }
+
+});
+
+
+/* =======================================
+   🎯 GUARDAR VACA
+======================================= */
+form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    try {
+
+        /* VALIDAR LOTE */
+        if (opcionLote.value === "crear") {
+            const name = document.getElementById("nombre-lote").value;
+            const desc = document.getElementById("descripcion-lote").value;
+
+            const docRef = await addDoc(collection(db, "users", currentUser.uid, "lots"), {
+                name,
+                description: desc,
+                userId: currentUser.uid,
+                createdAt: new Date()
+            });
+
+            selectedLoteId = docRef.id;
+            selectedLoteName = name;
+        }
+
+        if (!selectedLoteId) {
+            mensaje.innerHTML = `<div class="alert-danger-custom">Debes seleccionar un lote.</div>`;
+            return;
+        }
+        const padreSelect = document.getElementById("padre");
+        const madreSelect = document.getElementById("madre");
+
+        const fatherId = padreSelect.value || null;
+        const fatherName =
+            padreSelect.options[padreSelect.selectedIndex]?.dataset.name || null;
+
+        const motherId = madreSelect.value || null;
+        const motherName =
+        madreSelect.options[madreSelect.selectedIndex]?.dataset.name || null;
+
+
+        /* GUARDAR LA VACA */
+        const vaca = {
+            name: document.getElementById("nombre").value,
+            breed: document.getElementById("raza").value,
+            weight: parseFloat(document.getElementById("peso").value),
+            age: parseInt(document.getElementById("edad").value),
+            gender: document.getElementById("genero").value,
+            milkProduction: parseFloat(document.getElementById("leche").value) || 0,
+            isLactating: lactandoCheck.checked,
+            lotId: selectedLoteId,
+            lotName: selectedLoteName,
+            fatherId: fatherId,
+            fatherName: fatherName,
+            motherId: motherId,
+            motherName: motherName,
+            birthDate: document.getElementById("fecha-nacimiento").value || null,
+            purpose: document.getElementById("proposito").value || "",
+            origin: document.getElementById("origen").value || "",
+            internalId: document.getElementById("id-interno").value || "",
+            chipId: document.getElementById("chip-id").value || "",
+            notes: document.getElementById("notas").value || "",
+            reproductiveStatus: document.getElementById("estado-reproductivo").value || "",
+            createdAt: new Date()
+        };
+
+        await addDoc(collection(db, "users", currentUser.uid, "cows"), vaca);
+
+        mensaje.innerHTML = "<div class='alert-custom alert-success-custom'>✅ Vaca registrada con éxito en el lote: " + selectedLoteName + "</div>";
                 form.reset();
                 camposCrearLote.classList.add("hidden");
                 camposSeleccionarLote.classList.add("hidden");
@@ -354,7 +568,8 @@
                 mensaje.innerHTML = "<div class='alert-custom alert-danger-custom'>❌ Error al guardar la vaca. Intenta nuevamente.</div>";
             }
         });
-    </script>
+
+</script>
 
 </body>
 </html>

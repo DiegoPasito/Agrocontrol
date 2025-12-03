@@ -191,14 +191,17 @@
     
 
     <h2 class="mb-4 text-center page-title">🐮 Mis Vacas Girolando</h2>
-    <!-- 🟦 Selector de Lote -->
-<div class="text-center mb-4">
-  <label class="fw-bold mb-2">Selecciona un lote</label>
-
-  <select id="selectorLote" class="form-select w-50 mx-auto">
-    <option value="">-- Selecciona un lote --</option>
-  </select>
-</div>
+   <!-- 🟦 Selector de Lote Mejorado -->
+    <div class="selector-lote-container">
+      <div class="selector-lote-card">
+        <div class="selector-icono">🐄</div>
+        <label class="selector-label">Selecciona un lote</label>
+        <select id="selectorLote" class="selector-lote-custom">
+          <option value="">-- Selecciona un lote --</option>
+        </select>
+        <div class="selector-decoracion"></div>
+      </div>
+    </div>
 
     <div id="tabla-girolando" class="table-responsive"></div>
   </main>
@@ -616,50 +619,227 @@
     const db = getFirestore(app);
 
     let usuarioId = null;
+    let loteSeleccionado = "";
 
-    function crearTabla(vacas) {
-      if (vacas.length === 0) return "<p class='text-center text-muted'>No hay vacas Girolando registradas.</p>";
-      let filas = vacas.map(v => `
-        <tr>
-          <td>${v.data.name}</td>
-          <td>${v.data.weight} kg</td>
-          <td>${v.data.age} años</td>
-          <td>${v.data.milkProduction ?? "-"} L</td>
-          <td>${v.data.isLactating ? "Sí" : "No"}</td>
-          <td class="text-center">
-          <div class="d-flex flex-wrap justify-content-center gap-2 w-100 text-center">
-            <button class="btn btn-verde-pastel btn-sm"
-              data-bs-toggle="modal" data-bs-target="#editarModal"
-              onclick="llenarFormulario('${v.id}','${v.data.name}','${v.data.weight}','${v.data.age}','${v.data.milkProduction ?? 0}','${v.data.isLactating}')">
-              Editar
-            </button>
+// 🟢 Crear tarjetas en lugar de tabla
+function crearTarjetasVacas(vacas) {
+  if (vacas.length === 0) return "<p class='text-center text-muted'>No hay vacas Jersey registradas.</p>";
 
-            <button class="btn btn-verde-pastel btn-sm"
-              data-bs-toggle="modal" data-bs-target="#eliminarModal"
-              onclick="prepararEliminar('${v.id}','${v.data.name}')">
-              Eliminar
-            </button>
+  let html = '<div class="row g-4">';
 
-            <!-- NUEVO BOTÓN -->
-            <button class="btn btn-verde-pastel btn-sm text-white"
-              onclick="abrirPanelRegistros('${v.id}')">
-              Registros
-            </button>
-
-            <!-- 🔵 Nuevo botón: Historial -->
-            <button class="btn btn-verde-pastel btn-sm text-black"
-              onclick="verHistorial('${v.id}')">
-              Historial
-            </button>
+  vacas.forEach(v => {
+    const data = v.data;
+    
+    html += `
+      <div class="col-md-6 col-lg-4">
+        <div class="vaca-card" data-id="${v.id}">
+          
+          <!-- Encabezado con nombre y estado -->
+          <div class="vaca-card-header">
+            <div class="d-flex justify-content-between align-items-start">
+              <div>
+                <h5 class="vaca-nombre mb-1">🐄 ${data.name}</h5>
+                ${data.internalId ? `<small class="id-interno">ID: ${data.internalId}</small>` : ''}
+              </div>
+              <span class="badge-lactando ${data.isLactating ? 'lactando' : 'seca'}">
+                ${data.isLactating ? '✓ Lactando' : '○ Seca'}
+              </span>
+            </div>
           </div>
-        </td>
-        </tr>
-      `).join("");
-      return `<table class="table table-striped table-hover shadow rounded">
-        <thead class="table-verde"><tr>
-          <th>Nombre</th><th>Peso</th><th>Edad</th><th>Leche (L/día)</th><th>Lactando</th><th>Acciones</th>
-        </tr></thead><tbody>${filas}</tbody></table>`;
-    }
+
+          <!-- Info básica siempre visible -->
+          <div class="vaca-card-body">
+            <div class="info-basica">
+              <div class="info-item">
+                <span class="info-icon">⚖️</span>
+                <div>
+                  <small class="text-muted d-block">Peso</small>
+                  <strong class="info-valor">${data.weight} kg</strong>
+                </div>
+              </div>
+
+              <div class="info-item">
+                <span class="info-icon">📅</span>
+                <div>
+                  <small class="text-muted d-block">Edad</small>
+                  <strong class="info-valor">${data.age} años</strong>
+                </div>
+              </div>
+
+              <div class="info-item">
+                <span class="info-icon">🥛</span>
+                <div>
+                  <small class="text-muted d-block">Producción</small>
+                  <strong class="info-valor">${data.milkProduction ?? '-'} L/día</strong>
+                </div>
+              </div>
+            </div>
+
+            <!-- Detalles expandibles (ocultos por defecto) -->
+            <div class="vaca-detalles" id="detalles-${v.id}" style="display: none;">
+              
+              <div class="detalles-grid">
+                ${data.gender ? `
+                  <div class="detalle-item">
+                    <span class="detalle-icono">⚥</span>
+                    <div>
+                      <small class="detalle-label">Género</small>
+                      <span class="detalle-valor">${data.gender}</span>
+                    </div>
+                  </div>
+                ` : ''}
+
+                ${data.birthDate ? `
+                  <div class="detalle-item">
+                    <span class="detalle-icono">🎂</span>
+                    <div>
+                      <small class="detalle-label">Nacimiento</small>
+                      <span class="detalle-valor">${new Date(data.birthDate).toLocaleDateString()}</span>
+                    </div>
+                  </div>
+                ` : ''}
+
+                ${data.fatherName ? `
+                  <div class="detalle-item">
+                    <span class="detalle-icono">♂️</span>
+                    <div>
+                      <small class="detalle-label">Padre</small>
+                      <span class="detalle-valor">${data.fatherName}</span>
+                    </div>
+                  </div>
+                ` : ''}
+
+                ${data.motherName ? `
+                  <div class="detalle-item">
+                    <span class="detalle-icono">♀️</span>
+                    <div>
+                      <small class="detalle-label">Madre</small>
+                      <span class="detalle-valor">${data.motherName}</span>
+                    </div>
+                  </div>
+                ` : ''}
+
+
+                ${data.gender === "Hembra" && data.reproductiveStatus ? `
+                  <div class="detalle-item">
+                    <span class="detalle-icono">🥛</span>
+                    <div>
+                      <small class="detalle-label">Estado reproductivo</small>
+                      <span class="detalle-valor">${data.reproductiveStatus}</span>
+                    </div>
+                  </div>
+                ` : ''}
+
+
+                ${data.purpose ? `
+                  <div class="detalle-item">
+                    <span class="detalle-icono">🎯</span>
+                    <div>
+                      <small class="detalle-label">Propósito</small>
+                      <span class="detalle-valor">${data.purpose}</span>
+                    </div>
+                  </div>
+                ` : ''}
+
+                ${data.origin ? `
+                  <div class="detalle-item">
+                    <span class="detalle-icono">📍</span>
+                    <div>
+                      <small class="detalle-label">Origen</small>
+                      <span class="detalle-valor">${data.origin}</span>
+                    </div>
+                  </div>
+                ` : ''}
+
+                ${data.chipId ? `
+                  <div class="detalle-item">
+                    <span class="detalle-icono">💳</span>
+                    <div>
+                      <small class="detalle-label">Chip ID</small>
+                      <span class="detalle-valor">${data.chipId}</span>
+                    </div>
+                  </div>
+                ` : ''}
+
+                ${data.notes ? `
+                  <div class="detalle-item detalle-full">
+                    <span class="detalle-icono">📝</span>
+                    <div>
+                      <small class="detalle-label">Notas</small>
+                      <span class="detalle-valor">${data.notes}</span>
+                    </div>
+                  </div>
+                ` : ''}
+              </div>
+            </div>
+
+            <!-- Botón compacto para expandir -->
+            <button class="btn-expandir-compacto" onclick="toggleDetalles('${v.id}')">
+              <span class="expandir-texto">Más información</span>
+              <span class="expandir-icono">›</span>
+            </button>
+
+            <!-- Acciones -->
+            <div class="vaca-acciones">
+              <button class="btn-accion btn-verde-pastel" 
+                      data-bs-toggle="modal" 
+                      data-bs-target="#editarModal"
+                      onclick="llenarFormulario('${v.id}','${data.name}','${data.weight}','${data.age}','${data.milkProduction ?? 0}','${data.isLactating}')">
+                
+                <span class="btn-texto">Editar</span>
+              </button>
+
+              <button class="btn-accion btn-verde-pastel"
+                      onclick="abrirPanelRegistros('${v.id}')">
+                
+                <span class="btn-texto">Registros</span>
+              </button>
+
+              <button class="btn-accion btn-verde-pastel"
+                      onclick="verHistorial('${v.id}')">
+                
+                <span class="btn-texto">Historial</span>
+              </button>
+
+              <button class="btn-accion btn-verde-pastel"
+                      data-bs-toggle="modal" 
+                      data-bs-target="#eliminarModal"
+                      onclick="prepararEliminar('${v.id}','${data.name}')">
+                
+                <span class="btn-texto">Eliminar</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+  });
+
+  html += '</div>';
+  return html;
+}
+
+// Función para expandir/contraer detalles
+window.toggleDetalles = function(vacaId) {
+  const detalles = document.getElementById(`detalles-${vacaId}`);
+  const boton = event.target.closest('.btn-expandir-compacto');
+  const texto = boton.querySelector('.expandir-texto');
+  const icono = boton.querySelector('.expandir-icono');
+  
+  if (detalles.style.display === 'none') {
+    detalles.style.display = 'block';
+    texto.textContent = 'Menos información';
+    icono.textContent = '‹';
+    icono.style.transform = 'rotate(-90deg)';
+    boton.classList.add('expandido');
+  } else {
+    detalles.style.display = 'none';
+    texto.textContent = 'Más información';
+    icono.textContent = '›';
+    icono.style.transform = 'rotate(90deg)';
+    boton.classList.remove('expandido');
+  }
+};
 
         // 🟢 Cargar vacas Girolando
    async function cargarVacas(userId, loteId = null) {
@@ -679,7 +859,7 @@
     data: docSnap.data()
   }));
 
-  document.getElementById("tabla-girolando").innerHTML = crearTabla(vacas);
+  document.getElementById("tabla-girolando").innerHTML = crearTarjetasVacas(vacas);
 }
 
      // 🟢 Pasar datos al modal de edición
@@ -708,7 +888,7 @@
         isLactating: lactando
       });
       bootstrap.Modal.getInstance(document.getElementById("editarModal")).hide();
-      cargarVacas(usuarioId);
+      cargarVacas(usuarioId, loteSeleccionado);
     });
     // 🟢 Eliminar vaca
     window.prepararEliminar = function(id, nombre) {
@@ -720,7 +900,7 @@
       const id = document.getElementById("delete-id").value;
       await deleteDoc(doc(db, "users", usuarioId, "cows", id));
       bootstrap.Modal.getInstance(document.getElementById("eliminarModal")).hide();
-      cargarVacas(usuarioId);
+      cargarVacas(usuarioId, loteSeleccionado);
     });
     // 🟢 Detectar sesión
     onAuthStateChanged(auth, (user) => {
@@ -753,16 +933,20 @@
   });
 }
 
-document.getElementById("selectorLote").addEventListener("change", function () {
-  const loteId = this.value;
 
-  if (loteId === "") {
+//SE LE APLICA A LAS OTRAS VACAS
+document.getElementById("selectorLote").addEventListener("change", function () {
+  loteSeleccionado = this.value; // 🟢 Guardar lote seleccionado
+
+  if (loteSeleccionado === "") {
     document.getElementById("tabla-girolando").innerHTML =
       "<p class='text-center text-muted'>Selecciona un lote</p>";
   } else {
-    cargarVacas(usuarioId, loteId); // Filtrar por lote
+    cargarVacas(usuarioId, loteSeleccionado); // 🟢 Filtrar por lote
   }
 });
+
+
 
 
 
