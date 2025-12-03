@@ -145,6 +145,7 @@ body {
     height: 200%;
     background: radial-gradient(circle, rgba(54, 172, 66, 0.05) 0%, transparent 70%);
     transition: transform 0.6s ease;
+    pointer-events: none;
 }
 
 .card:hover::before {
@@ -304,7 +305,343 @@ html {
     background: linear-gradient(135deg, #2b8c35, #1e7e34);
 }
 
+/* ======================================================
+   ADICIONAL: HERO BANNER, CARRUSEL, STATS Y GRID SECUNDARIO
+   (pegar al final de contenidoPrincipal.css)
+   ====================================================== */
 
+/* HERO BANNER + CARRUSEL */
+.hero-banner {
+    position: relative;
+    width: 100%;
+    height: 55vh;
+    min-height: 300px;
+    overflow: hidden;
+    border-radius: 0 0 25px 25px;
+    box-shadow: 0 8px 25px rgba(54, 172, 66, 0.12);
+    margin-bottom: 32px;
+    background-color: #e9f6ec;
+    /* fallback si las imágenes tardan en cargar */
+}
+
+/* Contenedor del carrusel (las imágenes absolutas dentro) */
+.carousel-container {
+    position: absolute;
+    inset: 0;
+    /* top:0; right:0; bottom:0; left:0; */
+    width: 100%;
+    height: 100%;
+}
+
+/* Cada imagen del carrusel */
+.carousel-image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 1.2s ease-in-out, transform 8s linear;
+    will-change: opacity, transform;
+    transform: scale(1.02);
+}
+
+/* Imagen visible */
+.carousel-image.active {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* Overlay central con texto */
+.banner-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 28px 20px;
+    background: rgba(0, 0, 0, 0.30);
+    /* semitransparente para contraste con imágenes */
+    color: #ffffff;
+}
+
+/* Texto del overlay */
+.banner-overlay h1 {
+    font-size: 2.6rem;
+    line-height: 1.02;
+    margin: 0 0 8px 0;
+    font-weight: 700;
+    text-shadow: 0 6px 18px rgba(0, 0, 0, 0.45);
+}
+
+.banner-overlay h2 {
+    font-size: 1.25rem;
+    margin: 0 0 12px 0;
+    font-weight: 500;
+    text-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+}
+
+.banner-overlay p {
+    font-size: 1rem;
+    max-width: 880px;
+    margin: 0 auto;
+    color: rgba(255, 255, 255, 0.95);
+}
+
+/* BOTONES (si decides agregarlos en HTML) */
+.banner-buttons {
+    margin-top: 18px;
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+/* estéticas para botones (no sobrescriben clases .btn existentes) */
+.banner-buttons .btn {
+    padding: 10px 18px;
+    border-radius: 10px;
+    font-weight: 600;
+}
+
+/* GRID DE TARJETAS PRINCIPALES (STATS) */
+.stats-cards-grid {
+    width: 100%;
+    padding: 24px 12px;
+    display: grid;
+    gap: 22px;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    align-items: start;
+}
+
+/* Ajustes visuales de cada tarjeta estadística */
+.stat-card {
+    padding: 20px;
+    border-radius: 14px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(245, 250, 245, 0.98));
+    box-shadow: 0 8px 20px rgba(35, 115, 55, 0.06);
+    border: 1px solid rgba(43, 140, 53, 0.08);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 8px;
+    min-height: 130px;
+}
+
+/* sobrescribir solo tipografía/colores puntuales sin tocar estructura .card */
+.stat-card h3 {
+    font-size: 1.05rem;
+    color: #1e7e34;
+    margin: 0;
+    font-weight: 700;
+}
+
+.stat-card h2,
+.stat-card .stat-number,
+.stat-card .circle-progress {
+    font-size: 2.1rem;
+    color: #2b8c35;
+    margin: 6px 0 0 0;
+    font-weight: 800;
+}
+
+.stat-detail {
+    margin-top: 6px;
+    color: #486a4a;
+    font-size: 0.9rem;
+}
+
+/* círculo de progreso (salud del hato) - diseño estático, JS puede actualizarlo */
+.chart-circle {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 8px 0;
+    background: radial-gradient(closest-side, #f0f5f0 86%, transparent 87%),
+        conic-gradient(#43A047 68%, #E0E0E0 0);
+    box-shadow: inset 0 -6px 18px rgba(0, 0, 0, 0.03);
+}
+
+/* Sección secundaria (accesos + gráficas) */
+.secondary-content-grid {
+    width: 100%;
+    padding: 24px 12px;
+    display: grid;
+    gap: 22px;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    align-items: start;
+}
+
+/* tarjeta de accesos rápidos */
+.quick-access-card {
+    padding: 20px;
+    border-radius: 14px;
+    background: linear-gradient(180deg, rgba(245, 252, 245, 0.98), rgba(235, 249, 239, 0.98));
+    box-shadow: 0 8px 20px rgba(35, 115, 55, 0.04);
+    border: 1px solid rgba(43, 140, 53, 0.06);
+}
+
+.access-list {
+    margin-top: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* Evito colisiones con reglas previas; mantengo estilos visuales */
+.access-item {
+    padding: 12px 14px;
+    border-radius: 12px;
+    background: #f4fbf4;
+    color: #1e6f2f;
+    text-decoration: none;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid rgba(43, 140, 53, 0.06);
+    transition: transform 0.18s ease, background 0.18s ease;
+}
+
+.access-item:hover {
+    /* Mantenemos el efecto de desplazamiento que ya tienes: */
+    transform: translateX(6px);
+
+    /* CAMBIO SEGURO: Usamos un color verde claro visible, similar a tu menú */
+    background: #c5f0c9;
+    /* Un verde claro y suave */
+
+    /* Aseguramos un buen contraste en el texto */
+    color: #1a5e29;
+}
+
+/* tarjetas de gráficos */
+.chart-card {
+    padding: 18px;
+    border-radius: 14px;
+    background: linear-gradient(180deg, #ffffff, #f7fbf7);
+    box-shadow: 0 8px 20px rgba(35, 115, 55, 0.04);
+    border: 1px solid rgba(43, 140, 53, 0.06);
+    min-height: 220px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* contenedor para canvas */
+.chart-container {
+    width: 100%;
+    height: 220px;
+    position: relative;
+}
+
+/* DONUT pequeño centro */
+.chart-donut-sim {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ajustes de íconos/eventos */
+.event-icon-text {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+/* pequeñas utilidades */
+.stat-number {
+    font-size: 2rem;
+    color: #2b8c35;
+    font-weight: 700;
+}
+
+/* ANIMACIONES SUAVES */
+.hero-banner,
+.stat-card,
+.quick-access-card,
+.chart-card {
+    transition: transform 0.28s ease, box-shadow 0.28s ease;
+}
+
+.hero-banner:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 18px 40px rgba(54, 172, 66, 0.08);
+}
+
+/* RESPONSIVE: ajustes puntuales */
+@media (max-width: 992px) {
+    .banner-overlay h1 {
+        font-size: 2.2rem;
+    }
+
+    .banner-overlay h2 {
+        font-size: 1.05rem;
+    }
+
+    .hero-banner {
+        height: 48vh;
+    }
+}
+
+@media (max-width: 768px) {
+    .banner-overlay h1 {
+        font-size: 1.6rem;
+    }
+
+    .banner-overlay h2 {
+        font-size: 1rem;
+    }
+
+    .banner-overlay p {
+        font-size: 0.92rem;
+        padding: 0 12px;
+    }
+
+    .hero-banner {
+        height: 36vh;
+        border-radius: 12px;
+        margin-bottom: 18px;
+    }
+
+    .chart-container {
+        height: 180px;
+    }
+
+    .stats-cards-grid {
+        gap: 16px;
+        padding: 14px 8px;
+    }
+
+    .secondary-content-grid {
+        gap: 16px;
+        padding: 14px 8px;
+    }
+}
+
+/* acceso por teclado / foco: mejora accesibilidad */
+.access-item:focus,
+.access-item:active,
+.access-item:hover {
+    outline: none;
+    box-shadow: 0 6px 18px rgba(43, 140, 53, 0.08);
+}
+
+/* pequeño fallback si imagen no carga: color y texto centrado */
+.hero-banner::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(232, 248, 234, 0.22), rgba(224, 249, 232, 0.12));
+    pointer-events: none;
+    z-index: 2;
+}
 
 
 
