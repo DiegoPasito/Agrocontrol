@@ -390,3 +390,26 @@ aside.col-md-4 *::after {
     background-color: #33a852 !important;
     color: white !important;
 }
+
+/* Scroll suave */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Barra de scroll personalizada */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #e8f8ea;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, #36ac42, #2b8c35);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(135deg, #2b8c35, #1e7e34);
+}
