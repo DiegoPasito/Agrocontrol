@@ -218,22 +218,18 @@ if (registerForm) {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
 
-      // Actualizar perfil
+      // Actualizar displayName del perfil
       await updateProfile(user, { displayName: nombre });
 
-      // Crear documento en Firestore
+      // Crear documento en Firestore - Compatible 100% con la app móvil
       await setDoc(doc(db, "users", user.uid), {
-        // Nombre unificado para compatibilidad total
-        name: nombre,      
-        nombre: nombre,    
-        dbName: nombre,    
-
+        nombre: nombre,           // Usado en la web
+        dbName: nombre,           // Usado en la app móvil
         email: email,
         uid: user.uid,
         fechaRegistro: serverTimestamp(),
         ultimoAcceso: serverTimestamp()
       });
-
 
       showPrompt("Cuenta creada exitosamente", "Éxito");
 
@@ -252,8 +248,8 @@ if (registerForm) {
         showPrompt("Ocurrió un error.", "Error");
       }
     }
-  });
-}
+      });
+    }
 </script>
 
   <!-- Bootstrap JS -->
