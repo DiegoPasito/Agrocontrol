@@ -203,55 +203,138 @@
       </div>
     </div>
 
+    <input 
+      type="text" 
+      id="buscarVaca"
+      class="form-control mb-4"
+      placeholder="🔍 Buscar vaca por nombre, ID, padre, madre..."
+      style="display:none;"
+    >
+
     <div id="tabla-girolando" class="table-responsive"></div>
   </main>
 
-  <!-- Modal Editar -->
-  <div class="modal fade" id="editarModal" tabindex="-1" aria-labelledby="editarLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header modal-header-verde">
-          <h5 class="modal-title" id="editarLabel">Editar Vaca</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-        </div>
-        <div class="modal-body">
-          <form id="formEditar">
-            <input type="hidden" id="edit-id">
+ <!-- Modal Editar -->
+<div class="modal fade" id="editarModal" tabindex="-1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
 
-            <div class="mb-3">
+      <div class="modal-header modal-header-verde">
+        <h5 class="modal-title">Editar Vaca</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body">
+        <form id="formEditar">
+
+          <input type="hidden" id="edit-id">
+
+          <div class="row g-3">
+
+            <div class="col-md-6">
               <label class="form-label">Nombre</label>
-              <input type="text" class="form-control" id="edit-nombre" required>
+              <input id="edit-nombre" class="form-control" required>
             </div>
 
-            <div class="mb-3">
+            <div class="col-md-6">
+              <label class="form-label">ID Interno</label>
+              <input id="edit-internalId" class="form-control">
+            </div>
+
+            <div class="col-md-4">
               <label class="form-label">Peso (kg)</label>
-              <input type="number" class="form-control" id="edit-peso" step="any" required>
+              <input type="number" id="edit-peso" class="form-control" step="any">
             </div>
 
-            <div class="mb-3">
+            <div class="col-md-4">
               <label class="form-label">Edad (años)</label>
-              <input type="number" class="form-control" id="edit-edad" required>
+              <input type="number" id="edit-edad" class="form-control">
             </div>
 
-            <div class="mb-3">
-              <label class="form-label">Producción de leche (L/día)</label>
-              <input type="number" class="form-control" id="edit-leche" step="any" required>
+            <div class="col-md-4">
+              <label class="form-label">Producción (L/día)</label>
+              <input type="number" id="edit-leche" class="form-control" step="any">
             </div>
 
-            <div class="mb-3">
+            <div class="col-md-6">
               <label class="form-label">Lactando</label>
-              <select class="form-select" id="edit-lactando">
+              <select id="edit-lactando" class="form-select">
                 <option value="true">Sí</option>
                 <option value="false">No</option>
               </select>
             </div>
 
-            <button type="submit" class="btn btn-success w-100">Guardar cambios</button>
-          </form>
-        </div>
+            <div class="col-md-6">
+              <label class="form-label">Género</label>
+              <select id="edit-genero" class="form-select">
+                <option value="">-- Selecciona --</option>
+                <option value="Hembra">Hembra</option>
+                <option value="Macho">Macho</option>
+              </select>
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label">Fecha de nacimiento</label>
+              <input type="date" id="edit-nacimiento" class="form-control">
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label">Estado reproductivo</label>
+              <select id="edit-reproductivo" class="form-select">
+                <option value="">-- Selecciona --</option>
+                <option>Seca</option>
+                <option>Lactando</option>
+                <option>Gestante</option>
+              </select>
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label">Padre</label>
+              <input id="edit-padre" class="form-control">
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label">Madre</label>
+              <input id="edit-madre" class="form-control">
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label">Propósito</label>
+              <select id="edit-proposito" class="form-select">
+                <option value="">-- Selecciona --</option>
+                <option>Leche</option>
+                <option>Carne</option>
+                <option>Reproducción</option>
+                <option>Mixto</option>
+              </select>
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label">Origen</label>
+              <input id="edit-origen" class="form-control">
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label">Chip ID</label>
+              <input id="edit-chip" class="form-control">
+            </div>
+
+            <div class="col-12">
+              <label class="form-label">Notas</label>
+              <textarea id="edit-notas" class="form-control" rows="3"></textarea>
+            </div>
+
+          </div>
+
+          <button class="btn btn-success w-100 mt-3">Guardar cambios</button>
+
+        </form>
       </div>
+
     </div>
   </div>
+</div>
+
 
   <!-- Modal Eliminar -->
   <div class="modal fade" id="eliminarModal" tabindex="-1" aria-labelledby="eliminarLabel" aria-hidden="true">
@@ -623,7 +706,7 @@
 
 // 🟢 Crear tarjetas en lugar de tabla
 function crearTarjetasVacas(vacas) {
-  if (vacas.length === 0) return "<p class='text-center text-muted'>No hay vacas Jersey registradas.</p>";
+  if (vacas.length === 0) return "<p class='text-center text-muted'>No hay vacas Girolando registradas.</p>";
 
   let html = '<div class="row g-4">';
 
@@ -781,11 +864,9 @@ function crearTarjetasVacas(vacas) {
 
             <!-- Acciones -->
             <div class="vaca-acciones">
-              <button class="btn-accion btn-verde-pastel" 
-                      data-bs-toggle="modal" 
-                      data-bs-target="#editarModal"
-                      onclick="llenarFormulario('${v.id}','${data.name}','${data.weight}','${data.age}','${data.milkProduction ?? 0}','${data.isLactating}')">
-                
+              <button class="btn-accion 
+              btn-verde-pastel" data-bs-toggle="modal" 
+              onclick="cargarDatosEditar('${v.id}')">
                 <span class="btn-texto">Editar</span>
               </button>
 
@@ -863,14 +944,64 @@ window.toggleDetalles = function(vacaId) {
 }
 
      // 🟢 Pasar datos al modal de edición
-    window.llenarFormulario = function(id, nombre, peso, edad, leche, lactando) {
-      document.getElementById("edit-id").value = id;
-      document.getElementById("edit-nombre").value = nombre;
-      document.getElementById("edit-peso").value = peso;
-      document.getElementById("edit-edad").value = edad;
-      document.getElementById("edit-leche").value = leche;
-      document.getElementById("edit-lactando").value = lactando;
-    };
+// Función principal que se llama desde el botón "Editar" de la tarjeta de la vaca
+window.cargarDatosEditar = async function(vacaId) {
+    // 1. Guardar la ID de la vaca seleccionada (útil para la función 'guardar cambios')
+    window.vacaSeleccionada = vacaId;
+    document.getElementById("edit-id").value = vacaId;
+
+    // 2. Referencia y obtención del documento de Firebase
+    const vacaRef = doc(db, "users", usuarioId, "cows", vacaId);
+    const docSnap = await getDoc(vacaRef);
+
+    if (docSnap.exists()) {
+        const data = docSnap.data();
+        
+        // 3. Llenar el formulario con los datos obtenidos
+        llenarFormulario(data);
+        
+        // 4. Abrir el modal de edición
+        const editModal = new bootstrap.Modal(document.getElementById('editarModal'));
+        editModal.show();
+        
+    } else {
+        console.error("No se encontró el documento de la vaca con ID:", vacaId);
+        // Función para mostrar mensajes al usuario (asumo que tienes 'mostrarToast')
+        mostrarToast("Error: No se encontraron los datos de la vaca.", "danger");
+    }
+}
+
+// Función auxiliar para asignar los datos a los campos del modal
+function llenarFormulario(data) {
+    
+    // Campos de texto e inputs
+    document.getElementById("edit-nombre").value = data.name || "";
+    document.getElementById("edit-peso").value = data.weight || "";
+    document.getElementById("edit-chip").value = data.chipId || "";
+    document.getElementById("edit-origen").value = data.origin || "";
+    document.getElementById("edit-padre").value = data.fatherName || "";
+    document.getElementById("edit-madre").value = data.motherName || "";
+    document.getElementById("edit-notas").value = data.notes || "";
+    document.getElementById("edit-internalId").value = data.internalId || "";
+    document.getElementById("edit-edad").value = data.age || "";
+    document.getElementById("edit-leche").value = data.milkProduction || "";
+
+    // Campo de fecha: Es crucial formatear la fecha a YYYY-MM-DD para que el input type="date" lo reconozca.
+    // Asumo que 'birthDate' está guardado como un string ISO (ej: 2025-01-01T00:00:00.000Z)
+    document.getElementById("edit-nacimiento").value = data.birthDate ? data.birthDate.split("T")[0] : "";
+    
+    // Selects (para estado reproductivo, género y propósito)
+    document.getElementById("edit-genero").value = data.gender || "";
+    document.getElementById("edit-reproductivo").value = data.reproductiveStatus || ""; 
+    document.getElementById("edit-proposito").value = data.purpose || "";               
+
+    // Checkbox (Para si está lactando o no)
+    // Se debe asignar un valor booleano (true/false) a la propiedad 'checked'.
+    document.getElementById("edit-lactando").value = data.isLactating ? "true" : "false";
+
+}
+
+
     // 🟢 Guardar cambios
     document.getElementById("formEditar").addEventListener("submit", async (e) => {
       e.preventDefault();
@@ -881,15 +1012,56 @@ window.toggleDetalles = function(vacaId) {
       const leche = parseFloat(document.getElementById("edit-leche").value);
       const lactando = document.getElementById("edit-lactando").value === "true";
       await updateDoc(doc(db, "users", usuarioId, "cows", id), {
-        name: nombre,
-        weight: peso,
-        age: edad,
-        milkProduction: leche,
-        isLactating: lactando
+        name: document.getElementById("edit-nombre").value,
+        internalId: document.getElementById("edit-internalId").value,
+        weight: parseFloat(document.getElementById("edit-peso").value),
+        age: parseInt(document.getElementById("edit-edad").value),
+        milkProduction: parseFloat(document.getElementById("edit-leche").value),
+        isLactating: document.getElementById("edit-lactando").value === "true",
+        gender: document.getElementById("edit-genero").value,
+        birthDate: document.getElementById("edit-nacimiento").value || null,
+        fatherName: document.getElementById("edit-padre").value,
+        motherName: document.getElementById("edit-madre").value,
+        reproductiveStatus: document.getElementById("edit-reproductivo").value,
+        purpose: document.getElementById("edit-proposito").value,
+        origin: document.getElementById("edit-origen").value,
+        chipId: document.getElementById("edit-chip").value,
+        notes: document.getElementById("edit-notas").value
       });
       bootstrap.Modal.getInstance(document.getElementById("editarModal")).hide();
       cargarVacas(usuarioId, loteSeleccionado);
     });
+
+
+    // Función para limpiar el formulario de edición
+function limpiarFormulario() {
+    document.getElementById("edit-id").value = "";
+    document.getElementById("edit-nombre").value = "";
+    document.getElementById("edit-internalId").value = "";
+    document.getElementById("edit-peso").value = "";
+    document.getElementById("edit-edad").value = "";
+    document.getElementById("edit-leche").value = "";
+    document.getElementById("edit-chip").value = "";
+    document.getElementById("edit-origen").value = "";
+    document.getElementById("edit-padre").value = "";
+    document.getElementById("edit-madre").value = "";
+    document.getElementById("edit-notas").value = "";
+    document.getElementById("edit-nacimiento").value = "";
+
+    document.getElementById("edit-genero").value = "";
+    document.getElementById("edit-reproductivo").value = ""; 
+    document.getElementById("edit-proposito").value = "";               
+
+     document.getElementById("edit-lactando").value = "";
+
+
+}
+
+document.getElementById("editarModal").addEventListener("hidden.bs.modal", () => {
+    limpiarFormulario();
+});
+
+
     // 🟢 Eliminar vaca
     window.prepararEliminar = function(id, nombre) {
       document.getElementById("delete-id").value = id;
@@ -902,6 +1074,7 @@ window.toggleDetalles = function(vacaId) {
       bootstrap.Modal.getInstance(document.getElementById("eliminarModal")).hide();
       cargarVacas(usuarioId, loteSeleccionado);
     });
+
     // 🟢 Detectar sesión
     onAuthStateChanged(auth, (user) => {
   if (user) {
@@ -946,8 +1119,28 @@ document.getElementById("selectorLote").addEventListener("change", function () {
   }
 });
 
+//filtro para buscar vacas
+    document.getElementById("buscarVaca").addEventListener("input", () => {
+  const texto = document.getElementById("buscarVaca").value.toLowerCase();
 
+  document.querySelectorAll(".vaca-card").forEach(card => {
+    const contenido = card.innerText.toLowerCase();
+    card.style.display = contenido.includes(texto) ? "" : "none";
+  });
+});
+//Mostrar barra cuando solo el lote este seleccionado
+document.getElementById("selectorLote").addEventListener("change", function () {
+  loteSeleccionado = this.value;
 
+  if (loteSeleccionado === "") {
+    document.getElementById("buscarVaca").style.display = "none";
+    document.getElementById("tabla-girolando").innerHTML =
+      "<p class='text-center text-muted'>Selecciona un lote</p>";
+  } else {
+    document.getElementById("buscarVaca").style.display = "block";
+    cargarVacas(usuarioId, loteSeleccionado);
+  }
+});
 
 
 
