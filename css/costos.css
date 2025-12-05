@@ -134,3 +134,50 @@ body {
         #chartIngresosGastos {
         height: 220px !important;
         }
+
+        /* Responsividad para tablas en costos */
+        .table-responsive {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            margin-bottom: 1rem;
+        }
+
+        /* Gráfico responsive */
+        #chartIngresosGastos {
+            height: 220px !important;
+            max-width: 100%;
+        }
+
+        @media (max-width: 576px) {
+            #chartIngresosGastos {
+                height: 300px !important; /* Más alto en celulares */
+            }
+        }
+
+        /* Responsividad general */
+        @media (max-width: 576px) {
+            body {
+                font-size: 16px;
+            }
+
+            .navbar-nav .nav-link {
+                padding: 6px 12px;
+                margin: 3px;
+            }
+        }
+
+        .filtros-fecha {
+            width: 100%;
+        }
+
+        .filtros-fecha .btn {
+            min-width: 90px;
+            flex: 1;
+        }
+
+        /* En móviles: cada botón ocupa toda la fila */
+        @media (max-width: 576px) {
+            .filtros-fecha .btn {
+                flex: 100%;
+            }
+        }
