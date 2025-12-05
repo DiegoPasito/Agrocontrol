@@ -223,12 +223,17 @@ if (registerForm) {
 
       // Crear documento en Firestore
       await setDoc(doc(db, "users", user.uid), {
-        nombre: nombre,
+        // Nombre unificado para compatibilidad total
+        name: nombre,      
+        nombre: nombre,    
+        dbName: nombre,    
+
         email: email,
         uid: user.uid,
         fechaRegistro: serverTimestamp(),
         ultimoAcceso: serverTimestamp()
       });
+
 
       showPrompt("Cuenta creada exitosamente", "Éxito");
 
