@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agrocontrol</title>
+    <title>BoviGestf</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
 
@@ -18,7 +18,7 @@
   <div class="container-fluid ">
 
     <a class="navbar-brand" >
-      <img src="img/Logo agrocontrol.png" alt="Logo Agrocontrol" width="100" height="100">
+      <img src="img/LogoAgrocontrol.png" alt="Logo Agrocontrol" width="100" height="100">
     </a>
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -82,95 +82,95 @@
  </nav>
   </header>
 
+<style>
+  body {
+    background: linear-gradient(135deg, #f8fdf8, #e9f7ee);
+  }
+
+  .card-pro {
+    border: 1px solid #e3efe6;
+    border-radius: 1.5rem;
+    backdrop-filter: blur(6px);
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 10px 30px rgba(0, 120, 60, 0.08);
+  }
+
+  .avatar {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid #d9f5df;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  .divider {
+    height: 2px;
+    background: linear-gradient(90deg, #d8e9db, #cbe3d0, #d8e9db);
+    margin: 1.6rem 0;
+    border-radius: 5px;
+  }
+
+  .section-title {
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: #2c6233;
+    margin-bottom: 1rem;
+  }
+
+  .actividad-list li {
+    padding: 8px 0;
+    font-size: 1.05rem;
+  }
+</style>
+
+
 <main class="container py-5">
+  <div class="row justify-content-center">
+    <section class="col-lg-6 col-md-8 col-sm-12">
 
-  <div class="row g-4 justify-content-center">
+      <!-- TARJETA PROFESIONAL -->
+      <div class="card card-pro p-4">
 
-    <!-- 🟩 PANEL: PERFIL DE USUARIO -->
-    <section class="col-lg-4 col-md-6">
-      <div class="card shadow-lg border-0 rounded-4 h-100">
-        <div class="card-body text-center p-5">
+        <div class="text-center">
+          <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" class="avatar mb-3" alt="avatar">
 
-          <!-- Datos importantes -->
-          <h4 id="profile-name" class="fw-bold mb-1">--</h4>
-          <p id="profile-email" class="text-muted mb-1">---</p>
+          <h4 id="profile-name" class="fw-bold mb-0">--</h4>
+          <p id="profile-email" class="text-muted mb-2">---</p>
 
           <span class="badge rounded-pill text-bg-success px-3 py-2">Ganadero</span>
 
-          <p class="text-muted mt-3 mb-1">
+          <p class="text-muted mt-2">
             Miembro desde: <span id="miembro-desde">-</span>
           </p>
-
-          <hr class="my-4">
-
-          <!-- Acciones -->
-          <div class="d-grid gap-3">
-            <a href="index.html" class="btn-uniforme btn-cerrar">Cerrar sesión</a>
-            <a href="CambioContra.html" class="btn-uniforme btn-cambiar">Cambiar Contraseña</a>
-          </div>
         </div>
-      </div>
-    </section>
 
-    <!-- 🟦 PANEL: INFORMACIÓN Y GRÁFICOS -->
-    <section class="col-lg-6 col-md-6">
+        <div class="divider"></div>
 
-      <!-- Actividad reciente -->
-      <div class="card border-0 shadow-sm rounded-4 mb-4">
-        <div class="card-header bg-success text-white fw-semibold">
-          Actividad reciente
+        <!-- ACTIVIDAD -->
+        <h5 class="section-title text-center">Actividad reciente</h5>
+
+        <ul class="list-unstyled actividad-list text-center mb-4">
+          <li>🐄 Vacas registradas: <strong id="vacas-registradas">-</strong></li>
+          <li>⏰ Recordatorios activos: <strong id="recordatorios-activos">-</strong></li>
+        </ul>
+
+        <div class="divider"></div>
+
+        <!-- 🔹 TUS BOTONES ORIGINALES -->
+        <div class="d-grid gap-3 mt-3">
+          <a href="index.html" class="btn-uniforme btn-cerrar">Cerrar sesión</a>
+          <a href="CambioContra.html" class="btn-uniforme btn-cambiar">Cambiar Contraseña</a>
         </div>
-        <div class="card-body">
-          <ul class="list-unstyled mb-0">
-            <li>Vacas registradas: <span id="vacas-registradas">-</span></li>
-            <li>Recordatorios activos: <span id="recordatorios-activos">-</span></li>
-          </ul>
-        </div>
+
       </div>
 
-      <!-- Gráfico -->
-      <div class="card border-0 shadow-sm rounded-4">
-        <div class="card-header bg-light fw-semibold">
-          Estado general del hato
-        </div>
-        <div class="card-body">
-          <canvas id="graficoResumen" style="width:100%; height:260px;"></canvas>
-        </div>
-      </div>
     </section>
   </div>
 </main>
 
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  const ctx = document.getElementById("graficoResumen");
-  if (!ctx) return;
 
-  new Chart(ctx, {
-    type: "doughnut",
-    data: {
-      labels: ["Sanas", "En tratamiento", "En observación"],
-      datasets: [{
-        data: [15, 6, 3],
-        backgroundColor: ["#28a745", "#ffc107", "#dc3545"],
-        borderWidth: 1
-      }]
-    },
-    options: {
-      plugins: {
-        legend: { position: "bottom" },
-        title: {
-          display: true,
-          text: "Estado general del hato",
-          font: { size: 16 }
-        }
-      }
-    }
-  });
-});
-
-</script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script type="module" src="js/perfil.js"></script>
+
 </body>
 </html>

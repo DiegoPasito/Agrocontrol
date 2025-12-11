@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Registro - Agrocontrol</title>
+  <title>Registro - BoviGestf</title>
 
   <!-- Bootstrap 5 -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -77,7 +77,7 @@
         <div class="register-form-section">
           <div class="text-center mb-4">
             <img src="img/Logo Agro sin letras.png" alt="Logo Agrocontrol" class="rounded-circle form-logo" onerror="this.style.display='none'">
-            <h3 class="mt-3 mb-1">Agrocontrol</h3>
+            <h3 class="mt-3 mb-1">BoviGestf</h3>
             <p class="text-muted">Crea tu cuenta</p>
           </div>
 
@@ -130,7 +130,7 @@
             <div class="visual-logo">
               <img src="img/Logo Agro sin letras.png" alt="Logo Agrocontrol" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ccircle cx=%2250%22 cy=%2250%22 r=%2240%22 fill=%22%2336ac42%22/%3E%3Cpath d=%22M50 30 L50 70 M30 50 L70 50%22 stroke=%22white%22 stroke-width=%224%22/%3E%3C/svg%3E'">
             </div>
-            <h2 class="mb-3">Únete a Agrocontrol</h2>
+            <h2 class="mb-3">Únete a BoviGestf</h2>
             <p class="mb-4">Comienza a optimizar la gestión de tu producción ganadera hoy mismo</p>
             <div class="mt-4">
               <p class="small mb-1">✓ Registro rápido y sencillo</p>
@@ -218,12 +218,13 @@ if (registerForm) {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
 
-      // Actualizar perfil
+      // Actualizar displayName del perfil
       await updateProfile(user, { displayName: nombre });
 
-      // Crear documento en Firestore
+      // Crear documento en Firestore - Compatible 100% con la app móvil
       await setDoc(doc(db, "users", user.uid), {
-        nombre: nombre,
+        nombre: nombre,           // Usado en la web
+        dbName: nombre,           // Usado en la app móvil
         email: email,
         uid: user.uid,
         fechaRegistro: serverTimestamp(),
@@ -247,8 +248,8 @@ if (registerForm) {
         showPrompt("Ocurrió un error.", "Error");
       }
     }
-  });
-}
+      });
+    }
 </script>
 
   <!-- Bootstrap JS -->
