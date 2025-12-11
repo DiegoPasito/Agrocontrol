@@ -6,6 +6,7 @@
     <title>Agrocontrol</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="css/Gyr.css">
 
 </head>
@@ -566,9 +567,14 @@
           🌾 Insumos
         </button>
 
-        <button class="btn btn-verde-pastel w-100"
+        <button class="btn btn-verde-pastel w-100 mb-3"
           onclick="abrirModalRegistro(window.vacaSeleccionada,'enfermedad')">
           🟥 Enfermedades
+        </button>
+
+        <button class="btn btn-verde-pastel w-100 "
+          onclick="abrirModalRegistro(window.vacaSeleccionada,'graficas')">
+          📊 Gráficas
         </button>
 
       </div>
@@ -676,6 +682,44 @@
     </div>
   </div>
 </div>
+
+<!-- 🟩 MODAL DE GRÁFICAS -->
+<div class="modal fade" id="modalGraficas" tabindex="-1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+
+      <div class="modal-header modal-header-verde">
+        <h5 class="modal-title">📊 Estadísticas de la Vaca</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body">
+
+        <!-- TABS PESO / LECHE -->
+        <div class="d-flex justify-content-center mb-3">
+          <button id="tabPeso" class="btn btn-success me-2">Peso</button>
+          <button id="tabLeche" class="btn btn-success">Producción de leche</button>
+        </div>
+
+        <!-- GRÁFICA -->
+        <div style="overflow-x:auto; overflow-y:hidden; width:100%; padding-bottom:8px; border-radius:8px; background:#f8f9fa;">
+          <div id="canvasContainer" style="min-width:600px; padding:15px;">
+            <canvas id="graficaVaca" style="display:block; height:350px;"></canvas>
+          </div>
+        </div>
+
+        <hr>
+
+        <!-- HISTORIAL -->
+        <h5>📜 Historial</h5>
+        <div id="historialGraficas"></div>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
   <!-- Firebase y Script -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-app.js";
@@ -1263,6 +1307,17 @@ window.abrirModalRegistro = async function (vacaId, tipo) {
       document.getElementById("modalEnfermedades")
     ).show();
   }
+
+  // ==========================
+  // 📊 GRÁFICAS (PESO / LECHE)
+  // ==========================
+if (tipo === "graficas") {
+    await cargarGraficasDeLaVaca(vacaId);
+    bootstrap.Modal.getOrCreateInstance(
+      document.getElementById("modalGraficas")
+    ).show();
+}
+
 };
 
 
@@ -1833,6 +1888,193 @@ window.guardarEdicionEnfermedad = async function () {
   bootstrap.Modal.getInstance(document.getElementById("modalEditarEnfermedad")).hide();
   verHistorial(window.vacaSeleccionada);
 }; 
+
+
+// ===============================
+// 📊 GRÁFICAS DE LA VACA
+// ===============================
+let chartVaca = null;
+let tabActual = "peso";
+
+async function cargarGraficasDeLaVaca(vacaId) {
+  const uid = auth.currentUser.uid;
+
+  const vacaRef = doc(db, "users", uid, "cows", vacaId);
+  const snap = await getDoc(vacaRef);
+
+  if (!snap.exists()) return;
+
+  const cow = snap.data();
+  window.cowGraficas = cow; // guardar por si cambian tabs
+
+  // Detectar si es macho → bloquear leche
+  const gender = (cow.gender || "").toLowerCase();
+  if (gender === "macho" || gender === "toro") {
+    document.getElementById("tabLeche").style.display = "none";
+    tabActual = "peso";
+  } else {
+    document.getElementById("tabLeche").style.display = "inline-block";
+  }
+
+  renderizarGrafica();
+}
+
+
+// ===============================
+// 🔄 Renderizar gráfica
+// ===============================
+function renderizarGrafica() {
+  const cow = window.cowGraficas;
+  if (!cow) return;
+
+  const history = tabActual === "peso"
+    ? (cow.weightHistory || [])
+    : (cow.milkProductionHistory || []);
+
+    history.sort((a, b) => {
+    const fechaA = new Date(a.date || 0);
+    const fechaB = new Date(b.date || 0);
+    return fechaA - fechaB; // Orden ascendente (más antigua primero)
+  });
+
+  const labels = history.map(h => {
+  if (!h.date) return "--";
+  const fecha = new Date(h.date);
+  return fecha.toLocaleDateString('es-CO', { 
+    day: '2-digit', 
+    month: '2-digit', 
+    year: 'numeric' 
+  });
+});
+  const values = history.map(h =>
+    tabActual === "peso" ? h.weight : h.liters
+  );
+
+  // Historial
+  let html = "";
+  history.slice().reverse().forEach(h => {
+  const fechaFormateada = h.date 
+    ? new Date(h.date).toLocaleDateString('es-CO', { 
+        day: '2-digit', 
+        month: 'long', 
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      })
+    : "Fecha no disponible";
+    
+  html += `
+    <div class="p-3 border rounded mb-2 shadow-sm" style="background: linear-gradient(to right, #f8f9fa, #ffffff);">
+      <div class="d-flex justify-content-between align-items-center">
+        <div>
+          <span class="badge bg-success mb-1">${tabActual === "peso" ? "Peso" : "Producción"}</span>
+          <h6 class="mb-0 mt-1" style="color: #2e7d32; font-weight: bold;">
+            ${tabActual === "peso" ? h.weight + " kg" : h.liters + " L"}
+          </h6>
+        </div>
+        <small class="text-muted" style="font-size: 0.85rem;">
+          📅 ${fechaFormateada}
+        </small>
+      </div>
+    </div>
+  `;
+});
+
+  document.getElementById("historialGraficas").innerHTML = html;
+
+  // Gráfica
+  const ctx = document.getElementById("graficaVaca").getContext("2d");
+
+  // Ajustar ancho dinámico según cantidad de datos
+const container = document.getElementById("canvasContainer");
+const minWidth = Math.max(600, labels.length * 80); // 80px por barra
+container.style.minWidth = minWidth + "px";
+
+  if (chartVaca) chartVaca.destroy();
+
+  chartVaca = new Chart(ctx, {
+  type: "bar",
+  data: {
+    labels: labels,
+    datasets: [{
+      label: tabActual === "peso" ? "Peso (kg)" : "Leche (L/día)",
+      data: values,
+      backgroundColor: "rgba(46, 125, 50, 0.85)",
+      borderColor: "rgba(46, 125, 50, 1)",
+      borderWidth: 2,
+      borderRadius: 6,
+      barThickness: 45,
+      maxBarThickness: 60
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        display: true,
+        labels: {
+          font: { size: 14, weight: 'bold' },
+          color: '#2e7d32'
+        }
+      },
+      tooltip: {
+        backgroundColor: 'rgba(46, 125, 50, 0.95)',
+        titleColor: '#fff',
+        bodyColor: '#fff',
+        borderColor: '#2e7d32',
+        borderWidth: 2,
+        padding: 12,
+        displayColors: false,
+        callbacks: {
+          label: function(context) {
+            return tabActual === "peso" 
+              ? `Peso: ${context.parsed.y} kg`
+              : `Producción: ${context.parsed.y} L`;
+          }
+        }
+      }
+    },
+    scales: {
+      y: { 
+        beginAtZero: true,
+        ticks: {
+          font: { size: 12 },
+          color: '#555'
+        },
+        grid: {
+          color: 'rgba(0,0,0,0.05)'
+        }
+      },
+      x: {
+        ticks: {
+          font: { size: 11 },
+          color: '#555',
+          maxRotation: 45,
+          minRotation: 45
+        },
+        grid: {
+          display: false
+        }
+      }
+    }
+  }
+});
+}
+
+
+// ===============================
+// 🟦 Tabs Peso / Leche
+// ===============================
+document.getElementById("tabPeso").addEventListener("click", () => {
+  tabActual = "peso";
+  renderizarGrafica();
+});
+
+document.getElementById("tabLeche").addEventListener("click", () => {
+  tabActual = "leche";
+  renderizarGrafica();
+});
 
   </script>
 
