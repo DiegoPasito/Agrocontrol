@@ -444,23 +444,12 @@
         white-space: normal !important;
         }
 
-        td .btn {
-        flex: 1 1 45%;
-        min-width: 120px;
+        /* Contenedor de tarjetas sin scroll horizontal */
+        #tabla-jersey {
+          width: 100%;
+          overflow-x: visible;
         }
 
-
-        /* Para que los 4 botones se acomoden bien */
-        td .d-flex {
-        flex-wrap: wrap;
-        }
-
-        td .btn {
-        min-width: 120px;
-        flex: 1 1 45%;
-        }
-
-  
         /* === Encabezado del modal (verde elegante) === */
     .modal-header-verde {
     background: linear-gradient(135deg, #54ce60, #36ac42);

@@ -436,31 +436,14 @@ body {
         white-space: normal !important;
         }
 
-        td .btn {
-        flex: 1 1 45%;
-        min-width: 120px;
+        /* Contenedor de tarjetas sin scroll horizontal */
+        #tabla-gyr {
+          width: 100%;
+          overflow-x: visible;
         }
 
-        /* Evita que la tabla se corte en móviles */
-        #tabla-jersey {
-        width: 100%;
-        overflow-x: auto !important;
-        }
+        
 
-        /* Evita que la tabla se encoja demasiado y se recorte */
-        table {
-        min-width: 700px;
-        }
-
-        /* Para que los 4 botones se acomoden bien */
-        td .d-flex {
-        flex-wrap: wrap;
-        }
-
-        td .btn {
-        min-width: 120px;
-        flex: 1 1 45%;
-        }
 
         
 
