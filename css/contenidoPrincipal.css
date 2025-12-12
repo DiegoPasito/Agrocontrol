@@ -125,127 +125,7 @@ body {
 
         /* Aqui termina el navbar */
 
-/* Cards con diseño moderno */
-.card {
-    background: linear-gradient(135deg, #f0fdf4 0%, #d9f5dc 100%);
-    border: 2px solid #36ac42;
-    border-radius: 20px;
-    box-shadow: 0 6px 20px rgba(54, 172, 66, 0.2);
-    transition: all 0.3s ease;
-    overflow: hidden;
-    position: relative;
-}
 
-.card::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    right: -50%;
-    width: 200%;
-    height: 200%;
-    background: radial-gradient(circle, rgba(54, 172, 66, 0.05) 0%, transparent 70%);
-    transition: transform 0.6s ease;
-    pointer-events: none;
-}
-
-.card:hover::before {
-    transform: translate(-25%, -25%);
-}
-
-.card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 12px 30px rgba(54, 172, 66, 0.35);
-    border-color: #2b8c35;
-}
-
-/* Card con imagen (bienvenida) */
-.card.mb-3 img {
-    border-radius: 20px 0 0 20px;
-    transition: transform 0.3s ease;
-}
-
-.card.mb-3:hover img {
-    transform: scale(1.05);
-}
-
-/* Card body mejorado */
-.card-body {
-    position: relative;
-    z-index: 1;
-    padding: 25px;
-}
-
-.card-body h3, .card-body h4 {
-    color: #1e7e34;
-    font-weight: 600;
-    margin-bottom: 15px;
-}
-
-.card-body p {
-    color: #2d5a3d;
-    line-height: 1.6;
-}
-
-/* Links dentro de las cards */
-.card-body a {
-    text-decoration: none;
-    color: #1e7e34;
-    transition: all 0.2s ease;
-    display: inline-block;
-    padding: 5px 0;
-    position: relative;
-}
-
-.card-body a::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 0;
-    height: 2px;
-    background: linear-gradient(90deg, #36ac42, #2b8c35);
-    transition: width 0.3s ease;
-}
-
-.card-body a:hover {
-    color: #36ac42;
-    transform: translateX(5px);
-}
-
-.card-body a:hover::after {
-    width: 100%;
-}
-
-/* Listas mejoradas */
-.card-body ul {
-    list-style: none;
-    padding-left: 0;
-}
-
-.card-body ul li {
-    padding: 8px 0;
-    border-bottom: 1px solid rgba(54, 172, 66, 0.15);
-    transition: padding-left 0.2s ease;
-}
-
-.card-body ul li:last-child {
-    border-bottom: none;
-}
-
-.card-body ul li:hover {
-    padding-left: 10px;
-}
-
-/* Fecha con estilo */
-.fecha-panel {
-    background: linear-gradient(135deg, #36ac42, #2b8c35);
-    color: white;
-    padding: 10px 20px;
-    border-radius: 50px;
-    display: inline-block;
-    font-weight: 500;
-    box-shadow: 0 4px 10px rgba(54, 172, 66, 0.3);
-}
 
 /* Animación de entrada */
 @keyframes fadeInUp {
@@ -406,162 +286,6 @@ html {
     font-weight: 600;
 }
 
-/* GRID DE TARJETAS PRINCIPALES (STATS) */
-.stats-cards-grid {
-    width: 100%;
-    padding: 24px 12px;
-    display: grid;
-    gap: 22px;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    align-items: start;
-}
-
-/* Ajustes visuales de cada tarjeta estadística */
-.stat-card {
-    padding: 20px;
-    border-radius: 14px;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(245, 250, 245, 0.98));
-    box-shadow: 0 8px 20px rgba(35, 115, 55, 0.06);
-    border: 1px solid rgba(43, 140, 53, 0.08);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 8px;
-    min-height: 130px;
-}
-
-/* sobrescribir solo tipografía/colores puntuales sin tocar estructura .card */
-.stat-card h3 {
-    font-size: 1.05rem;
-    color: #1e7e34;
-    margin: 0;
-    font-weight: 700;
-}
-
-.stat-card h2,
-.stat-card .stat-number,
-.stat-card .circle-progress {
-    font-size: 2.1rem;
-    color: #2b8c35;
-    margin: 6px 0 0 0;
-    font-weight: 800;
-}
-
-.stat-detail {
-    margin-top: 6px;
-    color: #486a4a;
-    font-size: 0.9rem;
-}
-
-/* círculo de progreso (salud del hato) - diseño estático, JS puede actualizarlo */
-.chart-circle {
-    width: 110px;
-    height: 110px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 8px 0;
-    background: radial-gradient(closest-side, #f0f5f0 86%, transparent 87%),
-        conic-gradient(#43A047 68%, #E0E0E0 0);
-    box-shadow: inset 0 -6px 18px rgba(0, 0, 0, 0.03);
-}
-
-/* Sección secundaria (accesos + gráficas) */
-.secondary-content-grid {
-    width: 100%;
-    padding: 24px 12px;
-    display: grid;
-    gap: 22px;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    align-items: start;
-}
-
-/* tarjeta de accesos rápidos */
-.quick-access-card {
-    padding: 20px;
-    border-radius: 14px;
-    background: linear-gradient(180deg, rgba(245, 252, 245, 0.98), rgba(235, 249, 239, 0.98));
-    box-shadow: 0 8px 20px rgba(35, 115, 55, 0.04);
-    border: 1px solid rgba(43, 140, 53, 0.06);
-}
-
-.access-list {
-    margin-top: 12px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-/* Evito colisiones con reglas previas; mantengo estilos visuales */
-.access-item {
-    padding: 12px 14px;
-    border-radius: 12px;
-    background: #f4fbf4;
-    color: #1e6f2f;
-    text-decoration: none;
-    font-weight: 600;
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    border: 1px solid rgba(43, 140, 53, 0.06);
-    transition: transform 0.18s ease, background 0.18s ease;
-}
-
-.access-item:hover {
-    /* Mantenemos el efecto de desplazamiento que ya tienes: */
-    transform: translateX(6px);
-
-    /* CAMBIO SEGURO: Usamos un color verde claro visible, similar a tu menú */
-    background: #c5f0c9;
-    /* Un verde claro y suave */
-
-    /* Aseguramos un buen contraste en el texto */
-    color: #1a5e29;
-}
-
-/* tarjetas de gráficos */
-.chart-card {
-    padding: 18px;
-    border-radius: 14px;
-    background: linear-gradient(180deg, #ffffff, #f7fbf7);
-    box-shadow: 0 8px 20px rgba(35, 115, 55, 0.04);
-    border: 1px solid rgba(43, 140, 53, 0.06);
-    min-height: 220px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-/* contenedor para canvas */
-.chart-container {
-    width: 100%;
-    height: 220px;
-    position: relative;
-}
-
-/* DONUT pequeño centro */
-.chart-donut-sim {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-/* ajustes de íconos/eventos */
-.event-icon-text {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-}
-
-/* pequeñas utilidades */
-.stat-number {
-    font-size: 2rem;
-    color: #2b8c35;
-    font-weight: 700;
-}
-
 /* ANIMACIONES SUAVES */
 .hero-banner,
 .stat-card,
@@ -641,6 +365,356 @@ html {
     background: linear-gradient(180deg, rgba(232, 248, 234, 0.22), rgba(224, 249, 232, 0.12));
     pointer-events: none;
     z-index: 2;
+}
+
+/* ================================
+   TARJETAS DE ESTADÍSTICAS
+================================ */
+.stats-cards-grid {
+  padding: 20px 0;
+}
+
+.stat-card {
+  border: none;
+  border-radius: 16px;
+  padding: 30px 25px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+}
+
+.stat-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+.card-icon {
+  font-size: 3rem;
+  margin-bottom: 15px;
+  animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.stat-card h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #495057;
+  margin-bottom: 15px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.stat-card h2 {
+  font-size: 3.5rem;
+  font-weight: bold;
+  color: #2e7d32;
+  margin: 10px 0;
+  line-height: 1;
+}
+
+.stat-title {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #2e7d32;
+  margin: 15px 0;
+  min-height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stat-detail {
+  font-size: 0.95rem;
+  color: #6c757d;
+  font-weight: 500;
+}
+
+/* ================================
+   TARJETA VACAS REGISTRADAS
+================================ */
+.vacas-reg {
+  background: linear-gradient(135deg, #c8f5cb 0%, #ffffff 100%);
+  border-left: 5px solid #4caf50;
+}
+
+.vacas-reg:hover {
+  background: linear-gradient(135deg, #caf5cb 0%, #c8f5cb 100%);
+}
+
+/* ================================
+   TARJETA PRÓXIMO RECORDATORIO
+================================ */
+.proximo-evento {
+  background: linear-gradient(135deg, #c8f5cb 0%, #ffffff 100%);
+  border-left: 5px solid #4caf50;
+}
+
+.proximo-evento:hover {
+  background: linear-gradient(135deg, #caf5cb 0%, #c8f5cb 100%);
+}
+
+.proximo-evento .card-icon {
+  color: #4caf50;
+}
+
+/* ================================
+   TARJETA ACCESOS RÁPIDOS
+================================ */
+.accesos-rapidos {
+  background: linear-gradient(135deg, #c8f5cb 0%, #ffffff 100%);
+  border-left: 5px solid #4caf50;
+}
+
+.accesos-rapidos:hover {
+  background: linear-gradient(135deg, #caf5cb 0%, #c8f5cb 100%);
+}
+
+.access-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.access-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 15px;
+  background: white;
+  border-radius: 12px;
+  text-decoration: none;
+  color: #495057;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  border: 2px solid transparent;
+}
+
+.access-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 16px rgba(89, 252, 130, 0.616);
+  border-color: #4caf50;
+  color: #4caf50;
+}
+
+.access-icon {
+  font-size: 2rem;
+  margin-bottom: 8px;
+}
+
+.access-text {
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+/* ================================
+   RESPONSIVE
+================================ */
+@media (max-width: 991px) {
+  .stat-card h2 {
+    font-size: 2.8rem;
+  }
+  
+  .stat-title {
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .stat-card {
+    padding: 25px 20px;
+  }
+  
+  .stat-card h2 {
+    font-size: 2.5rem;
+  }
+  
+  .card-icon {
+    font-size: 2.5rem;
+  }
+  
+  .access-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .access-btn {
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 15px;
+    padding: 15px 20px;
+  }
+  
+  .access-icon {
+    font-size: 1.8rem;
+    margin-bottom: 0;
+  }
+  
+  .access-text {
+    text-align: left;
+  }
+}
+
+@media (max-width: 576px) {
+  .stat-card h3 {
+    font-size: 1rem;
+  }
+  
+  .stat-card h2 {
+    font-size: 2.2rem;
+  }
+}
+
+/* ================================
+   BOTÓN DESCARGAR APP
+================================ */
+.btn-descargar-app {
+  border: 2px solid #36ac42;
+  border-radius: 50px;
+  padding: 10px 20px;
+  background: linear-gradient(135deg, #36ac42, #2b8c35);
+  color: white;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(54, 172, 66, 0.3);
+}
+
+.btn-descargar-app:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(54, 172, 66, 0.5);
+  background: linear-gradient(135deg, #2b8c35, #1e7e34);
+}
+
+.download-icon {
+  font-size: 1.3rem;
+  animation: bounce-phone 2s infinite;
+}
+
+@keyframes bounce-phone {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+.download-text {
+  font-size: 0.95rem;
+}
+
+/* ================================
+   MODAL QR CODE
+================================ */
+.modal-qr .modal-content {
+  border-radius: 20px;
+  border: 3px solid #36ac42;
+  box-shadow: 0 10px 30px rgba(54, 172, 66, 0.2);
+}
+
+.modal-qr .modal-header {
+  background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+  border-radius: 17px 17px 0 0;
+  padding: 20px;
+}
+
+.modal-qr .modal-title {
+  color: #1e7e34;
+  font-weight: 700;
+  font-size: 1.3rem;
+}
+
+.qr-container {
+  background: white;
+  padding: 20px;
+  border-radius: 15px;
+  display: inline-block;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  border: 3px solid #36ac42;
+}
+
+.qr-image {
+  width: 250px;
+  height: 250px;
+  display: block;
+}
+
+.download-info {
+  margin-top: 25px;
+}
+
+.info-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, #4caf50, #66bb6a);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 25px;
+  font-weight: 600;
+  box-shadow: 0 3px 10px rgba(76, 175, 80, 0.3);
+}
+
+.badge-icon {
+  font-size: 1.2rem;
+}
+
+.btn-download-direct {
+  background: linear-gradient(135deg, #2196f3, #1976d2);
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 25px;
+  font-weight: 600;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.3s ease;
+}
+
+.btn-download-direct:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(33, 150, 243, 0.4);
+  color: white;
+  background: linear-gradient(135deg, #1976d2, #1565c0);
+}
+
+/* ================================
+   RESPONSIVE
+================================ */
+@media (max-width: 991px) {
+  .btn-descargar-app {
+    width: 100%;
+    justify-content: center;
+    margin-top: 10px;
+  }
+  
+  .download-text {
+    display: inline;
+  }
+}
+
+@media (max-width: 576px) {
+  .qr-image {
+    width: 200px;
+    height: 200px;
+  }
+  
+  .modal-qr .modal-title {
+    font-size: 1.1rem;
+  }
 }
 
 

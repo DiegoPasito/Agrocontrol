@@ -72,6 +72,14 @@
         </li>
 
       </ul>
+
+       <!-- 📱 BOTÓN DESCARGAR APP (Alineado a la derecha) -->
+      <div class="ms-auto">
+        <button class="btn-descargar-app" data-bs-toggle="modal" data-bs-target="#modalQR">
+          <span class="download-icon">📱</span>
+          <span class="download-text">Descargar App</span>
+        </button>
+      </div>
       
     </div>
   </div>
@@ -101,88 +109,97 @@
 </section>
 
 <section class="stats-cards-grid mt-4">
-  <div class="row g-4">
+  <div class="row g-4 justify-content-center">
 
+    <!-- VACAS REGISTRADAS -->
     <div class="col-lg-4 col-md-6 col-sm-12">
       <div class="card stat-card vacas-reg">
+        <div class="card-icon">🐄</div>
         <h3>Vacas Registradas</h3>
-        <h2 id="dato-vacas">...</h2>
-        <span class="stat-detail">Total de animales activos ↑</span>
+        <h2 id="dato-vacas" class="display-4">...</h2>
+        <span class="stat-detail">Total de animales activos</span>
       </div>
     </div>
 
-    <div class="col-lg-4 col-md-6 col-sm-12">
-      <div class="card stat-card salud-hato">
-        <h3>Salud del Hato</h3>
-        <div class="chart-circle">
-          <div class="circle-progress" id="porcentaje-salud">...</div>
-          <p class="stat-detail">Sano</p>
-        </div>
-        <span class="stat-detail small-detail">Última revisión: Hoy</span>
-      </div>
-    </div>
-
+    <!-- PRÓXIMO RECORDATORIO -->
     <div class="col-lg-4 col-md-6 col-sm-12">
       <div class="card stat-card proximo-evento">
-        <h3>Próximo Evento</h3>
-        <div class="event-icon-text">
-          <i class="fas fa-calendar-check fa-4x"></i>
-          <span id="proximo-evento-titulo" class="stat-number">...</span>
-        </div>
-        <span class="stat-detail small-detail" id="proximo-evento-fecha">
-          Próximo evento: ...
+        <div class="card-icon">📅</div>
+        <h3>Próximo Recordatorio</h3>
+        <p id="proximo-recordatorio-titulo" class="stat-title">...</p>
+        <span class="stat-detail" id="proximo-recordatorio-fecha">
+          Cargando...
         </span>
+      </div>
+    </div>
+
+    <!-- ACCESOS RÁPIDOS -->
+    <div class="col-lg-4 col-md-12 col-sm-12">
+      <div class="card stat-card accesos-rapidos">
+        <div class="card-icon">⚡</div>
+        <h3>Accesos Rápidos</h3>
+        <div class="access-grid">
+          <a href="control.html" class="access-btn">
+            <span class="access-icon">➕</span>
+            <span class="access-text">Registrar Vacas</span>
+          </a>
+          <a href="Medicamentos.html" class="access-btn">
+            <span class="access-icon">💊</span>
+            <span class="access-text">Medicamentos</span>
+          </a>
+          <a href="enfermedades.html" class="access-btn">
+            <span class="access-icon">🏥</span>
+            <span class="access-text">Enfermedades</span>
+          </a>
+          <a href="Alertas y recordatorios.html" class="access-btn">
+            <span class="access-icon">🔔</span>
+            <span class="access-text">Recordatorios</span>
+          </a>
+        </div>
       </div>
     </div>
 
   </div>
 </section>
 
-<section class="secondary-content-grid mt-5">
-  <div class="row g-4">
+</main>
 
-    <div class="col-lg-4 col-md-6 col-sm-12">
-      <div class="card quick-access-card">
-        <h3>Accesos Rápidos</h3>
-        <div class="access-list">
-          <a href="control.html" class="access-item">
-            <i class="bi bi-cow"></i> Registrar Vacas
-          </a>
-          <a href="Medicamentos.html" class="access-item">
-            <i class="bi bi-capsule"></i> Buscar Medicamentos
-          </a>
-          <a href="enfermedades.html" class="access-item">
-            <i class="bi bi-hospital"></i> Buscar Enfermedades
-          </a>
-        </div>
+<!-- MODAL QR CODE -->
+<div class="modal fade" id="modalQR" tabindex="-1" aria-labelledby="modalQRLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content modal-qr">
+      <div class="modal-header border-0">
+        <h5 class="modal-title w-100 text-center" id="modalQRLabel">
+          📱 Descarga la App BoviGest
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-    </div>
-
-    <div class="col-lg-4 col-md-6 col-sm-12">
-      <div class="card chart-card salud-clave">
-        <h3>Producción (Litros/Día)</h3>
-        <p>Promedio Semanal</p>
-        <div class="chart-container">
-          <canvas id="produccion-chart"></canvas>
+      <div class="modal-body text-center p-4">
+        <p class="mb-4">Escanea el código QR con tu dispositivo móvil</p>
+        
+        <!-- 👇 AQUÍ VA TU CÓDIGO QR -->
+        <div class="qr-container">
+          <img src="img/qr-code-app.png" alt="QR Code" class="qr-image">
+          <!-- Si no tienes imagen, puedes usar un servicio de generación -->
+          <!-- <img src="https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=TU_ENLACE_APK" alt="QR Code" class="qr-image"> -->
         </div>
-      </div>
-    </div>
 
-    <div class="col-lg-4 col-md-6 col-sm-12">
-      <div class="card chart-card estadisticas-clave">
-        <h3>Estadísticas Clave</h3>
-        <div class="chart-donut-sim">
-          <div class="chart-container">
-            <canvas id="hato-composition"></canvas>
+        <div class="download-info mt-4">
+          <div class="info-badge">
+            <span class="badge-icon">🤖</span>
+            <span class="badge-text">Android APK</span>
           </div>
-          <p>Vacas del hato (Lechera/Engorde)</p>
+          <p class="text-muted small mt-3 mb-0">
+            O descarga directamente desde tu móvil:
+          </p>
+          <a href="TU_ENLACE_DIRECTO_APK" class="btn btn-download-direct mt-2" download>
+            <span>⬇️</span> Descargar APK
+          </a>
         </div>
       </div>
     </div>
-
   </div>
-
-  </main>
+</div>
   
   <script>
         const images = document.querySelectorAll(".carousel-image");
@@ -196,6 +213,7 @@
 
         setInterval(changeImage, 3500);
     </script>
+
 
     <!-- 🟢 SCRIPT DE ESTADÍSTICAS -->
   <script type="module" src="js/contenidoPrincipal.js"></script>

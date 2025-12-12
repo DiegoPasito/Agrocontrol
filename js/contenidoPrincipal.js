@@ -6,7 +6,11 @@ import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/
 import { 
   getFirestore, 
   collection, 
-  getCountFromServer 
+  getCountFromServer,
+  getDocs,
+  query,
+  orderBy,
+  limit
 } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-firestore.js";
 
 // ===============================
@@ -37,17 +41,77 @@ async function contarVacasRegistradas(userId) {
     const cowsCount = await getCountFromServer(cowsCol);
     
     const totalVacas = cowsCount.data().count;
-    
-    // Actualizar el HTML
     document.getElementById("dato-vacas").textContent = totalVacas;
     
     console.log("✅ Total vacas registradas:", totalVacas);
-    
     return totalVacas;
   } catch (error) {
     console.error("❌ Error contando vacas:", error);
-    document.getElementById("dato-vacas").textContent = "Error";
+    document.getElementById("dato-vacas").textContent = "0";
     return 0;
+  }
+}
+
+// ===============================
+// 🟢 OBTENER PRÓXIMO RECORDATORIO
+// ===============================
+async function obtenerProximoRecordatorio(userId) {
+  try {
+    const remindersCol = collection(db, "users", userId, "reminders");
+    const q = query(remindersCol, orderBy("dateTime", "asc"));
+    const snapshot = await getDocs(q);
+    
+    if (snapshot.empty) {
+      document.getElementById("proximo-recordatorio-titulo").textContent = "Sin recordatorios";
+      document.getElementById("proximo-recordatorio-fecha").textContent = "No hay eventos programados";
+      return;
+    }
+    
+    // Filtrar solo recordatorios NO vencidos
+    const ahora = new Date();
+    let proximoRecordatorio = null;
+    
+    snapshot.forEach(doc => {
+      const data = doc.data();
+      const fecha = data.dateTime?.toDate();
+      
+      // Solo considerar recordatorios futuros
+      if (fecha && fecha >= ahora && !proximoRecordatorio) {
+        proximoRecordatorio = data;
+      }
+    });
+    
+    // Si no hay recordatorios futuros
+    if (!proximoRecordatorio) {
+      document.getElementById("proximo-recordatorio-titulo").textContent = "Sin recordatorios próximos";
+      document.getElementById("proximo-recordatorio-fecha").textContent = "Todos los recordatorios están vencidos";
+      return;
+    }
+    
+    // Mostrar el próximo recordatorio
+    const fecha = proximoRecordatorio.dateTime?.toDate();
+    
+    document.getElementById("proximo-recordatorio-titulo").textContent = proximoRecordatorio.title || "Evento";
+    
+    if (fecha) {
+      const opciones = { 
+        weekday: 'short',
+        day: 'numeric',
+        month: 'short',
+        hour: '2-digit',
+        minute: '2-digit'
+      };
+      document.getElementById("proximo-recordatorio-fecha").textContent = 
+        fecha.toLocaleDateString('es-ES', opciones);
+    } else {
+      document.getElementById("proximo-recordatorio-fecha").textContent = "Fecha no disponible";
+    }
+    
+    console.log("✅ Próximo recordatorio cargado");
+  } catch (error) {
+    console.error("❌ Error obteniendo recordatorio:", error);
+    document.getElementById("proximo-recordatorio-titulo").textContent = "Error al cargar";
+    document.getElementById("proximo-recordatorio-fecha").textContent = "Intenta recargar la página";
   }
 }
 
@@ -58,14 +122,9 @@ onAuthStateChanged(auth, (user) => {
   if (user) {
     usuarioId = user.uid;
     console.log("👤 Usuario autenticado:", usuarioId);
-    
-    // Cargar todas las estadísticas
     cargarEstadisticas();
-    
   } else {
     console.log("⚠️ No hay usuario autenticado");
-    document.getElementById("dato-vacas").textContent = "0";
-    // Redirigir al login si no hay sesión
     window.location.href = "index.html";
   }
 });
@@ -78,12 +137,6 @@ async function cargarEstadisticas() {
   
   console.log("📊 Cargando estadísticas...");
   
-  // Cargar contador de vacas
   await contarVacasRegistradas(usuarioId);
-  
-  // 🔜 Aquí irán las otras funciones:
-  // await calcularSaludHato(usuarioId);
-  // await obtenerProximoEvento(usuarioId);
-  // await cargarProduccionSemanal(usuarioId);
-  // await cargarComposicionHato(usuarioId);
+  await obtenerProximoRecordatorio(usuarioId);
 }
