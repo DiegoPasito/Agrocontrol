@@ -57,7 +57,7 @@
         </li>
 
         <li class="nav-item">
-          <a class="nav-link" href="Alertas y recordatorios.html" > Alertas y Recordatorios </a>
+          <a class="nav-link" href="Alertas y recordatorios.html" >Recordatorios </a>
         </li>
 
          <li class="nav-item">
@@ -74,6 +74,14 @@
         </li>
         
       </ul>
+
+      <!-- 📱 BOTÓN DESCARGAR APP (Alineado a la derecha) -->
+      <div class="ms-auto">
+        <button class="btn-descargar-app" data-bs-toggle="modal" data-bs-target="#modalQR">
+          <span class="download-icon">📱</span>
+          <span class="download-text">Descargar App</span>
+        </button>
+      </div>
       
     </div>
   </div>
@@ -516,6 +524,44 @@
     </div>
 </div>
     </main>
+
+
+    <!-- MODAL QR CODE -->
+<div class="modal fade" id="modalQR" tabindex="-1" aria-labelledby="modalQRLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content modal-qr">
+      <div class="modal-header border-0">
+        <h5 class="modal-title w-100 text-center" id="modalQRLabel">
+          📱 Descarga la App BoviGestf
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body text-center p-4">
+        <p class="mb-4">Escanea el código QR con tu dispositivo móvil</p>
+        
+        <!-- 👇 AQUÍ VA TU CÓDIGO QR -->
+        <div class="qr-container">
+          <img src="img/qr-code-app.png" alt="QR Code" class="qr-image">
+          <!-- Si no tienes imagen, puedes usar un servicio de generación -->
+          <!-- <img src="https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=TU_ENLACE_APK" alt="QR Code" class="qr-image"> -->
+        </div>
+
+        <div class="download-info mt-4">
+          <div class="info-badge">
+            <span class="badge-icon">🤖</span>
+            <span class="badge-text">Android APK</span>
+          </div>
+          <p class="text-muted small mt-3 mb-0">
+            O descarga directamente desde tu móvil:
+          </p>
+          <a href="TU_ENLACE_DIRECTO_APK" class="btn btn-download-direct mt-2" download>
+            <span>⬇️</span> Descargar APK
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
     <!-- MODALES PARA CADA MEDICAMENTO -->
     
