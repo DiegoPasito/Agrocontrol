@@ -101,3 +101,13 @@ onAuthStateChanged(auth, async (user) => {
     console.error("Error cargando perfil:", error);
   }
 });
+
+   // 🔗 CONFIGURA TU ENLACE AQUÍ
+  const APK_URL = "https://drive.google.com/file/d/1AzI0q8QNbPIYP10eewEgUaiu184At9aA/view?usp=drive_link";
+  
+  // Actualizar botón de descarga
+  document.getElementById('btn-download-apk').href = APK_URL;
+  
+  // Generar QR dinámicamente
+  const qrApiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(APK_URL)}`;
+  document.getElementById('qr-code-img').src = qrApiUrl;

@@ -283,9 +283,7 @@
         
         <!-- 👇 AQUÍ VA TU CÓDIGO QR -->
         <div class="qr-container">
-          <img src="img/qr-code-app.png" alt="QR Code" class="qr-image">
-          <!-- Si no tienes imagen, puedes usar un servicio de generación -->
-          <!-- <img src="https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=TU_ENLACE_APK" alt="QR Code" class="qr-image"> -->
+          <img id="qr-code-img" src="" alt="QR Code" class="qr-image">
         </div>
 
         <div class="download-info mt-4">
@@ -296,7 +294,8 @@
           <p class="text-muted small mt-3 mb-0">
             O descarga directamente desde tu móvil:
           </p>
-          <a href="TU_ENLACE_DIRECTO_APK" class="btn btn-download-direct mt-2" download>
+          <!-- BOTÓN DE DESCARGA DIRECTA -->
+          <a id="btn-download-apk" href="#" class="btn btn-download-direct mt-2">
             <span>⬇️</span> Descargar APK
           </a>
         </div>
@@ -305,7 +304,7 @@
   </div>
 </div>
 
-    <script type="module">
+<script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-app.js";
         import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js";
         import { getFirestore, collection, addDoc, getDocs, query } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-firestore.js";
@@ -324,7 +323,7 @@
         const auth = getAuth(app);
         const db = getFirestore(app);
 
-        /* =======================================
+/* =======================================
    📌 VARIABLES BASE
 ======================================= */
 const form = document.getElementById("form-vaca");
@@ -357,7 +356,7 @@ opcionLote.addEventListener("change", async () => {
 });
 
 /* =======================================
-   📥 CARGAR LOTES DEL USUARIO
+   🔥 CARGAR LOTES DEL USUARIO
 ======================================= */
 async function cargarLotes() {
     listaLotes.innerHTML = "<p>Cargando lotes...</p>";
@@ -398,14 +397,14 @@ async function cargarLotes() {
 ======================================= */
 onAuthStateChanged(auth, (user) => {
     if (!user) {
-                mensaje.innerHTML = "<div class='alert-custom alert-danger-custom'>⚠️ Debes iniciar sesión para registrar vacas.</div>";
-                form.style.display = "none";
-                return;
-            }
+        mensaje.innerHTML = "<div class='alert-custom alert-danger-custom'>⚠️ Debes iniciar sesión para registrar vacas.</div>";
+        form.style.display = "none";
+        return;
+    }
 
-            currentUser = user;
-            form.style.display = "block";
-            mensaje.innerHTML = "<div class='alert-custom alert-success-custom'>✅ Bienvenido, puedes registrar tus vacas</div>";
+    currentUser = user;
+    form.style.display = "block";
+    mensaje.innerHTML = "<div class='alert-custom alert-success-custom'>✅ Bienvenido, puedes registrar tus vacas</div>";
 
     cargarPadresMadres();
 });
@@ -426,7 +425,6 @@ toggleBtn.addEventListener("click", () => {
     }
 });
 
-
 /* =======================================
    🐄 CARGAR PADRES Y MADRES EXISTENTES
 ======================================= */
@@ -443,31 +441,70 @@ async function cargarPadresMadres() {
     const snap = await getDocs(cowsRef);
 
     snap.forEach(doc => {
-    const cow = doc.data();
+        const cow = doc.data();
 
-    // SOLO MACHOS PARA PADRE
-    if (cow.gender === "Macho") {
-        padreSel.innerHTML += `
-            <option value="${doc.id}" data-name="${cow.name}">
-                ${cow.name}
-            </option>`;
+        // SOLO MACHOS PARA PADRE
+        if (cow.gender === "Macho") {
+            padreSel.innerHTML += `
+                <option value="${doc.id}" data-name="${cow.name}">
+                    ${cow.name}
+                </option>`;
+        }
+
+        // SOLO HEMBRAS PARA MADRE
+        if (cow.gender === "Hembra") {
+            madreSel.innerHTML += `
+                <option value="${doc.id}" data-name="${cow.name}">
+                    ${cow.name}
+                </option>`;
+        }
+    });
+}
+
+/* =======================================
+   🎂 SINCRONIZAR EDAD CON FECHA DE NACIMIENTO
+======================================= */
+const edad = document.getElementById("edad");
+const fechaNacimiento = document.getElementById("fecha-nacimiento");
+
+// Función para calcular edad desde fecha de nacimiento
+function calcularEdadDesdeFecha(fechaNac) {
+    if (!fechaNac) return null;
+    
+    const hoy = new Date();
+    const nacimiento = new Date(fechaNac);
+    let edad = hoy.getFullYear() - nacimiento.getFullYear();
+    const mes = hoy.getMonth() - nacimiento.getMonth();
+    
+    if (mes < 0 || (mes === 0 && hoy.getDate() < nacimiento.getDate())) {
+        edad--;
     }
+    
+    return edad;
+}
 
-    // SOLO HEMBRAS PARA MADRE
-    if (cow.gender === "Hembra") {
-        madreSel.innerHTML += `
-            <option value="${doc.id}" data-name="${cow.name}">
-                ${cow.name}
-            </option>`;
+// Cuando cambia la fecha de nacimiento → actualizar edad
+fechaNacimiento.addEventListener("change", () => {
+    const edadCalculada = calcularEdadDesdeFecha(fechaNacimiento.value);
+    if (edadCalculada !== null) {
+        edad.value = edadCalculada;
+        calcularEtapa(); // Recalcular etapa también
     }
 });
 
-}
+// Cuando cambia la edad manualmente → actualizar fecha aproximada
+edad.addEventListener("input", () => {
+    if (edad.value && !fechaNacimiento.value) {
+        const hoy = new Date();
+        const anioNacimiento = hoy.getFullYear() - parseInt(edad.value);
+        const fechaAproximada = `${anioNacimiento}-01-01`;
+        fechaNacimiento.value = fechaAproximada;
+    }
+});
 
 /* =======================================
    🧮 CALCULAR ETAPA AUTOMÁTICA
 ======================================= */
-const edad = document.getElementById("edad");
 const genero = document.getElementById("genero");
 const etapaBox = document.getElementById("etapa-box");
 const etapaLabel = document.getElementById("etapa-label");
@@ -492,7 +529,6 @@ function calcularEtapa() {
     etapaBox.classList.remove("d-none");
 }
 
-edad.addEventListener("input", calcularEtapa);
 genero.addEventListener("change", calcularEtapa);
 
 /* =======================================
@@ -501,11 +537,15 @@ genero.addEventListener("change", calcularEtapa);
 const lactanciaContainer = document.getElementById("lactancia-container");
 const produccionContainer = document.getElementById("produccion-container");
 const lactandoCheck = document.getElementById("lactando");
+const estadoContainer = document.getElementById("estado-container");
 
 genero.addEventListener("change", () => {
-    if (genero.value === "Hembra") lactanciaContainer.classList.remove("d-none");
-    else {
+    if (genero.value === "Hembra") {
+        lactanciaContainer.classList.remove("d-none");
+        estadoContainer.classList.remove("d-none");
+    } else {
         lactanciaContainer.classList.add("d-none");
+        estadoContainer.classList.add("d-none");
         lactandoCheck.checked = false;
         produccionContainer.classList.add("d-none");
     }
@@ -515,23 +555,70 @@ lactandoCheck.addEventListener("change", () => {
     produccionContainer.classList.toggle("d-none", !lactandoCheck.checked);
 });
 
-const estadoContainer = document.getElementById("estado-container");
-
-genero.addEventListener("change", () => {
-
-    // manejo lactancia ya existente...
-    if (genero.value === "Hembra") {
-        lactanciaContainer.classList.remove("d-none");
-        estadoContainer.classList.remove("d-none"); // 👈 MOSTRAR ESTADO
-    } else {
-        lactanciaContainer.classList.add("d-none");
-        estadoContainer.classList.add("d-none");   // 👈 OCULTAR ESTADO
-        lactandoCheck.checked = false;
-        produccionContainer.classList.add("d-none");
-    }
-
-});
-
+/* =======================================
+   🎉 MOSTRAR MENSAJE CENTRADO CON DESVANECIMIENTO
+======================================= */
+function mostrarMensajeExito(texto) {
+    // Crear elemento del mensaje
+    const mensajeDiv = document.createElement('div');
+    mensajeDiv.style.cssText = `
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: linear-gradient(135deg, #4CAF50, #45a049);
+        color: white;
+        padding: 25px 40px;
+        border-radius: 15px;
+        font-size: 18px;
+        font-weight: bold;
+        box-shadow: 0 8px 30px rgba(76, 175, 80, 0.4);
+        z-index: 9999;
+        animation: aparecer 0.4s ease-out;
+        text-align: center;
+        min-width: 300px;
+    `;
+    mensajeDiv.innerHTML = `
+        <div style="font-size: 40px; margin-bottom: 10px;">✅</div>
+        ${texto}
+    `;
+    
+    // Agregar animación CSS
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes aparecer {
+            from {
+                opacity: 0;
+                transform: translate(-50%, -60%);
+            }
+            to {
+                opacity: 1;
+                transform: translate(-50%, -50%);
+            }
+        }
+        @keyframes desvanecer {
+            from {
+                opacity: 1;
+                transform: translate(-50%, -50%);
+            }
+            to {
+                opacity: 0;
+                transform: translate(-50%, -40%);
+            }
+        }
+    `;
+    document.head.appendChild(style);
+    
+    document.body.appendChild(mensajeDiv);
+    
+    // Desvanecer después de 2.5 segundos
+    setTimeout(() => {
+        mensajeDiv.style.animation = 'desvanecer 0.4s ease-out';
+        setTimeout(() => {
+            mensajeDiv.remove();
+        }, 400);
+    }, 2500);
+}
 
 /* =======================================
    🎯 GUARDAR VACA
@@ -540,7 +627,6 @@ form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
     try {
-
         /* VALIDAR LOTE */
         if (opcionLote.value === "crear") {
             const name = document.getElementById("nombre-lote").value;
@@ -561,17 +647,15 @@ form.addEventListener("submit", async (e) => {
             mensaje.innerHTML = `<div class="alert-danger-custom">Debes seleccionar un lote.</div>`;
             return;
         }
+
         const padreSelect = document.getElementById("padre");
         const madreSelect = document.getElementById("madre");
 
         const fatherId = padreSelect.value || null;
-        const fatherName =
-            padreSelect.options[padreSelect.selectedIndex]?.dataset.name || null;
+        const fatherName = padreSelect.options[padreSelect.selectedIndex]?.dataset.name || null;
 
         const motherId = madreSelect.value || null;
-        const motherName =
-        madreSelect.options[madreSelect.selectedIndex]?.dataset.name || null;
-
+        const motherName = madreSelect.options[madreSelect.selectedIndex]?.dataset.name || null;
 
         /* GUARDAR LA VACA */
         const vaca = {
@@ -600,19 +684,32 @@ form.addEventListener("submit", async (e) => {
 
         await addDoc(collection(db, "users", currentUser.uid, "cows"), vaca);
 
-        mensaje.innerHTML = "<div class='alert-custom alert-success-custom'>✅ Vaca registrada con éxito en el lote: " + selectedLoteName + "</div>";
-                form.reset();
-                camposCrearLote.classList.add("hidden");
-                camposSeleccionarLote.classList.add("hidden");
-                
-                setTimeout(() => {
-                    mensaje.innerHTML = "<div class='alert-custom alert-success-custom'>✅ Bienvenido, puedes registrar tus vacas</div>";
-                }, 3000);
-            } catch (error) {
-                console.error("Error al guardar vaca:", error);
-                mensaje.innerHTML = "<div class='alert-custom alert-danger-custom'>❌ Error al guardar la vaca. Intenta nuevamente.</div>";
-            }
-        });
+        // 🎉 MENSAJE CENTRADO CON DESVANECIMIENTO
+        mostrarMensajeExito(`Vaca registrada con éxito en el lote: ${selectedLoteName}`);
+
+        form.reset();
+        camposCrearLote.classList.add("hidden");
+        camposSeleccionarLote.classList.add("hidden");
+        etapaBox.classList.add("d-none");
+        lactanciaContainer.classList.add("d-none");
+        produccionContainer.classList.add("d-none");
+        estadoContainer.classList.add("d-none");
+        
+    } catch (error) {
+        console.error("Error al guardar vaca:", error);
+        mensaje.innerHTML = "<div class='alert-custom alert-danger-custom'>❌ Error al guardar la vaca. Intenta nuevamente.</div>";
+    }
+});
+
+   // 🔗 CONFIGURA TU ENLACE AQUÍ
+  const APK_URL = "https://drive.google.com/file/d/1AzI0q8QNbPIYP10eewEgUaiu184At9aA/view?usp=drive_link";
+  
+  // Actualizar botón de descarga
+  document.getElementById('btn-download-apk').href = APK_URL;
+  
+  // Generar QR dinámicamente
+  const qrApiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(APK_URL)}`;
+  document.getElementById('qr-code-img').src = qrApiUrl;
 
 </script>
 

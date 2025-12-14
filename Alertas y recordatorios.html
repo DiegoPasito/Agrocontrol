@@ -153,11 +153,9 @@
       <div class="modal-body text-center p-4">
         <p class="mb-4">Escanea el código QR con tu dispositivo móvil</p>
         
-        <!-- 👇 AQUÍ VA TU CÓDIGO QR -->
         <div class="qr-container">
-          <img src="img/qr-code-app.png" alt="QR Code" class="qr-image">
-          <!-- Si no tienes imagen, puedes usar un servicio de generación -->
-          <!-- <img src="https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=TU_ENLACE_APK" alt="QR Code" class="qr-image"> -->
+         <img id="qr-code-img" src="" alt="QR Code" class="qr-image">
+          
         </div>
 
         <div class="download-info mt-4">
@@ -168,7 +166,8 @@
           <p class="text-muted small mt-3 mb-0">
             O descarga directamente desde tu móvil:
           </p>
-          <a href="TU_ENLACE_DIRECTO_APK" class="btn btn-download-direct mt-2" download>
+          <!-- BOTÓN DE DESCARGA DIRECTA -->
+          <a id="btn-download-apk" href="#" class="btn btn-download-direct mt-2">
             <span>⬇️</span> Descargar APK
           </a>
         </div>
@@ -386,6 +385,19 @@ document.getElementById("btnConfirmarEliminar").addEventListener("click", async 
     alert("Hubo un error al eliminar el recordatorio.");
   }
 });
+
+
+   // 🔗 CONFIGURA TU ENLACE AQUÍ
+  const APK_URL = "https://drive.google.com/file/d/1AzI0q8QNbPIYP10eewEgUaiu184At9aA/view?usp=drive_link";
+  
+  // Actualizar botón de descarga
+  document.getElementById('btn-download-apk').href = APK_URL;
+  
+  // Generar QR dinámicamente
+  const qrApiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(APK_URL)}`;
+  document.getElementById('qr-code-img').src = qrApiUrl;
+
+
 </script>
 
 
