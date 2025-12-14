@@ -8,6 +8,13 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
+    <!-- jsPDF para generar PDFs -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<!-- jsPDF-AutoTable para tablas bonitas -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
+<!-- html2canvas para capturar las gráficas -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
     <link rel="stylesheet" href="css/Jersey.css">
 
 </head>
@@ -625,6 +632,11 @@
         <button class="btn btn-verde-pastel w-100 "
           onclick="abrirModalRegistro(window.vacaSeleccionada,'graficas')">
           📊 Gráficas
+        </button>
+
+        <button class="btn btn-success w-100 mt-3"
+          onclick="generarReportePDF(window.vacaSeleccionada)">
+          📄 Generar Reporte PDF
         </button>
 
       </div>
@@ -2127,6 +2139,389 @@ document.getElementById("tabLeche").addEventListener("click", () => {
   tabActual = "leche";
   renderizarGrafica();
 });
+
+
+// ===============================
+// 📄 GENERAR REPORTE PDF
+// ===============================
+window.generarReportePDF = async function(vacaId) {
+  
+  mostrarToast("Generando reporte PDF...", "warning");
+  
+  const { jsPDF } = window.jspdf;
+  const pdfDoc = new jsPDF();
+  
+  // 1️⃣ Obtener datos de la vaca
+  const vacaRef = doc(db, "users", usuarioId, "cows", vacaId);
+  const vacaSnap = await getDoc(vacaRef);
+  
+  if (!vacaSnap.exists()) {
+    mostrarToast("Error: No se encontró la vaca", "danger");
+    return;
+  }
+  
+  const vaca = vacaSnap.data();
+  let yPos = 20;
+  
+  // =============================
+  // ENCABEZADO
+  // =============================
+  pdfDoc.setFontSize(22);
+  pdfDoc.setTextColor(46, 125, 50);
+  pdfDoc.text("REPORTE DE VACA JERSEY", 105, yPos, { align: "center" });
+  
+  yPos += 8;
+  pdfDoc.setFontSize(10);
+  pdfDoc.setTextColor(100);
+  pdfDoc.text(`Generado el: ${new Date().toLocaleString('es-CO')}`, 105, yPos, { align: "center" });
+  
+  yPos += 15;
+  
+  // =============================
+  // DATOS BÁSICOS DE LA VACA
+  // =============================
+  pdfDoc.setFontSize(14);
+  pdfDoc.setTextColor(0);
+  pdfDoc.text("DATOS BASICOS", 14, yPos);
+  yPos += 8;
+  
+  const datosBasicos = [
+    ['Nombre', vaca.name || '-'],
+    ['ID Interno', vaca.internalId || '-'],
+    ['Peso', `${vaca.weight || '-'} kg`],
+    ['Edad', `${vaca.age || '-'} años`],
+    ['Genero', vaca.gender || '-'],
+    ['Fecha de Nacimiento', vaca.birthDate ? new Date(vaca.birthDate).toLocaleDateString('es-CO') : '-'],
+    ['Estado Reproductivo', vaca.reproductiveStatus || '-'],
+    ['Produccion de Leche', `${vaca.milkProduction || '-'} L/dia`],
+    ['Lactando', vaca.isLactating ? 'Si' : 'No'],
+    ['Padre', vaca.fatherName || '-'],
+    ['Madre', vaca.motherName || '-'],
+    ['Proposito', vaca.purpose || '-'],
+    ['Origen', vaca.origin || '-'],
+    ['Chip ID', vaca.chipId || '-']
+  ];
+  
+  pdfDoc.autoTable({
+    startY: yPos,
+    head: [['Campo', 'Valor']],
+    body: datosBasicos,
+    theme: 'grid',
+    headStyles: { fillColor: [46, 125, 50], textColor: 255, fontSize: 10 },
+    bodyStyles: { fontSize: 9 },
+    margin: { left: 14, right: 14 }
+  });
+  
+  yPos = pdfDoc.lastAutoTable.finalY + 15;
+  
+  // =============================
+  // MEDICAMENTOS APLICADOS
+  // =============================
+  const medsSnap = await getDocs(
+    collection(db, "users", usuarioId, "cows", vacaId, "applied_medications")
+  );
+  
+  if (!medsSnap.empty) {
+    if (yPos > 250) {
+      pdfDoc.addPage();
+      yPos = 20;
+    }
+    
+    pdfDoc.setFontSize(14);
+    pdfDoc.setTextColor(0);
+    pdfDoc.text("MEDICAMENTOS APLICADOS", 14, yPos);
+    yPos += 8;
+    
+    const medicamentos = [];
+    medsSnap.forEach(d => {
+      const m = d.data();
+      medicamentos.push([
+        m.name || '-',
+        `${m.dose_administered_ml || 0} ml`,
+        new Date(m.date).toLocaleDateString('es-CO'),
+        (m.observations || 'Sin observaciones').substring(0, 50)
+      ]);
+    });
+    
+    pdfDoc.autoTable({
+      startY: yPos,
+      head: [['Medicamento', 'Dosis', 'Fecha', 'Observaciones']],
+      body: medicamentos,
+      theme: 'striped',
+      headStyles: { fillColor: [76, 175, 80], fontSize: 9 },
+      bodyStyles: { fontSize: 8 },
+      margin: { left: 14, right: 14 }
+    });
+    
+    yPos = pdfDoc.lastAutoTable.finalY + 15;
+  }
+  
+  // =============================
+  // INSUMOS APLICADOS
+  // =============================
+  const insumosSnap = await getDocs(
+    collection(db, "users", usuarioId, "cows", vacaId, "applied_feeds")
+  );
+  
+  if (!insumosSnap.empty) {
+    if (yPos > 250) {
+      pdfDoc.addPage();
+      yPos = 20;
+    }
+    
+    pdfDoc.setFontSize(14);
+    pdfDoc.setTextColor(0);
+    pdfDoc.text("INSUMOS APLICADOS", 14, yPos);
+    yPos += 8;
+    
+    const insumos = [];
+    insumosSnap.forEach(d => {
+      const i = d.data();
+      insumos.push([
+        i.feedName || '-',
+        `${i.amountGiven || 0} kg`,
+        new Date(i.date).toLocaleDateString('es-CO'),
+        (i.observations || 'Sin observaciones').substring(0, 50)
+      ]);
+    });
+    
+    pdfDoc.autoTable({
+      startY: yPos,
+      head: [['Insumo', 'Cantidad', 'Fecha', 'Observaciones']],
+      body: insumos,
+      theme: 'striped',
+      headStyles: { fillColor: [139, 195, 74], fontSize: 9 },
+      bodyStyles: { fontSize: 8 },
+      margin: { left: 14, right: 14 }
+    });
+    
+    yPos = pdfDoc.lastAutoTable.finalY + 15;
+  }
+  
+  // =============================
+  // ENFERMEDADES REGISTRADAS
+  // =============================
+  const enfSnap = await getDocs(
+    collection(db, "users", usuarioId, "cows", vacaId, "diseases_history")
+  );
+  
+  if (!enfSnap.empty) {
+    if (yPos > 250) {
+      pdfDoc.addPage();
+      yPos = 20;
+    }
+    
+    pdfDoc.setFontSize(14);
+    pdfDoc.setTextColor(0);
+    pdfDoc.text("ENFERMEDADES REGISTRADAS", 14, yPos);
+    yPos += 8;
+    
+    const enfermedades = [];
+    enfSnap.forEach(d => {
+      const e = d.data();
+      enfermedades.push([
+        e.name || '-',
+        e.severity || '-',
+        new Date(e.date).toLocaleDateString('es-CO'),
+        (e.notes || 'Sin notas').substring(0, 50)
+      ]);
+    });
+    
+    pdfDoc.autoTable({
+      startY: yPos,
+      head: [['Enfermedad', 'Gravedad', 'Fecha', 'Notas']],
+      body: enfermedades,
+      theme: 'striped',
+      headStyles: { fillColor: [244, 67, 54], fontSize: 9 },
+      bodyStyles: { fontSize: 8 },
+      margin: { left: 14, right: 14 }
+    });
+    
+    yPos = pdfDoc.lastAutoTable.finalY + 15;
+  }
+  
+  // =============================
+  // GRÁFICAS DE PESO
+  // =============================
+  if (vaca.weightHistory && vaca.weightHistory.length > 0) {
+    
+    try {
+      pdfDoc.addPage();
+      yPos = 20;
+      
+      pdfDoc.setFontSize(14);
+      pdfDoc.setTextColor(0);
+      pdfDoc.text("GRAFICA DE EVOLUCION DE PESO", 14, yPos);
+      yPos += 10;
+      
+      // Crear canvas temporal
+      const tempCanvas = document.createElement('canvas');
+      tempCanvas.width = 1000;
+      tempCanvas.height = 500;
+      tempCanvas.style.position = 'absolute';
+      tempCanvas.style.left = '-9999px';
+      document.body.appendChild(tempCanvas);
+      
+      const ctx = tempCanvas.getContext('2d');
+      
+      // Datos de peso
+      const historyPeso = vaca.weightHistory.sort((a, b) => new Date(a.date) - new Date(b.date));
+      const labelsPeso = historyPeso.map(h => {
+        if (!h.date) return "--";
+        const fecha = new Date(h.date);
+        return fecha.toLocaleDateString('es-CO', { day: '2-digit', month: '2-digit' });
+      });
+      const valuesPeso = historyPeso.map(h => h.weight);
+      
+      // Crear gráfica
+      const tempChart = new Chart(ctx, {
+        type: "line",
+        data: {
+          labels: labelsPeso,
+          datasets: [{
+            label: "Peso (kg)",
+            data: valuesPeso,
+            backgroundColor: "rgba(46, 125, 50, 0.2)",
+            borderColor: "rgba(46, 125, 50, 1)",
+            borderWidth: 3,
+            fill: true,
+            tension: 0.4,
+            pointRadius: 5,
+            pointBackgroundColor: "rgba(46, 125, 50, 1)"
+          }]
+        },
+        options: {
+          responsive: false,
+          animation: false,
+          plugins: {
+            legend: { 
+              display: true,
+              labels: { font: { size: 14 } }
+            }
+          },
+          scales: {
+            y: { 
+              beginAtZero: false,
+              ticks: { font: { size: 12 } }
+            },
+            x: {
+              ticks: { font: { size: 10 } }
+            }
+          }
+        }
+      });
+      
+      // Esperar renderizado
+      await new Promise(resolve => setTimeout(resolve, 800));
+      
+      // Capturar y agregar imagen
+      const imgData = tempCanvas.toDataURL("image/png", 1.0);
+      pdfDoc.addImage(imgData, 'PNG', 14, yPos, 180, 90);
+      
+      // Limpiar
+      tempChart.destroy();
+      document.body.removeChild(tempCanvas);
+      
+    } catch (error) {
+      console.error("Error al generar gráfica de peso:", error);
+      pdfDoc.setFontSize(10);
+      pdfDoc.setTextColor(200, 0, 0);
+      pdfDoc.text("No se pudo generar la grafica de peso", 14, yPos);
+    }
+  }
+  
+  // =============================
+  // GRÁFICAS DE LECHE (solo si es hembra)
+  // =============================
+  const gender = (vaca.gender || "").toLowerCase();
+  if (gender === "hembra" && vaca.milkProductionHistory && vaca.milkProductionHistory.length > 0) {
+    
+    try {
+      pdfDoc.addPage();
+      yPos = 20;
+      
+      pdfDoc.setFontSize(14);
+      pdfDoc.setTextColor(0);
+      pdfDoc.text("GRAFICA DE PRODUCCION DE LECHE", 14, yPos);
+      yPos += 10;
+      
+      // Crear canvas temporal
+      const tempCanvas = document.createElement('canvas');
+      tempCanvas.width = 1000;
+      tempCanvas.height = 500;
+      tempCanvas.style.position = 'absolute';
+      tempCanvas.style.left = '-9999px';
+      document.body.appendChild(tempCanvas);
+      
+      const ctx = tempCanvas.getContext('2d');
+      
+      // Datos de leche
+      const historyLeche = vaca.milkProductionHistory.sort((a, b) => new Date(a.date) - new Date(b.date));
+      const labelsLeche = historyLeche.map(h => {
+        if (!h.date) return "--";
+        const fecha = new Date(h.date);
+        return fecha.toLocaleDateString('es-CO', { day: '2-digit', month: '2-digit' });
+      });
+      const valuesLeche = historyLeche.map(h => h.liters);
+      
+      // Crear gráfica
+      const tempChart = new Chart(ctx, {
+        type: "bar",
+        data: {
+          labels: labelsLeche,
+          datasets: [{
+            label: "Produccion (L/dia)",
+            data: valuesLeche,
+            backgroundColor: "rgba(33, 150, 243, 0.7)",
+            borderColor: "rgba(33, 150, 243, 1)",
+            borderWidth: 2
+          }]
+        },
+        options: {
+          responsive: false,
+          animation: false,
+          plugins: {
+            legend: { 
+              display: true,
+              labels: { font: { size: 14 } }
+            }
+          },
+          scales: {
+            y: { 
+              beginAtZero: true,
+              ticks: { font: { size: 12 } }
+            },
+            x: {
+              ticks: { font: { size: 10 } }
+            }
+          }
+        }
+      });
+      
+      // Esperar renderizado
+      await new Promise(resolve => setTimeout(resolve, 800));
+      
+      // Capturar y agregar imagen
+      const imgData = tempCanvas.toDataURL("image/png", 1.0);
+      pdfDoc.addImage(imgData, 'PNG', 14, yPos, 180, 90);
+      
+      // Limpiar
+      tempChart.destroy();
+      document.body.removeChild(tempCanvas);
+      
+    } catch (error) {
+      console.error("Error al generar gráfica de leche:", error);
+    }
+  }
+  
+  // =============================
+  // GUARDAR PDF
+  // =============================
+  const nombreArchivo = `Reporte_${vaca.name || 'Vaca'}_${new Date().getTime()}.pdf`;
+  pdfDoc.save(nombreArchivo);
+  
+  mostrarToast("Reporte generado exitosamente", "success");
+};
 
 
 </script>
