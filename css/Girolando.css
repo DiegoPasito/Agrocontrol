@@ -1091,3 +1091,33 @@
     font-size: 1.1rem;
   }
 }
+
+/* Tarjeta base */
+.raza-card {
+  border-radius: 22px;
+  overflow: hidden;
+}
+
+/* Imagen como fondo */
+.raza-img {
+  min-height: 100%;            /* 🔥 CLAVE */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* Forzar altura mínima a la card */
+.raza-card .row {
+  min-height: 360px;           /* 🔥 ESTO HACE QUE LA IMAGEN APAREZCA */
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .raza-card .row {
+    min-height: auto;
+  }
+
+  .raza-img {
+    min-height: 260px;
+  }
+}
